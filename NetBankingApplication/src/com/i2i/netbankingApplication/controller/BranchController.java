@@ -12,6 +12,7 @@ import com.i2i.netbankingApplication.service.BranchService;
 @Controller
 public class BranchController {
 	BranchService branchService = new BranchService();
+	@RequestMapping(value = "/open")
 	public String login() {
 		return "BranchIndex";
 	}
