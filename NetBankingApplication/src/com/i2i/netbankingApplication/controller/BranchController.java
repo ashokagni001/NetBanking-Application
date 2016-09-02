@@ -24,13 +24,13 @@ public class BranchController {
 	}
 	
 	@RequestMapping(value="/insertBranch", method = RequestMethod.POST)
-    public String addBranch(@ModelAttribute("employee") Branch branch, ModelMap message) {
+    public String addBranch(@ModelAttribute("Branch") Branch branch, ModelMap message) {
     	try {       
             branchService.getBranch(branch);
             message.addAttribute("message", "BRANCH ADDED SUCESSFULLY");
     	} catch (NumberFormatException e) {
     		message.addAttribute("message", "ENTER VALID EMAIL ONLY"); 
         }
-        return "Addbranch";
+        return "Add";
     }
 }

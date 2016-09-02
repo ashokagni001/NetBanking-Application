@@ -1,5 +1,7 @@
 package com.i2i.netbankingApplication.dao;
 
+import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,11 +21,28 @@ public class BranchDao {
 	     Transaction transaction = null;
 	     try {
 	         transaction = session.beginTransaction();
-		     session.persist(branch);                                                              
+		     session.persist(branch); 
 	         transaction.commit();                                                                    
 		 } catch (HibernateException e) {
 	     } finally {
 	         session.close(); 
 	     }
 	 }
+	 
+	 public List<Branch> retriveBranchs() {
+	        Session session = sessionFactory.openSession();
+	        Transaction transaction = null;
+	        try {
+	            transaction = session.beginTransaction();
+	            List<Branch> branchs = session.createQuery("from Branch").list();
+	            transaction.commit();
+	            return branchs;
+	        } catch(HibernateException e) {
+	        } finally {
+	            session.close();
+	        }
+			return null;
+	    }
+	 
+	 
 }
