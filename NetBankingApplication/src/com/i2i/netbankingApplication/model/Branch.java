@@ -1,5 +1,10 @@
 package com.i2i.netbankingApplication.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * 
  * <p>
@@ -11,10 +16,17 @@ package com.i2i.netbankingApplication.model;
  * @author ashok.
  *
  */
-
+@Entity
+@Table(name = "branch")
 public class Branch {
+	@Id
+    @Column(name = "IFSCode", unique = true)
 	private String IFSCode;
+	
+	@Column(name = "email")
 	private String emailId;
+	
+	@Column(name = "address_id", nullable = true, columnDefinition = "TEXT" )
 	private int addressId;
 	
 	public Branch() {
@@ -48,4 +60,5 @@ public class Branch {
 	public void setIFSCode(String IFSCode) {
 		this.IFSCode = IFSCode;
 	}
+	
 }

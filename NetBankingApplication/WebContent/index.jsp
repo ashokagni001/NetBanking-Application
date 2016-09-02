@@ -9,7 +9,7 @@
 <body>
  <center>
       <h1>WELCOME NETBANKING APPLICATION</h1>
-          If U Want Open Click On <br/><br/><a href=open>OPEN</a>
+          If U Want Open Click On <br/><br/><a href= open>OPEN</a>
       </center>
 </body>
 </html>

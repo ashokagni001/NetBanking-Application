@@ -1,5 +1,14 @@
 package com.i2i.netbankingApplication.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
 /**
  * 
  * <p>
@@ -12,11 +21,29 @@ package com.i2i.netbankingApplication.model;
  *
  */
 public class Address {
+	@Id
+    @Column(name = "address_id", unique = true)
 	private String addressId;
+	
+	@Column(name = "street")
 	private String street;
+	
+	@Column(name = "city")
 	private String city;
+	
+	@Column(name = "state")
 	private String state;
+	
+	@Column(name = "pincode")
 	private String pincode;
+	
+	@OneToOne(cascade = CascadeType.PERSIST, fetch=FetchType.LAZY)
+    @JoinColumn(name = "address_id")
+	private Set<Branch> branchs;
+	
+	@OneToOne(cascade = CascadeType.PERSIST, fetch=FetchType.LAZY)
+    @JoinColumn(name = "address_id")
+	private Set<User> users;
 	
 	public Address() {
 	}
@@ -68,5 +95,30 @@ public class Address {
 	public void setState(String state) {
 		this.state = state;
 	}
+	
+	public Set getBranchs() {
+        return branchs;
+    }
+    
+    public void setBranchs(Set branch) {
+        this.branchs.addAll(branch);        
+    }
+    
+    public void removeBranch(Branch branch) {
+        this.branchs.remove(branch);
+    }
+    
+    public Set getUsers() {
+        return users;
+    }
+    
+    public void setUsers(Set user) {
+        this.users.addAll(user);        
+    }
+    
+    public void removeUser(User user) {
+        this.users.remove(user);
+    }
+
 
 }

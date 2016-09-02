@@ -1,5 +1,8 @@
 package com.i2i.netbankingApplication.model;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+
 /**
  * <p>
  * Model class of User. 
@@ -13,15 +16,35 @@ package com.i2i.netbankingApplication.model;
  *
  */
 public class User {
+	@Id
+    @Column(name = "user_id", unique = true)
     private String userId;
+	
+	@Column(name = "name")
     private String name;
+	
+	@Column(name = "age")
     private int age;
+	
+	@Column(name = "dob")
     private String dob;
+	
+	@Column(name = "gender")
     private String gender;
+	
+	@Column(name = "mobile_number")
     private long mobileNumber;
+	
+	@Column(name = "mail")
     private String email;
+	
+	@Column(name = "passWord")
     private String passWord;
+	
+	@Column(name = "status")
     private String status;
+	
+	@Column(name = "address_id", nullable = true, columnDefinition = "TEXT" )
     private int addressId;
     
     public User() {
