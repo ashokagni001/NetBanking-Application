@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Registration Form For New User </title>
+<meta name="robots" content="noindex, nofollow">
+<!-- Include CSS File Here -->
+<link rel="stylesheet" href="resource/style.css"/>
+<!-- Include JS File Here -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="resource/registration.js"></script>
+</head>
+<body>
+<div class="container">
+<div class="main">
+<form class="form" method="post" action="#">
+<h2>Registration Form For New User</h2>
+<label>Name :</label>
+<input type="text" name="dname" id="name">
+<label>Email :</label>
+<input type="text" name="demail" id="email">
+<label>MobileNumber :</label>
+<input type="text" name="mobileNumber" id="mobileNumber">
+
+<!--birthday details start-->
+      <div>
+        <h3 class="birthday_title">Birthday</h3>
+      </div>
+      <div>
+        <select name="birthday_month" >
+          <option value="" selected >Month</option>
+          <option value="1">Jan</option>
+          <option value="2">Feb</option>
+          <option value="3">Mar</option>
+          <option value="4">Apr</option>
+          <option value="5">May</option>
+        </select>
+        &nbsp;&nbsp;
+        <select name="birthday_day" >
+          <option value="" selected>Day</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        &nbsp;&nbsp;
+        <select name="birthday_year">
+          <option value="" selected>Year</option>
+          <option value="2013">2013</option>
+          <option value="2012">2012</option>
+          <option value="2011">2011</option>
+          <option value="2010">2010</option>
+          <option value="2009">2009</option>
+        </select>
+      </div>
+      <!--birthday details ends-->
+      <div id="radio_button">
+        <input type="radio" name="radiobutton" value="Female">
+        <label >Female</label>
+        &nbsp;&nbsp;&nbsp;
+        <input type="radio" name="radiobutton" value="Male">
+        <label >Male</label>
+      </div>
+
+<input type="password" name="cpassword" id="cpassword">
+<input type="button" name="register" id="register" value="Register">
+</form>
+</div>
+</body>
+</html>
+
