@@ -1,11 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
-    <h2>NET BANKING APPLICATION</h2>
-    <h4>INSERT EMAIL ID</h4>
     <style type="text/css">
     input[type=submit] {
              width: 20%;
@@ -19,7 +17,7 @@
              outline:none;
          }
          input[type=text] {
-             width: 20%;
+             width: 90%;
              padding: 12px 20px;
              margin: 8px 0;
              display: inline-block;
@@ -31,24 +29,27 @@
     </style>
     </head>
     <body bgcolor="#99a38f">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-    <center>
-          <form:form method="post" action="insertBranch" modelAttribute="Branch">
-                <form:input path="emailId" type="text" placeholder="EMAIL ID" />
-                <br/>
-                <input type="submit" path="addBranch" value="ADD" />
-            </form:form>
-         <c:if test="${message != null}">
+        <font size="20"><marquee behavior="alternate">NET BANKING</marquee></font>
+        <h1>DELETE BANK</h1>
+        <center> 
+            <h2>Insert Id</h2>
+            <form action="deleteBranchById" method="get">
+            <table>
+                <tr>
+                    <td>
+                        <input type="text" name="ifsc" placeholder="IFSC" required>
+                    </td>
+                </tr>
+            </table>
+            </br></br>
+            <c:if test="${message != null}">
             <script type="text/javascript">
                 alert('CLICK OK THE PAGE WILL BE REFRESHED...' + "<c:out value='${message}'/>");
                 windows.location.reload();
             </script>
         </c:if>
-     <b>Go to main page </b><a href="BranchIndex" style="font-sise:18px"> click here</a></br></br>
-     </center>
-</body>
+            <input type="submit" name="delete" value="DELETE">
+            </form>
+            <b>Go to main page </b><a href="BranchIndex" style="font-sise:18px"> click here</a>
+    </center>
 </html>
