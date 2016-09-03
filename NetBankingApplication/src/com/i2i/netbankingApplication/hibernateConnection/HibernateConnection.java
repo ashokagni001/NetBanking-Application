@@ -3,13 +3,13 @@ package com.i2i.netbankingApplication.hibernateConnection;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.AnnotationConfiguration;
 
 public class HibernateConnection {
 	private HibernateConnection() {
 	}
 	     
-    private Configuration configuration = null;
+    private AnnotationConfiguration AnnotationConfiguration = null;
 	private SessionFactory sessionFactory = null;
 	private static HibernateConnection hibernateConnection = null;
 	
@@ -20,22 +20,22 @@ public class HibernateConnection {
 	    return hibernateConnection;
 	    }
 	
-	public Configuration getConfiguration() {
+	public AnnotationConfiguration getAnnotationConfiguration() {
 	    try {
-	        if(configuration == null) {
-	            configuration = new Configuration();
-		        configuration.configure("hibernate.cfg.xml"); 
+	        if(AnnotationConfiguration == null) {
+	            AnnotationConfiguration = new AnnotationConfiguration();
+		        AnnotationConfiguration.configure("hibernate.cfg.xml"); 
 		    }
 	    } catch(HibernateException e) {
-	             System.err.println("configuration not found Exception" + e);
+	             System.err.println("AnnotationConfiguration not found Exception" + e);
 	    }
-	        return configuration;
+	        return AnnotationConfiguration;
 	}
 	
     public SessionFactory getSessionFactory() {
 	        try {
 	            if(sessionFactory == null) {
-	                sessionFactory = configuration.buildSessionFactory();
+	                sessionFactory = AnnotationConfiguration.buildSessionFactory();
 	           }
 	        } catch(HibernateException e) {
 	             System.err.println("sessionFactory not found Exception" + e);
