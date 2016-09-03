@@ -23,12 +23,7 @@ public class BranchDao {
 	     Transaction transaction = null;
 	     try {
 	         transaction = session.beginTransaction();
-	         System.out.println(branch.getEmailId());
-	         System.out.println(branch.getIFSCode());
-	         System.out.println("hai1");
-	        // session.savebranch.setIFSCode());
 		     session.save(branch); 
-		     System.out.println("hai2");
 	         transaction.commit();                                                                    
 		 } catch (HibernateException e) {
 			 throw new DataBaseException("PLEASE CHECK YOUR DATAS " + branch + " YOUR DATA IS NOT VALID.PLEASE TRY AGAIN." );  
@@ -77,4 +72,35 @@ public class BranchDao {
 	         session.close();
 	     }
 	 }
+	 
+      public void addAddress(String IFSCode, Address address) {
+	     Session session = sessionFactory.openSession();
+	     Transaction transaction = null;
+	     try {
+	         transaction = session.beginTransaction();
+	         Branch branch = (Branch)session.get(Branch.class, IFSCode);
+		     session.save(address); 
+		     branch.setAddress(address);
+	         session.update(branch);
+	         transaction.commit();                                                                    
+		 } catch (HibernateException e) {
+	     } finally {
+	         session.close(); 
+	     }
+	 }
+	 
+	 public List<Address> retriveAddresses() {
+	        Session session = sessionFactory.openSession();
+	        Transaction transaction = null;
+	        try {
+	            transaction = session.beginTransaction();
+	            List<Address> addresses = session.createQuery("from Address").list();
+	            transaction.commit();
+	            return addresses;
+	        } catch(HibernateException e) {
+	        } finally {
+	            session.close();
+	        }
+			return null;
+	    }
 }

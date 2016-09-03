@@ -27,15 +27,16 @@ public class BranchController {
 		return "AddBranch";
 	}
 	
-	@RequestMapping(value="/insertBranch", method = RequestMethod.POST)
-    public String addBranch(@ModelAttribute("Branch")Branch branch, ModelMap message) throws DataBaseException {
-    	try {       
-            branchService.getBranch(branch);
-            message.addAttribute("message", "BRANCH ADDED SUCESSFULLY");
-    	} catch (DataBaseException e) {
-    		message.addAttribute("message", "ENTER VALID EMAIL ONLY"); 
-        }
-        return "AddBranch";
+		@RequestMapping(value="/insertBranch", method = RequestMethod.POST)
+    public String addBranch(@RequestParam("emailId") String emailId, ModelMap message) {  
+		branchService.getBranch(emailId);
+            message.addAttribute("Address", new Address());
+            return "AddAddress";
+    }
+	@RequestMapping(value="/address", method = RequestMethod.POST)
+    public String addBranch(@ModelAttribute("Address")Address address, ModelMap message, Branch branch) {  
+           branchService.getAddress(address);
+           return "BranchIndex";
     }
 	
 	@RequestMapping(value = "/deleteBranch")

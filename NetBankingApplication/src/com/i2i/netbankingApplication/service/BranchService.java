@@ -51,5 +51,23 @@ public class BranchService {
 	public Branch getBranchById(String ifsc) throws DataBaseException {
         return branchDao.retrieveBranchById(ifsc); 
     }
+    
+    public int getLastAddressId() {
+    	int id = 0;
+    	for (Address address : branchDao.retriveAddresses()) {
+    		id = address.getAddressId();
+    	}
+    	return id;
+    }
+    
+    public void getAddress(Address address) {
+      	String IFSCode = " ";
+      	int tempIFS = getLastIFSCode();
+        if (tempIFS >= 0) {
+        	IFSCode = "I2I0BK" + String.valueOf(tempIFS);
+        }
+        int id = getLastAddressId();
+    	branchDao.addAddress(IFSCode,new Address(id, address.getStreet(), address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
+    }
 }
 

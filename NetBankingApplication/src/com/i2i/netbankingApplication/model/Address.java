@@ -1,14 +1,8 @@
-package com.i2i.netbankingApplication.model;
+package model;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -16,36 +10,48 @@ import javax.persistence.Table;
 public class Address {
 	@Id
     @Column(name = "address_id", unique = true)
-	private String addressId;
-	
-	@Column(name = "city")
-	private String city;
+	private int addressId;
 	
 	@Column(name = "street")
 	private String street;
+	
+	@Column(name = "country")
+	private String country;
+	
+	@Column(name = "city")
+	private String city;
 	
 	@Column(name = "state")
 	private String state;
 	
 	@Column(name = "pincode")
-	private String pincode;
+	private int pincode;
 	
 	public Address() {
 	}
 	
-	public Address(String addressId, String street, String city, String state, String pincode) {
+	public Address(String street, String country, String city, String state, int pincode) {
+		this.street = street;
+		this.country = country;
+		this.city = city;
+		this.state = state;
+		this.pincode = pincode;
+	}
+	
+	public Address(int addressId, String street, String country, String city, String state, int pincode) {
 		this.addressId = addressId;
 		this.street = street;
+		this.country = country;
 		this.city = city;
 		this.state = state;
 		this.pincode = pincode;
 	}
 
-	public String getAddressId() {
+	public int getAddressId() {
 		return addressId;
 	}
 
-	public void setAddressId(String addressId) {
+	public void setAddressId(int addressId) {
 		this.addressId = addressId;
 	}
 
@@ -56,6 +62,15 @@ public class Address {
 	public void setStreet(String street) {
 		this.street = street;
 	}
+	
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
 
 	public String getCity() {
 		return city;
@@ -65,11 +80,11 @@ public class Address {
 		this.city = city;
 	}
 
-	public String getPincode() {
+	public int getPincode() {
 		return pincode;
 	}
 
-	public void setPincode(String pincode) {
+	public void setPincode(int pincode) {
 		this.pincode = pincode;
 	}
 
@@ -80,4 +95,5 @@ public class Address {
 	public void setState(String state) {
 		this.state = state;
 	}
+	
 }
