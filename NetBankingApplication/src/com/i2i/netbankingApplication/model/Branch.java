@@ -1,34 +1,36 @@
 package com.i2i.netbankingApplication.model;
 
+
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-/**
- * 
- * <p>
- * Model class of Branch.
- * It have getter and setter methods.
- * Default constructor and parameter constructor.
- * </p>
- * 
- * @author ashok.
- *
- */
 @Entity
-@Table(name = "branch")
+@Table(name = "branch_detail")
 public class Branch {
 	@Id
-    @Column(name = "IFSCode", unique = true)
+    @Column(name = "ifsc")
 	private String IFSCode;
 	
 	@Column(name = "email")
 	private String emailId;
 	
-	@Column(name = "address_id", nullable = true, columnDefinition = "TEXT" )
-	private int addressId;
+	@OneToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name="address_id")
+    //private String addressId;
+	public Address address;
 	
+   // @OneToMany(cascade=CascadeType.PERSIST)
+    //@JoinColumn(name="address_id")
+    //public Set<Branch> branch = new HashSet<Branch>();
+    
 	public Branch() {
 	}
 	
@@ -45,12 +47,12 @@ public class Branch {
 		this.emailId = emailId;
 	}
 	
-	public int getAddressId() {
-		return addressId;
+	public Address getAddress() {
+		return address;
 	}
-	
-	public void setAddressId(int addressId) {
-		this.addressId = addressId;
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	public String getIFSCode() {
