@@ -80,9 +80,13 @@ public class BranchDao {
 	    Transaction transaction = null;
 	    try {
 	        transaction = session.beginTransaction();
+	        System.out.println("hai");
 	        Branch branch = (Branch)session.get(Branch.class, IFSCode);
-		    session.save(address); 
+	        System.out.println("hai1");
+		    session.save(address);
+		    System.out.println("hai2");
 		    branch.setAddress(address);
+		    System.out.println("hai3");
 	        session.update(branch);
 	        transaction.commit();                                                                    
 		} catch (HibernateException e) {

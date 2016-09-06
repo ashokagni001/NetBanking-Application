@@ -31,7 +31,7 @@ public class BranchController {
     public String addBranch(@RequestParam("emailId") String emailId, ModelMap message) {  
 		try {
 		    branchService.getBranch(emailId);
-            message.addAttribute("Address", new Address());
+            message.addAttribute("Address1", new Address());
             return "AddAddress";
 		} catch (DataBaseException e) {
     		message.addAttribute("message", "ENTER VALID DATA ONLY"); 
@@ -40,12 +40,11 @@ public class BranchController {
     }
 	
 	@RequestMapping(value="/address", method = RequestMethod.POST)
-    public String addAddress(@ModelAttribute("address") Address address, ModelMap message) {  
+    public String addAddress(@ModelAttribute("address1") Address address, ModelMap message) {  
 		try {
             branchService.getAddress(address);
-            System.out.println(address);
             return "BranchIndex";
-		}  catch (DataBaseException e) {
+		} catch (DataBaseException e) {
     		message.addAttribute("message", "ENTER VALID DATA ONLY"); 
         }
 		return "BranchIndex";
@@ -73,7 +72,7 @@ public class BranchController {
 	}
 	
 	@RequestMapping(value="/getBranchById", method = RequestMethod.GET)  
-    public ModelAndView viewEmployeeById (@RequestParam("ifsc")String ifsc, ModelMap message) {
+    public ModelAndView viewBranchById (@RequestParam("ifsc")String ifsc, ModelMap message) {
         try {
             return new ModelAndView("RetrieveBranchById","branch", branchService.getBranchById(ifsc));
         } catch (DataBaseException e) {
@@ -82,7 +81,7 @@ public class BranchController {
     }
 	
 	@RequestMapping(value="/getAllBranches")  
-    public ModelAndView getAllEmployee() {
+    public ModelAndView getAllBranch() {
         try {
         	return new ModelAndView ("RetrieveAllBranch", "branches", branchService.getAllBranch()); 
         } catch (DataBaseException e) {

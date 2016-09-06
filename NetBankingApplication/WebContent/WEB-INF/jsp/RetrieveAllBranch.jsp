@@ -22,7 +22,7 @@
                         <td><c:out value="<%= sno %>" /></td>
                         <td><c:out value="${branches.getIFSCode()}" /></td>
                         <td><c:out value="${branches.getEmailId()}" /></td>
-                       <c:choose>
+                        <c:choose>
                         <c:when test="${null == branches.getAddress()}">
                              <td><c:out value="${'No Address Allocated'}"/></td>
                         </c:when>

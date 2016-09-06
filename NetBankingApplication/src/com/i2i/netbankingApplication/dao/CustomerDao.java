@@ -11,6 +11,7 @@ import org.hibernate.cfg.Configuration;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.hibernateConnection.HibernateConnection;
 import com.i2i.netbankingApplication.model.Address;
+import com.i2i.netbankingApplication.model.Branch;
 import com.i2i.netbankingApplication.model.Customer;
 
 public class CustomerDao {
@@ -43,16 +44,16 @@ public class CustomerDao {
 	    }
 	}
 	
-	public void addAddress(String CustomerId, Address address) throws DataBaseException {
+	public void addAddress(String customerId, Address address) throws DataBaseException {
 	    Session session = sessionFactory.openSession();
 	    Transaction transaction = null;
 	    try {
 	        transaction = session.beginTransaction();
-	        Customer customer = (Customer)session.get(Customer.class, CustomerId);
-		    session.save(address); 
+	        Customer customer = (Customer)session.get(Customer.class, customerId);
+	        session.save(address); 
 		    customer.setAddress(address);
 	        session.update(customer);
-	        transaction.commit();                                                                    
+	        transaction.commit();   
 		} catch (HibernateException e) {
 			throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
 	    } finally {

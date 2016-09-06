@@ -43,14 +43,26 @@ public class CustomerController {
     public String addAddress(@ModelAttribute("user") Customer user, ModelMap message) {  
 		try {
 			customerService.getUser(user);
-		} catch (Exception e) {
+			message.addAttribute("Address", new Address());
+            return "AddAddress";
+		} catch (DataBaseException e) {
+    		message.addAttribute("message", "ENTER VALID DATA ONLY"); 
+        }
+		return "BranchIndex";
+    }
+	@RequestMapping(value="/customerAddress", method = RequestMethod.POST)
+    public String addAddress(@ModelAttribute("address") Address address, ModelMap message) {  
+		try {
+            customerService.getAddress(address);
+            return "BranchIndex";
+		} catch (DataBaseException e) {
     		message.addAttribute("message", "ENTER VALID DATA ONLY"); 
         }
 		return "BranchIndex";
     }
 	
 	@RequestMapping(value="/getAllCustomer")  
-    public ModelAndView getAllEmployee() {
+    public ModelAndView getAllCustomer() {
         try {
         	return new ModelAndView ("RetrieveAllCustomer", "customers", customerService.getAllCustomer()); 
         } catch (DataBaseException e) {

@@ -50,30 +50,20 @@ public class Customer {
     private String passWord;
 	
 	@Column(name = "account_number")
-	private int accountNumber;
+	private long accountNumber;
 	
 	@Column(name = "status")
     private String status;
 	
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="address_id")
-    public Address address;
+	public Address address;
     
     public Customer() {
     }
-    public Customer(String customerId, String name, String dob, String gender,
-        long mobileNumber, String email, int accountNumber) {
-        this.customerId = customerId;
-        this.name = name;
-        this.dob = dob;
-        this.gender = gender;
-        this.mobileNumber = mobileNumber;
-        this.email = email;
-        this.accountNumber = accountNumber;
-    } 
     
     public Customer(String customerId, String name, int age, String dob, String gender,
-        long mobileNumber, String email, int accountNumber, String passWord, String status) {
+            long mobileNumber, String email, String passWord, long accountNumber, String status) {
     	this.customerId = customerId;
     	this.name = name;
     	this.age = age;
@@ -150,11 +140,11 @@ public class Customer {
 		this.passWord = passWord;
 	}
 
-	public int getAccountNumber() {
+	public long getAccountNumber() {
 		return accountNumber;
 	}
 
-	public void setAccountNumber(int accountNumber) {
+	public void setAccountNumber(long accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 
@@ -173,7 +163,7 @@ public class Customer {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-	
+    
 }
     
 	
