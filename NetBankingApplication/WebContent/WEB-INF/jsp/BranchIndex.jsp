@@ -29,9 +29,14 @@
                         <a href="getAllBranches">FETCH ALL BRANCH</a>
                     </td>
                </tr>
+                <tr>
+                    <td align="center" height="40" width="350">
+                        <a href="CustomerRegistration">Customer Registration</a>
+                    </td>
+               </tr>
                <tr>
                     <td align="center" height="40" width="350">
-                        <a href="updateBank">UPDATE BRANCH</a>
+                        <a href="getAllCustomer">FETCH ALL CUSTOMER</a>
                     </td>
                </tr>
                </table>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.i2i.netbankingApplication.exception.DataBaseException;
+import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Branch;
 import com.i2i.netbankingApplication.service.BranchService;
 
@@ -20,23 +21,34 @@ public class BranchController {
 	public String login() {
 		return "BranchIndex";
 	}
-	
 	@RequestMapping(value = "/addBranch")
-	public String addBranche(ModelMap model) {
+	public String getBranch(ModelMap model) {
 		model.addAttribute("Branch", new Branch());
 		return "AddBranch";
 	}
 	
 		@RequestMapping(value="/insertBranch", method = RequestMethod.POST)
     public String addBranch(@RequestParam("emailId") String emailId, ModelMap message) {  
-		branchService.getBranch(emailId);
+		try {
+		    branchService.getBranch(emailId);
             message.addAttribute("Address", new Address());
             return "AddAddress";
+		} catch (DataBaseException e) {
+    		message.addAttribute("message", "ENTER VALID DATA ONLY"); 
+        }
+		return "BranchIndex";
     }
+	
 	@RequestMapping(value="/address", method = RequestMethod.POST)
-    public String addBranch(@ModelAttribute("Address")Address address, ModelMap message, Branch branch) {  
-           branchService.getAddress(address);
-           return "BranchIndex";
+    public String addAddress(@ModelAttribute("address") Address address, ModelMap message) {  
+		try {
+            branchService.getAddress(address);
+            System.out.println(address);
+            return "BranchIndex";
+		}  catch (DataBaseException e) {
+    		message.addAttribute("message", "ENTER VALID DATA ONLY"); 
+        }
+		return "BranchIndex";
     }
 	
 	@RequestMapping(value = "/deleteBranch")
@@ -45,7 +57,7 @@ public class BranchController {
 	}
 	
 	@RequestMapping(value="/deleteBranchById", method = RequestMethod.GET)
-    public String deleteBranch(@RequestParam("ifsc")String ifsc, ModelMap message) throws DataBaseException {
+    public String deleteBranch(@RequestParam("ifsc")String ifsc, ModelMap message) {
     	try {       
             branchService.deleteBranchById(ifsc);
             message.addAttribute("message", "BRANCH DELETED SUCESSFULLY");
@@ -61,7 +73,7 @@ public class BranchController {
 	}
 	
 	@RequestMapping(value="/getBranchById", method = RequestMethod.GET)  
-    public ModelAndView viewEmployeeById (@RequestParam("ifsc")String ifsc, ModelMap message) throws DataBaseException {
+    public ModelAndView viewEmployeeById (@RequestParam("ifsc")String ifsc, ModelMap message) {
         try {
             return new ModelAndView("RetrieveBranchById","branch", branchService.getBranchById(ifsc));
         } catch (DataBaseException e) {
@@ -70,11 +82,11 @@ public class BranchController {
     }
 	
 	@RequestMapping(value="/getAllBranches")  
-    public ModelAndView getAllEmployee() throws DataBaseException {
+    public ModelAndView getAllEmployee() {
         try {
         	return new ModelAndView ("RetrieveAllBranch", "branches", branchService.getAllBranch()); 
         } catch (DataBaseException e) {
-        	return new ModelAndView ("RetrieveAllBranch", "message",e.getMessage().toString());
+        	return new ModelAndView ("RetrieveAllBranch", "message", e.getMessage().toString());
         } 
     } 
 }

@@ -37,15 +37,13 @@
 <body>
     <center>
           <form:form method="post" action="register" modelAttribute="User"><br/><br/>
-                <form:input path="userid" type="text" placeholder="Enter the userid" /><br/><br/>
+                <form:input path="userId" type="text" placeholder="Enter the Id" /><br/><br/>
                 <form:input path="name" type="text" placeholder="Enter the name" /><br/><br/>
                 <form:input path="dob" type="text" placeholder="Enter the dob" /><br/><br/>
                 <form:input path="gender" type="text" placeholder="Enter the gender" /><br/><br/>
                 <form:input path="mobileNumber" type="text" placeholder="Enter the mobile_number" /><br/><br/>
+                <form:input path="accountNumber" type="text" placeholder="Enter the account_number" /><br/><br/>
                 <form:input path="email" type="text" placeholder="Enter the email" /><br/><br/>
-                <form:input path="passWord" type="text" placeholder="Enter the password" /><br/><br/>
-                <form:input path="status" type="text" placeholder="Enter the status" /><br/><br/>
-                
                 <br/>
                 <input type="submit" path="submit" value="ADD" />
             </form:form>

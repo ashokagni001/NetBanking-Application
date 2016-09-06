@@ -6,28 +6,43 @@
     </head>
     <body bgcolor="#E9967A">
         <center>
-            <c:if test="${branches != null}">
-            <h1>Fetching Data From A Project Management System</h1> 
+            <h1>Fetching Data From A Customer Management System</h1> 
             <table cellpadding="0" cellspacing="2" bordercolor=#125610 border="3">
                 <tr>
                     <th align="center" height="30" width="100">S.NO</th>
-	            <th align="center" height="30" width="100">IFSC CODE</th>
+	            <th align="center" height="30" width="100">CUSTOMER ID</th>
+	            <th align="center" height="30" width="100">NAME</th>
+	            <th align="center" height="30" width="100">AGE</th>
+	            <th align="center" height="30" width="100">DOB</th>
+	            <th align="center" height="30" width="100">GENDER</th>
+	            <th align="center" height="30" width="100">MOB.NUMBER</th>
 	            <th align="center" height="30" width="100">EMAIL</th>
+	            <th align="center" height="30" width="100">PASSWORD</th>
+	            <th align="center" height="30" width="100">ACCOUNT NUMBER</th>
+	            <th align="center" height="30" width="100">STATUS</th>
 	            <th align="center" height="30" width="100">ADDRESS ID</th>
 	            <th colspan="2" align="center" height="30" width="100" >Action</th>
                 </tr> 
                 <% int sno =1; %>
-               <c:forEach items="${branches}" var="branches" >
+               <c:forEach items="${customers}" var="customers" >
                     <tr>
                         <td><c:out value="<%= sno %>" /></td>
-                        <td><c:out value="${branches.getIFSCode()}" /></td>
-                        <td><c:out value="${branches.getEmailId()}" /></td>
+                        <td><c:out value="${customers.getCustomerId()}" /></td>
+                        <td><c:out value="${customers.getName()}" /></td>
+                        <td><c:out value="${customers.getAge()}" /></td>
+                        <td><c:out value="${customers.getDob()}" /></td>
+                        <td><c:out value="${customers.getGender()}" /></td>
+                        <td><c:out value="${customers.getMobileNumber()}" /></td>
+                        <td><c:out value="${customers.getEmail()}" /></td>
+                        <td><c:out value="${customers.getPassWord()}" /></td>
+                        <td><c:out value="${customers.getAccountNumber()}" /></td>
+                        <td><c:out value="${customers.getStatus()}" /></td>
                        <c:choose>
-                        <c:when test="${null == branches.getAddress()}">
+                        <c:when test="${null == customers.getAddress()}">
                              <td><c:out value="${'No Address Allocated'}"/></td>
                         </c:when>
                         <c:otherwise>
-                            <td><c:out value="${branches.getAddress()}" /></td>
+                            <td><c:out value="${customers.getAddress()}" /></td>
                         </c:otherwise>
                     </c:choose>
                     <td align="center" height="30" width="100"><a href="deleteBranchById?ifsc=<c:out value="${branches.getIFSCode()}"/>" style="color:blue">Delete</a></td>             
@@ -38,7 +53,6 @@
                 %> 
                 </c:forEach>
             </table>
-            </c:if>
             <br/><br/>
             <b>Go to main page </b><a href="BranchIndex" style="font-sise:18px"> click here</a>
 	    <br/><br/>
