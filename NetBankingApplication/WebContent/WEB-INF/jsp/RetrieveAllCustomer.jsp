@@ -54,9 +54,9 @@
                 </c:forEach>
             </table>
             <br/><br/>
-            <b>Go to main page </b><a href="BranchIndex" style="font-sise:18px"> click here</a>
+            <b>Go to main page </b><a href="CustomerIndex" style="font-sise:18px"> click here</a>
 	    <br/><br/>
-	        <b>Do you want to insert a new Branch</b><a href="addBranch" style="color:blue"> Insert here</a>  
+	        <b>Do you want to insert a new Branch</b><a href="CustomerRegistration" style="color:blue"> Insert here</a>  
 	    <br/><br/>
          <c:if test="${message != null}">
                 <script type="text/javascript">

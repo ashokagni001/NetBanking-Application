@@ -21,19 +21,17 @@ public class BranchService {
     
     public int getLastIFSCode() throws DataBaseException {
     	int lastIFSC = 0;
-    	String IFSC = " ";
-        int temp;
     	if (branchDao.retriveAllBranch().size() == 0) {
     		return lastIFSC;
     	} else {
     		for (Branch branch : branchDao.retriveAllBranch()) {
-    		     IFSC = branch.getIFSCode();
-                 temp = Integer.parseInt(IFSC.substring(6, IFSC.length()));
-                 if (lastIFSC <= temp) {
-                	 lastIFSC = temp;
-                 }
+    			String IFSC = branch.getIFSCode();
+    			int temp = Integer.parseInt(IFSC.substring(6, IFSC.length()));
+                if (lastIFSC <= temp) {
+                	lastIFSC = temp;
+                }
     		}
-    		return lastIFSC;
+    	    return lastIFSC;
     	}
     }
 
@@ -50,10 +48,9 @@ public class BranchService {
     }
 	
 	public int getLastAddressId() throws DataBaseException {
-		int temp;
     	int id = 0;
     	for (Address address : branchDao.retriveAllAddresses()) {
-    		temp = address.getAddressId();
+    		int temp = address.getAddressId();
     		if (id <= temp) {
     			id = temp;
     		}
@@ -62,11 +59,8 @@ public class BranchService {
     }
     
 	public void getAddress(Address address) throws DataBaseException {
-	    String IFSCode = " ";
 	    int tempIFS = getLastIFSCode();
-	    if (tempIFS >= 0) {
-	        IFSCode = "I2I0BK" + String.valueOf(tempIFS);
-	    }
+	    String IFSCode = "I2I0BK" + String.valueOf(tempIFS);
 	    int id = getLastAddressId();
 	    branchDao.addAddress(IFSCode,new Address(id+1, address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));

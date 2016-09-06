@@ -33,6 +33,22 @@ public class CustomerDao {
         }
     }
 	
+	public Customer retrieveCustomerById(String customerId) throws DataBaseException {
+	    Customer customer = null ;
+	    Session session = sessionFactory.openSession();
+	    Transaction transaction = null;
+	    try {
+	        transaction = session.beginTransaction();
+	        customer = (Customer)session.get(Customer.class, customerId); 
+	        transaction.commit();
+	    } catch (HibernateException e) {
+	    	throw new DataBaseException("CHECK YOUR " + customerId + "PLEASE INSERT VALID CUSTOMER ID..");
+	    } finally {
+	        session.close(); 
+	    } 
+	    return customer; 
+	}
+	
 	public List<Customer> retriveAllCustomer() throws DataBaseException {
 	    Session session = sessionFactory.openSession();
 	    try {

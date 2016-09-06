@@ -4,12 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>NET BANKING</title>
 </head>
 <body>
- <center>
+      <center>
       <h1>WELCOME NETBANKING APPLICATION</h1>
-          If U Want Open Click On <br/><br/><a href=BranchIndex>OPEN</a>
+          If U Want Branch Operation Open Click On <br/><br/><a href=BranchIndex>OPEN</a>
+          <br/><br/>
+          If U Want Customer Operation Open Click On <br/><br/><a href=CustomerIndex>OPEN</a>
       </center>
 </body>
 </html>

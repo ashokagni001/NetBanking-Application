@@ -7,7 +7,7 @@
     <body bgcolor="#99a38f">
         <center>
             <c:if test="${branch != null}">
-            <h1>Fetching Data From A Project Database</h1> 
+            <h1>Fetching Data From A Branch Database</h1> 
             <table cellpadding="0" cellspacing="2" bordercolor=#125610 border="3">
                 <tr>
 	            <th align="center" height="30" width="100">PROJECT ID</th>

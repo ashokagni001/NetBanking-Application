@@ -46,6 +46,7 @@
                 <br/>
                 <input type="submit" path="submit" value="ADD" />
             </form:form>
+            <b>Go to main page </b><a href="CustomerIndex" style="font-sise:18px"> click here</a></br></br>
      </center>
 </body>
 </html>

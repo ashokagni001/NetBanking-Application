@@ -27,7 +27,7 @@ public class BranchController {
 		return "AddBranch";
 	}
 	
-		@RequestMapping(value="/insertBranch", method = RequestMethod.POST)
+	@RequestMapping(value="/insertBranch", method = RequestMethod.POST)
     public String addBranch(@RequestParam("emailId") String emailId, ModelMap message) {  
 		try {
 		    branchService.getBranch(emailId);
@@ -67,7 +67,7 @@ public class BranchController {
     }
 	
 	@RequestMapping(value = "/getBranch")
-	public String getBankById() {
+	public String getBranchById() {
 		return "GetBranchById";
 	}
 	

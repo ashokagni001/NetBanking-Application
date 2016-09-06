@@ -3,36 +3,40 @@ package com.i2i.netbankingApplication.service;
 import java.util.List;
 
 import com.i2i.netbankingApplication.dao.CustomerDao;
+import com.i2i.netbankingApplication.exception.CustomerDataException;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.Address;
+import com.i2i.netbankingApplication.model.Branch;
 import com.i2i.netbankingApplication.model.Customer;
 import com.i2i.netbankingApplication.util.StringUtil;
 
 public class CustomerService {
     CustomerDao customerDao = new CustomerDao();
     
-    public void getUser(Customer customer) throws DataBaseException {
+    public void getUser(Customer customer) throws DataBaseException, CustomerDataException {
     	String customerId = " ";
       	int tempcustomerId = getLastCustomerId();
         if (tempcustomerId >= 0) {
         	customerId = "I2I0BK" + String.valueOf(tempcustomerId + 1);
         } 
-        if(StringUtil.isValidFormat(customer.getDob())) {
+        if (StringUtil.isValidFormat(customer.getDob())) {
             throw new DataBaseException("YOUR FORMAT" + customer.getDob() +
                 "FORMAT MUST 1/05/2000.INSERT VALID DOB..!!");  
         }
         int customerAge = StringUtil.calculateAge(customer.getDob());
+        if (customerAge > 100) {
+        	throw new CustomerDataException("YOUR AGE IS NOT VALID");  
+        }
         String status = "Request";
         String password = "i2i" + String.valueOf((int)(Math.random()*9000));
     	customerDao.insertUser(new Customer(customerId, customer.getName(), customerAge, customer.getDob(), 
-            customer.getGender(), customer.getMobileNumber(), customer.getEmail(), password, customer.getAccountNumber(), status ));
+            customer.getGender(), customer.getMobileNumber(), customer.getEmail(), password, customer.getAccountNumber(), status));
     }
     
 	public int getLastAddressId() throws DataBaseException {
-		int temp;
     	int id = 0;
     	for (Address address : customerDao.retriveAllAddresses()) {
-    		temp = address.getAddressId();
+    		int temp = address.getAddressId();
     		if (id <= temp) {
     			id = temp;
     		}
@@ -61,19 +65,14 @@ public class CustomerService {
 	}
     
 	public void getAddress(Address address) throws DataBaseException {
-	    String customerId = " ";
 	    int tempcustomerId = getLastCustomerId();
-	    customerId = "I2I0BK" + String.valueOf(tempcustomerId);
-	   /* if (tempcustomerId >= 0) {
-	    	
-	    }*/
-	    System.out.println("hai1");
-	    System.out.println(customerId);
-	    System.out.println("hai2");
-	    System.out.println(tempcustomerId);
-	    System.out.println("hai3");
+	    String customerId = "I2I0BK" + String.valueOf(tempcustomerId);
 	    int id = getLastAddressId();
 	    customerDao.addAddress(customerId, new Address(id+1, address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
+    }
+
+	public Customer getCustomerById(String customerId) throws DataBaseException {
+        return customerDao.retrieveCustomerById(customerId); 
     }
 } 
