@@ -34,6 +34,11 @@
                         <a href="CustomerRegistration">Customer Registration</a>
                     </td>
                </tr>
+                  <tr>
+                    <td align="center" height="40" width="350">
+                        <a href="CustomerOperation">CustomerOperation</a>
+                    </td>
+               </tr>
                <tr>
                     <td align="center" height="40" width="350">
                         <a href="getAllCustomer">FETCH ALL CUSTOMER</a>
