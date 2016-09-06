@@ -29,6 +29,24 @@
                         <a href="getAllBranches">FETCH ALL BRANCH</a>
                     </td>
                </tr>
+<<<<<<< HEAD
+=======
+                <tr>
+                    <td align="center" height="40" width="350">
+                        <a href="CustomerRegistration">Customer Registration</a>
+                    </td>
+               </tr>
+                  <tr>
+                    <td align="center" height="40" width="350">
+                        <a href="CustomerOperation">CustomerOperation</a>
+                    </td>
+               </tr>
+               <tr>
+                    <td align="center" height="40" width="350">
+                        <a href="getAllCustomer">FETCH ALL CUSTOMER</a>
+                    </td>
+               </tr>
+>>>>>>> de802ffee0948a0be31f6b096a547013cf20f0ff
                </table>
        </center>
 </body>

@@ -1,59 +1,62 @@
 package com.i2i.netbankingApplication.model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "account_detail")
 public class Account {
-    private int id;
+	@Id
+    @Column(name = "account_number")
   	private String accountNumber;
-    private String userId;
-    private String IFSCode;
-    private String branchName;
+	
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name="user_id")
+    private Customer customerId;
+    
+    @OneToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name="ifscode")
+    private Branch branch;
+    
+    @Column(name = "balance")
     private double balance;
+    
+    @Column(name = "account_type")
     private String accountType;
     
-    
-    public Account(int id, String accountNumber, String branchName, double balance, 
-        String accountType) {
-		this.id = id;
-		this.accountNumber = accountNumber;
-		this.branchName = branchName;
-		this.balance = balance;
-		this.accountType = accountType;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getAccountNumber() {
 		return accountNumber;
 	}
 	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
 	}
-	public String getUserId() {
-		return userId;
+	public Customer getCustomerId() {
+		return customerId;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setCustomerId(Customer customerId) {
+		this.customerId = customerId;
 	}
-	public String getBranchId() {
-		return IFSCode;
+	public Branch getBranch() {
+		return branch;
 	}
-	public void setBranchId(String branchId) {
-		this.IFSCode = branchId;
-	}
-	public String getBranchName() {
-		return branchName;
-	}
-	public void setBranchName(String branchName) {
-		this.branchName = branchName;
+	public void setBranch(Branch branch) {
+		this.branch = branch;
 	}
 	public double getBalance() {
 		return balance;
 	}
+	
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
+	
 	public String getAccountType() {
 		return accountType;
 	}
