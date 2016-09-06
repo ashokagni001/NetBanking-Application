@@ -7,7 +7,7 @@ import java.util.Calendar;
 public class StringUtil {
 	
 	/**
-     * Check the employee Name valid Format or not.
+     * Check the customer Name valid Format or not.
      * 
      * @param input
      *        A String data type.  
@@ -19,7 +19,7 @@ public class StringUtil {
     }  
     
     /**
-     * Check the employee salary valid Format or not.
+     * Check the customer salary valid Format or not.
      * 
      * @param input
      *        A int data type.  
@@ -31,7 +31,7 @@ public class StringUtil {
     }
     
     /**
-     * Check the employee P.Number valid Format or not.
+     * Check the customer P.Number valid Format or not.
      * 
      * @param input
      *        A int data type.  
@@ -43,7 +43,7 @@ public class StringUtil {
     }
     
     /**
-     * Check the employee address valid Format or not.
+     * Check the customer address valid Format or not.
      * 
      * @param input
      *        A string data type.  
@@ -55,10 +55,10 @@ public class StringUtil {
     }  
     
     /**
-     * Check the employee DOB valid Format or not.
+     * Check the customer DOB valid Format or not.
      * 
      * @param DOB
-     *        DOB of employee.
+     *        DOB of customer.
      *        
      * @return Boolean
      *         Return true or false.
@@ -70,30 +70,30 @@ public class StringUtil {
             return false;
             }
         catch(ParseException e) {
-            FileUtil.exceptionOccurCreateFile("\nEMPLOYEE DATE OF BIRTH IS NOT VALID...\n" + e.toString());
+            FileUtil.exceptionOccurCreateFile("\nCUSTOMER DATE OF BIRTH IS NOT VALID...\n" + e.toString());
             return true;
         }
     }
     /**
-     * It is calculate the employee age.
+     * It is calculate the customer age.
      * 
-     * @param employeeDateOfBirth
-     *        DOB of employee.
+     * @param customerDateOfBirth
+     *        DOB of customer.
      * @return year
-     *         return age of employee.
+     *         return age of customer.
      */
-    public static int calculateAge (String employeeDateOfBirth) {
+    public static int calculateAge (String customerDateOfBirth) {
         int month;
         int year;
-        String age[] = employeeDateOfBirth.split("/");
-        int employeeDay = Integer.parseInt(age[0]);
-        int employeeMonth = Integer.parseInt(age[1]);
-        int employeeYear = Integer.parseInt(age[2]);
-        Calendar employeeBirthDay = Calendar.getInstance();
-        employeeBirthDay.set(employeeYear, employeeMonth, employeeDay);
+        String age[] = customerDateOfBirth.split("/");
+        int customerDay = Integer.parseInt(age[0]);
+        int customerMonth = Integer.parseInt(age[1]);
+        int customerYear = Integer.parseInt(age[2]);
+        Calendar customerBirthDay = Calendar.getInstance();
+        customerBirthDay.set(customerYear, customerMonth, customerDay);
         Calendar currentDate = Calendar.getInstance();
-        year = currentDate.get(Calendar.YEAR) - employeeBirthDay.get(Calendar.YEAR);
-        month = currentDate.get(Calendar.MONTH) - employeeBirthDay.get(Calendar.MONTH);
+        year = currentDate.get(Calendar.YEAR) - customerBirthDay.get(Calendar.YEAR);
+        month = currentDate.get(Calendar.MONTH) - customerBirthDay.get(Calendar.MONTH);
         if (month < 0) {
             return year--;
         }
