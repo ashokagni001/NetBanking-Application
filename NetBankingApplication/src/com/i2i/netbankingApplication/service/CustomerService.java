@@ -2,25 +2,47 @@ package com.i2i.netbankingApplication.service;
 
 import java.util.List;
 
+import com.i2i.netbankingApplication.constantVariableUtil.ConstantVariableUtil;
 import com.i2i.netbankingApplication.dao.CustomerDao;
+import com.i2i.netbankingApplication.exception.CustomerDataException;
 import com.i2i.netbankingApplication.exception.DataBaseException;
+import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Address;
-import com.i2i.netbankingApplication.model.Branch;
 import com.i2i.netbankingApplication.model.Customer;
 import com.i2i.netbankingApplication.util.StringUtil;
 
 public class CustomerService {
     CustomerDao customerDao = new CustomerDao();
     
-    public void getUser(Customer customer) throws DataBaseException {
-      	String customerId = "I2I0BK" + String.valueOf(getLastCustomerId() + 1);
+    public void getUser(Customer customer) throws DataBaseException, CustomerDataException {
+    	String customerId = " ";
+    	Account account = customerDao.retrieveAccountByNumber(customer.getAccountNumber());
+    	
+    	if (account == null) {
+    		throw new CustomerDataException("YOUR ACCOUNT NUMBER IS NOT VALID");  
+    	}
+    	
+    	if (account.getCustomer() != null) {
+    		throw new CustomerDataException("YOUR ACCOUNT NUMBER ALREADY ALLOCATED ANOTHER CUSTOMER"); 
+    	}
+    	
+      	int tempcustomerId = getLastCustomerId();
+        if (tempcustomerId >= 0) {
+        	customerId = "I2I0BK" + String.valueOf(tempcustomerId + 1);
+        } 
+        
         if (StringUtil.isValidFormat(customer.getDob())) {
             throw new DataBaseException("YOUR FORMAT" + customer.getDob() +
                 "FORMAT MUST 1/05/2000.INSERT VALID DOB..!!");  
         }
+        
         int customerAge = StringUtil.calculateAge(customer.getDob());
+        if (customerAge > ConstantVariableUtil.maxAgeLimit) {
+        	throw new CustomerDataException("YOUR AGE IS NOT VALID");  
+        }
+        
         String password = "i2i" + String.valueOf((int)(Math.random()*9000));
-    	customerDao.insertUser(new Customer(customerId, customer.getName(), customerAge, customer.getDob(), 
+    	customerDao.insertUser(customer.getAccountNumber(), new Customer(customerId, customer.getName(), customerAge, customer.getDob(), 
             customer.getGender(), customer.getMobileNumber(), customer.getEmail(), password, customer.getAccountNumber(), "Request"));
     }
     
@@ -37,14 +59,18 @@ public class CustomerService {
     
     public int getLastCustomerId() throws DataBaseException {
     	int lastCustomerId = 0;
-        for (Customer customer : customerDao.retriveAllCustomer()) {
-    		String id = customer.getCustomerId();
-    		int temp = Integer.parseInt(id.substring(6, id.length()));
-            if (lastCustomerId <= temp) {
-               	lastCustomerId = temp;
-            }
+    	if (customerDao.retriveAllCustomer().size() == 0) {
+    		return lastCustomerId;
+    	} else {
+    		for (Customer customer : customerDao.retriveAllCustomer()) {
+    			String id = customer.getCustomerId();
+    		    int temp = Integer.parseInt(id.substring(6, id.length()));
+                if (lastCustomerId <= temp) {
+                	lastCustomerId = temp;
+                }
+    		}
+    		return lastCustomerId;
     	}
-		return lastCustomerId;
     }
     
     public List<Customer> getAllCustomer() throws DataBaseException {
@@ -52,8 +78,10 @@ public class CustomerService {
 	}
     
 	public void getAddress(Address address) throws DataBaseException {
-	    String customerId = "I2I0BK" + String.valueOf(getLastCustomerId());
-	    customerDao.addAddress(customerId, new Address(getLastAddressId() + 1, address.getStreet(),
+	    int tempcustomerId = getLastCustomerId();
+	    String customerId = "I2I0BK" + String.valueOf(tempcustomerId);
+	    int id = getLastAddressId();
+	    customerDao.addAddress(customerId, new Address(id+1, address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
     }
 

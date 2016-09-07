@@ -10,6 +10,7 @@ import org.hibernate.cfg.Configuration;
 
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.hibernateConnection.HibernateConnection;
+import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Branch;
 import com.i2i.netbankingApplication.model.Customer;
@@ -19,12 +20,16 @@ public class CustomerDao {
 	Configuration configuration = hibernateConnectionObject.getConfiguration();
 	SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
 
-	public void insertUser(Customer user) {
+	public void insertUser(String accountNumber, Customer customer) {
 		Session session = sessionFactory.openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            session.save(user);
+            Account account = (Account)session.get(Account.class, accountNumber);
+            session.save(customer);
+            System.out.println(account.getBalance());
+            account.setCustomer(customer);
+            session.update(account);
             transaction.commit();
         } catch(Exception e) {
         	e.printStackTrace();
@@ -34,14 +39,19 @@ public class CustomerDao {
     }
 	
 	public Customer retrieveCustomerById(String customerId) throws DataBaseException {
+	    Customer customer = null ;
 	    Session session = sessionFactory.openSession();
+	    Transaction transaction = null;
 	    try {
-	        return (Customer)session.get(Customer.class, customerId); 
+	        transaction = session.beginTransaction();
+	        customer = (Customer)session.get(Customer.class, customerId); 
+	        transaction.commit();
 	    } catch (HibernateException e) {
 	    	throw new DataBaseException("CHECK YOUR " + customerId + "PLEASE INSERT VALID CUSTOMER ID..");
 	    } finally {
 	        session.close(); 
 	    } 
+	    return customer; 
 	}
 	
 	public List<Customer> retriveAllCustomer() throws DataBaseException {
@@ -84,13 +94,29 @@ public class CustomerDao {
 	}
 	
 	public Address retrieveAddressById(int addressId) throws DataBaseException {
+		Address address;
 		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
 		try {
-			return (Address)session.get(Address.class, addressId);
+			transaction = session.beginTransaction();
+		    address = (Address)session.get(Address.class, addressId);
+			transaction.commit();
 		} catch (HibernateException e) {
 			throw new DataBaseException("Oops Some Problem occured.. please try again later");
 		} finally {
 			session.close();
 		}
+		return address;
+	}
+	
+	public Account retrieveAccountByNumber(String accountNumber) throws DataBaseException {
+	    Session session = sessionFactory.openSession();
+	    try {
+	        return (Account)session.get(Account.class, accountNumber); 
+	    } catch (HibernateException e) {
+	    	throw new DataBaseException("Oops Some Problem occured.. please try again later");
+	    } finally {
+	        session.close(); 
+	    } 
 	}
 }

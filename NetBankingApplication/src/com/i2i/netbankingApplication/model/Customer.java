@@ -3,7 +3,6 @@ package com.i2i.netbankingApplication.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -51,12 +50,12 @@ public class Customer {
     private String passWord;
 	
 	@Column(name = "account_number")
-	private long accountNumber;
+	private String accountNumber;
 	
 	@Column(name = "status")
     private String status;
 	
-	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="address_id")
 	public Address address;
     
@@ -64,7 +63,7 @@ public class Customer {
     }
     
     public Customer(String customerId, String name, int age, String dob, String gender,
-            long mobileNumber, String email, String passWord, long accountNumber, String status) {
+            long mobileNumber, String email, String passWord, String accountNumber, String status) {
     	this.customerId = customerId;
     	this.name = name;
     	this.age = age;
@@ -141,11 +140,11 @@ public class Customer {
 		this.passWord = passWord;
 	}
 
-	public long getAccountNumber() {
+	public String getAccountNumber() {
 		return accountNumber;
 	}
 
-	public void setAccountNumber(long accountNumber) {
+	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 

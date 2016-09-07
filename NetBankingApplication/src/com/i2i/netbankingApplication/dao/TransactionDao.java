@@ -70,5 +70,4 @@ public class TransactionDao {
 	        session.close(); 
 	    } 
 	}
-
 }

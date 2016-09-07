@@ -48,5 +48,11 @@
             </form:form>
             <b>Go to main page </b><a href="CustomerIndex" style="font-sise:18px"> click here</a></br></br>
      </center>
+      <c:if test="${message != null}">
+            <script type="text/javascript">
+                alert('CLICK OK THE PAGE WILL BE REFRESHED...' + "<c:out value='${message}'/>");
+                windows.location.reload();
+            </script>
+        </c:if>
 </body>
 </html>

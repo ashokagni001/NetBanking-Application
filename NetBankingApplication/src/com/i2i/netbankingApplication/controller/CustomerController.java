@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.i2i.netbankingApplication.exception.CustomerDataException;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Customer;
@@ -40,14 +41,16 @@ public class CustomerController {
 			customerService.getUser(user);
 			message.addAttribute("Address", new Address());
             return "AddAddress";
+		} catch (CustomerDataException e) {
+    		message.addAttribute("message", e.getMessage().toString()); 
         } catch (DataBaseException e) {
-    		message.addAttribute("message", "ENTER VALID DATA ONLY"); 
+    		message.addAttribute("message", e.getMessage().toString()); 
         } 
 		return "CustomerRegistration";
     }
 	
 	@RequestMapping(value="/customerAddress", method = RequestMethod.POST)
-    public String addAddress(@ModelAttribute("address") Address address, ModelMap message) {  
+    public String addAddress(@ModelAttribute("Address") Address address, ModelMap message) {  
 		try {
             customerService.getAddress(address);
             return "BranchIndex";

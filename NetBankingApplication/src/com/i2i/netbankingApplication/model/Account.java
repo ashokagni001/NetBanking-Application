@@ -21,8 +21,8 @@ public class Account {
 	@JoinColumn(name="user_id")
     private Customer customer;
     
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	@JoinColumn(name="ifscode")
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@JoinColumn(name="ifsc")
     private Branch branch;
     
     @Column(name = "balance")
@@ -63,5 +63,4 @@ public class Account {
 	public void setAccountType(String accountType) {
 		this.accountType = accountType;
 	}
-    
 }

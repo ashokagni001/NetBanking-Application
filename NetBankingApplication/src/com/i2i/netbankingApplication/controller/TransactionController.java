@@ -14,23 +14,27 @@ import com.i2i.netbankingApplication.service.TransactionService;
 public class TransactionController {
 	TransactionService transactionService = new TransactionService();
 	
-	@RequestMapping(value = "/TransactionOperation")
+	@RequestMapping(value = "/TransactionIndex")
+    public String customer() {
+	    return "TransactionIndex";
+    }
+	 
+	@RequestMapping(value = "/addTransaction")
 	public String transactionOpration() throws DataBaseException {
-		//transactionService.getTransactionDetail("123456", "234567", 500);
-		return "TransactionOperation";
+		return "AddTransaction";
 	}
 	
 	@RequestMapping(value="/insertTransaction", method = RequestMethod.POST)
     public String transaction(@RequestParam("debitAccountNumber") String debitAccountNumber, 
-    		@RequestParam("criditAccountNumber") String criditAccountNumber, @RequestParam("ifscode")String ifscode ,
+    		@RequestParam("criditAccountNumber") String criditAccountNumber, 
     		@RequestParam("amount")String amount,ModelMap message) {  
 		try {
-			System.out.println(amount);
-			transactionService.getTransactionDetail(debitAccountNumber, criditAccountNumber, ifscode, Double.parseDouble(amount));
+			transactionService.getTransactionDetail(debitAccountNumber, criditAccountNumber, 
+					Double.parseDouble(amount));
 		} catch (DataBaseException e) {
             System.out.println("ENTER VALID DATA ONLY" + e); 
         }
-		return "CustomerOperation";
+		return "AddTransaction";
     }
 
 }

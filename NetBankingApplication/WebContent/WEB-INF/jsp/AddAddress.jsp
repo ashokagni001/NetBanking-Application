@@ -3,7 +3,8 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
-<body>
+<body bgcolor="#99a38f">
+<center>
 <c:if test = "${Address1 != null }">
      <form:form method="post" action="address" modelAttribute="Address1">
                 <tr>    
@@ -29,7 +30,7 @@
                     
                     </form:form>
                     </c:if>
-<c:if test = "${Address != null }">
+     <c:if test = "${Address != null }">
      <form:form method="post" action="customerAddress" modelAttribute="Address">
                 <tr>    
                    <td>Street : </td>   
@@ -54,5 +55,6 @@
                     
                     </form:form>
                     </c:if>
+                </center>
 </body>
 </html>
