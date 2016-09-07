@@ -22,11 +22,11 @@ public class TransactionController {
 	
 	@RequestMapping(value="/insertTransaction", method = RequestMethod.POST)
     public String transaction(@RequestParam("debitAccountNumber") String debitAccountNumber, 
-    		@RequestParam("criditAccountNumber") String criditAccountNumber, 
+    		@RequestParam("criditAccountNumber") String criditAccountNumber, @RequestParam("ifscode")String ifscode ,
     		@RequestParam("amount")String amount,ModelMap message) {  
 		try {
 			System.out.println(amount);
-			transactionService.getTransactionDetail(debitAccountNumber, criditAccountNumber, Double.parseDouble(amount));
+			transactionService.getTransactionDetail(debitAccountNumber, criditAccountNumber, ifscode, Double.parseDouble(amount));
 		} catch (DataBaseException e) {
             System.out.println("ENTER VALID DATA ONLY" + e); 
         }

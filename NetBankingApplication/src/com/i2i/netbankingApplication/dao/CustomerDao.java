@@ -34,19 +34,14 @@ public class CustomerDao {
     }
 	
 	public Customer retrieveCustomerById(String customerId) throws DataBaseException {
-	    Customer customer = null ;
 	    Session session = sessionFactory.openSession();
-	    Transaction transaction = null;
 	    try {
-	        transaction = session.beginTransaction();
-	        customer = (Customer)session.get(Customer.class, customerId); 
-	        transaction.commit();
+	        return (Customer)session.get(Customer.class, customerId); 
 	    } catch (HibernateException e) {
 	    	throw new DataBaseException("CHECK YOUR " + customerId + "PLEASE INSERT VALID CUSTOMER ID..");
 	    } finally {
 	        session.close(); 
 	    } 
-	    return customer; 
 	}
 	
 	public List<Customer> retriveAllCustomer() throws DataBaseException {
@@ -89,18 +84,13 @@ public class CustomerDao {
 	}
 	
 	public Address retrieveAddressById(int addressId) throws DataBaseException {
-		Address address;
 		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
 		try {
-			transaction = session.beginTransaction();
-		    address = (Address)session.get(Address.class, addressId);
-			transaction.commit();
+			return (Address)session.get(Address.class, addressId);
 		} catch (HibernateException e) {
 			throw new DataBaseException("Oops Some Problem occured.. please try again later");
 		} finally {
 			session.close();
 		}
-		return address;
 	}
 }

@@ -35,7 +35,7 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value="/register", method = RequestMethod.POST)
-    public String addAddress(@ModelAttribute("user") Customer user, ModelMap message) {  
+    public String addAddress(@ModelAttribute("User") Customer user, ModelMap message) {  
 		try {
 			customerService.getUser(user);
 			message.addAttribute("Address", new Address());

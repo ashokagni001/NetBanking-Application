@@ -13,20 +13,15 @@ public class CustomerService {
     CustomerDao customerDao = new CustomerDao();
     
     public void getUser(Customer customer) throws DataBaseException {
-    	String customerId = " ";
-      	int tempcustomerId = getLastCustomerId();
-        if (tempcustomerId >= 0) {
-        	customerId = "I2I0BK" + String.valueOf(tempcustomerId + 1);
-        } 
+      	String customerId = "I2I0BK" + String.valueOf(getLastCustomerId() + 1);
         if (StringUtil.isValidFormat(customer.getDob())) {
             throw new DataBaseException("YOUR FORMAT" + customer.getDob() +
                 "FORMAT MUST 1/05/2000.INSERT VALID DOB..!!");  
         }
         int customerAge = StringUtil.calculateAge(customer.getDob());
-        String status = "Request";
         String password = "i2i" + String.valueOf((int)(Math.random()*9000));
     	customerDao.insertUser(new Customer(customerId, customer.getName(), customerAge, customer.getDob(), 
-            customer.getGender(), customer.getMobileNumber(), customer.getEmail(), password, customer.getAccountNumber(), status));
+            customer.getGender(), customer.getMobileNumber(), customer.getEmail(), password, customer.getAccountNumber(), "Request"));
     }
     
 	public int getLastAddressId() throws DataBaseException {
@@ -42,18 +37,14 @@ public class CustomerService {
     
     public int getLastCustomerId() throws DataBaseException {
     	int lastCustomerId = 0;
-    	if (customerDao.retriveAllCustomer().size() == 0) {
-    		return lastCustomerId;
-    	} else {
-    		for (Customer customer : customerDao.retriveAllCustomer()) {
-    			String id = customer.getCustomerId();
-    		    int temp = Integer.parseInt(id.substring(6, id.length()));
-                if (lastCustomerId <= temp) {
-                	lastCustomerId = temp;
-                }
-    		}
-    		return lastCustomerId;
+        for (Customer customer : customerDao.retriveAllCustomer()) {
+    		String id = customer.getCustomerId();
+    		int temp = Integer.parseInt(id.substring(6, id.length()));
+            if (lastCustomerId <= temp) {
+               	lastCustomerId = temp;
+            }
     	}
+		return lastCustomerId;
     }
     
     public List<Customer> getAllCustomer() throws DataBaseException {
@@ -61,10 +52,8 @@ public class CustomerService {
 	}
     
 	public void getAddress(Address address) throws DataBaseException {
-	    int tempcustomerId = getLastCustomerId();
-	    String customerId = "I2I0BK" + String.valueOf(tempcustomerId);
-	    int id = getLastAddressId();
-	    customerDao.addAddress(customerId, new Address(id+1, address.getStreet(),
+	    String customerId = "I2I0BK" + String.valueOf(getLastCustomerId());
+	    customerDao.addAddress(customerId, new Address(getLastAddressId() + 1, address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
     }
 

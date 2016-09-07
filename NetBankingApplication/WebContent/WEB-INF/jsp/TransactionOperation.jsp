@@ -44,6 +44,9 @@
                 <b>Cridit Account Number </b>
                 <input name="criditAccountNumber" placeholder="criditAccountNumber" />
                 </br>
+                <b>Cridit Account IFSC number </b>
+                <input name="ifscode" placeholder="ifscode" />
+                </br>
                 <b>Enter your Amount </b>
                 <input name="amount" placeholder="Amount" />
                 </br>
