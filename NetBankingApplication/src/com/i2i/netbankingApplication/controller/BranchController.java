@@ -88,4 +88,13 @@ public class BranchController {
         	return new ModelAndView ("RetrieveAllBranch", "message", e.getMessage().toString());
         } 
     } 
+	
+	@RequestMapping(value="/viewBranchAddress", method = RequestMethod.GET)
+    public ModelAndView viewAddressById(@RequestParam("addressId")int addressId, ModelMap message) {
+    	try {                     
+            return new ModelAndView ("RetrieveAddressById", "address", branchService.getAddressById(addressId)); 
+    	} catch (DataBaseException e) {
+    		return new ModelAndView ("RetrieveAddressById", "message", e.getMessage().toString());
+        }
+	}
 }

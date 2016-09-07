@@ -65,5 +65,9 @@ public class BranchService {
 	    branchDao.addAddress(IFSCode,new Address(id+1, address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
     }
+
+	public Address getAddressById(int addressId) throws DataBaseException {
+	    return branchDao.retrieveAddressById(addressId);
+	}
 }
 

@@ -87,4 +87,20 @@ public class CustomerDao {
 	        session.close();
 	    }
 	}
+	
+	public Address retrieveAddressById(int addressId) throws DataBaseException {
+		Address address;
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+		    address = (Address)session.get(Address.class, addressId);
+			transaction.commit();
+		} catch (HibernateException e) {
+			throw new DataBaseException("Oops Some Problem occured.. please try again later");
+		} finally {
+			session.close();
+		}
+		return address;
+	}
 }

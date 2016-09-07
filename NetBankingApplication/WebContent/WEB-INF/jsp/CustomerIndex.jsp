@@ -5,8 +5,9 @@
 <head>
 <title>Insert title here</title>
 </head>
-    <body>
+    <body bgcolor="#99a38f">
          <center>
+             <h2>CUSTOMER INFORMATION</h2>
              <table>
                  <br/><br/>
                  <tr>
@@ -26,5 +27,6 @@
                  </tr>
              </table>
          </center>
+         <b>Go to main page </b><a href="index.jsp" style="font-sise:18px"> click here</a></br></br>
     </body>
 </html>

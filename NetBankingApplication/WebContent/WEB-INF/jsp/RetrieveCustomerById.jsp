@@ -6,10 +6,10 @@
     </head>
     <body bgcolor="#E9967A">
         <center>
+            <c:if test="${customer != null}">
             <h1>Fetching Data From A Customer Management System</h1> 
             <table cellpadding="0" cellspacing="2" bordercolor=#125610 border="3">
                 <tr>
-                    <th align="center" height="30" width="100">S.NO</th>
 	                <th align="center" height="30" width="100">CUSTOMER ID</th>
 	                <th align="center" height="30" width="100">NAME</th>
 	                <th align="center" height="30" width="100">AGE</th>
@@ -19,15 +19,11 @@
 	                <th align="center" height="30" width="100">EMAIL</th>
 	                <th align="center" height="30" width="100">PASSWORD</th>
 	                <th align="center" height="30" width="100">ACCOUNT NUMBER</th>
-	                <th align="center" height="30" width="100">ADDRESS</th>
-	                <th colspan="2" align="center" height="30" width="100" >Action</th>
+	                <th align="center" height="30" width="100">ADDRESS ID</th>
+	                <th colspan="2" align="center" height="30" width="100" >ADDRESS</th>
                 </tr> 
-                <% int sno =1; %>
                 <c:set value="${customer}" var="customer"/>
                     <tr>
-                        <td>
-                            <c:out value="<%= sno %>"/>
-                        </td>
                         <td>
                             <c:out value="${customer.getCustomerId()}"/>
                         </td>
@@ -55,13 +51,19 @@
                         <td>
                             <c:out value="${customer.getAccountNumber()}"/>
                         </td>
-                        <td>
-                            <c:out value="${customer.getAddress()}"/>
-                        </td>
-                        <td align="center" height="30" width="100"><a href="viewAddressById?id=<c:out value="${customer.getAddress()}"/>" style="color:blue">VIEW</a>
-                        </td>             
+                         <c:choose>
+                        <c:when test="${null == customer.getAddress()}">
+                             <td><c:out value="${'No Address Allocated'}"/></td>
+                        </c:when>
+                        <c:otherwise>
+                            <td><c:set value="${customer.getAddress()}" var="address"/>
+                            <c:out value="${address.addressId}" /></td>
+                        </c:otherwise>
+                    </c:choose>
+                    <td align="center" height="30" width="100"><a href="viewCustomerAddress?addressId=<c:out value="${address.addressId}"/>" style="color:blue">VIEW</a></td>  
                     </tr> 
             </table>
+            </c:if>
             <br/><br/>
             <b>Go to main page </b><a href="CustomerIndex" style="font-sise:18px"> click here</a>
 	        <br/><br/>

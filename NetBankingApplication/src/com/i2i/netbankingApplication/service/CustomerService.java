@@ -75,4 +75,8 @@ public class CustomerService {
 	public Customer getCustomerById(String customerId) throws DataBaseException {
         return customerDao.retrieveCustomerById(customerId); 
     }
+	
+	public Address getAddressById(int addressId) throws DataBaseException {
+	    return customerDao.retrieveAddressById(addressId);
+	}
 } 

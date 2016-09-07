@@ -80,13 +80,9 @@ public class BranchDao {
 	    Transaction transaction = null;
 	    try {
 	        transaction = session.beginTransaction();
-	        System.out.println("hai");
 	        Branch branch = (Branch)session.get(Branch.class, IFSCode);
-	        System.out.println("hai1");
 		    session.save(address);
-		    System.out.println("hai2");
 		    branch.setAddress(address);
-		    System.out.println("hai3");
 	        session.update(branch);
 	        transaction.commit();                                                                    
 		} catch (HibernateException e) {
@@ -105,5 +101,21 @@ public class BranchDao {
 	    } finally {
 	        session.close();
 	    }
+	}
+
+	public Address retrieveAddressById(int addressId) throws DataBaseException {
+		Address address;
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+		    address = (Address)session.get(Address.class, addressId);
+			transaction.commit();
+		} catch (HibernateException e) {
+			throw new DataBaseException("Oops Some Problem occured.. please try again later");
+		} finally {
+			session.close();
+		}
+		return address;
 	}
 }

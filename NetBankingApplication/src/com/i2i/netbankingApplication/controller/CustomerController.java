@@ -82,5 +82,13 @@ public class CustomerController {
         } catch (DataBaseException e) {
         	return new ModelAndView ("CustomerRegistration", "message", e.getMessage().toString());
         } 
-    } 
+	}
+	@RequestMapping(value="/viewCustomerAddress", method = RequestMethod.GET)
+    public ModelAndView viewAddressById(@RequestParam("addressId")int addressId, ModelMap message) {
+    	try {                     
+            return new ModelAndView ("RetrieveAddressById", "address", customerService.getAddressById(addressId)); 
+    	} catch (DataBaseException e) {
+    		return new ModelAndView ("RetrieveAddressById", "message", e.getMessage().toString());
+        }
+	}
 }

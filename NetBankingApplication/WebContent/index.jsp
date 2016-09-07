@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>NET BANKING</title>
 </head>
-<body>
+<body bgcolor="#99a38f">
       <center>
       <h1>WELCOME NETBANKING APPLICATION</h1>
           If U Want Branch Operation Open Click On <br/><br/><a href=BranchIndex>OPEN</a>

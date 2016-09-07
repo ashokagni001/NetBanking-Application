@@ -21,7 +21,7 @@
 	            <th align="center" height="30" width="100">ACCOUNT NUMBER</th>
 	            <th align="center" height="30" width="100">STATUS</th>
 	            <th align="center" height="30" width="100">ADDRESS ID</th>
-	            <th colspan="2" align="center" height="30" width="100" >Action</th>
+	            <th colspan="2" align="center" height="30" width="100" >ADDRESS</th>
                 </tr> 
                 <% int sno =1; %>
                <c:forEach items="${customers}" var="customers" >
@@ -37,16 +37,16 @@
                         <td><c:out value="${customers.getPassWord()}" /></td>
                         <td><c:out value="${customers.getAccountNumber()}" /></td>
                         <td><c:out value="${customers.getStatus()}" /></td>
-                       <c:choose>
+                        <c:choose>
                         <c:when test="${null == customers.getAddress()}">
                              <td><c:out value="${'No Address Allocated'}"/></td>
                         </c:when>
                         <c:otherwise>
-                            <td><c:out value="${customers.getAddress()}" /></td>
+                            <td><c:set value="${customers.getAddress()}" var="address"/>
+                            <c:out value="${address.addressId}" /></td>
                         </c:otherwise>
                     </c:choose>
-                    <td align="center" height="30" width="100"><a href="deleteBranchById?ifsc=<c:out value="${branches.getIFSCode()}"/>" style="color:blue">Delete</a></td>             
-                </tr>                   
+                    <td align="center" height="30" width="100"><a href="viewCustomerAddress?addressId=<c:out value="${address.addressId}"/>" style="color:blue">VIEW</a></td>  
                     </tr>                   
                 <%    
                     sno++;   

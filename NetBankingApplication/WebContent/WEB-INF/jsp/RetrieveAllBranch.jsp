@@ -13,8 +13,9 @@
                     <th align="center" height="30" width="100">S.NO</th>
 	            <th align="center" height="30" width="100">IFSC CODE</th>
 	            <th align="center" height="30" width="100">EMAIL</th>
-	            <th align="center" height="30" width="100">ADDRESS ID</th>
-	            <th colspan="2" align="center" height="30" width="100" >Action</th>
+	            <th colspan="1" align="center" height="30" width="100">ADDRESS</th>
+	            <th colspan="1" align="center" height="30" width="100" >ADDRESS</th>
+	            <th colspan="1" align="center" height="30" width="100" >ACTION</th>
                 </tr> 
                 <% int sno =1; %>
                <c:forEach items="${branches}" var="branches" >
@@ -27,10 +28,11 @@
                              <td><c:out value="${'No Address Allocated'}"/></td>
                         </c:when>
                         <c:otherwise>
-                            <td><c:out value="${branches.getAddress()}" /></td>
+                            <td><c:set value="${branches.getAddress()}" var="address" /></td>
+                            <td align="center" height="30" width="100"><a href="viewBranchAddress?addressId=<c:out value="${address.addressId}"/>" style="color:blue">VIEW</a></td>  
                         </c:otherwise>
                     </c:choose>
-                    <td align="center" height="30" width="100"><a href="deleteBranchById?ifsc=<c:out value="${branches.getIFSCode()}"/>" style="color:blue">Delete</a></td>             
+                    <td align="center" height="30" width="100"><a href="deleteBranchById?ifsc=<c:out value="${branches.getIFSCode()}"/>" style="color:blue">Delete</a></td>  
                 </tr>                   
                     </tr>                   
                 <%    
