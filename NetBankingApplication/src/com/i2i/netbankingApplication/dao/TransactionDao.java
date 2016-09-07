@@ -19,13 +19,18 @@ public class TransactionDao {
 	Configuration configuration = hibernateConnectionObject.getConfiguration();
 	SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
     
-	public void addTransaction(TransactionDetail transactionDetail) throws DataBaseException {
+	public void addTransaction(TransactionDetail transactionDetail, Account debitAccount,
+			Account criditAccount) throws DataBaseException {
 	    Session session = sessionFactory.openSession();
 	    Transaction transaction = null;
 	    try {
 	        transaction = session.beginTransaction();
-		    session.save(transactionDetail); 
-	        transaction.commit();                                                                    
+	        session.save(transactionDetail);
+	        transactionDetail.setDebitAccount(debitAccount);
+	        transactionDetail.setCriditAccount(criditAccount);
+	        session.update(transactionDetail);
+	        session.update(debitAccount);
+	        transaction.commit(); 
 		} catch (HibernateException e) {
 			throw new DataBaseException("PLEASE CHECK YOUR DATAS YOUR DATA IS NOT VALID.PLEASE TRY AGAIN.addTransaction" );  
 	    } finally {
@@ -44,22 +49,6 @@ public class TransactionDao {
 	    }
 	}
 	
-	public TransactionDetail retrieveTransactionByAccoutNumber(String accountNumber) throws DataBaseException {
-	    Session session = sessionFactory.openSession();
-	    Transaction transaction = null;
-	    try {
-	    	 transaction = session.beginTransaction();
-	    	 TransactionDetail branch = (TransactionDetail)session.get(TransactionDetail.class, accountNumber);
-	    	 
-		        transaction.commit();
-		        return branch;
-	    } catch (HibernateException e) {
-	    	throw new DataBaseException("CHECK IFSC " + accountNumber + "PLEASE INSERT VALID accountNumber...\n" + e);
-	    } finally {
-	        session.close(); 
-	    } 
-	}
-	
 	public List<Account> retriveAllAccounts() throws DataBaseException {
 	    Session session = sessionFactory.openSession();
 	    try {
@@ -76,7 +65,7 @@ public class TransactionDao {
 	    try {
 	        return (Account)session.get(Account.class, accountNumber); 
 	    } catch (HibernateException e) {
-	    	throw new DataBaseException("CHECK IFSC " + accountNumber + "PLEASE INSERT VALID accountNumber...\n");
+	    	throw new DataBaseException("retrieveAccountByNumber dao" + e);
 	    } finally {
 	        session.close(); 
 	    } 

@@ -14,11 +14,6 @@ import com.i2i.netbankingApplication.service.TransactionService;
 public class TransactionController {
 	TransactionService transactionService = new TransactionService();
 	
-	@RequestMapping(value = "/CustomerOperation")
-	public String customerOperation() {
-		return "CustomerOperation";
-	}
-	
 	@RequestMapping(value = "/TransactionOperation")
 	public String transactionOpration() throws DataBaseException {
 		//transactionService.getTransactionDetail("123456", "234567", 500);

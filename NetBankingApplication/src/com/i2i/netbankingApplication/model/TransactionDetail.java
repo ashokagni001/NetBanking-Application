@@ -3,6 +3,7 @@ package com.i2i.netbankingApplication.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,13 +17,13 @@ public class TransactionDetail {
     @Column(name = "id")
     private int id;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinColumn(name="debit_account_number")
-	private Account debitAccountNumber;
+	private Account debitAccount;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinColumn(name="cridit_account_number")
-    private Account criditAccountNumber;
+    private Account criditAccount;
     
     @Column(name = "amount")
     private double amount;
@@ -31,7 +32,7 @@ public class TransactionDetail {
     private String date;
     
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinColumn(name="user_id")
     private Customer customer;
     
@@ -46,6 +47,9 @@ public class TransactionDetail {
 	@Column(name = "status")
     private String status;
     
+	public TransactionDetail() {
+		
+	}
     public TransactionDetail(int id, double amount,String status) {
 		this.id = id;
 		this.amount = amount;
@@ -86,19 +90,19 @@ public class TransactionDetail {
 		this.status = status;
 	}
 
-	public Account getDebitAccountNumber() {
-		return debitAccountNumber;
+	public Account getDebitAccount() {
+		return debitAccount;
 	}
 
-	public void setDebitAccountNumber(Account debitAccountNumber) {
-		this.debitAccountNumber = debitAccountNumber;
+	public void setDebitAccount(Account debitAccount) {
+		this.debitAccount = debitAccount;
 	}
 
-	public Account getCriditAccountNumber() {
-		return criditAccountNumber;
+	public Account getCriditAccount() {
+		return criditAccount;
 	}
 
-	public void setCriditAccountNumber(Account criditAccountNumber) {
-		this.criditAccountNumber = criditAccountNumber;
+	public void setCriditAccount(Account criditAccount) {
+		this.criditAccount = criditAccount;
 	}
 }

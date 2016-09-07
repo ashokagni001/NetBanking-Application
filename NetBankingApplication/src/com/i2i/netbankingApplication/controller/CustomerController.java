@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.i2i.netbankingApplication.exception.CustomerDataException;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Customer;
@@ -41,8 +40,6 @@ public class CustomerController {
 			customerService.getUser(user);
 			message.addAttribute("Address", new Address());
             return "AddAddress";
-		} catch (CustomerDataException e) {
-    		message.addAttribute("message", "ENTER VALID DATA ONLY"); 
         } catch (DataBaseException e) {
     		message.addAttribute("message", "ENTER VALID DATA ONLY"); 
         } 

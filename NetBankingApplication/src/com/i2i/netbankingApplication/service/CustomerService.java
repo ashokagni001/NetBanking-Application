@@ -3,7 +3,6 @@ package com.i2i.netbankingApplication.service;
 import java.util.List;
 
 import com.i2i.netbankingApplication.dao.CustomerDao;
-import com.i2i.netbankingApplication.exception.CustomerDataException;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Branch;
@@ -13,7 +12,7 @@ import com.i2i.netbankingApplication.util.StringUtil;
 public class CustomerService {
     CustomerDao customerDao = new CustomerDao();
     
-    public void getUser(Customer customer) throws DataBaseException, CustomerDataException {
+    public void getUser(Customer customer) throws DataBaseException {
     	String customerId = " ";
       	int tempcustomerId = getLastCustomerId();
         if (tempcustomerId >= 0) {
@@ -24,9 +23,6 @@ public class CustomerService {
                 "FORMAT MUST 1/05/2000.INSERT VALID DOB..!!");  
         }
         int customerAge = StringUtil.calculateAge(customer.getDob());
-        if (customerAge > 100) {
-        	throw new CustomerDataException("YOUR AGE IS NOT VALID");  
-        }
         String status = "Request";
         String password = "i2i" + String.valueOf((int)(Math.random()*9000));
     	customerDao.insertUser(new Customer(customerId, customer.getName(), customerAge, customer.getDob(), 
