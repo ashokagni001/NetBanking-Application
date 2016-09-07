@@ -26,10 +26,7 @@ public class CustomerService {
     		throw new CustomerDataException("YOUR ACCOUNT NUMBER ALREADY ALLOCATED ANOTHER CUSTOMER"); 
     	}
     	
-      	int tempcustomerId = getLastCustomerId();
-        if (tempcustomerId >= 0) {
-        	customerId = "I2I0BK" + String.valueOf(tempcustomerId + 1);
-        } 
+        customerId = "I2I0BK" + String.valueOf(getLastCustomerId() + 1);
         
         if (StringUtil.isValidFormat(customer.getDob())) {
             throw new DataBaseException("YOUR FORMAT" + customer.getDob() +
@@ -59,9 +56,6 @@ public class CustomerService {
     
     public int getLastCustomerId() throws DataBaseException {
     	int lastCustomerId = 0;
-    	if (customerDao.retriveAllCustomer().size() == 0) {
-    		return lastCustomerId;
-    	} else {
     		for (Customer customer : customerDao.retriveAllCustomer()) {
     			String id = customer.getCustomerId();
     		    int temp = Integer.parseInt(id.substring(6, id.length()));
@@ -69,8 +63,7 @@ public class CustomerService {
                 	lastCustomerId = temp;
                 }
     		}
-    		return lastCustomerId;
-    	}
+            return lastCustomerId;
     }
     
     public List<Customer> getAllCustomer() throws DataBaseException {
@@ -78,10 +71,8 @@ public class CustomerService {
 	}
     
 	public void getAddress(Address address) throws DataBaseException {
-	    int tempcustomerId = getLastCustomerId();
-	    String customerId = "I2I0BK" + String.valueOf(tempcustomerId);
-	    int id = getLastAddressId();
-	    customerDao.addAddress(customerId, new Address(id+1, address.getStreet(),
+	    String customerId = "I2I0BK" + String.valueOf(getLastCustomerId());
+	    customerDao.addAddress(customerId, new Address(getLastAddressId() + 1, address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
     }
 

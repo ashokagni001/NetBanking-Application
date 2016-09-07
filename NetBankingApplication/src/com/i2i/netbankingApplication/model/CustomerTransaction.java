@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "transaction_detail")
-public class TransactionDetail {
+public class CustomerTransaction {
 	@Id
     @Column(name = "id")
     private int id;
@@ -47,10 +47,10 @@ public class TransactionDetail {
 	@Column(name = "status")
     private String status;
     
-	public TransactionDetail() {
+	public CustomerTransaction() {
 		
 	}
-    public TransactionDetail(int id, double amount,String status) {
+    public CustomerTransaction(int id, double amount,String status) {
 		this.id = id;
 		this.amount = amount;
 		this.status = status;

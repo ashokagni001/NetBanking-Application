@@ -27,7 +27,6 @@ public class CustomerDao {
             transaction = session.beginTransaction();
             Account account = (Account)session.get(Account.class, accountNumber);
             session.save(customer);
-            System.out.println(account.getBalance());
             account.setCustomer(customer);
             session.update(account);
             transaction.commit();
@@ -39,19 +38,14 @@ public class CustomerDao {
     }
 	
 	public Customer retrieveCustomerById(String customerId) throws DataBaseException {
-	    Customer customer = null ;
 	    Session session = sessionFactory.openSession();
-	    Transaction transaction = null;
 	    try {
-	        transaction = session.beginTransaction();
-	        customer = (Customer)session.get(Customer.class, customerId); 
-	        transaction.commit();
+	        return (Customer)session.get(Customer.class, customerId); 
 	    } catch (HibernateException e) {
 	    	throw new DataBaseException("CHECK YOUR " + customerId + "PLEASE INSERT VALID CUSTOMER ID..");
 	    } finally {
 	        session.close(); 
 	    } 
-	    return customer; 
 	}
 	
 	public List<Customer> retriveAllCustomer() throws DataBaseException {
@@ -59,7 +53,8 @@ public class CustomerDao {
 	    try {
 	        return session.createQuery("FROM Customer").list();
 	    } catch (HibernateException e) {
-	        throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
+	    	System.out.println(e);
+	        throw new DataBaseException("retriveAllCustomer DATA IS NOT AVAILABLE.INSERT DATA.");
 	    } finally {
 	        session.close();
 	    }
@@ -76,7 +71,8 @@ public class CustomerDao {
 	        session.update(customer);
 	        transaction.commit();   
 		} catch (HibernateException e) {
-			throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
+			System.out.println(e);
+			throw new DataBaseException("addAddress DATA IS NOT AVAILABLE.INSERT DATA.");
 	    } finally {
 	        session.close(); 
 	    }
@@ -87,26 +83,22 @@ public class CustomerDao {
 	    try {
 	        return session.createQuery("from Address").list();
 	    } catch(HibernateException e) {
-	        throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
+	    	System.out.println(e);
+	        throw new DataBaseException("retriveAllAddresses DATA IS NOT AVAILABLE.INSERT DATA.");
 	    } finally {
 	        session.close();
 	    }
 	}
 	
 	public Address retrieveAddressById(int addressId) throws DataBaseException {
-		Address address;
 		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
 		try {
-			transaction = session.beginTransaction();
-		    address = (Address)session.get(Address.class, addressId);
-			transaction.commit();
+			return (Address)session.get(Address.class, addressId);
 		} catch (HibernateException e) {
 			throw new DataBaseException("Oops Some Problem occured.. please try again later");
 		} finally {
 			session.close();
 		}
-		return address;
 	}
 	
 	public Account retrieveAccountByNumber(String accountNumber) throws DataBaseException {

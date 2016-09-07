@@ -12,23 +12,23 @@ import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.hibernateConnection.HibernateConnection;
 import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Branch;
-import com.i2i.netbankingApplication.model.TransactionDetail;
+import com.i2i.netbankingApplication.model.CustomerTransaction;
 
 public class TransactionDao {
 	HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
 	Configuration configuration = hibernateConnectionObject.getConfiguration();
 	SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
     
-	public void addTransaction(TransactionDetail transactionDetail, Account debitAccount,
+	public void addTransaction(CustomerTransaction customerTransaction, Account debitAccount,
 			Account criditAccount) throws DataBaseException {
 	    Session session = sessionFactory.openSession();
 	    Transaction transaction = null;
 	    try {
 	        transaction = session.beginTransaction();
-	        session.save(transactionDetail);
-	        transactionDetail.setDebitAccount(debitAccount);
-	        transactionDetail.setCriditAccount(criditAccount);
-	        session.update(transactionDetail);
+	        session.save(customerTransaction);
+	        customerTransaction.setDebitAccount(debitAccount);
+	        customerTransaction.setCriditAccount(criditAccount);
+	        session.update(customerTransaction);
 	        session.update(debitAccount);
 	        transaction.commit(); 
 		} catch (HibernateException e) {
@@ -38,10 +38,10 @@ public class TransactionDao {
 	    }
 	}
 	
-	public List<TransactionDetail> retriveAllTransactions() throws DataBaseException {
+	public List<CustomerTransaction> retriveAllTransactions() throws DataBaseException {
 	    Session session = sessionFactory.openSession();
 	    try {
-	        return session.createQuery("FROM TransactionDetail").list();
+	        return session.createQuery("FROM CustomerTransaction").list();
 	    } catch (HibernateException e) {
 	        throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
 	    } finally {

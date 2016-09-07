@@ -49,19 +49,14 @@ public class BranchDao {
     }
 	 
 	public Branch retrieveBranchById(String IFSCode) throws DataBaseException {
-	    Branch branch = null ;
 	    Session session = sessionFactory.openSession();
-	    Transaction transaction = null;
 	    try {
-	        transaction = session.beginTransaction();
-	        branch = (Branch)session.get(Branch.class, IFSCode); 
-	        transaction.commit();
+	        return (Branch)session.get(Branch.class, IFSCode); 
 	    } catch (HibernateException e) {
 	    	throw new DataBaseException("CHECK IFSC " + IFSCode + "PLEASE INSERT VALID IFSC...\n");
 	    } finally {
 	        session.close(); 
 	    } 
-	    return branch; 
 	}
 	
 	public List<Branch> retriveAllBranch() throws DataBaseException {
@@ -104,18 +99,13 @@ public class BranchDao {
 	}
 
 	public Address retrieveAddressById(int addressId) throws DataBaseException {
-		Address address;
 		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
 		try {
-			transaction = session.beginTransaction();
-		    address = (Address)session.get(Address.class, addressId);
-			transaction.commit();
+			return (Address)session.get(Address.class, addressId);
 		} catch (HibernateException e) {
 			throw new DataBaseException("Oops Some Problem occured.. please try again later");
 		} finally {
 			session.close();
 		}
-		return address;
 	}
 }
