@@ -9,9 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 /**
  * <p>
  * Model class of User. 
@@ -45,13 +42,13 @@ public class Customer {
     private String gender;
 	
 	@Column(name = "mobile_number")
-    private long mobileNumber;
+    private String mobileNumber;
 	
 	@Column(name = "email")
     private String email;
 	
 	@Column(name = "password")
-    private String passWord;
+    private String password;
 	
 	@Column(name = "account_number")
 	private String accountNumber;
@@ -59,8 +56,7 @@ public class Customer {
 	@Column(name = "status")
     private String status;
 	
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="address_id")
 	public Address address;
     
@@ -68,7 +64,7 @@ public class Customer {
     }
     
     public Customer(String customerId, String name, int age, String dob, String gender,
-            long mobileNumber, String email, String passWord, String accountNumber, String status) {
+    		String mobileNumber, String email, String password, String accountNumber, String status) {
     	this.customerId = customerId;
     	this.name = name;
     	this.age = age;
@@ -76,7 +72,7 @@ public class Customer {
     	this.gender = gender;
     	this.mobileNumber = mobileNumber;
     	this.email = email;
-    	this.passWord = passWord;
+    	this.password = password;
     	this.accountNumber = accountNumber;
     	this.status = status;
     }
@@ -121,11 +117,11 @@ public class Customer {
 		this.gender = gender;
 	}
 
-	public long getMobileNumber() {
+	public String getMobileNumber() {
 		return mobileNumber;
 	}
 
-	public void setMobileNumber(long mobileNumber) {
+	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 
@@ -137,12 +133,12 @@ public class Customer {
 		this.email = email;
 	}
 
-	public String getPassWord() {
-		return passWord;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPassWord(String passWord) {
-		this.passWord = passWord;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getAccountNumber() {

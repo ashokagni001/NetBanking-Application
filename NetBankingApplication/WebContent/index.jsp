@@ -13,7 +13,7 @@
           <br/><br/>
           If U Want Customer Operation Open Click On <br/><br/><a href=CustomerIndex>OPEN</a>
           <br/><br/>
-          If U Want Customer Operation Open Click On <br/><br/><a href=TransactionIndex>OPEN</a>
+          If U Want Transaction Operation Open Click On <br/><br/><a href=TransactionIndex>OPEN</a>
       </center>
 </body>
 </html>

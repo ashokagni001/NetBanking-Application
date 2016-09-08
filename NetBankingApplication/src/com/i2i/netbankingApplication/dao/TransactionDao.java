@@ -11,6 +11,7 @@ import org.hibernate.cfg.Configuration;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.hibernateConnection.HibernateConnection;
 import com.i2i.netbankingApplication.model.Account;
+import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Branch;
 import com.i2i.netbankingApplication.model.CustomerTransaction;
 
@@ -69,5 +70,21 @@ public class TransactionDao {
 	    } finally {
 	        session.close(); 
 	    } 
+	}
+
+	public Account retrieveAccountDetail(String accountNumber) throws DataBaseException {
+		Account account;
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+		    account = (Account)session.get(Account.class, accountNumber);
+			transaction.commit();
+		} catch (HibernateException e) {
+			throw new DataBaseException("Oops Some Problem occured.. please try again later");
+		} finally {
+			session.close();
+		}
+		return account;
 	}
 }

@@ -1,5 +1,6 @@
 package com.i2i.netbankingApplication.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.i2i.netbankingApplication.dao.TransactionDao;
@@ -48,13 +49,20 @@ public class TransactionService {
     	return id + 1;
     }
     
-    public List<CustomerTransaction> retriveAllTransactions() throws DataBaseException {
-		List<CustomerTransaction> transactions = null;
+    public List<CustomerTransaction> getAllTransaction() throws DataBaseException {
+		List transactions = new ArrayList();
 		for (CustomerTransaction transaction : transactionDao.retriveAllTransactions()) {
 			if (transaction.getStatus().equals("Request")) {
 				transactions.add(transaction);
 			}
 		}
 		return transactions;
+	}
+
+	public Account getCustomerAccount(String accountNumber) throws DataBaseException {
+		return transactionDao.retrieveAccountDetail(accountNumber);
+	}
+
+	public void transactionSuccess(int transactionId) {
 	}
 }

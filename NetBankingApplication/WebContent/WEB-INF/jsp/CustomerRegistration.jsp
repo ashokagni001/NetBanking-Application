@@ -31,12 +31,11 @@
     </head>
     <body bgcolor="#99a38f">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Registeration</title>
 </head>
 <body>
     <center>
-          <form:form method="post" action="register" modelAttribute="User"><br/><br/>
+          <form:form method="post" action="register" modelAttribute="Customer"><br/><br/>
                 <form:input path="name" type="text" placeholder="Enter the name" /><br/><br/>
                 <form:input path="dob" type="text" placeholder="Enter the dob" /><br/><br/>
                 <form:input path="gender" type="text" placeholder="Enter the gender" /><br/><br/>

@@ -1,12 +1,6 @@
 package com.i2i.netbankingApplication.controller;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;  
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;  
 import org.springframework.web.bind.annotation.RequestMapping;  
@@ -31,12 +25,12 @@ public class CustomerController {
     
 	@RequestMapping("/CustomerRegistration") 
 	public String addForm(ModelMap model) {
-		model.addAttribute("User", new Customer());
+		model.addAttribute("Customer", new Customer());
 		return "CustomerRegistration";
 	}
 	
 	@RequestMapping(value="/register", method = RequestMethod.POST)
-    public String addAddress(@ModelAttribute("User") Customer user, ModelMap message) {  
+    public String addAddress(@ModelAttribute("Customer") Customer user, ModelMap message) {  
 		try {
 			customerService.getUser(user);
 			message.addAttribute("Address", new Address());
@@ -60,29 +54,29 @@ public class CustomerController {
 		return "CustomerRegistration";
     }
 	
-	@RequestMapping(value = "/getCustomer")
+	@RequestMapping(value = "/GetCustomer")
 	public String getCustomerById() {
-		return "GetCustomerById";
+		return "GetCustomer";
 	}
 	
-	@RequestMapping(value="/getCustomerById", method = RequestMethod.GET)  
+	@RequestMapping(value="/getCustomer", method = RequestMethod.GET)  
     public ModelAndView viewBranchById (@RequestParam("customerId")String customerId, ModelMap message) {
         try {
-        	System.out.println(customerId);
-            return new ModelAndView("RetrieveCustomerById", "customer", customerService.getCustomerById(customerId));
+        	if (customerId.equals("all") || customerId.equals("All") || customerId.equals("ALL")) {
+        		return new ModelAndView ("GetCustomer", "customers", customerService.getAllCustomer());
+        	} else {
+        		Customer customer = customerService.getCustomerById(customerId);
+        		if (customer != null) {
+        			return new ModelAndView("GetCustomer", "customer", customer);
+        		} else {
+        			return new ModelAndView("GetCustomer", "message", "ENTER VALID CUSTOMER ID ONLY");
+        		}
+        	}
         } catch (DataBaseException e) {
-        	return new ModelAndView("RetrieveCustomerById", "message", "ENTER VALID CUSTOMER ID ONLY");
+        	return new ModelAndView("GetCustomer", "message", e.getMessage().toString());
         }
     }
 	
-	@RequestMapping(value="/getAllCustomer")  
-    public ModelAndView getAllCustomer() {
-        try {
-        	return new ModelAndView ("RetrieveAllCustomer", "customers", customerService.getAllCustomer()); 
-        } catch (DataBaseException e) {
-        	return new ModelAndView ("CustomerRegistration", "message", e.getMessage().toString());
-        } 
-	}
 	@RequestMapping(value="/viewCustomerAddress", method = RequestMethod.GET)
     public ModelAndView viewAddressById(@RequestParam("addressId")int addressId, ModelMap message) {
     	try {                     

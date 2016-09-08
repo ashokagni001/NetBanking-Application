@@ -10,6 +10,7 @@ import org.hibernate.cfg.Configuration;
 
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.hibernateConnection.HibernateConnection;
+import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Branch;
 
@@ -107,5 +108,30 @@ public class BranchDao {
 		} finally {
 			session.close();
 		}
+	}
+	
+	public void addAccount(Account account) throws DataBaseException {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+		    session.save(account); 
+	        transaction.commit();                                                                    
+		} catch (HibernateException e) {
+			throw new DataBaseException("PLEASE CHECK YOUR DATAS " + account + " YOUR DATA IS NOT VALID.PLEASE TRY AGAIN." );  
+	    } finally {
+	        session.close(); 
+		}
+	}
+	
+	public List<Account> retriveAllAccount() throws DataBaseException {
+	    Session session = sessionFactory.openSession();
+	    try {
+	        return session.createQuery("from Account").list();
+	    } catch(HibernateException e) {
+	        throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
+	    } finally {
+	        session.close();
+	    }
 	}
 }

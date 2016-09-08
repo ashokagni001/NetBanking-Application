@@ -20,11 +20,11 @@ public class CustomerTransaction {
     @Column(name = "id")
     private int id;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="debit_account_number")
 	private Account debitAccount;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="cridit_account_number")
     private Account criditAccount;
     
@@ -34,7 +34,7 @@ public class CustomerTransaction {
     @Column(name = "date")
     private String date;
     
-	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="user_id")
     private Customer customer;
     
@@ -81,8 +81,6 @@ public class CustomerTransaction {
 	public void setDate(String date) {
 		this.date = date;
 	}
-
-
 
 	public String getStatus() {
 		return status;

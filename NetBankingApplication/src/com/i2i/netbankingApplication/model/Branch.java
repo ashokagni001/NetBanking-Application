@@ -3,7 +3,6 @@ package com.i2i.netbankingApplication.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -19,7 +18,7 @@ public class Branch {
 	@Column(name = "email")
 	private String emailId;
 	
-	@OneToOne(cascade = CascadeType.PERSIST,  fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="address_id")
     //private String addressId;
 	public Address address;
