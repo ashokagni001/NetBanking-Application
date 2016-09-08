@@ -7,11 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "transaction_detail")
@@ -34,24 +30,17 @@ public class CustomerTransaction {
     @Column(name = "date")
     private String date;
     
-	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinColumn(name="user_id")
     private Customer customer;
     
-    public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
 	@Column(name = "status")
     private String status;
     
 	public CustomerTransaction() {
-		
 	}
+	
     public CustomerTransaction(int id, double amount,String status) {
 		this.id = id;
 		this.amount = amount;
@@ -104,5 +93,13 @@ public class CustomerTransaction {
 
 	public void setCriditAccount(Account criditAccount) {
 		this.criditAccount = criditAccount;
+	}
+	
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 }

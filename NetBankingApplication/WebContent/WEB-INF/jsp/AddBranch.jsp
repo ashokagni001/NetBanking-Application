@@ -9,7 +9,6 @@
     <style type="text/css">
     input[type=submit] {
              width: 20%;
-             background-color: #4CAF50;
              color: white;
              padding: 14px 20px;
              margin: 8px 0;
@@ -20,15 +19,19 @@
          }
          input[type=text] {
              width: 20%;
-             padding: 12px 20px;
+             padding: 5px;
              margin: 8px 0;
              display: inline-block;
              border: 1px solid #ccc;
              border-radius: 100px;
              box-sizing: border-box;
              outline:none;
+             height:45px;
          }
     </style>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body bgcolor="#99a38f">
 <head>
@@ -38,9 +41,9 @@
 <body>
     <center>
           <form:form method="post" action="insertBranch" modelAttribute="Branch">
-                <form:input path="emailId" type="text" placeholder="EMAIL ID" />
+                <form:input path="emailId" class="form-control" type="text" placeholder="EMAIL ID" />
                 <br/>
-                <input type="submit" path="addBranch" value="ADD" />
+                <input type="submit" path="addBranch" value="ADD" class="btn btn-success" />
             </form:form>
          <c:if test="${message != null}">
             <script type="text/javascript">

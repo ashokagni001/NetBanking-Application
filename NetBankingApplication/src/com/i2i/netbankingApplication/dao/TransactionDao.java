@@ -13,6 +13,7 @@ import com.i2i.netbankingApplication.hibernateConnection.HibernateConnection;
 import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Branch;
+import com.i2i.netbankingApplication.model.Customer;
 import com.i2i.netbankingApplication.model.CustomerTransaction;
 
 public class TransactionDao {
@@ -37,6 +38,22 @@ public class TransactionDao {
 	    } finally {
 	        session.close(); 
 	    }
+	}
+	
+	public CustomerTransaction retrieveCustomerTransactionById(String transactionId) throws DataBaseException {
+		CustomerTransaction customerTransaction = null ;
+	    Session session = sessionFactory.openSession();
+	    Transaction transaction = null;
+	    try {
+	        transaction = session.beginTransaction();
+	        customerTransaction = (CustomerTransaction)session.get(CustomerTransaction.class, transactionId); 
+	        transaction.commit();
+	    } catch (HibernateException e) {
+	    	throw new DataBaseException("CHECK YOUR " + transactionId + "PLEASE INSERT VALID CUSTOMER ID..");
+	    } finally {
+	        session.close(); 
+	    } 
+	    return customerTransaction; 
 	}
 	
 	public List<CustomerTransaction> retriveAllTransactions() throws DataBaseException {
@@ -86,5 +103,47 @@ public class TransactionDao {
 			session.close();
 		}
 		return account;
+	}
+	
+	public void transactionSuccess(String accountNumber, double balanceAmount, int transactionId) throws DataBaseException {
+	    Session session = sessionFactory.openSession();
+	    Transaction transaction = null;
+	    Account account = null;
+	    CustomerTransaction customerTransaction = null;
+	    try {
+	        transaction = session.beginTransaction();
+	        account = (Account)session.get(Account.class, accountNumber);
+	        account.setBalance(balanceAmount);
+	        session.update(account);
+	        customerTransaction = (CustomerTransaction)session.get(CustomerTransaction.class, transactionId);
+	        customerTransaction.setStatus("Success");
+	        session.update(customerTransaction);
+	        transaction.commit(); 
+		} catch (HibernateException e) {
+			throw new DataBaseException("Oops Some Problem occured.. please try again later" );  
+	    } finally {
+	        session.close(); 
+	    }
+	}
+	
+	public void transactionFailure(String accountNumber, double balanceAmount, int transactionId) throws DataBaseException {
+	    Session session = sessionFactory.openSession();
+	    Transaction transaction = null;
+	    Account account = null;
+	    CustomerTransaction customerTransaction = null;
+	    try {
+	        transaction = session.beginTransaction();
+	        account = (Account)session.get(Account.class, accountNumber);
+	        account.setBalance(balanceAmount);
+	        session.update(account);
+	        customerTransaction = (CustomerTransaction)session.get(CustomerTransaction.class, transactionId);
+	        customerTransaction.setStatus("Failure");
+	        session.update(customerTransaction);
+	        transaction.commit(); 
+		} catch (HibernateException e) {
+			throw new DataBaseException("Oops Some Problem occured.. please try again later" );  
+	    } finally {
+	        session.close(); 
+	    }
 	}
 }

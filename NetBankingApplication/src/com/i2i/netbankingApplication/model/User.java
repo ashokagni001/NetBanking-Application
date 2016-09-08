@@ -1,12 +1,7 @@
 package com.i2i.netbankingApplication.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 /**
  * <p>
@@ -20,13 +15,10 @@ import javax.persistence.Table;
  * @created 2016
  *
  */
-
-@Entity
-@Table(name = "user_detail")
-public class Customer {
+public class User {
 	@Id
-    @Column(name = "user_id")
-    private String customerId;
+    @Column(name = "user_id", unique = true)
+    private String userId;
 	
 	@Column(name = "name")
     private String name;
@@ -41,30 +33,26 @@ public class Customer {
     private String gender;
 	
 	@Column(name = "mobile_number")
-    private String mobileNumber;
+    private long mobileNumber;
 	
-	@Column(name = "email")
+	@Column(name = "mail")
     private String email;
 	
-	@Column(name = "password")
+	@Column(name = "passWord")
     private String passWord;
-	
-	@Column(name = "account_number")
-	private String accountNumber;
 	
 	@Column(name = "status")
     private String status;
 	
-	@OneToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name="address_id")
-	public Address address;
+	@Column(name = "address_id", nullable = true, columnDefinition = "TEXT" )
+    private int addressId;
     
-    public Customer() {
+    public User() {
     }
     
-    public Customer(String customerId, String name, int age, String dob, String gender,
-            String mobileNumber, String email, String passWord, String accountNumber, String status) {
-    	this.customerId = customerId;
+    public User(String userId, String name, int age, String dob, String gender,
+        long moblieNumber, String email, String passWord, String status) {
+    	this.userId = userId;
     	this.name = name;
     	this.age = age;
     	this.dob = dob;
@@ -72,16 +60,15 @@ public class Customer {
     	this.mobileNumber = mobileNumber;
     	this.email = email;
     	this.passWord = passWord;
-    	this.accountNumber = accountNumber;
     	this.status = status;
     }
 
-	public String getCustomerId() {
-		return customerId;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getName() {
@@ -116,11 +103,11 @@ public class Customer {
 		this.gender = gender;
 	}
 
-	public String getMobileNumber() {
+	public long getMobileNumber() {
 		return mobileNumber;
 	}
 
-	public void setMobileNumber(String mobileNumber) {
+	public void setMobileNumber(long mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 
@@ -140,14 +127,6 @@ public class Customer {
 		this.passWord = passWord;
 	}
 
-	public String getAccountNumber() {
-		return accountNumber;
-	}
-
-	public void setAccountNumber(String accountNumber) {
-		this.accountNumber = accountNumber;
-	}
-
 	public String getStatus() {
 		return status;
 	}
@@ -156,12 +135,12 @@ public class Customer {
 		this.status = status;
 	}
 
-	public Address getAddress() {
-		return address;
+	public int getAddressId() {
+		return addressId;
 	}
 
-	public void setAddress(Address address) {
-		this.address = address;
+	public void setAddressId(int addressId) {
+		this.addressId = addressId;
 	}
     
 }

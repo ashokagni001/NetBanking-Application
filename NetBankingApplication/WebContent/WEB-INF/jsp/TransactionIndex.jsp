@@ -20,6 +20,11 @@
                  </tr>
                  <tr>
                       <td align="center" height="40" width="350">
+                         <a href="notification">NOTIFICATIONS</a>
+                     </td>
+                 </tr>
+                 <tr>
+                      <td align="center" height="40" width="350">
                          <a href="viewAllTransaction">FETCH ALL TRANSACTION</a>
                      </td>
                  </tr>

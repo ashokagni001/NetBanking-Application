@@ -10,51 +10,35 @@
             <table cellpadding="0" cellspacing="2" bordercolor=#125610 border="3">
                 <tr>
                 <th align="center" height="30" width="100">S.NO</th>
-	            <th align="center" height="30" width="100">TRANSACTION ID</th>
-	            <th align="center" height="30" width="100">DEBIT ACCOUNT ID</th>
-	            <th align="center" height="30" width="100">CRIDIT ACCOUNT ID</th>
-	            <th align="center" height="30" width="100">USER ID</th>
+	            <th align="center" height="30" width="100">DEBIT ACCOUNT NUMBER</th>
+	            <th align="center" height="30" width="100">CRIDIT ACCOUNT NUMBER</th>
 	            <th align="center" height="30" width="100">AMOUNT</th>
 	            <th align="center" height="30" width="100">DATE & TIME</th>
 	            <th align="center" height="30" width="100">TRANSACTION STATUS</th>
-	            <th colspan="2" align="center" height="30" width="100" >VIEW CUSTOMER DETAIL</th>
                 </tr> 
                 <% int sno =1; %>
-                <c:forEach items="${transactions}" var="transactions">
+                <c:forEach items="${miniStatement}" var="miniStatement">
                     <tr>
                         <td>
                             <c:out value="<%= sno %>"/>
                         </td>
                         <td>
-                            <c:out value="${transactions.getId()}"/>
-                        </td>
-                        <td>
-                            <c:set value="${transactions.getDebitAccount()}" var="accountDebit"/>
+                            <c:set value="${miniStatement.getDebitAccount()}" var="accountDebit"/>
                             <c:out value="${accountDebit.accountNumber}"/>
                         </td>
                         <td>
-                            <c:set value="${transactions.getCriditAccount()}" var="accountCridit"/>
+                            <c:set value="${miniStatement.getCriditAccount()}" var="accountCridit"/>
                             <c:out value="${accountCridit.accountNumber}" />
                         </td>
                         <td>
-                            <c:set value="${transactions.getCustomer()}" var="customer"/>
-                            <c:out value="${customer.customerId}"/>
+                            <c:out value="${miniStatement.getAmount()}"/>
                         </td>
                         <td>
-                            <c:out value="${transactions.getAmount()}"/>
+                            <c:out value="${miniStatement.getDate()}"/>
                         </td>
                         <td>
-                            <c:out value="${transactions.getDate()}"/>
+                            <c:out value="${miniStatement.getStatus()}"/>
                         </td>
-                        <td>
-                            <c:out value="${transactions.getStatus()}"/>
-                        </td>
-                        <td align="center" height="30" width="100">
-                            <a href="viewCustomerAccount?accountNumber=<c:out value="${accountDebit.accountNumber}"/>" style="color:blue">VIEW DEBIT ACCOUNT</a>
-                        </td>
-                        <td align="center" height="30" width="100">
-                            <a href="viewCustomerAccount?accountNumber=<c:out value="${accountCridit.accountNumber}"/>" style="color:blue">VIEW CRIDIT ACCOUNT</a>
-                        </td> 
                     </tr>                   
                 <%    
                     sno++;   

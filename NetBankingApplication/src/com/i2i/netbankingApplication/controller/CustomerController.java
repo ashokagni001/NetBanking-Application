@@ -25,12 +25,12 @@ public class CustomerController {
     
 	@RequestMapping("/CustomerRegistration") 
 	public String addForm(ModelMap model) {
-		model.addAttribute("Customer", new Customer());
+		model.addAttribute("User", new Customer());
 		return "CustomerRegistration";
 	}
 	
 	@RequestMapping(value="/register", method = RequestMethod.POST)
-    public String addAddress(@ModelAttribute("Customer") Customer user, ModelMap message) {  
+    public String addAddress(@ModelAttribute("User") Customer user, ModelMap message) {  
 		try {
 			customerService.getUser(user);
 			message.addAttribute("Address", new Address());
@@ -54,28 +54,28 @@ public class CustomerController {
 		return "CustomerRegistration";
     }
 	
-	@RequestMapping(value = "/GetCustomer")
+	@RequestMapping(value = "/getCustomer")
 	public String getCustomerById() {
-		return "GetCustomer";
+		return "GetCustomerById";
 	}
 	
-	@RequestMapping(value="/getCustomer", method = RequestMethod.GET)  
-    public ModelAndView viewBranchById (@RequestParam("customerId")String customerId, ModelMap message) {
+	@RequestMapping(value="/getCustomerById", method = RequestMethod.GET)  
+    public ModelAndView viewCustomerById (@RequestParam("customerId")String customerId, ModelMap message) {
         try {
-        	if (customerId.equals("all") || customerId.equals("All") || customerId.equals("ALL")) {
-        		return new ModelAndView ("GetCustomer", "customers", customerService.getAllCustomer());
-        	} else {
-        		Customer customer = customerService.getCustomerById(customerId);
-        		if (customer != null) {
-        			return new ModelAndView("GetCustomer", "customer", customer);
-        		} else {
-        			return new ModelAndView("GetCustomer", "message", "ENTER VALID CUSTOMER ID ONLY");
-        		}
-        	}
+            return new ModelAndView("RetrieveCustomerById", "customer", customerService.getCustomerById(customerId));
         } catch (DataBaseException e) {
-        	return new ModelAndView("GetCustomer", "message", e.getMessage().toString());
+        	return new ModelAndView("RetrieveCustomerById", "message", "ENTER VALID CUSTOMER ID ONLY");
         }
     }
+	
+	@RequestMapping(value="/getAllCustomer")  
+    public ModelAndView getAllCustomer() {
+        try {
+        	return new ModelAndView ("RetrieveAllCustomer", "customers", customerService.getAllCustomer()); 
+        } catch (DataBaseException e) {
+        	return new ModelAndView ("CustomerRegistration", "message", e.getMessage().toString());
+        } 
+	}
 	
 	@RequestMapping(value="/viewCustomerAddress", method = RequestMethod.GET)
     public ModelAndView viewAddressById(@RequestParam("addressId")int addressId, ModelMap message) {
@@ -85,4 +85,19 @@ public class CustomerController {
     		return new ModelAndView ("RetrieveAddressById", "message", e.getMessage().toString());
         }
 	}
+	
+	@RequestMapping(value = "/getMiniStatementByCustomerId")
+	public String getMiniStatementByCustomerId() {
+		return "GetMiniStatementByCustomerId";
+	}
+	
+	@RequestMapping(value="/viewMiniStatementByCustomerId", method = RequestMethod.GET)  
+    public ModelAndView viewMiniStatementByCustomerId (@RequestParam("customerId")String customerId, ModelMap message) {
+        try {
+            return new ModelAndView("RetrieveMiniStatementByCustomerId", "miniStatement", customerService.getMiniStatementByCustomerId(customerId));
+        } catch (DataBaseException e) {
+        	return new ModelAndView("RetrieveMiniStatementByCustomerId", "message", "ENTER VALID CUSTOMER ID ONLY");
+        }
+    }
+
 }

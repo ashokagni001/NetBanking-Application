@@ -9,6 +9,7 @@ import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Customer;
+import com.i2i.netbankingApplication.model.CustomerTransaction;
 import com.i2i.netbankingApplication.util.StringUtil;
 
 public class CustomerService {
@@ -28,7 +29,7 @@ public class CustomerService {
     	
       	int tempcustomerId = getLastCustomerId();
         if (tempcustomerId >= 0) {
-        	customerId = "I2I0BK" + String.valueOf(tempcustomerId + 1);
+        	customerId = "CUSI2I00" + String.valueOf(tempcustomerId + 1);
         } 
         
         if (StringUtil.isValidFormat(customer.getDob())) {
@@ -79,7 +80,7 @@ public class CustomerService {
     
 	public void getAddress(Address address) throws DataBaseException {
 	    int tempcustomerId = getLastCustomerId();
-	    String customerId = "I2I0BK" + String.valueOf(tempcustomerId);
+	    String customerId = "CUSI2I00" + String.valueOf(tempcustomerId);
 	    int id = getLastAddressId();
 	    customerDao.addAddress(customerId, new Address(id+1, address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
@@ -91,5 +92,10 @@ public class CustomerService {
 	
 	public Address getAddressById(int addressId) throws DataBaseException {
 	    return customerDao.retrieveAddressById(addressId);
+	}
+
+	public List<CustomerTransaction> getMiniStatementByCustomerId(String customerId) throws DataBaseException {
+		TransactionService transactionService = new TransactionService();
+		return transactionService.getCustomerMiniStatement(customerId);
 	}
 } 
