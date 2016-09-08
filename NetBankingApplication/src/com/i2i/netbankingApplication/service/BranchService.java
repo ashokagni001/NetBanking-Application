@@ -11,20 +11,28 @@ public class BranchService {
     BranchDao branchDao = new BranchDao();
     
     public void getBranch(String emailId) throws DataBaseException {
-      	String IFSCode = "I2I0BK" + String.valueOf(getLastIFSCode() + 1);
+      	String IFSCode = " ";
+      	int tempIFS = getLastIFSCode();
+        if (tempIFS >= 0) {
+        	IFSCode = "I2I0BK" + String.valueOf(tempIFS + 1);
+        } 
     	branchDao.addBranch(new Branch(IFSCode, emailId));
     }
     
     public int getLastIFSCode() throws DataBaseException {
     	int lastIFSC = 0;
-    	for (Branch branch : branchDao.retriveAllBranch()) {
-    		String IFSC = branch.getIFSCode();
-    		int temp = Integer.parseInt(IFSC.substring(6, IFSC.length()));
-            if (lastIFSC <= temp) {
-              	lastIFSC = temp;
-            }
+    	if (branchDao.retriveAllBranch().size() == 0) {
+    		return lastIFSC;
+    	} else {
+    		for (Branch branch : branchDao.retriveAllBranch()) {
+    			String IFSC = branch.getIFSCode();
+    			int temp = Integer.parseInt(IFSC.substring(6, IFSC.length()));
+                if (lastIFSC <= temp) {
+                	lastIFSC = temp;
+                }
+    		}
+    	    return lastIFSC;
     	}
-    	return lastIFSC;
     }
 
 	public void deleteBranchById(String IFSCode) throws DataBaseException {
@@ -51,8 +59,10 @@ public class BranchService {
     }
     
 	public void getAddress(Address address) throws DataBaseException {
-	    String IFSCode = "I2I0BK" + String.valueOf(getLastIFSCode());
-	    branchDao.addAddress(IFSCode,new Address(getLastAddressId() + 1, address.getStreet(),
+	    int tempIFS = getLastIFSCode();
+	    String IFSCode = "I2I0BK" + String.valueOf(tempIFS);
+	    int id = getLastAddressId();
+	    branchDao.addAddress(IFSCode,new Address(id+1, address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
     }
 

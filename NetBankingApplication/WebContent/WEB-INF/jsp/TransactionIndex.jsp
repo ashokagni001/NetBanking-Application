@@ -19,8 +19,8 @@
                      </td>
                  </tr>
                  <tr>
-                     <td align="center" height="40" width="350">
-                         <a href="getAllTransaction">FETCH ALL TRANSACTION</a>
+                      <td align="center" height="40" width="350">
+                         <a href="viewAllTransaction">FETCH ALL TRANSACTION</a>
                      </td>
                  </tr>
              </table>

@@ -32,8 +32,7 @@
     </head>
     <body bgcolor="#99a38f">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>NET BANKING</title>
 </head>
 <body>
     <center>
@@ -44,12 +43,15 @@
                 <b>Cridit Account Number </b>
                 <input name="criditAccountNumber" placeholder="criditAccountNumber" />
                 </br>
+                <b>Cridit Account IFSC number </b>
+                <input name="ifscode" placeholder="ifscode" />
+                </br>
                 <b>Enter your Amount </b>
                 <input name="amount" placeholder="Amount" />
                 </br>
                 <input type="submit" name="proceed" value="insertTransaction" />
             </form>
-     <b>Go to main page </b><a href="TransactionIndex" style="font-size:18px"> click here</a></br></br>
+     <b>Go to main page </b><a href="BranchIndex" style="font-size:18px"> click here</a></br></br>
      </center>
 </body>
 </html>

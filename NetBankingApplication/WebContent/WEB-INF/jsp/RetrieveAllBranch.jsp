@@ -14,7 +14,6 @@
 	            <th align="center" height="30" width="100">IFSC CODE</th>
 	            <th align="center" height="30" width="100">EMAIL</th>
 	            <th colspan="1" align="center" height="30" width="100">ADDRESS</th>
-	            <th colspan="1" align="center" height="30" width="100" >ADDRESS</th>
 	            <th colspan="1" align="center" height="30" width="100" >ACTION</th>
                 </tr> 
                 <% int sno =1; %>
@@ -28,7 +27,7 @@
                              <td><c:out value="${'No Address Allocated'}"/></td>
                         </c:when>
                         <c:otherwise>
-                            <td><c:set value="${branches.getAddress()}" var="address" /></td>
+                            <c:set value="${branches.getAddress()}" var="address" />
                             <td align="center" height="30" width="100"><a href="viewBranchAddress?addressId=<c:out value="${address.addressId}"/>" style="color:blue">VIEW</a></td>  
                         </c:otherwise>
                     </c:choose>

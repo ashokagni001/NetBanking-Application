@@ -17,12 +17,12 @@ public class Account {
     @Column(name = "account_number")
   	private String accountNumber;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="user_id")
     private Customer customer;
     
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-	@JoinColumn(name="ifscode")
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@JoinColumn(name="ifsc")
     private Branch branch;
     
     @Column(name = "balance")

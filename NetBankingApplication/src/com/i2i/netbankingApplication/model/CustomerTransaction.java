@@ -17,7 +17,7 @@ public class CustomerTransaction {
     @Column(name = "id")
     private int id;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="debit_account_number")
 	private Account debitAccount;
 	
@@ -79,8 +79,6 @@ public class CustomerTransaction {
 	public void setDate(String date) {
 		this.date = date;
 	}
-
-
 
 	public String getStatus() {
 		return status;

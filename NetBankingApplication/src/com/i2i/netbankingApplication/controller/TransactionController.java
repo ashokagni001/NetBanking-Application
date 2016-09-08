@@ -5,31 +5,62 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.i2i.netbankingApplication.exception.DataBaseException;
-import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.service.TransactionService;
 
 @Controller
 public class TransactionController {
 	TransactionService transactionService = new TransactionService();
 	
-	@RequestMapping(value = "/TransactionOperation")
+	@RequestMapping(value = "/TransactionIndex")
+    public String customer() {
+	    return "TransactionIndex";
+    }
+	 
+	@RequestMapping(value = "/addTransaction")
 	public String transactionOpration() throws DataBaseException {
-		return "TransactionOperation";
+		return "AddTransaction";
 	}
 	
-	@RequestMapping(value="/insertTransaction", method = RequestMethod.POST)
-    public String transaction(@RequestParam("debitAccountNumber") String debitAccountNumber, 
-    		@RequestParam("criditAccountNumber") String criditAccountNumber, @RequestParam("ifscode")String ifscode ,
-    		@RequestParam("amount")String amount,ModelMap message) {  
+    @RequestMapping(value="/insertTransaction", method = RequestMethod.POST)
+	public String transaction(@RequestParam("debitAccountNumber") String debitAccountNumber, 
+	    @RequestParam("criditAccountNumber") String criditAccountNumber, @RequestParam("ifscode")String ifscode ,
+	    @RequestParam("amount")String amount,ModelMap message) {  
 		try {
-			System.out.println(amount);
 			transactionService.getTransactionDetail(debitAccountNumber, criditAccountNumber, ifscode, Double.parseDouble(amount));
 		} catch (DataBaseException e) {
-            System.out.println("ENTER VALID DATA ONLY" + e); 
-        }
+	        System.out.println("ENTER VALID DATA ONLY" + e); 
+	    }
 		return "CustomerOperation";
+	}
+	
+	@RequestMapping(value="/viewAllTransaction", method = RequestMethod.GET)
+    public ModelAndView viewAllTransaction() {
+    	try {                     
+            return new ModelAndView ("RetrieveAllTransaction", "transactions", transactionService.getAllTransaction()); 
+    	} catch (DataBaseException e) {
+    		return new ModelAndView ("RetrieveAllTransaction", "message", e.getMessage().toString());
+        }
+	}
+	
+	@RequestMapping(value="/viewCustomerAccount", method = RequestMethod.GET)  
+    public ModelAndView viewCustomerAccount (@RequestParam("accountNumber")String accountNumber, ModelMap message) {
+        try {
+            return new ModelAndView("RetrieveCustomerAccount","accountDetail", transactionService.getCustomerAccount (accountNumber));
+        } catch (DataBaseException e) {
+        	return new ModelAndView("RetrieveCustomerAccount","message", "ENTER VALID IFSC ONLY");
+        }
     }
-
+	
+	/*@RequestMapping(value="/transactionSuccess", method = RequestMethod.GET)
+    public ModelAndView transactionSuccess(@RequestParam("id")int transactionId) {
+    	try {           
+    		transactionService.transactionSuccess(transactionId);
+            return new ModelAndView ("RetrieveAllTransaction", "transactions", "TRANSACTION ACTION SUCCESSFULLY"); 
+    	} catch (DataBaseException e) {
+    		return new ModelAndView ("RetrieveAllTransaction", "message", e.getMessage().toString());
+        }
+	}*/
 }
