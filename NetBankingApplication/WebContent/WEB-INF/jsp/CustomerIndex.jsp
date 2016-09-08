@@ -25,6 +25,11 @@
                          <a href="getAllCustomer">FETCH ALL CUSTOMER</a>
                      </td>
                  </tr>
+                 <tr>
+                     <td align="center" height="40" width="350">
+                         <a href="TransactionOperation">Transaction Operation</a>
+                     </td>
+                 </tr>
              </table>
          </center>
          <b>Go to main page </b><a href="index.jsp" style="font-sise:18px"> click here</a></br></br>

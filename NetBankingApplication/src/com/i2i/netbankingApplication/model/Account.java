@@ -21,7 +21,7 @@ public class Account {
 	@JoinColumn(name="user_id")
     private Customer customer;
     
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="ifscode")
     private Branch branch;
     

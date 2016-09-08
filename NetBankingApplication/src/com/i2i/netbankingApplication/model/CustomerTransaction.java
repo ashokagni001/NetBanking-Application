@@ -10,6 +10,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @Table(name = "transaction_detail")
 public class CustomerTransaction {
@@ -31,7 +34,6 @@ public class CustomerTransaction {
     @Column(name = "date")
     private String date;
     
-
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinColumn(name="user_id")
     private Customer customer;
