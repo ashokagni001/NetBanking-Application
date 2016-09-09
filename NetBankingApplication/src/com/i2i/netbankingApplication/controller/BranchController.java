@@ -12,7 +12,13 @@ import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Branch;
 import com.i2i.netbankingApplication.service.BranchService;
+import com.i2i.netbankingApplication.util.FileUtil;
 
+/**
+ * 
+ * @author team2
+ *
+ */
 @Controller
 public class BranchController {
 	BranchService branchService = new BranchService();
@@ -21,6 +27,7 @@ public class BranchController {
 	public String login() {
 		return "BranchIndex";
 	}
+	
 	@RequestMapping(value = "/addBranch")
 	public String getBranch(ModelMap model) {
 		model.addAttribute("Branch", new Branch());
@@ -30,71 +37,109 @@ public class BranchController {
 	@RequestMapping(value="/insertBranch", method = RequestMethod.POST)
     public String addBranch(@RequestParam("emailId") String emailId, ModelMap message) {  
 		try {
-		    branchService.getBranch(emailId);
+			branchService.getBranch(emailId);
             message.addAttribute("Address1", new Address());
             return "AddAddress";
 		} catch (DataBaseException e) {
-    		message.addAttribute("message", "ENTER VALID DATA ONLY"); 
-        }
-		return "BranchIndex";
+			FileUtil.exceptionOccurCreateFile("EMPLOYEE ADD AT TIME EXCEPTION OCCUR ..\nDATAS-->" + emailId  + e);
+    		message.addAttribute("message", e.getMessage()); 
+    		return "BranchIndex";
+        } 
+		
     }
 	
 	@RequestMapping(value="/address", method = RequestMethod.POST)
     public String addAddress(@ModelAttribute("address1") Address address, ModelMap message) {  
 		try {
-            branchService.getAddress(address);
+			message.addAttribute("message","Branch added suceess. Branch IFSC is :: " + branchService.getAddress(address));
             return "BranchIndex";
 		} catch (DataBaseException e) {
-    		message.addAttribute("message", "ENTER VALID DATA ONLY"); 
+			FileUtil.exceptionOccurCreateFile("EMPLOYEE ADD AT TIME EXCEPTION OCCUR ..\nDATAS-->" + address  + e);
+    		message.addAttribute("message", e.getMessage()); 
+    		return "BranchIndex";
         }
-		return "BranchIndex";
     }
 	
-	@RequestMapping(value = "/deleteBranch")
-	public String deleteBranch() {
-		return "DeleteBranch";
-	}
-	
 	@RequestMapping(value="/deleteBranchById", method = RequestMethod.GET)
-    public String deleteBranch(@RequestParam("ifsc")String ifsc, ModelMap message) {
+    public String deleteBranch(@RequestParam("ifsc")String ifsc, ModelMap message) throws DataBaseException {
     	try {       
             branchService.deleteBranchById(ifsc);
             message.addAttribute("message", "BRANCH DELETED SUCESSFULLY");
+            message.addAttribute("branches", branchService.getAllBranch());
+            return "GetBranch";
     	} catch (DataBaseException e) {
-    		message.addAttribute("message", "ENTER VALID ID ONLY"); 
+			FileUtil.exceptionOccurCreateFile("EMPLOYEE ADD AT TIME EXCEPTION OCCUR ..\nDATAS-->" + ifsc  + e);
+    		message.addAttribute("message", e.getMessage()); 
+    		message.addAttribute("branches", branchService.getAllBranch());
+            return "GetBranch";
         }
-        return "DeleteBranch";
     }
 	
-	@RequestMapping(value = "/getBranch")
+	@RequestMapping(value = "/GetBranch")
 	public String getBranchById() {
-		return "GetBranchById";
+		return "GetBranch";
 	}
 	
-	@RequestMapping(value="/getBranchById", method = RequestMethod.GET)  
+	@RequestMapping(value="/getBranch", method = RequestMethod.GET)  
     public ModelAndView viewBranchById (@RequestParam("ifsc")String ifsc, ModelMap message) {
         try {
-            return new ModelAndView("RetrieveBranchById","branch", branchService.getBranchById(ifsc));
+        	if (ifsc.equals("all") || ifsc.equals("All") || ifsc.equals("ALL")) {
+        		return new ModelAndView ("GetBranch", "branches", branchService.getAllBranch());
+        	} else  {
+        		Branch branch = branchService.getBranchById(ifsc);
+        		if (branch != null) {
+                    return new ModelAndView("GetBranch","branch", branch);
+        		} else {
+        			return new ModelAndView("GetBranch","message", "ENTER VALID IFSC ONLY");
+        		}
+        	}
         } catch (DataBaseException e) {
-        	return new ModelAndView("RetrieveBranchById","message", "ENTER VALID IFSC ONLY");
+			FileUtil.exceptionOccurCreateFile("EMPLOYEE ADD AT TIME EXCEPTION OCCUR ..\nDATAS-->" + ifsc  + e);
+        	return new ModelAndView("GetBranch","message",  e.getMessage());
         }
     }
-	
-	@RequestMapping(value="/getAllBranches")  
-    public ModelAndView getAllBranch() {
-        try {
-        	return new ModelAndView ("RetrieveAllBranch", "branches", branchService.getAllBranch()); 
-        } catch (DataBaseException e) {
-        	return new ModelAndView ("RetrieveAllBranch", "message", e.getMessage().toString());
-        } 
-    } 
 	
 	@RequestMapping(value="/viewBranchAddress", method = RequestMethod.GET)
     public ModelAndView viewAddressById(@RequestParam("addressId")int addressId, ModelMap message) {
     	try {                     
             return new ModelAndView ("RetrieveAddressById", "address", branchService.getAddressById(addressId)); 
     	} catch (DataBaseException e) {
-    		return new ModelAndView ("RetrieveAddressById", "message", e.getMessage().toString());
+    		FileUtil.exceptionOccurCreateFile("EMPLOYEE ADD AT TIME EXCEPTION OCCUR ..\nDATAS-->" + addressId  + e);
+    		return new ModelAndView ("RetrieveAddressById", "message", e.getMessage());
         }
+	}
+	
+	@RequestMapping(value = "/AddAccount")
+	public String getAccount() {
+		return "AddAccount";
+	}
+	
+	@RequestMapping(value="/addAccount", method = RequestMethod.POST)  
+    public String getAccount(@RequestParam("accountNumber")String accountNumber, @RequestParam("balance")String balance, @RequestParam("accounttype")String accounttype, @RequestParam("ifscode")String ifsc, ModelMap message) throws  DataBaseException {
+		try { 
+	     	branchService.getAccount(accountNumber, Double.parseDouble(balance), accounttype, ifsc);
+		}catch(DataBaseException e) {
+    		FileUtil.exceptionOccurCreateFile("EMPLOYEE ADD AT TIME EXCEPTION OCCUR ..\nDATAS-->" + accountNumber + balance + accounttype + ifsc);
+			message.addAttribute("message", e.getMessage());
+		} finally {
+	     	return "BranchIndex";
+		}
+	}
+	
+	@RequestMapping(value = "/ViewAccountByBranch")
+	public String viewAccountByBranch() {
+		return "ViewAccountByBranch";
+	}
+	
+	@RequestMapping(value="/getAccount", method = RequestMethod.GET)  
+    public String viewAccountByBranch (@RequestParam("ifsc")String ifsc, ModelMap message) {
+		try { 
+			message.addAttribute("accounts", branchService.viewAccountByBranch(ifsc));
+		}catch(DataBaseException e) {
+    		FileUtil.exceptionOccurCreateFile("EMPLOYEE ADD AT TIME EXCEPTION OCCUR ..\nDATAS-->" + ifsc);
+			message.addAttribute("message", e.getMessage().toString());
+		} finally {
+	     	return "ViewAccountByBranch";
+		}
 	}
 }

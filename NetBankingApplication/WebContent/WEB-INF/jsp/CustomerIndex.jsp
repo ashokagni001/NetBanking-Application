@@ -17,12 +17,7 @@
                  </tr>
                  <tr>
                      <td align="center" height="40" width="350">
-                         <a href="getCustomer">FETCH CUSTOMER</a>
-                     </td>
-                 </tr>
-                 <tr>
-                     <td align="center" height="40" width="350">
-                         <a href="getAllCustomer">FETCH ALL CUSTOMER</a>
+                         <a href="GetCustomer">FETCH CUSTOMER</a>
                      </td>
                  </tr>
                  <tr>

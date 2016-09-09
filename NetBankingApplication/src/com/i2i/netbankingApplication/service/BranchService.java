@@ -1,9 +1,11 @@
 package com.i2i.netbankingApplication.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.i2i.netbankingApplication.dao.BranchDao;
 import com.i2i.netbankingApplication.exception.DataBaseException;
+import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Branch;
 
@@ -58,16 +60,40 @@ public class BranchService {
     	return id;
     }
     
-	public void getAddress(Address address) throws DataBaseException {
+	public String getAddress(Address address) throws DataBaseException {
 	    int tempIFS = getLastIFSCode();
 	    String IFSCode = "I2I0BK" + String.valueOf(tempIFS);
 	    int id = getLastAddressId();
 	    branchDao.addAddress(IFSCode,new Address(id+1, address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
+	    return IFSCode;
     }
 
 	public Address getAddressById(int addressId) throws DataBaseException {
 	    return branchDao.retrieveAddressById(addressId);
+	}
+	
+	public void getAccount(String accountNumber, double balance, String accounttype, String ifsc) throws DataBaseException {
+		Branch branch = branchDao.retrieveBranchById(ifsc);
+		if (branch != null) {
+			branchDao.addAccount(new Account(accountNumber, balance, accounttype, branch));
+	    } else {
+	     	throw new DataBaseException("Please enter valid IFSC number"); 
+		}
+	}
+	
+	public List viewAccountByBranch(String ifsc) throws DataBaseException {
+		List accounts = new ArrayList();
+		if (branchDao.retrieveBranchById(ifsc) != null) {
+			for (Account account : branchDao.retriveAllAccount()) {
+				if (account.getBranch().getIFSCode().equals(ifsc)) {
+					accounts.add(account);
+				}
+			}
+			return accounts;
+		} else {
+			throw new DataBaseException("Please enter valid IFSC number"); 
+		}
 	}
 }
 

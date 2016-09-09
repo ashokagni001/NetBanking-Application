@@ -25,7 +25,7 @@
                         <td><c:out value="${branch.IFSCode}" /></td>
                         <td><c:out value="${accountDetail.getBalance()}" /></td>
                         <td><c:out value="${accountDetail.getAccountType()}" /></td>
-                        <td align="center" height="30" width="100"><a href="getCustomerById?customerId=<c:out value="${customer.customerId}"/>" style="color:blue">VIEW USER DETAIL</a></td>  
+                        <td align="center" height="30" width="100"><a href="GetCustomer?customerId=<c:out value="${customer.customerId}"/>" style="color:blue">VIEW USER DETAIL</a></td>  
                   </tr>
             </table>
             <br/><br/>

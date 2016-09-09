@@ -11,7 +11,6 @@ import com.i2i.netbankingApplication.model.CustomerTransaction;
 
 public class TransactionService {
 	TransactionDao transactionDao = new TransactionDao();
-	private CustomerService customerService = new CustomerService();
 	public void getTransactionDetail(String debitAccountNumber, String criditAccountNumber, 
 			String ifscode, double amount) throws DataBaseException {
 		Account debitAccount = transactionDao.retrieveAccountByNumber(debitAccountNumber);
@@ -71,14 +70,12 @@ public class TransactionService {
 		return transactions;
 	}
     
-    public List<CustomerTransaction> getCustomerMiniStatement(String customerId) throws DataBaseException {
-		List<CustomerTransaction> transactions = new ArrayList<CustomerTransaction>();
-		String userAccount = customerService.getCustomerById(customerId).getAccountNumber();
-		System.out.println(userAccount);
+    public List getCustomerMiniStatement(String customerAccountNumber) throws DataBaseException {
+		List transactions = new ArrayList();
 		for (CustomerTransaction transaction : transactionDao.retriveAllTransactions()) {
-			if (transaction.getDebitAccount().getAccountNumber().equals(userAccount)) {
+			if (transaction.getDebitAccount().getAccountNumber().equals(customerAccountNumber)) {
 	        	transactions.add(transaction);
-	        } else if (transaction.getCriditAccount().getAccountNumber().equals(userAccount)) {
+	        } else if (transaction.getCriditAccount().getAccountNumber().equals(customerAccountNumber)) {
 	            if (!(transaction.getStatus().equals("Request"))) {
 	                transactions.add(transaction);
 	            }

@@ -31,24 +31,40 @@ public class Account {
     @Column(name = "account_type")
     private String accountType;
     
+    public Account(){
+    }
+    
+    public Account(String accountNumber, double balance, String accountType, Branch branch){
+    	this.accountNumber = accountNumber;
+    	this.balance = balance;
+    	this.accountType = accountType;
+    	this.branch = branch;
+    }
+    
 	public String getAccountNumber() {
 		return accountNumber;
 	}
+	
 	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
 	}
+	
 	public Customer getCustomer() {
 		return customer;
 	}
+	
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+	
 	public Branch getBranch() {
 		return branch;
 	}
+	
 	public void setBranch(Branch branch) {
 		this.branch = branch;
 	}
+	
 	public double getBalance() {
 		return balance;
 	}
@@ -60,6 +76,7 @@ public class Account {
 	public String getAccountType() {
 		return accountType;
 	}
+	
 	public void setAccountType(String accountType) {
 		this.accountType = accountType;
 	}

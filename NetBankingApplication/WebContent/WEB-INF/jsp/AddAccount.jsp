@@ -41,7 +41,7 @@
             <form method="post" action="addAccount">
                 <input name="accountNumber" type="text" placeholder="Enter the accountNumber" /><br/>
                 <input name="balance" type="text" placeholder="Enter the account balance" /><br/>
-                <b>Account Type</b>>
+                <b>Account Type</b>
                 <select name="accounttype">
                     <option value="Current">Current</option>
                     <option value="Saving">Saving</option>

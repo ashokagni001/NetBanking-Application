@@ -14,7 +14,7 @@ import com.i2i.netbankingApplication.util.StringUtil;
 
 public class CustomerService {
     CustomerDao customerDao = new CustomerDao();
-    
+    private TransactionService transactionService = new TransactionService();
     public void getUser(Customer customer) throws DataBaseException, CustomerDataException {
     	String customerId = " ";
     	Account account = customerDao.retrieveAccountByNumber(customer.getAccountNumber());
@@ -26,12 +26,7 @@ public class CustomerService {
     	if (account.getCustomer() != null) {
     		throw new CustomerDataException("YOUR ACCOUNT NUMBER ALREADY ALLOCATED ANOTHER CUSTOMER"); 
     	}
-    	
-      	int tempcustomerId = getLastCustomerId();
-        if (tempcustomerId >= 0) {
-        	customerId = "CUSI2I00" + String.valueOf(tempcustomerId + 1);
-        } 
-        
+        customerId = "CUSI2I00" + String.valueOf(getLastCustomerId() + 1);
         if (StringUtil.isValidFormat(customer.getDob())) {
             throw new DataBaseException("YOUR FORMAT" + customer.getDob() +
                 "FORMAT MUST 1/05/2000.INSERT VALID DOB..!!");  
@@ -79,10 +74,8 @@ public class CustomerService {
 	}
     
 	public void getAddress(Address address) throws DataBaseException {
-	    int tempcustomerId = getLastCustomerId();
-	    String customerId = "CUSI2I00" + String.valueOf(tempcustomerId);
-	    int id = getLastAddressId();
-	    customerDao.addAddress(customerId, new Address(id+1, address.getStreet(),
+	    String customerId = "CUSI2I00" + String.valueOf(getLastCustomerId());
+	    customerDao.addAddress(customerId, new Address(getLastAddressId() + 1, address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
     }
 
@@ -95,7 +88,6 @@ public class CustomerService {
 	}
 
 	public List<CustomerTransaction> getMiniStatementByCustomerId(String customerId) throws DataBaseException {
-		TransactionService transactionService = new TransactionService();
-		return transactionService.getCustomerMiniStatement(customerId);
+		return transactionService.getCustomerMiniStatement(customerDao.retrieveCustomerById(customerId).getAccountNumber());
 	}
 } 
