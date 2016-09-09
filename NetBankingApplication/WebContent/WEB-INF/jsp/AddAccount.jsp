@@ -4,33 +4,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <html>
     <head>
-        <h2>NET BANKING APPLICATION</h2>
-        <h4>INSERT Account Detail</h4>
+        <link rel="stylesheet" href="resource/css/bootstrap.css">
+        <script src="resource/js/bootstrap.js"></script>
+        <script src="resource/js/bootstrap1.js"></script>
         <style type="text/css">
-            input[type=submit] {
-                width: 20%;
-                background-color: #4CAF50;
-                color: white;
-                padding: 14px 20px;
-                margin: 8px 0;
-                border: none;
-                border-radius: 100px;
-                cursor: pointer;
-                outline:none;
-            }
-            input[type=text] {
-                width: 20%;
-                padding: 12px 20px;
-                margin: 8px 0;
-                display: inline-block;
-                border: 1px solid #ccc;
-                border-radius: 100px;
-                box-sizing: border-box;
-                outline:none;
+            .well {
+                background-color:  #8ddfe1 ;
             }
         </style>
     </head>
-    <body bgcolor="#99a38f">
+    <body">
+        <div class = "well">
+            <font size="20"><marquee behavior="alternate">NET BANKING</marquee></font>
+        </div>
+        <h2>INSERT ACCOUNT</h2>
         <center>
             <c:if test="${message != null}">
                 <script type="text/javascript">
@@ -41,7 +28,7 @@
             <form method="post" action="addAccount">
                 <input name="accountNumber" type="text" placeholder="Enter the accountNumber" /><br/>
                 <input name="balance" type="text" placeholder="Enter the account balance" /><br/>
-                <b>Account Type</b>
+                <b>Account Type</b></br>
                 <select name="accounttype">
                     <option value="Current">Current</option>
                     <option value="Saving">Saving</option>

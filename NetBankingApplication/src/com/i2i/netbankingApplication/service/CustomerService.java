@@ -15,10 +15,13 @@ import com.i2i.netbankingApplication.util.StringUtil;
 public class CustomerService {
     CustomerDao customerDao = new CustomerDao();
     private TransactionService transactionService = new TransactionService();
+<<<<<<< HEAD
     
     public void getCustomer(Customer customer) throws DataBaseException, CustomerDataException {
+=======
+    public void getUser(Customer customer) throws DataBaseException, CustomerDataException {
+>>>>>>> 75919ca2c5d299fe30bbf9316c2e30ef0c5a3563
     	Account account = customerDao.retrieveAccountByNumber(customer.getAccountNumber());
-    	
     	if (account == null) {
     		throw new CustomerDataException("YOUR ACCOUNT NUMBER IS NOT VALID");  
     	}
@@ -26,7 +29,10 @@ public class CustomerService {
     	if (account.getCustomer() != null) {
     		throw new CustomerDataException("YOUR ACCOUNT NUMBER ALREADY ALLOCATED ANOTHER CUSTOMER"); 
     	}
+<<<<<<< HEAD
     	
+=======
+>>>>>>> 75919ca2c5d299fe30bbf9316c2e30ef0c5a3563
     	String customerId = "CUSI2I00" + String.valueOf(getLastCustomerId() + 1);
         if (StringUtil.isValidFormat(customer.getDob())) {
             throw new DataBaseException("YOUR FORMAT" + customer.getDob() +
@@ -89,6 +95,11 @@ public class CustomerService {
 	}
 
 	public List<CustomerTransaction> getMiniStatementByCustomerId(String customerId) throws DataBaseException {
-		return transactionService.getCustomerMiniStatement(customerDao.retrieveCustomerById(customerId).getAccountNumber());
+		Customer customer = customerDao.retrieveCustomerById(customerId);
+		if (customer != null) {
+		    return transactionService.getCustomerMiniStatement(customer.getAccountNumber());
+		} else {
+			throw new DataBaseException("Enter valid id"); 
+		}
 	}
 } 

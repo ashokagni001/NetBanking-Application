@@ -136,7 +136,7 @@ public class CustomerController {
     public String getAddress(@ModelAttribute("Address") Address address, ModelMap message) {  
 		try {
             customerService.getAddress(address);
-            return "BranchIndex";
+            return "CustomerIndex";
 		} catch (DataBaseException e) {
 			FileUtil.exceptionOccurCreateFile("CUSTOMER ADDRESS AT TIME EXCEPTION OCCUR ..\nDATAS-->" + address  + e);
     		message.addAttribute("message", "ENTER VALID DATA ONLY"); 
@@ -208,8 +208,12 @@ public class CustomerController {
     	try {                     
             return new ModelAndView ("RetrieveAddressById", "address", customerService.getAddressById(addressId)); 
     	} catch (DataBaseException e) {
+<<<<<<< HEAD
     		FileUtil.exceptionOccurCreateFile("CUSTOMER VIEW AT TIME EXCEPTION OCCUR ..\nDATAS-->" + addressId  + e);
     		return new ModelAndView ("RetrieveAddressById", "message", e.getMessage().toString());
+=======
+    		return new ModelAndView ("CustomerIndex", "message", e.getMessage().toString());
+>>>>>>> 75919ca2c5d299fe30bbf9316c2e30ef0c5a3563
         }
     }
 	
@@ -243,8 +247,12 @@ public class CustomerController {
         try {
             return new ModelAndView("RetrieveMiniStatementByCustomerId", "miniStatement", customerService.getMiniStatementByCustomerId(customerId));
         } catch (DataBaseException e) {
+<<<<<<< HEAD
     		FileUtil.exceptionOccurCreateFile("CUSTOMER VIEW AT TIME EXCEPTION OCCUR ..\nDATAS-->" + customerId  + e);
         	return new ModelAndView("RetrieveMiniStatementByCustomerId", "message", "ENTER VALID CUSTOMER ID ONLY");
+=======
+        	return new ModelAndView("CustomerIndex", "message", "ENTER VALID CUSTOMER ID ONLY");
+>>>>>>> 75919ca2c5d299fe30bbf9316c2e30ef0c5a3563
         }
     }
 }

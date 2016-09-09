@@ -12,8 +12,8 @@ import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Branch;
 import com.i2i.netbankingApplication.service.BranchService;
-import com.i2i.netbankingApplication.util.FileUtil;
 
+<<<<<<< HEAD
 /**
  * <p>
  *    When request comes from JSP page. 
@@ -27,6 +27,8 @@ import com.i2i.netbankingApplication.util.FileUtil;
  * 
  * @created 2016-09-03
  */
+=======
+>>>>>>> 75919ca2c5d299fe30bbf9316c2e30ef0c5a3563
 @Controller
 public class BranchController {
 	BranchService branchService = new BranchService();
@@ -90,7 +92,10 @@ public class BranchController {
             message.addAttribute("Address1", new Address());
             return "AddAddress";
 		} catch (DataBaseException e) {
+<<<<<<< HEAD
 			FileUtil.exceptionOccurCreateFile("BRANCH ADD AT TIME EXCEPTION OCCUR ..\nEMAIL ID-->" + emailId  + e);
+=======
+>>>>>>> 75919ca2c5d299fe30bbf9316c2e30ef0c5a3563
     		message.addAttribute("message", e.getMessage()); 
     		return "BranchIndex";
         } 
@@ -121,7 +126,10 @@ public class BranchController {
 			message.addAttribute("message","BRANCH ADDED SUCCESS. BRANCH IFSC IS :: " + branchService.getAddress(address));
             return "BranchIndex";
 		} catch (DataBaseException e) {
+<<<<<<< HEAD
 			FileUtil.exceptionOccurCreateFile("BRANCH ADDRESS AT TIME EXCEPTION OCCUR ..\nDATAS-->" + address  + e);
+=======
+>>>>>>> 75919ca2c5d299fe30bbf9316c2e30ef0c5a3563
     		message.addAttribute("message", e.getMessage()); 
     		return "BranchIndex";
         }
@@ -146,7 +154,10 @@ public class BranchController {
             message.addAttribute("branches", branchService.getAllBranch());
             return "GetBranch";
     	} catch (DataBaseException e) {
+<<<<<<< HEAD
 			FileUtil.exceptionOccurCreateFile("BRANCH DELETE AT TIME EXCEPTION OCCUR ..\nIFSC CODE-->" + ifsc  + e);
+=======
+>>>>>>> 75919ca2c5d299fe30bbf9316c2e30ef0c5a3563
     		message.addAttribute("message", e.getMessage()); 
     		message.addAttribute("branches", branchService.getAllBranch());
             return "GetBranch";
@@ -196,7 +207,10 @@ public class BranchController {
         		}
         	}
         } catch (DataBaseException e) {
+<<<<<<< HEAD
 			FileUtil.exceptionOccurCreateFile("BRANCH VIEW AT TIME EXCEPTION OCCUR ..\nIFSC CODE-->" + ifsc  + e);
+=======
+>>>>>>> 75919ca2c5d299fe30bbf9316c2e30ef0c5a3563
         	return new ModelAndView("GetBranch","message",  e.getMessage());
         }
     }
@@ -218,7 +232,10 @@ public class BranchController {
     	try {                     
             return new ModelAndView ("RetrieveAddressById", "address", branchService.getAddressById(addressId)); 
     	} catch (DataBaseException e) {
+<<<<<<< HEAD
     		FileUtil.exceptionOccurCreateFile("BRANCH ADDRESS VIEW AT TIME EXCEPTION OCCUR ..\nDATAS-->" + addressId  + e);
+=======
+>>>>>>> 75919ca2c5d299fe30bbf9316c2e30ef0c5a3563
     		return new ModelAndView ("RetrieveAddressById", "message", e.getMessage());
         }
 	}
@@ -256,7 +273,10 @@ public class BranchController {
 	     	branchService.getAccount(accountNumber, Double.parseDouble(balance), accounttype, ifsc);
 	     	model.addAttribute("message", "ACCOUNT ADDED");
 		}catch(DataBaseException e) {
+<<<<<<< HEAD
     		FileUtil.exceptionOccurCreateFile("ACCOUNT ADD AT TIME EXCEPTION OCCUR ..\nDATAS-->" + accountNumber + balance + accounttype + ifsc);
+=======
+>>>>>>> 75919ca2c5d299fe30bbf9316c2e30ef0c5a3563
 			message.addAttribute("message", e.getMessage());
 		} finally {
 	     	return "BranchIndex";
@@ -290,10 +310,14 @@ public class BranchController {
 		try { 
 			message.addAttribute("accounts", branchService.viewAccountByBranch(ifsc));
 		}catch(DataBaseException e) {
+<<<<<<< HEAD
     		FileUtil.exceptionOccurCreateFile("ACCOUNT VIEW AT TIME EXCEPTION OCCUR ..\nIFSC CODE-->" + ifsc);
+=======
+>>>>>>> 75919ca2c5d299fe30bbf9316c2e30ef0c5a3563
 			message.addAttribute("message", e.getMessage().toString());
 		} finally {
 	     	return "ViewAccountByBranch";
 		}
 	}
+	
 }

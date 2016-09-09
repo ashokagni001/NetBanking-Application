@@ -3,20 +3,43 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <html>
     <head>
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="resource/css/bootstrap.css">
+        <script src="resource/js/bootstrap.js"></script>
+        <script src="resource/js/bootstrap1.js"></script>
         <style type="text/css">
-        body {
-        background-color: #99a38f;
-        
+        .well {
+         background-color:  #8ddfe1 ;
+        }
+        .actionform {
+        float: right;
+        }
+        .index {
+        float: left;
+        }
+        .head {
+         background-color:  #f06b6f ;
         }
         </style>
     </head>
-    <body bgcolor="#99a3ff">
-        <font size="20"><marquee behavior="alternate">NET BANKING</marquee></font>
-        <h1>VIEW BRANCH BY ID</h1>
+        <body>
+            <div class = "well">
+                <font size="20"><marquee behavior="alternate">NET BANKING</marquee></font>
+            </div>
+        
+            <h1>VIEW BRANCH BY ID</h1>
+        
+        
         <center> 
+        <div class = "actionform">
+            <h2>Choose Branch Id</h3>
+            <form action="getBranch" method="get">
+                <tr>
+                    <td><input type="text" name="ifsc" placeholder="IFSC" required></td>
+                    <td><input type="submit" name="view" value="view"></td>
+                </tr>
+                </br></br>
+                </form>
+            </div>
             <c:if test="${message != null}">
             <script type="text/javascript">
                 alert('CLICK OK THE PAGE WILL BE REFRESHED...' + "<c:out value='${message}'/>");
@@ -24,8 +47,9 @@
             </script>
         </c:if>
          <c:if test="${branch != null}">
-            <h2>Fetching Data From A Branch Database</h2> 
-            <table class = " table .table-condensed">
+            <div class = "head">
+            <h3>Fetching Data From A Branch Database</h3> 
+            <table class = " table table-bordered">
                 <tr>
 	            <th align="center" height="30" width="100">IFSC CODE</th>
 	            <th align="center" height="30" width="100">EMAIL ID</th>
@@ -43,16 +67,18 @@
                         </c:when>
                         <c:otherwise>
                             <td><c:set value="${branch.getAddress()}" var="address" /></td>
-                            <td align="center" height="30" width="100"><a href="viewBranchAddress?addressId=<c:out value="${address.addressId}"/>" style="color:blue">VIEW</a></td>  
+                            <td><a href="viewBranchAddress?addressId=<c:out value="${address.addressId}"/>" style="color:blue">VIEW</a></td>  
                         </c:otherwise>
                     </c:choose>
-                    <td align="center" height="30" width="100"><a href="deleteBranchById?ifsc=<c:out value="${branches.getIFSCode()}"/>" style="color:blue">Delete</a></td>  
+                    <td><a href="deleteBranchById?ifsc=<c:out value="${branches.getIFSCode()}"/>" style="color:blue">Delete</a></td>  
                 </tr>                               
             </table>
+            </div>
             </c:if>
             <c:if test="${branches != null}">
-            <h2>Fetching Data From A Project Management System</h2> 
-            <table class = " table .table-.active">
+            <div class = "head">
+            <h3>Fetching Data From A Project Management System</h3> 
+            <table class = " table table-bordered">
                 <tr>
                     <th align="center" height="30" width="100">S.NO</th>
 	            <th align="center" height="30" width="100">IFSC CODE</th>
@@ -83,17 +109,10 @@
                 %> 
                 </c:forEach>
             </table>
+            </div>
             </c:if>
-            <h3>Insert Id</h3>
-            <form action="getBranch" method="get">
-            <table>
-                <tr>
-                    <td><input type="text" name="ifsc" placeholder="IFSC" required></td>
-                    <td><input type="submit" name="view" value="view"></td>
-                </tr>
-            </table>
-            </br></br>
-            </form>
-            <b>Go to main page </b><a href="BranchIndex" style="font-sise:18px"> click here</a>
+            <div class ="index">
+                <b>Go to main page </b><a href="BranchIndex" style="font-sise:18px"> click here</a>
+            </div>
     </center>
 </html>

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Table(name = "branch_detail")
 public class Branch {
 	@Id
-    @Column(name = "ifsc")
+    @Column(name = "ifscode")
 	private String IFSCode;
 	
 	@Column(name = "email")

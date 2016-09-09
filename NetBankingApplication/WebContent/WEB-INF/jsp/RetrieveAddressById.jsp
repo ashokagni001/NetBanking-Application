@@ -2,9 +2,19 @@
 
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" href="resource/css/bootstrap.css">
+        <script src="resource/js/bootstrap.js"></script>
+        <script src="resource/js/bootstrap1.js"></script>
+        <style type="text/css">
+            .well {
+                background-color:  #8ddfe1 ;
+            }
+        </style>
     </head>
-    <body bgcolor="#99a38f">
+    <body>
+        <div class = "well">
+            <font size="20"><marquee behavior="alternate">NET BANKING</marquee></font>
+        </div>
         <center>
             <c:if test="${address != null}">
             <h1>Fetching Data From A Branch Database</h1> 

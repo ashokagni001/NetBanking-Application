@@ -16,7 +16,7 @@ import com.i2i.netbankingApplication.model.Branch;
 
 
 public class BranchDao {
-	HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
+HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
 	Configuration configuration = hibernateConnectionObject.getConfiguration();
 	SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
 	 

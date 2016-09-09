@@ -2,10 +2,26 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<title>Insert title here</title>
-</head>
-    <body bgcolor="#99a38f">
+    <head>
+        <link rel="stylesheet" href="resource/css/bootstrap.css">
+        <script src="resource/js/bootstrap.js"></script>
+        <script src="resource/js/bootstrap1.js"></script>
+        <style type="text/css">
+            .well {
+                background-color:  #8ddfe1 ;
+            }
+        </style>
+    </head>
+    <body>
+         <c:if test="${message != null}">
+            <script type="text/javascript">
+                alert('CLICK OK THE PAGE WILL BE REFRESHED...' + "<c:out value='${message}'/>");
+                windows.location.reload();
+            </script>
+        </c:if>
+        <div class = "well">
+            <font size="20"><marquee behavior="alternate">NET BANKING</marquee></font>
+        </div>
          <center>
              <h2>CUSTOMER INFORMATION</h2>
              <table>

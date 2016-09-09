@@ -20,16 +20,14 @@ public class RoleDao {
 	Configuration configuration = hibernateConnectionObject.getConfiguration();
 	SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
 
-	public void insertRole(String id, String customerId, String roleId) throws DataBaseException {
+	public void insertRole(UserRole userRole) throws DataBaseException {
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			String hql = "INSERT INTO user_role(id, customerId, roleId)"
-					+ "SELECT id, customerId FROM user_detail, roleId FROM role_detail";
-			Query query = (Query) session.createQuery(hql);
-			int result = query.executeUpdate();
-			System.out.println("Rows affected: " + result);
+			System.out.println("Rows affected: " + userRole);
+			session.save(userRole);
+			System.out.println("Rows affected: " + userRole);
 			transaction.commit();
 		} catch (HibernateException exp) {
 			throw new DataBaseException("ROLEDAO/ Sorry information can't save please try again" + exp);
@@ -54,22 +52,8 @@ public class RoleDao {
 		try {
 			return (Role) session.get(Role.class, id);
 		} catch (HibernateException e) {
+			System.out.println(e);
 			throw new DataBaseException("ROLEDAO/ CHECK ID " + id + "PLEASE INSERT VALID ID...\n");
-		} finally {
-			session.close();
-		}
-	}
-
-	public void deleteRole(String roleId) throws DataBaseException {
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
-		try {
-			transaction = session.beginTransaction();
-			Role role = (Role) session.get(Role.class, roleId);
-			session.delete(role);
-			transaction.commit();
-		} catch (HibernateException e) {
-			throw new DataBaseException("ROLEDAO/ CHECK ROLEID " + roleId + "PLEASE INSERT VALID ROLEID...\n");
 		} finally {
 			session.close();
 		}
@@ -78,8 +62,10 @@ public class RoleDao {
 	public List<UserRole> retriveAllUserRole() throws DataBaseException {
 		Session session = sessionFactory.openSession();
 		try {
+			System.out.println("dao userrole");
 			return session.createQuery("FROM UserRole").list();
 		} catch (HibernateException e) {
+			System.out.println(e);
 			throw new DataBaseException("ROLEDAO/ Data is not available please insert the data." + e);
 		} finally {
 			session.close();

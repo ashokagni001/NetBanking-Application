@@ -1,12 +1,21 @@
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="style.css">
+   <head>
+        <link rel="stylesheet" href="resource/css/bootstrap.css">
+        <script src="resource/js/bootstrap.js"></script>
+        <script src="resource/js/bootstrap1.js"></script>
+        <style type="text/css">
+            .well {
+                background-color:  #8ddfe1 ;
+            }
+        </style>
     </head>
-    <body bgcolor="#E9967A">
+    <body>
+        <div class = "well">
+            <font size="20"><marquee behavior="alternate">NET BANKING</marquee></font>
+        </div>
         <center>
-            <h1>NET BANKING</h1> 
             <table cellpadding="0" cellspacing="2" bordercolor=#125610 border="3">
                 <tr>
                 <th align="center" height="30" width="100">S.NO</th>
