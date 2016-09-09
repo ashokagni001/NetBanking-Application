@@ -60,12 +60,13 @@ public class BranchService {
     	return id;
     }
     
-	public void getAddress(Address address) throws DataBaseException {
+	public String getAddress(Address address) throws DataBaseException {
 	    int tempIFS = getLastIFSCode();
 	    String IFSCode = "I2I0BK" + String.valueOf(tempIFS);
 	    int id = getLastAddressId();
 	    branchDao.addAddress(IFSCode,new Address(id+1, address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
+	    return IFSCode;
     }
 
 	public Address getAddressById(int addressId) throws DataBaseException {

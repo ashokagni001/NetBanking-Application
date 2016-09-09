@@ -21,6 +21,7 @@ public class BranchController {
 	public String login() {
 		return "BranchIndex";
 	}
+	
 	@RequestMapping(value = "/addBranch")
 	public String getBranch(ModelMap model) {
 		model.addAttribute("Branch", new Branch());
@@ -30,24 +31,25 @@ public class BranchController {
 	@RequestMapping(value="/insertBranch", method = RequestMethod.POST)
     public String addBranch(@RequestParam("emailId") String emailId, ModelMap message) {  
 		try {
-		    branchService.getBranch(emailId);
+			branchService.getBranch(emailId);
             message.addAttribute("Address1", new Address());
             return "AddAddress";
 		} catch (DataBaseException e) {
-    		message.addAttribute("message", "ENTER VALID DATA ONLY"); 
-        }
-		return "BranchIndex";
+    		message.addAttribute("message", e.getMessage()); 
+    		return "BranchIndex";
+        } 
+		
     }
 	
 	@RequestMapping(value="/address", method = RequestMethod.POST)
     public String addAddress(@ModelAttribute("address1") Address address, ModelMap message) {  
 		try {
-            branchService.getAddress(address);
+			message.addAttribute("message","Branch added suceess. Branch IFSC is :: " + branchService.getAddress(address));
             return "BranchIndex";
 		} catch (DataBaseException e) {
-    		message.addAttribute("message", "ENTER VALID DATA ONLY"); 
+    		message.addAttribute("message", e.getMessage()); 
+    		return "BranchIndex";
         }
-		return "BranchIndex";
     }
 	
 	@RequestMapping(value = "/deleteBranch")
@@ -60,10 +62,11 @@ public class BranchController {
     	try {       
             branchService.deleteBranchById(ifsc);
             message.addAttribute("message", "BRANCH DELETED SUCESSFULLY");
+            return "BranchIndex";
     	} catch (DataBaseException e) {
-    		message.addAttribute("message", e.getMessage().toString()); 
+    		message.addAttribute("message", e.getMessage()); 
+    		return "BranchIndex";
         }
-        return "DeleteBranch";
     }
 	
 	@RequestMapping(value = "/GetBranch")
@@ -85,7 +88,7 @@ public class BranchController {
         		}
         	}
         } catch (DataBaseException e) {
-        	return new ModelAndView("GetBranch","message",  e.getMessage().toString());
+        	return new ModelAndView("GetBranch","message",  e.getMessage());
         }
     }
 	
@@ -94,7 +97,7 @@ public class BranchController {
     	try {                     
             return new ModelAndView ("RetrieveAddressById", "address", branchService.getAddressById(addressId)); 
     	} catch (DataBaseException e) {
-    		return new ModelAndView ("RetrieveAddressById", "message", e.getMessage().toString());
+    		return new ModelAndView ("RetrieveAddressById", "message", e.getMessage());
         }
 	}
 	
@@ -108,7 +111,7 @@ public class BranchController {
 		try { 
 	     	branchService.getAccount(accountNumber, Double.parseDouble(balance), accounttype, ifsc);
 		}catch(DataBaseException e) {
-			message.addAttribute("message", e.getMessage().toString());
+			message.addAttribute("message", e.getMessage());
 		} finally {
 	     	return "BranchIndex";
 		}
