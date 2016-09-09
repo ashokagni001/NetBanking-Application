@@ -15,8 +15,8 @@ import com.i2i.netbankingApplication.util.StringUtil;
 public class CustomerService {
     CustomerDao customerDao = new CustomerDao();
     private TransactionService transactionService = new TransactionService();
-    public void getUser(Customer customer) throws DataBaseException, CustomerDataException {
-    	String customerId = " ";
+    
+    public void getCustomer(Customer customer) throws DataBaseException, CustomerDataException {
     	Account account = customerDao.retrieveAccountByNumber(customer.getAccountNumber());
     	
     	if (account == null) {
@@ -26,7 +26,8 @@ public class CustomerService {
     	if (account.getCustomer() != null) {
     		throw new CustomerDataException("YOUR ACCOUNT NUMBER ALREADY ALLOCATED ANOTHER CUSTOMER"); 
     	}
-        customerId = "CUSI2I00" + String.valueOf(getLastCustomerId() + 1);
+    	
+    	String customerId = "CUSI2I00" + String.valueOf(getLastCustomerId() + 1);
         if (StringUtil.isValidFormat(customer.getDob())) {
             throw new DataBaseException("YOUR FORMAT" + customer.getDob() +
                 "FORMAT MUST 1/05/2000.INSERT VALID DOB..!!");  

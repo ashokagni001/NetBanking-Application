@@ -2,12 +2,10 @@ package com.i2i.netbankingApplication.service;
 
 import java.util.List;
 
-import com.i2i.netbankingApplication.dao.CustomerDao;
 import com.i2i.netbankingApplication.dao.RoleDao;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.Customer;
 import com.i2i.netbankingApplication.model.Role;
-import com.i2i.netbankingApplication.model.User;
 import com.i2i.netbankingApplication.model.UserRole;
 import com.i2i.netbankingApplication.service.CustomerService;
 

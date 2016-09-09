@@ -17,6 +17,10 @@
           If U Want Customer Operation Open Click On <br/><br/><a href=CustomerIndex>OPEN</a>
           <br/><br/>
           If U Want Transaction Operation Open Click On <br/><br/><a href=TransactionIndex>OPEN</a>
+          <br/><br/>
+          If U Want Role Operation Open Click On <br/><br/><a href=RoleIndex>OPEN</a>
+          <br/><br/>
+          If U Want Login Operation Open Click On <br/><br/><a href =index>Login</a>
       </center>
 </body>
 </html>
