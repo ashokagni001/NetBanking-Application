@@ -1,27 +1,45 @@
 package com.i2i.netbankingApplication.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "role_detail")
 public class Role {
-	private int id;
-	private String role;
+	
+	@Id
+	@Column(name = "role_id")
+	private String roleId;
+	
+	@Column(name = "role_name")
+	private String roleName;
 	
 	public Role() {
 	}
     
-	public int getId() {
-		return id;
+	public Role(String roleId, String roleName) {
+		this.roleId = roleId;
+		this.roleName = roleName;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public String getRoleId() {
+		return roleId;
 	}
 
-	public String getRole() {
-		return role;
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public String getRoleName() {
+		return roleName;
 	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+	
 }
 	
 

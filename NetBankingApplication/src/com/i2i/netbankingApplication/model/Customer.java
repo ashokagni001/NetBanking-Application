@@ -48,7 +48,7 @@ public class Customer {
     private String email;
 	
 	@Column(name = "password")
-    private String password;
+    private String passWord;
 	
 	@Column(name = "account_number")
 	private String accountNumber;
@@ -56,7 +56,7 @@ public class Customer {
 	@Column(name = "status")
     private String status;
 	
-	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinColumn(name="address_id")
 	public Address address;
     
@@ -64,7 +64,7 @@ public class Customer {
     }
     
     public Customer(String customerId, String name, int age, String dob, String gender,
-    		String mobileNumber, String email, String password, String accountNumber, String status) {
+            String mobileNumber, String email, String passWord, String accountNumber, String status) {
     	this.customerId = customerId;
     	this.name = name;
     	this.age = age;
@@ -72,7 +72,7 @@ public class Customer {
     	this.gender = gender;
     	this.mobileNumber = mobileNumber;
     	this.email = email;
-    	this.password = password;
+    	this.passWord = passWord;
     	this.accountNumber = accountNumber;
     	this.status = status;
     }
@@ -133,12 +133,12 @@ public class Customer {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getPassWord() {
+		return passWord;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPassWord(String passWord) {
+		this.passWord = passWord;
 	}
 
 	public String getAccountNumber() {

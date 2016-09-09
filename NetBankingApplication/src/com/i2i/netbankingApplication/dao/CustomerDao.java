@@ -32,28 +32,11 @@ public class CustomerDao {
             session.update(account);
             transaction.commit();
         } catch(Exception e) {
-        	System.out.println(e);
+        	e.printStackTrace();
         } finally {
             session.close();
         }
     }
-	
-	public void addAddress(String customerId, Address address) throws DataBaseException {
-	    Session session = sessionFactory.openSession();
-	    Transaction transaction = null;
-	    try {
-	        transaction = session.beginTransaction();
-	        Customer customer = (Customer)session.get(Customer.class, customerId);
-	        session.save(address); 
-		    customer.setAddress(address);
-	        session.update(customer);
-	        transaction.commit();   
-		} catch (HibernateException e) {
-			throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
-	    } finally {
-	        session.close(); 
-	    }
-	}
 	
 	public Customer retrieveCustomerById(String customerId) throws DataBaseException {
 	    Customer customer = null ;
@@ -76,12 +59,29 @@ public class CustomerDao {
 	    try {
 	        return session.createQuery("FROM Customer").list();
 	    } catch (HibernateException e) {
-	        throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA." + e);
+	        throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
 	    } finally {
 	        session.close();
 	    }
 	}
 	
+	public void addAddress(String customerId, Address address) throws DataBaseException {
+	    Session session = sessionFactory.openSession();
+	    Transaction transaction = null;
+	    try {
+	        transaction = session.beginTransaction();
+	        Customer customer = (Customer)session.get(Customer.class, customerId);
+	        session.save(address); 
+		    customer.setAddress(address);
+	        session.update(customer);
+	        transaction.commit();   
+		} catch (HibernateException e) {
+			throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
+	    } finally {
+	        session.close(); 
+	    }
+	}
+	 
 	public List<Address> retriveAllAddresses() throws DataBaseException {
 	    Session session = sessionFactory.openSession();
 	    try {

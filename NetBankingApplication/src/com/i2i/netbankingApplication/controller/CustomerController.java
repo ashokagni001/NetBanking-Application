@@ -47,7 +47,7 @@ public class CustomerController {
     public String addAddress(@ModelAttribute("Address") Address address, ModelMap message) {  
 		try {
             customerService.getAddress(address);
-            return "BranchIndex";
+            return "CustomerIndex";
 		} catch (DataBaseException e) {
     		message.addAttribute("message", "ENTER VALID DATA ONLY"); 
         }
@@ -55,7 +55,8 @@ public class CustomerController {
     }
 	
 	@RequestMapping(value = "/GetCustomer")
-	public String getCustomerById() {
+	public String getCustomerById( ModelMap message) throws DataBaseException {
+		message.addAttribute("customers", customerService.getAllCustomer());
 		return "GetCustomer";
 	}
 	
@@ -82,7 +83,22 @@ public class CustomerController {
     	try {                     
             return new ModelAndView ("RetrieveAddressById", "address", customerService.getAddressById(addressId)); 
     	} catch (DataBaseException e) {
-    		return new ModelAndView ("RetrieveAddressById", "message", e.getMessage().toString());
+    		return new ModelAndView ("CustomerIndex", "message", e.getMessage().toString());
         }
+    }
+	
+	@RequestMapping(value = "/getMiniStatementByCustomerId")
+	public String getMiniStatementByCustomerId() {
+		return "GetMiniStatementByCustomerId";
 	}
+	
+	@RequestMapping(value="/viewMiniStatementByCustomerId", method = RequestMethod.GET)  
+    public ModelAndView viewMiniStatementByCustomerId (@RequestParam("customerId")String customerId, ModelMap message) {
+        try {
+            return new ModelAndView("RetrieveMiniStatementByCustomerId", "miniStatement", customerService.getMiniStatementByCustomerId(customerId));
+        } catch (DataBaseException e) {
+        	return new ModelAndView("CustomerIndex", "message", "ENTER VALID CUSTOMER ID ONLY");
+        }
+    }
+
 }

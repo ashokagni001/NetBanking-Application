@@ -2,12 +2,21 @@
 
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" href="resource/css/bootstrap.css">
+        <script src="resource/js/bootstrap.js"></script>
+        <script src="resource/js/bootstrap1.js"></script>
+        <style type="text/css">
+            .well {
+                background-color:  #8ddfe1 ;
+            }
+        </style>
     </head>
-    <body bgcolor="#E9967A">
+    <body>
+        <div class = "well">
+            <font size="20"><marquee behavior="alternate">NET BANKING</marquee></font>
+        </div>
         <center>
-            <h1>NET BANKING</h1> 
-            <table cellpadding="0" cellspacing="2" bordercolor=#125610 border="3">
+            <table class = "table">
                 <tr>
 	            <th align="center" height="30" width="100">ACCOUNT NUMBER</th>
 	            <th align="center" height="30" width="100">USER ID</th>
@@ -25,7 +34,7 @@
                         <td><c:out value="${branch.IFSCode}" /></td>
                         <td><c:out value="${accountDetail.getBalance()}" /></td>
                         <td><c:out value="${accountDetail.getAccountType()}" /></td>
-                        <td align="center" height="30" width="100"><a href="getCustomerById?customerId=<c:out value="${customer.customerId}"/>" style="color:blue">VIEW USER DETAIL</a></td>  
+                        <td align="center" height="30" width="100"><a href="GetCustomer?customerId=<c:out value="${customer.customerId}"/>" style="color:blue">VIEW USER DETAIL</a></td>  
                   </tr>
             </table>
             <br/><br/>

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
     <style type="text/css">
@@ -30,26 +29,25 @@
     </head>
     <body bgcolor="#99a38f">
         <font size="20"><marquee behavior="alternate">NET BANKING</marquee></font>
-        <h1>DELETE BANK</h1>
+        <h1>VIEW ROLE BY ID</h1>
         <center> 
             <h2>Insert Id</h2>
-            <form action="deleteBranchById" method="get">
+            <form action="getRoleById" method="get">
             <table>
                 <tr>
                     <td>
-                        <input type="text" name="ifsc" placeholder="IFSC" required>
+                        <input type="text" name="Id" placeholder="Enter the Id" required>
                     </td>
                 </tr>
             </table>
             </br></br>
+            <input type="submit" name="view" value="VIEW">
+            </form>
             <c:if test="${message != null}">
             <script type="text/javascript">
                 alert('CLICK OK THE PAGE WILL BE REFRESHED...' + "<c:out value='${message}'/>");
                 windows.location.reload();
             </script>
         </c:if>
-            <input type="submit" name="delete" value="DELETE">
-            </form>
-            <b>Go to main page </b><a href="BranchIndex" style="font-sise:18px"> click here</a>
     </center>
 </html>

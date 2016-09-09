@@ -9,15 +9,14 @@ import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Customer;
+import com.i2i.netbankingApplication.model.CustomerTransaction;
 import com.i2i.netbankingApplication.util.StringUtil;
 
 public class CustomerService {
     CustomerDao customerDao = new CustomerDao();
-    
+    private TransactionService transactionService = new TransactionService();
     public void getUser(Customer customer) throws DataBaseException, CustomerDataException {
-    	String customerId = " ";
     	Account account = customerDao.retrieveAccountByNumber(customer.getAccountNumber());
-    	
     	if (account == null) {
     		throw new CustomerDataException("YOUR ACCOUNT NUMBER IS NOT VALID");  
     	}
@@ -25,12 +24,7 @@ public class CustomerService {
     	if (account.getCustomer() != null) {
     		throw new CustomerDataException("YOUR ACCOUNT NUMBER ALREADY ALLOCATED ANOTHER CUSTOMER"); 
     	}
-    	
-      	int tempcustomerId = getLastCustomerId();
-        if (tempcustomerId >= 0) {
-        	customerId = "I2I0BK" + String.valueOf(tempcustomerId + 1);
-        } 
-        
+    	String customerId = "CUSI2I00" + String.valueOf(getLastCustomerId() + 1);
         if (StringUtil.isValidFormat(customer.getDob())) {
             throw new DataBaseException("YOUR FORMAT" + customer.getDob() +
                 "FORMAT MUST 1/05/2000.INSERT VALID DOB..!!");  
@@ -78,10 +72,8 @@ public class CustomerService {
 	}
     
 	public void getAddress(Address address) throws DataBaseException {
-	    int tempcustomerId = getLastCustomerId();
-	    String customerId = "I2I0BK" + String.valueOf(tempcustomerId);
-	    int id = getLastAddressId();
-	    customerDao.addAddress(customerId, new Address(id+1, address.getStreet(),
+	    String customerId = "CUSI2I00" + String.valueOf(getLastCustomerId());
+	    customerDao.addAddress(customerId, new Address(getLastAddressId() + 1, address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
     }
 
@@ -91,5 +83,14 @@ public class CustomerService {
 	
 	public Address getAddressById(int addressId) throws DataBaseException {
 	    return customerDao.retrieveAddressById(addressId);
+	}
+
+	public List<CustomerTransaction> getMiniStatementByCustomerId(String customerId) throws DataBaseException {
+		Customer customer = customerDao.retrieveCustomerById(customerId);
+		if (customer != null) {
+		    return transactionService.getCustomerMiniStatement(customer.getAccountNumber());
+		} else {
+			throw new DataBaseException("Enter valid id"); 
+		}
 	}
 } 

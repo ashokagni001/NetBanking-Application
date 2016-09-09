@@ -36,6 +36,15 @@ public class TransactionController {
 		return "CustomerOperation";
 	}
 	
+	@RequestMapping(value="/notification", method = RequestMethod.GET)
+    public ModelAndView notification() {
+    	try {                     
+            return new ModelAndView ("RetrieveAllNotification", "notifications", transactionService.getAllNotification()); 
+    	} catch (DataBaseException e) {
+    		return new ModelAndView ("RetrieveAllNotification", "message", e.getMessage().toString());
+        }
+	}
+	
 	@RequestMapping(value="/viewAllTransaction", method = RequestMethod.GET)
     public ModelAndView viewAllTransaction() {
     	try {                     
@@ -54,13 +63,27 @@ public class TransactionController {
         }
     }
 	
-	/*@RequestMapping(value="/transactionSuccess", method = RequestMethod.GET)
-    public ModelAndView transactionSuccess(@RequestParam("id")int transactionId) {
+	@RequestMapping(value="/transactionSuccess", method = RequestMethod.GET)
+    public String transactionSuccess(@RequestParam("id")int transactionId,
+    		@RequestParam("criditAccountNumber")String criditAccountNumber, @RequestParam("amount")Double amount, ModelMap message) {
     	try {           
-    		transactionService.transactionSuccess(transactionId);
-            return new ModelAndView ("RetrieveAllTransaction", "transactions", "TRANSACTION ACTION SUCCESSFULLY"); 
+    		transactionService.transactionSuccess(transactionId, criditAccountNumber, amount);
+    		message.addAttribute("message", "TRANSACTION ACTION SUCCESSFULLY"); 
     	} catch (DataBaseException e) {
-    		return new ModelAndView ("RetrieveAllTransaction", "message", e.getMessage().toString());
+    		message.addAttribute( "message", e.getMessage().toString());
         }
-	}*/
+		return "viewAllTransaction";
+	}
+	
+	@RequestMapping(value="/transactionCancel", method = RequestMethod.GET)
+    public String transactionFailure(@RequestParam("id")int transactionId,
+    		@RequestParam("debitAccountNumber")String debitAccountNumber, @RequestParam("amount")Double amount, ModelMap message) {
+    	try {           
+    		transactionService.transactionFailure(transactionId, debitAccountNumber, amount);
+            message.addAttribute("transactions", "TRANSACTION ACTION SUCCESSFULLY"); 
+    	} catch (DataBaseException e) {
+    		message.addAttribute("message", e.getMessage().toString());
+        }
+		return "viewAllTransaction";
+	}
 }

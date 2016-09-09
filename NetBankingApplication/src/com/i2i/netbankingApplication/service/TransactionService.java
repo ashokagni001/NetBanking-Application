@@ -6,14 +6,13 @@ import java.util.List;
 import com.i2i.netbankingApplication.dao.TransactionDao;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.Account;
-import com.i2i.netbankingApplication.model.Branch;
+import com.i2i.netbankingApplication.model.Customer;
 import com.i2i.netbankingApplication.model.CustomerTransaction;
 
 public class TransactionService {
 	TransactionDao transactionDao = new TransactionDao();
-	
-	public void getTransactionDetail(String debitAccountNumber, String criditAccountNumber, String ifscode, double amount) 
-			throws DataBaseException {
+	public void getTransactionDetail(String debitAccountNumber, String criditAccountNumber, 
+			String ifscode, double amount) throws DataBaseException {
 		Account debitAccount = transactionDao.retrieveAccountByNumber(debitAccountNumber);
 		Account criditAccount = transactionDao.retrieveAccountByNumber(criditAccountNumber);
 		if (debitAccount != null) {
@@ -29,7 +28,7 @@ public class TransactionService {
 				    }
 				} 
 			}
-		} else{
+		} else {
 			throw new DataBaseException("Your debitAccountNumber or criditAccountNumber incorrect"); 
 		}
 	}
@@ -49,20 +48,65 @@ public class TransactionService {
     	return id + 1;
     }
     
-    public List<CustomerTransaction> getAllTransaction() throws DataBaseException {
-		List transactions = new ArrayList();
+	public CustomerTransaction getTransactionById(String transactionId) throws DataBaseException {
+        return transactionDao.retrieveCustomerTransactionById(transactionId); 
+    }
+	
+	public List<CustomerTransaction> getAllTransaction() throws DataBaseException {
+		List<CustomerTransaction> transactions = new ArrayList<CustomerTransaction>();
 		for (CustomerTransaction transaction : transactionDao.retriveAllTransactions()) {
-			if (transaction.getStatus().equals("Request")) {
-				transactions.add(transaction);
-			}
+			    transactions.add(transaction);
 		}
 		return transactions;
 	}
-
+    
+    public List<CustomerTransaction> getAllNotification() throws DataBaseException {
+		List<CustomerTransaction> transactions = new ArrayList<CustomerTransaction>();
+		for (CustomerTransaction transaction : transactionDao.retriveAllTransactions()) {
+			if (transaction.getStatus().equals("Request")) {
+				transactions.add(transaction);
+			} 
+		}
+		return transactions;
+	}
+    
+    public List getCustomerMiniStatement(String customerAccountNumber) throws DataBaseException {
+		List transactions = new ArrayList();
+		for (CustomerTransaction transaction : transactionDao.retriveAllTransactions()) {
+			if (transaction.getDebitAccount().getAccountNumber().equals(customerAccountNumber)) {
+	        	transactions.add(transaction);
+	        } else if (transaction.getCriditAccount().getAccountNumber().equals(customerAccountNumber)) {
+	            if (!(transaction.getStatus().equals("Request"))) {
+	                transactions.add(transaction);
+	            }
+	        }
+		}
+		return transactions;
+	}
+    		
 	public Account getCustomerAccount(String accountNumber) throws DataBaseException {
 		return transactionDao.retrieveAccountDetail(accountNumber);
 	}
-
-	public void transactionSuccess(int transactionId) {
+	
+	public void transactionSuccess(int transactionId, String criditAccountNumber, Double amount) throws DataBaseException {
+		Account criditAccount = transactionDao.retrieveAccountByNumber(criditAccountNumber);
+		if (criditAccount != null) {
+			 double currentAmount = criditAccount.getBalance();
+			 double balanceAmount = (currentAmount + amount);
+			 transactionDao.transactionSuccess(criditAccount.getAccountNumber(), balanceAmount, transactionId);
+        } else {
+	        throw new DataBaseException("CRIDIT ACCOUNT IS NOT AVAILABLE "); 
+        }
+	}
+	
+	public void transactionFailure(int transactionId, String debitAccountNumber, Double amount) throws DataBaseException {
+		Account debitAccount = transactionDao.retrieveAccountByNumber(debitAccountNumber);
+		if (debitAccount != null) {
+			 double currentAmount = debitAccount.getBalance();
+			 double balanceAmount = (currentAmount + amount);
+			 transactionDao.transactionFailure(debitAccount.getAccountNumber(), balanceAmount, transactionId);
+        } else {
+	        throw new DataBaseException("CRIDIT ACCOUNT IS NOT AVAILABLE "); 
+        }
 	}
 }

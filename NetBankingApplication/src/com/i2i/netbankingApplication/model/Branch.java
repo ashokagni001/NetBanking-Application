@@ -20,13 +20,8 @@ public class Branch {
 	
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="address_id")
-    //private String addressId;
 	public Address address;
 	
-   // @OneToMany(cascade=CascadeType.PERSIST)
-    //@JoinColumn(name="address_id")
-    //public Set<Branch> branch = new HashSet<Branch>();
-    
 	public Branch() {
 	}
 	

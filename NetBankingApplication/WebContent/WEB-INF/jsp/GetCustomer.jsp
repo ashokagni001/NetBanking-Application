@@ -3,32 +3,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <html>
     <head>
-    <style type="text/css">
-    input[type=submit] {
-             width: 100%;
-             background-color: #4CAF50;
-             color: white;
-             padding: 14px 20px;
-             margin: 8px 0;
-             border: none;
-             border-radius: 100px;
-             cursor: pointer;
-             outline:none;
-         }
-         input[type=text] {
-             width: 90%;
-             padding: 12px 20px;
-             margin: 8px 0;
-             display: inline-block;
-             border: 1px solid #ccc;
-             border-radius: 100px;
-             box-sizing: border-box;
-             outline:none;
-         }
-    </style>
+        <link rel="stylesheet" href="resource/css/bootstrap.css">
+        <script src="resource/js/bootstrap.js"></script>
+        <script src="resource/js/bootstrap1.js"></script>
+        <style type="text/css">
+            .well {
+                background-color:  #8ddfe1 ;
+            }
+        </style>
     </head>
-    <body bgcolor="#99a38f">
-        <font size="20"><marquee behavior="alternate">NET BANKING</marquee></font>
+    <body">
+        <div class = "well">
+            <font size="20"><marquee behavior="alternate">NET BANKING</marquee></font>
+        </div>
         <c:if test="${message != null}">
                 <script type="text/javascript">
                     alert('CLICK OK THE PAGE WILL BE REFRESHED...' + "<c:out value='${message}'/>");
@@ -46,7 +33,7 @@
         <center>
             <c:if test="${customer != null}">
             <h2>Fetching Data From A Customer Management System</h2> 
-            <table cellpadding="0" cellspacing="2" bordercolor=#125610 border="3">
+            <table class = " table table-condensed">
                 <tr>
 	                <th align="center" height="30" width="100">CUSTOMER ID</th>
 	                <th align="center" height="30" width="100">NAME</th>
@@ -79,13 +66,13 @@
                             <c:out value="${address.addressId}" /></td>
                         </c:otherwise>
                     </c:choose>
-                    <td align="center" height="30" width="100"><a href="viewCustomerAddress?addressId=<c:out value="${address.addressId}"/>" style="color:blue">VIEW</a></td>  
+                    <td><a href="viewCustomerAddress?addressId=<c:out value="${address.addressId}"/>" style="color:blue">VIEW</a></td>  
                     </tr> 
             </table>
             </c:if>
             <c:if test = "${customers != null}">
             <h2>Fetching Data From A Customer Management System</h2> 
-            <table cellpadding="0" cellspacing="2" bordercolor=#125610 border="3">
+            <table class = " table table-bordered">
                 <tr>
                     <th align="center" height="30" width="100">S.NO</th>
 	            <th align="center" height="30" width="100">CUSTOMER ID</th>
@@ -122,7 +109,7 @@
                             <c:out value="${address.addressId}" /></td>
                         </c:otherwise>
                     </c:choose>
-                    <td align="center" height="30" width="100"><a href="viewCustomerAddress?addressId=<c:out value="${address.addressId}"/>" style="color:blue">VIEW</a></td>  
+                    <td><a href="viewCustomerAddress?addressId=<c:out value="${address.addressId}"/>" style="color:blue">VIEW</a></td>  
                     </tr>                   
                 <%    
                     sno++;   

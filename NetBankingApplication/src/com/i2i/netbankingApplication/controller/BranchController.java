@@ -52,20 +52,17 @@ public class BranchController {
         }
     }
 	
-	@RequestMapping(value = "/deleteBranch")
-	public String deleteBranch() {
-		return "DeleteBranch";
-	}
-	
 	@RequestMapping(value="/deleteBranchById", method = RequestMethod.GET)
-    public String deleteBranch(@RequestParam("ifsc")String ifsc, ModelMap message) {
+    public String deleteBranch(@RequestParam("ifsc")String ifsc, ModelMap message) throws DataBaseException {
     	try {       
             branchService.deleteBranchById(ifsc);
             message.addAttribute("message", "BRANCH DELETED SUCESSFULLY");
-            return "BranchIndex";
+            message.addAttribute("branches", branchService.getAllBranch());
+            return "GetBranch";
     	} catch (DataBaseException e) {
     		message.addAttribute("message", e.getMessage()); 
-    		return "BranchIndex";
+    		message.addAttribute("branches", branchService.getAllBranch());
+            return "GetBranch";
         }
     }
 	
