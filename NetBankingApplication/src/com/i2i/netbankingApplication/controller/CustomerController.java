@@ -46,7 +46,7 @@ public class CustomerController {
 	@RequestMapping(value="/customerAddress", method = RequestMethod.POST)
     public String addAddress(@ModelAttribute("Address") Address address, ModelMap message) {  
 		try {
-            customerService.getAddress(address);
+			message.addAttribute("message", customerService.getAddress(address));
             return "CustomerIndex";
 		} catch (DataBaseException e) {
     		message.addAttribute("message", "ENTER VALID DATA ONLY"); 
@@ -61,20 +61,22 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value="/getCustomer", method = RequestMethod.GET)  
-    public ModelAndView viewBranchById (@RequestParam("customerId")String customerId, ModelMap message) {
+    public String viewBranchById (@RequestParam("customerId")String customerId, ModelMap message) {
         try {
         	if (customerId.equals("all") || customerId.equals("All") || customerId.equals("ALL")) {
-        		return new ModelAndView ("GetCustomer", "customers", customerService.getAllCustomer());
+        		message.addAttribute("customers", customerService.getAllCustomer());
         	} else {
         		Customer customer = customerService.getCustomerById(customerId);
         		if (customer != null) {
-        			return new ModelAndView("GetCustomer", "customer", customer);
+        			message.addAttribute("customer", customer);
         		} else {
-        			return new ModelAndView("GetCustomer", "message", "ENTER VALID CUSTOMER ID ONLY");
+        			message.addAttribute("message", "ENTER VALID CUSTOMER ID ONLY");
         		}
         	}
         } catch (DataBaseException e) {
-        	return new ModelAndView("GetCustomer", "message", e.getMessage().toString());
+        	message.addAttribute("message", e.getMessage().toString());
+        } finally {
+        	return "GetCustomer";
         }
     }
 	
@@ -100,5 +102,29 @@ public class CustomerController {
         	return new ModelAndView("CustomerIndex", "message", "ENTER VALID CUSTOMER ID ONLY");
         }
     }
+	
+	@RequestMapping(value = "/addUserRole")
+	public String addUserRole(ModelMap model) throws DataBaseException {
+		if (customerService.isRoleAvailable()) {
+			model.addAttribute("roles", customerService.getAllRole());
+		} else {
+			model.addAttribute("message", "Sorry role is not present");
+		}
+		return "AddUserRole";
+	}
+
+	@RequestMapping(value = "/insertRole", method = RequestMethod.GET)
+	public String addUserRole(@RequestParam("customerId") String customerId, @RequestParam("role") String roleId,
+			ModelMap message) throws DataBaseException {
+		try {
+			customerService.insertRole(customerId, roleId);
+			message.addAttribute("message", "INFORMATION SAVED SUCESSFULLY");
+			message.addAttribute("roles", customerService.getAllRole());
+		} catch (DataBaseException  e) {
+			message.addAttribute("message", e.getMessage().toString());
+			message.addAttribute("roles", customerService.getAllRole());
+		}
+		return "AddUserRole";
+	}
 
 }

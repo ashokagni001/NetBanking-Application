@@ -29,11 +29,12 @@ public class TransactionController {
 	    @RequestParam("criditAccountNumber") String criditAccountNumber, @RequestParam("ifscode")String ifscode ,
 	    @RequestParam("amount")String amount,ModelMap message) {  
 		try {
-			transactionService.getTransactionDetail(debitAccountNumber, criditAccountNumber, ifscode, Double.parseDouble(amount));
+			message.addAttribute("message", transactionService.getTransactionDetail(debitAccountNumber, criditAccountNumber, ifscode, Double.parseDouble(amount)));
 		} catch (DataBaseException e) {
-	        System.out.println("ENTER VALID DATA ONLY" + e); 
+			message.addAttribute("message", e.toString()); 
+	    } finally {
+		    return "TransactionIndex";
 	    }
-		return "CustomerOperation";
 	}
 	
 	@RequestMapping(value="/notification", method = RequestMethod.GET)

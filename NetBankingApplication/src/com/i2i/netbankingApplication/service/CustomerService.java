@@ -10,11 +10,38 @@ import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Customer;
 import com.i2i.netbankingApplication.model.CustomerTransaction;
+import com.i2i.netbankingApplication.model.Role;
+import com.i2i.netbankingApplication.model.UserRole;
 import com.i2i.netbankingApplication.util.StringUtil;
-
+/**
+ * <p>
+ *     When values comes from CustomerController.
+ *     CustomerService operate passing value's to CustomerDao based on requset's from CustomerController.
+ *     It can operate validation before send the value's in CustomerDao.
+ *     It can be send the value's to CustomerController from CustomerDao.
+ * </p>
+ * 
+ * @author TEAM-2
+ * 
+ * @created
+ *
+ */
 public class CustomerService {
     CustomerDao customerDao = new CustomerDao();
     private TransactionService transactionService = new TransactionService();
+    
+    /**
+     * <p>
+     * customer object get from CustomerController.
+     * In this customer is check already have bank account.If account exit given the customer id, password.   
+     * If they not account return some use full message.
+     * In this method we done customer id and password manual generation.
+     * If customer add successfully return customer id and password.
+     * 
+     * @param customer
+     * @throws DataBaseException
+     * @throws CustomerDataException
+     */
     public void getUser(Customer customer) throws DataBaseException, CustomerDataException {
     	Account account = customerDao.retrieveAccountByNumber(customer.getAccountNumber());
     	if (account == null) {
@@ -22,7 +49,7 @@ public class CustomerService {
     	}
     	
     	if (account.getCustomer() != null) {
-    		throw new CustomerDataException("YOUR ACCOUNT NUMBER ALREADY ALLOCATED ANOTHER CUSTOMER"); 
+    		throw new CustomerDataException("YOUR ALREADY REGISTER THE NETBANKING..."); 
     	}
     	String customerId = "CUSI2I00" + String.valueOf(getLastCustomerId() + 1);
         if (StringUtil.isValidFormat(customer.getDob())) {
@@ -36,8 +63,9 @@ public class CustomerService {
         }
         
         String password = "i2i" + String.valueOf((int)(Math.random()*9000));
-    	customerDao.insertUser(customer.getAccountNumber(), new Customer(customerId, customer.getName(), customerAge, customer.getDob(), 
+        customerDao.insertUser(customer.getAccountNumber(), new Customer(customerId, customer.getName(), customerAge, customer.getDob(), 
             customer.getGender(), customer.getMobileNumber(), customer.getEmail(), password, customer.getAccountNumber(), "Request"));
+    	 
     }
     
 	public int getLastAddressId() throws DataBaseException {
@@ -71,9 +99,9 @@ public class CustomerService {
     	return customerDao.retriveAllCustomer();
 	}
     
-	public void getAddress(Address address) throws DataBaseException {
+	public String getAddress(Address address) throws DataBaseException {
 	    String customerId = "CUSI2I00" + String.valueOf(getLastCustomerId());
-	    customerDao.addAddress(customerId, new Address(getLastAddressId() + 1, address.getStreet(),
+	    return customerDao.addAddress(customerId, new Address(getLastAddressId() + 1, address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
     }
 
@@ -92,5 +120,55 @@ public class CustomerService {
 		} else {
 			throw new DataBaseException("Enter valid id"); 
 		}
+	}
+	
+	public void insertRole(String customerId, String roleId) throws DataBaseException {
+		Customer customer = customerDao.retrieveCustomerById(customerId);
+		if (customer != null) {
+			Role role = customerDao.retrieveRoleById(roleId);
+			if (IfUserRoleExist(customerId, roleId)) {
+			    customerDao.insertRole(new UserRole(getUserRoleLastId() + 1, customer, role));
+			} else {
+				throw new DataBaseException("ALREADY CUSTOMER ASSINED SAME ROLE");
+			}
+		} else {
+			throw new DataBaseException("Please enter the valid userId");
+		}
+	}
+
+	public List<Role> getAllRole() throws DataBaseException {
+		return customerDao.retriveAllRole();
+	}
+
+	public boolean isRoleAvailable() throws DataBaseException {
+		return (getAllRole().size() != 0);
+	}
+    
+	public int getUserRoleLastId() throws DataBaseException {
+		int lastId = 0;
+		if (customerDao.retriveAllUserRole().size() == 0) {
+			return lastId;
+		} else {
+		    for (UserRole userRole : customerDao.retriveAllUserRole()) {
+			    int tempId = userRole.getId();
+			    if (lastId <= tempId) {
+				    lastId = tempId;
+			    }
+		    }
+		return lastId;
+		}
+	}
+	
+	public boolean IfUserRoleExist(String customerId, String roleId) throws DataBaseException {
+		if (customerDao.retriveAllUserRole().size() == 0) {
+			return true;
+		} else {
+		    for (UserRole userRole : customerDao.retriveAllUserRole()) {
+			    if ((userRole.getCustomer().getCustomerId().equals(customerId)) && (userRole.getRole().getRoleId().equals(roleId))) {
+			    	return false;
+			    }
+		    }
+		return true;
+	    }
 	}
 } 

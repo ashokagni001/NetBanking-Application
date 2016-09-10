@@ -106,7 +106,7 @@ public class BranchController {
 	@RequestMapping(value="/addAccount", method = RequestMethod.POST)  
     public String getAccount(@RequestParam("accountNumber")String accountNumber, @RequestParam("balance")String balance, @RequestParam("accounttype")String accounttype, @RequestParam("ifscode")String ifsc, ModelMap message) throws  DataBaseException {
 		try { 
-	     	branchService.getAccount(accountNumber, Double.parseDouble(balance), accounttype, ifsc);
+			message.addAttribute("message", branchService.getAccount(accountNumber, Double.parseDouble(balance), accounttype, ifsc));
 		}catch(DataBaseException e) {
 			message.addAttribute("message", e.getMessage());
 		} finally {
@@ -122,6 +122,7 @@ public class BranchController {
 	@RequestMapping(value="/getAccount", method = RequestMethod.GET)  
     public String viewAccountByBranch (@RequestParam("ifsc")String ifsc, ModelMap message) {
 		try { 
+			System.out.println(ifsc);
 			message.addAttribute("accounts", branchService.viewAccountByBranch(ifsc));
 		}catch(DataBaseException e) {
 			message.addAttribute("message", e.getMessage().toString());

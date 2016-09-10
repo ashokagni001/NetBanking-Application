@@ -21,20 +21,17 @@ public class TransactionDao {
 	Configuration configuration = hibernateConnectionObject.getConfiguration();
 	SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
     
-	public void addTransaction(CustomerTransaction customerTransaction, Account debitAccount,
-			Account criditAccount) throws DataBaseException {
+	public String addTransaction(CustomerTransaction customerTransaction, Account debitAccount) throws DataBaseException {
 	    Session session = sessionFactory.openSession();
 	    Transaction transaction = null;
 	    try {
 	        transaction = session.beginTransaction();
 	        session.save(customerTransaction);
-	        customerTransaction.setDebitAccount(debitAccount);
-	        customerTransaction.setCriditAccount(criditAccount);
-	        session.update(customerTransaction);
 	        session.update(debitAccount);
-	        transaction.commit(); 
+	        transaction.commit();
+            return ("YOUR TRANSACTION SENDING REQUSET SUCCESSFULL");
 		} catch (HibernateException e) {
-			throw new DataBaseException("PLEASE CHECK YOUR DATAS YOUR DATA IS NOT VALID.PLEASE TRY AGAIN.addTransaction" );  
+			throw new DataBaseException("PLEASE CHECK YOUR DATAS YOUR DATA IS NOT VALID.PLEASE TRY AGAIN.addTransaction"+e);  
 	    } finally {
 	        session.close(); 
 	    }

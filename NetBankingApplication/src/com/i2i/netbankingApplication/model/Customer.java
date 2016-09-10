@@ -9,6 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 /**
  * <p>
  * Model class of User. 
@@ -56,7 +59,8 @@ public class Customer {
 	@Column(name = "status")
     private String status;
 	
-	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="address_id")
 	public Address address;
     
