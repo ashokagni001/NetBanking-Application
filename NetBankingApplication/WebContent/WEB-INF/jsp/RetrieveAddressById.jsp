@@ -18,7 +18,7 @@
         <center>
             <c:if test="${address != null}">
             <h1>Fetching Data From A Branch Database</h1> 
-            <table cellpadding="0" cellspacing="2" bordercolor=#125610 border="3">
+            <table class = " table table-bordered">
                 <tr>
 	            <th align="center" height="30" width="100">STREET</th>
 	            <th align="center" height="30" width="100">CITY</th>

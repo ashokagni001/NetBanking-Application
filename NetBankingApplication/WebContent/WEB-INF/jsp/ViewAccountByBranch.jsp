@@ -17,7 +17,16 @@
             <font size="20"><marquee behavior="alternate">NET BANKING</marquee></font>
         </div>
         <h1>VIEW ACCOUNT BY BRANCH </h1>
-        <center> 
+         <h3>Branch IFSC Number</h3>
+            <form action="getAccount" method="get">
+            <table>
+                <tr>
+                    <td><input type="text" name="ifsc" placeholder="IFSC" required></td>
+                    <td><input type="submit" name="view" value="view"></td>
+                </tr>
+            </table>
+            </br></br>
+            </form>
             <c:if test="${message != null}">
             <script type="text/javascript">
                 alert('CLICK OK THE PAGE WILL BE REFRESHED...' + "<c:out value='${message}'/>");
@@ -26,13 +35,13 @@
         </c:if>
          <c:if test="${accounts != null}">
             <h2>Fetching Data From A Project Management System</h2> 
-            <table cellpadding="0" cellspacing="2" bordercolor=#125610 border="3">
+            <table class = "table-striped">
                 <tr>
-                    <th align="center" height="30" width="100">S.NO</th>
-	            <th align="center" height="30" width="100">AccountNumber</th>
-	            <th align="center" height="30" width="100">Customer Id</th>
-	            <th align="center" height="30" width="100">Balance</th>
-	            <th align="center" height="30" width="100">AccountType</th>
+                    <th>S.NO</th>
+	            <th>AccountNumber</th>
+	            <th>Customer Id</th>
+	            <th>Balance</th>
+	            <th>AccountType</th>
                 </tr> 
                 <% int sno =1; %>
                <c:forEach items="${accounts}" var="accounts" >
@@ -50,16 +59,5 @@
                 </c:forEach>
             </table>
             </c:if>
-            <h3>Insert Id</h3>
-            <form action="getAccount" method="get">
-            <table>
-                <tr>
-                    <td><input type="text" name="ifsc" placeholder="IFSC" required></td>
-                    <td><input type="submit" name="view" value="view"></td>
-                </tr>
-            </table>
-            </br></br>
-            </form>
             <b>Go to main page </b><a href="BranchIndex" style="font-sise:18px"> click here</a>
-    </center>
 </html>

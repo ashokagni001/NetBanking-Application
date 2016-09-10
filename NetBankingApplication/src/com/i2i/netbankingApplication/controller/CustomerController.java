@@ -135,7 +135,7 @@ public class CustomerController {
 	@RequestMapping(value="/customerAddress", method = RequestMethod.POST)
     public String getAddress(@ModelAttribute("Address") Address address, ModelMap message) {  
 		try {
-            customerService.getAddress(address);
+			message.addAttribute("message", customerService.getAddress(address));
             return "CustomerIndex";
 		} catch (DataBaseException e) {
 			FileUtil.exceptionOccurCreateFile("CUSTOMER ADDRESS AT TIME EXCEPTION OCCUR ..\nDATAS-->" + address  + e);
@@ -173,21 +173,31 @@ public class CustomerController {
 	 *     Return to the ReteriveAllCustomer JSP page with Customer lists or status message(failure).
 	 */
 	@RequestMapping(value="/getCustomer", method = RequestMethod.GET)  
+<<<<<<< HEAD
     public ModelAndView getCustomerById (@RequestParam("customerId")String customerId) {
+=======
+    public String viewBranchById (@RequestParam("customerId")String customerId, ModelMap message) {
+>>>>>>> 464c0d73467590002b690837ff5aaebeebc73592
         try {
         	if (customerId.equals("all") || customerId.equals("All") || customerId.equals("ALL")) {
-        		return new ModelAndView ("GetCustomer", "customers", customerService.getAllCustomer());
+        		message.addAttribute("customers", customerService.getAllCustomer());
         	} else {
         		Customer customer = customerService.getCustomerById(customerId);
         		if (customer != null) {
-        			return new ModelAndView("GetCustomer", "customer", customer);
+        			message.addAttribute("customer", customer);
         		} else {
-        			return new ModelAndView("GetCustomer", "message", "ENTER VALID CUSTOMER ID ONLY");
+        			message.addAttribute("message", "ENTER VALID CUSTOMER ID ONLY");
         		}
         	}
         } catch (DataBaseException e) {
+<<<<<<< HEAD
         	FileUtil.exceptionOccurCreateFile("CUSTOMER VIEW AT TIME EXCEPTION OCCUR ..\nDATAS-->" + customerId  + e);
         	return new ModelAndView("GetCustomer", "message", e.getMessage().toString());
+=======
+        	message.addAttribute("message", e.getMessage().toString());
+        } finally {
+        	return "GetCustomer";
+>>>>>>> 464c0d73467590002b690837ff5aaebeebc73592
         }
     }
 	
@@ -255,4 +265,32 @@ public class CustomerController {
 >>>>>>> 75919ca2c5d299fe30bbf9316c2e30ef0c5a3563
         }
     }
+<<<<<<< HEAD
+=======
+	
+	@RequestMapping(value = "/addUserRole")
+	public String addUserRole(ModelMap model) throws DataBaseException {
+		if (customerService.isRoleAvailable()) {
+			model.addAttribute("roles", customerService.getAllRole());
+		} else {
+			model.addAttribute("message", "Sorry role is not present");
+		}
+		return "AddUserRole";
+	}
+
+	@RequestMapping(value = "/insertRole", method = RequestMethod.GET)
+	public String addUserRole(@RequestParam("customerId") String customerId, @RequestParam("role") String roleId,
+			ModelMap message) throws DataBaseException {
+		try {
+			customerService.insertRole(customerId, roleId);
+			message.addAttribute("message", "INFORMATION SAVED SUCESSFULLY");
+			message.addAttribute("roles", customerService.getAllRole());
+		} catch (DataBaseException  e) {
+			message.addAttribute("message", e.getMessage().toString());
+			message.addAttribute("roles", customerService.getAllRole());
+		}
+		return "AddUserRole";
+	}
+
+>>>>>>> 464c0d73467590002b690837ff5aaebeebc73592
 }

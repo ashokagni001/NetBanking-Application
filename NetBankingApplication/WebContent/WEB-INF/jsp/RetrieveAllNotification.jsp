@@ -16,7 +16,7 @@
             <font size="20"><marquee behavior="alternate">NET BANKING</marquee></font>
         </div>
         <center>
-            <table class = "table">
+            <table class = " table table-bordered">
                 <tr>
                 <th align="center" height="30" width="100">S.NO</th>
 	            <th align="center" height="30" width="100">TRANSACTION ID</th>

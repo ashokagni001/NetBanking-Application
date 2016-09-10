@@ -16,7 +16,7 @@
             <font size="20"><marquee behavior="alternate">NET BANKING</marquee></font>
         </div>
         <center>
-            <table class = "table">
+            <table class = " table table-bordered">
                 <tr>
 	            <th align="center" height="30" width="100">ACCOUNT NUMBER</th>
 	            <th align="center" height="30" width="100">USER ID</th>
@@ -34,7 +34,7 @@
                         <td><c:out value="${branch.IFSCode}" /></td>
                         <td><c:out value="${accountDetail.getBalance()}" /></td>
                         <td><c:out value="${accountDetail.getAccountType()}" /></td>
-                        <td align="center" height="30" width="100"><a href="GetCustomer?customerId=<c:out value="${customer.customerId}"/>" style="color:blue">VIEW USER DETAIL</a></td>  
+                        <td align="center" height="30" width="100"><a href="getCustomer?customerId=<c:out value="${customer.customerId}"/>" style="color:blue">VIEW USER DETAIL</a></td>  
                   </tr>
             </table>
             <br/><br/>

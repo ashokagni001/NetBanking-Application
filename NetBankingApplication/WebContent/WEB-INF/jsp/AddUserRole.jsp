@@ -13,7 +13,13 @@
             }
         </style>
     </head>
-    <body">
+    <body>
+        <c:if test="${message != null}">
+            <script type="text/javascript">
+                alert("<c:out value='${message}'/>");
+                windows.location.reload();
+            </script>
+            </c:if>
         <div class = "well">
             <font size="20"><marquee behavior="alternate">NET BANKING</marquee></font>
         </div>
@@ -39,18 +45,12 @@
                 
                 <tr>
                  <td>
-                <input type="submit" path="add" value="SUBMIT">
+                <input type="submit" name = "add" value="Allocate">
                  </td>
                 </tr>
             </table>
             </form>
             </br></br>
-            <c:if test="${message != null}">
-            <script type="text/javascript">
-                alert("<c:out value='${message}'/>");
-                windows.location.reload();
-            </script>
-            </c:if>
             <b>Go to main page </b><a href="BranchIndex" style="font-sise:18px"> click here</a></br></br>
     </center>
 </html>

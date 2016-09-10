@@ -84,6 +84,7 @@ public class TransactionController {
 	    @RequestParam("criditAccountNumber") String criditAccountNumber, @RequestParam("ifscode")String ifscode ,
 	    @RequestParam("amount")String amount, ModelMap message) {  
 		try {
+<<<<<<< HEAD
 			transactionService.getTransactionDetail(debitAccountNumber, criditAccountNumber, ifscode, Double.parseDouble(amount));
 		} catch (NumberFormatException e) {
 			FileUtil.exceptionOccurCreateFile("transaction ADD AT TIME EXCEPTION OCCUR..\nDATAS-->" + debitAccountNumber +
@@ -95,6 +96,14 @@ public class TransactionController {
 	        message.addAttribute("message", e);
 	    }
 		return "transactionOperation";
+=======
+			message.addAttribute("message", transactionService.getTransactionDetail(debitAccountNumber, criditAccountNumber, ifscode, Double.parseDouble(amount)));
+		} catch (DataBaseException e) {
+			message.addAttribute("message", e.toString()); 
+	    } finally {
+		    return "TransactionIndex";
+	    }
+>>>>>>> 464c0d73467590002b690837ff5aaebeebc73592
 	}
 	
     /**

@@ -3,10 +3,14 @@ package com.i2i.netbankingApplication.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "branch_detail")
@@ -18,6 +22,7 @@ public class Branch {
 	@Column(name = "email")
 	private String emailId;
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="address_id")
 	public Address address;

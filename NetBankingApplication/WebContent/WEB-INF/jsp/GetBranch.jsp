@@ -7,6 +7,9 @@
         <script src="resource/js/bootstrap.js"></script>
         <script src="resource/js/bootstrap1.js"></script>
         <style type="text/css">
+        table,th,td {
+        border: 1px solid #000;
+        }
         .well {
          background-color:  #8ddfe1 ;
         }
@@ -15,9 +18,6 @@
         }
         .index {
         float: left;
-        }
-        .head {
-         background-color:  #f06b6f ;
         }
         </style>
     </head>
@@ -49,25 +49,25 @@
          <c:if test="${branch != null}">
             <div class = "head">
             <h3>Fetching Data From A Branch Database</h3> 
-            <table class = " table table-bordered">
+            <table class = "table table-striped">
                 <tr>
-	            <th align="center" height="30" width="100">IFSC CODE</th>
-	            <th align="center" height="30" width="100">EMAIL ID</th>
-	            <th align="center" height="30" width="100">ADDRESS ID</th>
-	            <th align="center" height="30" width="100">ADDRESS</th>
-	            <th colspan="2" align="center" height="30" width="100" >DALETE</th>
+	            <th>IFSC CODE</th>
+	            <th>EMAIL ID</th>
+	            <th>ADDRESS ID</th>
+	            <th>ADDRESS</th>
+	            <th>DALETE</th>
                 </tr>
                 <c:set value="${branch}" var="branch"/>
                 <tr>
-                    <td><c:out value="${branch.getIFSCode()}" /></td>
-                    <td><c:out value="${branch.getEmailId()}" /></td>
+                    <td><c:out value="${branch.getIFSCode()}" /></td><br/><br/>
+                    <td><c:out value="${branch.getEmailId()}" /></td><br/><br/>
                    <c:choose>
                         <c:when test="${null == branch.getAddress()}">
-                             <td><c:out value="${'No Address Allocated'}"/></td>
+                             <td><c:out value="${'No Address Allocated'}"/></td><br/><br/>
                         </c:when>
                         <c:otherwise>
                             <td><c:set value="${branch.getAddress()}" var="address" /></td>
-                            <td><a href="viewBranchAddress?addressId=<c:out value="${address.addressId}"/>" style="color:blue">VIEW</a></td>  
+                            <td><a href="viewBranchAddress?addressId=<c:out value="${address.addressId}"/>" style="color:blue">VIEW</a></td><br/><br/>  
                         </c:otherwise>
                     </c:choose>
                     <td><a href="deleteBranchById?ifsc=<c:out value="${branches.getIFSCode()}"/>" style="color:blue">Delete</a></td>  
@@ -80,11 +80,11 @@
             <h3>Fetching Data From A Project Management System</h3> 
             <table class = " table table-bordered">
                 <tr>
-                    <th align="center" height="30" width="100">S.NO</th>
-	            <th align="center" height="30" width="100">IFSC CODE</th>
-	            <th align="center" height="30" width="100">EMAIL</th>
-	            <th colspan="1" align="center" height="30" width="100">ADDRESS</th>
-	            <th colspan="1" align="center" height="30" width="100" >ACTION</th>
+                    <th>S.NO</th>
+	            <th>IFSC CODE</th>
+	            <th>EMAIL</th>
+	            <th>ADDRESS</th>
+	            <th>ACTION</th>
                 </tr> 
                 <% int sno =1; %>
                <c:forEach items="${branches}" var="branches" >

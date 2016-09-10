@@ -14,25 +14,26 @@ import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Branch;
 import com.i2i.netbankingApplication.model.Customer;
+import com.i2i.netbankingApplication.model.Role;
+import com.i2i.netbankingApplication.model.UserRole;
 
 public class CustomerDao {
 	HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
 	Configuration configuration = hibernateConnectionObject.getConfiguration();
 	SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
 
-	public void insertUser(String accountNumber, Customer customer) {
+	public void insertUser(String accountNumber, Customer customer) throws DataBaseException {
 		Session session = sessionFactory.openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
             Account account = (Account)session.get(Account.class, accountNumber);
             session.save(customer);
-            System.out.println(account.getBalance());
             account.setCustomer(customer);
             session.update(account);
             transaction.commit();
         } catch(Exception e) {
-        	e.printStackTrace();
+        	throw new DataBaseException("CHECK YOUR PLEASE INSERT VALID CUSTOMER DETAIL..");
         } finally {
             session.close();
         }
@@ -65,7 +66,7 @@ public class CustomerDao {
 	    }
 	}
 	
-	public void addAddress(String customerId, Address address) throws DataBaseException {
+	public String addAddress(String customerId, Address address) throws DataBaseException {
 	    Session session = sessionFactory.openSession();
 	    Transaction transaction = null;
 	    try {
@@ -74,7 +75,8 @@ public class CustomerDao {
 	        session.save(address); 
 		    customer.setAddress(address);
 	        session.update(customer);
-	        transaction.commit();   
+	        transaction.commit();  
+	        return ("Customer register successfully ::  customer ID :" + customer.getCustomerId() +" PASSWORD :" + customer.getPassWord());
 		} catch (HibernateException e) {
 			throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
 	    } finally {
@@ -94,19 +96,14 @@ public class CustomerDao {
 	}
 	
 	public Address retrieveAddressById(int addressId) throws DataBaseException {
-		Address address;
 		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
 		try {
-			transaction = session.beginTransaction();
-		    address = (Address)session.get(Address.class, addressId);
-			transaction.commit();
+			return (Address)session.get(Address.class, addressId);
 		} catch (HibernateException e) {
 			throw new DataBaseException("Oops Some Problem occured.. please try again later");
 		} finally {
 			session.close();
 		}
-		return address;
 	}
 	
 	public Account retrieveAccountByNumber(String accountNumber) throws DataBaseException {
@@ -118,5 +115,52 @@ public class CustomerDao {
 	    } finally {
 	        session.close(); 
 	    } 
+	}
+	
+	public void insertRole(UserRole userRole) throws DataBaseException {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			session.save(userRole);
+			transaction.commit();
+		} catch (HibernateException exp) {
+			throw new DataBaseException("Sorry information can't save please try again" + exp);
+		} finally {
+			session.close();
+		}
+	}
+
+	public List<Role> retriveAllRole() throws DataBaseException {
+		Session session = sessionFactory.openSession();
+		try {
+			return session.createQuery("FROM Role").list();
+		} catch (HibernateException exp) {
+			throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA." + exp);
+		} finally {
+			session.close();
+		}
+	}
+
+	public Role retrieveRoleById(String id) throws DataBaseException {
+		Session session = sessionFactory.openSession();
+		try {
+			return (Role) session.get(Role.class, id);
+		} catch (HibernateException e) {
+			throw new DataBaseException("CHECK ID " + id + "PLEASE INSERT VALID ID...\n");
+		} finally {
+			session.close();
+		}
+	}
+
+	public List<UserRole> retriveAllUserRole() throws DataBaseException {
+		Session session = sessionFactory.openSession();
+		try {
+			return session.createQuery("FROM UserRole").list();
+		} catch (HibernateException e) {
+			throw new DataBaseException("Data is not available please insert the data." + e);
+		} finally {
+			session.close();
+		}
 	}
 }

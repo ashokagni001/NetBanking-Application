@@ -270,8 +270,12 @@ public class BranchController {
     		@RequestParam("balance")String balance, @RequestParam("accounttype")String accounttype, 
     		@RequestParam("ifscode")String ifsc, ModelMap message, ModelMap model) throws  DataBaseException {
 		try { 
+<<<<<<< HEAD
 	     	branchService.getAccount(accountNumber, Double.parseDouble(balance), accounttype, ifsc);
 	     	model.addAttribute("message", "ACCOUNT ADDED");
+=======
+			message.addAttribute("message", branchService.getAccount(accountNumber, Double.parseDouble(balance), accounttype, ifsc));
+>>>>>>> 464c0d73467590002b690837ff5aaebeebc73592
 		}catch(DataBaseException e) {
 <<<<<<< HEAD
     		FileUtil.exceptionOccurCreateFile("ACCOUNT ADD AT TIME EXCEPTION OCCUR ..\nDATAS-->" + accountNumber + balance + accounttype + ifsc);
@@ -308,6 +312,7 @@ public class BranchController {
 	@RequestMapping(value="/getAccount", method = RequestMethod.GET)  
     public String viewAccountByBranch (@RequestParam("ifsc")String ifsc, ModelMap message) {
 		try { 
+			System.out.println(ifsc);
 			message.addAttribute("accounts", branchService.viewAccountByBranch(ifsc));
 		}catch(DataBaseException e) {
 <<<<<<< HEAD
