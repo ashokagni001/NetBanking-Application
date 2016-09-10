@@ -11,19 +11,18 @@ import com.i2i.netbankingApplication.model.CustomerTransaction;
 
 public class TransactionService {
 	TransactionDao transactionDao = new TransactionDao();
-	public String getTransactionDetail(String debitAccountNumber, String criditAccountNumber, 
+	public void getTransactionDetail(String debitAccountNumber, String criditAccountNumber, 
 			String ifscode, double amount) throws DataBaseException {
 		Account debitAccount = transactionDao.retrieveAccountByNumber(debitAccountNumber);
 		Account criditAccount = transactionDao.retrieveAccountByNumber(criditAccountNumber);
 		if (debitAccount != null) {
 			if (criditAccount != null) {
-				String ine = criditAccount.getBranch().getIFSCode(); 
 				if (criditAccount.getBranch().getIFSCode().equals(ifscode)) {
 				    double currentAmount = debitAccount.getBalance();
 				    double balanceAmount = (currentAmount - amount);
 				    if (amount > 0) {
 					    debitAccount.setBalance(balanceAmount);
-				        return transactionDao.addTransaction(new CustomerTransaction(getLastTransactionId(), amount, "Request", debitAccount, criditAccount), debitAccount);
+				        transactionDao.addTransaction(new CustomerTransaction(getLastTransactionId(), amount, "Request"), debitAccount, criditAccount);
 				    } else {
 					    throw new DataBaseException("Your cridit amount value is must be lesser than current amount :Rs "+ currentAmount); 
 				    }
@@ -32,7 +31,6 @@ public class TransactionService {
 		} else {
 			throw new DataBaseException("Your debitAccountNumber or criditAccountNumber incorrect"); 
 		}
-		return null;
 	}
 	
 	public Account retrieveAccountByNumber(String accountNumber) throws DataBaseException {

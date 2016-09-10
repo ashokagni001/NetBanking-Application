@@ -9,9 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 @Entity
 @Table(name = "transaction_detail")
 public class CustomerTransaction {
@@ -19,13 +16,11 @@ public class CustomerTransaction {
     @Column(name = "id")
     private int id;
 	
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="debit_account_number")
 	private Account debitAccount;
 	
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="cridit_account_number")
     private Account criditAccount;
     
@@ -35,8 +30,8 @@ public class CustomerTransaction {
     @Column(name = "date")
     private String date;
     
-    @LazyCollection(LazyCollectionOption.FALSE)
-	@ManyToOne(cascade = CascadeType.PERSIST)
+
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinColumn(name="user_id")
     private Customer customer;
     
@@ -46,12 +41,10 @@ public class CustomerTransaction {
 	public CustomerTransaction() {
 	}
 	
-    public CustomerTransaction(int id, double amount,String status, Account debitAccount, Account criditAccount) {
+    public CustomerTransaction(int id, double amount,String status) {
 		this.id = id;
 		this.amount = amount;
 		this.status = status;
-		this.criditAccount = criditAccount;
-		this.debitAccount = debitAccount;
 	}
 
 	public int getId() {

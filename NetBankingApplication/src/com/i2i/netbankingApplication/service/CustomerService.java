@@ -1,5 +1,6 @@
 package com.i2i.netbankingApplication.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.i2i.netbankingApplication.constantVariableUtil.ConstantVariableUtil;
@@ -13,6 +14,7 @@ import com.i2i.netbankingApplication.model.CustomerTransaction;
 import com.i2i.netbankingApplication.model.Role;
 import com.i2i.netbankingApplication.model.UserRole;
 import com.i2i.netbankingApplication.util.StringUtil;
+
 /**
  * <p>
  *     When values comes from CustomerController.
@@ -29,12 +31,6 @@ import com.i2i.netbankingApplication.util.StringUtil;
 public class CustomerService {
     CustomerDao customerDao = new CustomerDao();
     private TransactionService transactionService = new TransactionService();
-<<<<<<< HEAD
-<<<<<<< HEAD
-    
-    public void getCustomer(Customer customer) throws DataBaseException, CustomerDataException {
-=======
-=======
     
     /**
      * <p>
@@ -48,9 +44,7 @@ public class CustomerService {
      * @throws DataBaseException
      * @throws CustomerDataException
      */
->>>>>>> 464c0d73467590002b690837ff5aaebeebc73592
     public void getUser(Customer customer) throws DataBaseException, CustomerDataException {
->>>>>>> 75919ca2c5d299fe30bbf9316c2e30ef0c5a3563
     	Account account = customerDao.retrieveAccountByNumber(customer.getAccountNumber());
     	if (account == null) {
     		throw new CustomerDataException("YOUR ACCOUNT NUMBER IS NOT VALID");  
@@ -59,10 +53,6 @@ public class CustomerService {
     	if (account.getCustomer() != null) {
     		throw new CustomerDataException("YOUR ALREADY REGISTER THE NETBANKING..."); 
     	}
-<<<<<<< HEAD
-    	
-=======
->>>>>>> 75919ca2c5d299fe30bbf9316c2e30ef0c5a3563
     	String customerId = "CUSI2I00" + String.valueOf(getLastCustomerId() + 1);
         if (StringUtil.isValidFormat(customer.getDob())) {
             throw new DataBaseException("YOUR FORMAT" + customer.getDob() +
@@ -183,4 +173,39 @@ public class CustomerService {
 		return true;
 	    }
 	}
-} 
+
+	public boolean ifValidateUser(String customerId, String password) throws DataBaseException {
+	    Customer customer = getCustomerById(customerId); 
+	    if (customer == null) {
+	    	return false;  
+	    }
+	    if(!(customer.getPassWord().equals(password))) {
+	    	return false; 
+	    }
+	    return true;
+	}
+
+	public boolean checkIfRole(String customerId) throws DataBaseException {
+		int userRoleCount = 0;
+		for (UserRole userRole : customerDao.retriveAllUserRole()) {
+			if (userRole.getCustomer().getCustomerId().equals(customerId)) {
+				userRoleCount++;
+			}
+		}
+	    if (userRoleCount == 1) {
+			return false;
+		}
+		return true;
+	}
+}
+			 
+/*		}
+		List<UserRole> userRoleList = customerDao.retriveAllUserRole();
+		userRoleList.
+		System.out.println(customerId);
+        UserRole userRole = customerDao.retrieveUserRoleById(customerId);
+        userRoleList = userRole.getCustomer();
+        System.out.println("work");
+	    return userRole.getRole().getRoleName().equals("APPROVER");
+    }
+} */

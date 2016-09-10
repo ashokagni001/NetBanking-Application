@@ -1,10 +1,15 @@
- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<c:if test="${sessionScope['id']== null}">
+    <c:redirect url="login"/>
+</c:if>
+<c:if test="${sessionScope['role']!= 'approver'}">
+    <c:redirect url="userHomePage"/>
+</c:if>
 <html>
     <head>
-        <link rel="stylesheet" href="resource/css/bootstrap.css">
-        <script src="resource/js/bootstrap.js"></script>
-        <script src="resource/js/bootstrap1.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <script src="js/bootstrap.js"></script>
+        <script src="js/bootstrap.min.js"></script>
         <style type="text/css">
             .well {
                 background-color:  #8ddfe1 ;
@@ -56,7 +61,8 @@
             </table>
             <br/><br/>
             <b>Go to main page </b><a href="CustomerIndex" style="font-sise:18px"> click here</a>
-	        <br/><br/>
+	        <br/>
+	        <br/><a href="logoutController" style="width:300px;"> LOGOUT</a>
             <c:if test="${message != null}">
                 <script type="text/javascript">
                     alert('CLICK OK THE PAGE WILL BE REFRESHED...' + "<c:out value='${message}'/>" );

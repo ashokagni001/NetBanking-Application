@@ -10,9 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 @Entity
 @Table(name = "account_detail")
 public class Account {
@@ -20,14 +17,12 @@ public class Account {
     @Column(name = "account_number")
   	private String accountNumber;
 	
-	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="user_id")
     private Customer customer;
     
-	@LazyCollection(LazyCollectionOption.FALSE)
-    @OneToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name="ifscode")
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@JoinColumn(name="ifsc")
     private Branch branch;
     
     @Column(name = "balance")

@@ -73,12 +73,12 @@ public class BranchService {
 	    return branchDao.retrieveAddressById(addressId);
 	}
 	
-	public String getAccount(String accountNumber, double balance, String accounttype, String ifsc) throws DataBaseException {
+	public void getAccount(String accountNumber, double balance, String accounttype, String ifsc) throws DataBaseException {
 		Branch branch = branchDao.retrieveBranchById(ifsc);
 		if (branch != null) {
-			return branchDao.addAccount(new Account(accountNumber, balance, accounttype, branch));
+			branchDao.addAccount(new Account(accountNumber, balance, accounttype, branch));
 	    } else {
-	     	return ("Please enter valid IFSC number"); 
+	     	throw new DataBaseException("Please enter valid IFSC number"); 
 		}
 	}
 	

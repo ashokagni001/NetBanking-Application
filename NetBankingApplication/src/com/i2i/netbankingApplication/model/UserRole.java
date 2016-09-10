@@ -11,9 +11,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import com.i2i.netbankingApplication.model.Role;
 
 @Entity
@@ -22,14 +19,13 @@ public class UserRole {
 	@Id
 	@Column(name = "id")
 	private int id;
-    
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@ManyToOne(cascade = CascadeType.PERSIST)
+
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private Customer customer;
 
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@ManyToOne(cascade = CascadeType.PERSIST)
+
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name = "role_id")
 	private Role role;
     

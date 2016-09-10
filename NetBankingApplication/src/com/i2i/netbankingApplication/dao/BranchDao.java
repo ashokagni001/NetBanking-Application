@@ -120,14 +120,13 @@ HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance
 		return address;
 	}
 	
-	public String addAccount(Account account) throws DataBaseException {
+	public void addAccount(Account account) throws DataBaseException {
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
 		    session.save(account); 
-	        transaction.commit(); 
-	        return ("Account added successfullly");
+	        transaction.commit();                                                                    
 		} catch (HibernateException e) {
 			throw new DataBaseException("PLEASE CHECK YOUR DATAS " + account + " YOUR DATA IS NOT VALID.PLEASE TRY AGAIN." );  
 	    } finally {
