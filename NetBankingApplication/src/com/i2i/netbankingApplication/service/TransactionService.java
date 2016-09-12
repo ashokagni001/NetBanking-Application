@@ -17,7 +17,6 @@ public class TransactionService {
 		Account criditAccount = transactionDao.retrieveAccountByNumber(criditAccountNumber);
 		if (debitAccount != null) {
 			if (criditAccount != null) {
-				String ine = criditAccount.getBranch().getIFSCode(); 
 				if (criditAccount.getBranch().getIFSCode().equals(ifscode)) {
 				    double currentAmount = debitAccount.getBalance();
 				    double balanceAmount = (currentAmount - amount);
@@ -32,7 +31,7 @@ public class TransactionService {
 		} else {
 			throw new DataBaseException("Your debitAccountNumber or criditAccountNumber incorrect"); 
 		}
-		return null;
+		return ("Please check your details");
 	}
 	
 	public Account retrieveAccountByNumber(String accountNumber) throws DataBaseException {

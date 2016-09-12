@@ -13,6 +13,19 @@ import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Branch;
 import com.i2i.netbankingApplication.service.BranchService;
 
+/**
+ * <p>
+ *    When request comes from JSP page. 
+ *    Branch controller performs add or delete or fetch or fetchAll Branch with model(Branch),
+ *    service(Branch) and return the responses to JSP page.
+ *    It handles the NumberFormatException, DataBaseException.
+ *    If exception occurs it will write what type of exception occurred.
+ * </p>
+ * 
+ * @author TEAM-2
+ * 
+ * @created 2016-09-03
+ */
 @Controller
 public class BranchController {
 	BranchService branchService = new BranchService();
@@ -127,6 +140,5 @@ public class BranchController {
 		}finally {
 	     	return "ViewAccountByBranch";
 		}
-	}
-	
+	}	
 }

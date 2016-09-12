@@ -3,7 +3,6 @@ package com.i2i.netbankingApplication.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,7 +20,7 @@ public class Account {
   	private String accountNumber;
 	
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="user_id")
     private Customer customer;
     

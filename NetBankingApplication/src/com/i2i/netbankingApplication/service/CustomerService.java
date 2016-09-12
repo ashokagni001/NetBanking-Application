@@ -1,5 +1,6 @@
 package com.i2i.netbankingApplication.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.i2i.netbankingApplication.constantVariableUtil.ConstantVariableUtil;
@@ -13,6 +14,7 @@ import com.i2i.netbankingApplication.model.CustomerTransaction;
 import com.i2i.netbankingApplication.model.Role;
 import com.i2i.netbankingApplication.model.UserRole;
 import com.i2i.netbankingApplication.util.StringUtil;
+
 /**
  * <p>
  *     When values comes from CustomerController.
@@ -171,4 +173,39 @@ public class CustomerService {
 		return true;
 	    }
 	}
-} 
+
+	public boolean ifValidateUser(String customerId, String password) throws DataBaseException {
+	    Customer customer = getCustomerById(customerId); 
+	    if (customer == null) {
+	    	return false;  
+	    }
+	    if(!(customer.getPassWord().equals(password))) {
+	    	return false; 
+	    }
+	    return true;
+	}
+
+	public boolean checkIfRole(String customerId) throws DataBaseException {
+		int userRoleCount = 0;
+		for (UserRole userRole : customerDao.retriveAllUserRole()) {
+			if (userRole.getCustomer().getCustomerId().equals(customerId)) {
+				userRoleCount++;
+			}
+		}
+	    if (userRoleCount == 1) {
+			return false;
+		}
+		return true;
+	}
+}
+			 
+/*		}
+		List<UserRole> userRoleList = customerDao.retriveAllUserRole();
+		userRoleList.
+		System.out.println(customerId);
+        UserRole userRole = customerDao.retrieveUserRoleById(customerId);
+        userRoleList = userRole.getCustomer();
+        System.out.println("work");
+	    return userRole.getRole().getRoleName().equals("APPROVER");
+    }
+} */

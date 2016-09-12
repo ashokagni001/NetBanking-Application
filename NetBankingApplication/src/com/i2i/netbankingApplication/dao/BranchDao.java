@@ -126,8 +126,8 @@ HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance
 		try {
 			transaction = session.beginTransaction();
 		    session.save(account); 
-	        transaction.commit(); 
-	        return ("Account added successfullly");
+	        transaction.commit();
+	        return ("Enter Account added successfully");
 		} catch (HibernateException e) {
 			throw new DataBaseException("PLEASE CHECK YOUR DATAS " + account + " YOUR DATA IS NOT VALID.PLEASE TRY AGAIN." );  
 	    } finally {

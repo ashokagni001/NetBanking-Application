@@ -25,13 +25,13 @@ public class TransactionDao {
 	    Session session = sessionFactory.openSession();
 	    Transaction transaction = null;
 	    try {
-	        transaction = session.beginTransaction();
+	    	transaction = session.beginTransaction();
 	        session.save(customerTransaction);
 	        session.update(debitAccount);
-	        transaction.commit();
-            return ("YOUR TRANSACTION SENDING REQUSET SUCCESSFULL");
+	        transaction.commit(); 
+	        return ("Your transaction detail send our Transaction Approver please wait");
 		} catch (HibernateException e) {
-			throw new DataBaseException("PLEASE CHECK YOUR DATAS YOUR DATA IS NOT VALID.PLEASE TRY AGAIN.addTransaction"+e);  
+			throw new DataBaseException("PLEASE CHECK YOUR DATAS YOUR DATA IS NOT VALID.PLEASE TRY AGAIN.addTransaction" );  
 	    } finally {
 	        session.close(); 
 	    }

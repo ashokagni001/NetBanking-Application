@@ -5,9 +5,9 @@
 
 <html>
     <head>
-        <link rel="stylesheet" href="resource/css/bootstrap.css">
-        <script src="resource/js/bootstrap.js"></script>
-        <script src="resource/js/bootstrap1.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <script src="js/bootstrap.js"></script>
+        <script src="js/bootstrap.min.js"></script>
         <style type="text/css">
             .well {
                 background-color:  #8ddfe1 ;
@@ -31,11 +31,10 @@
                 <form:input path="mobileNumber" type="text" placeholder="Enter the mobile_number" /><br/><br/>
                 <form:input path="accountNumber" type="text" placeholder="Enter the account_number" /><br/><br/>
                 <form:input path="email" type="text" placeholder="Enter the email" /><br/><br/>
-                <br/>
-                <input type="submit" path="submit" value="ADD" />
+                <input type="submit" path="submit" value="NEXT" />
             </form:form>
             </center>
-            <b>Go to main page </b><a href="CustomerIndex" style="font-sise:18px"> click here</a></br></br>
+            <b>Go to main page </b><a href="login" style="font-sise:18px"> click here</a></br></br>
       <c:if test="${message != null}">
             <script type="text/javascript">
                 alert('CLICK OK THE PAGE WILL BE REFRESHED...' + "<c:out value='${message}'/>");
