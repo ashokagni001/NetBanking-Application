@@ -11,6 +11,18 @@ import javax.persistence.Table;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+/**
+ * <p>
+ *     Model class of CustomerTransaction. 
+ *     It have getter method, setter method, default constructor and parameter constructor.
+ *     Many to One mapping is established for Account model class.
+ * </p>
+ * 
+ * @author TEAM-2
+ * 
+ * @created 2016-09-03
+ *
+ */
 @Entity
 @Table(name = "transaction_detail")
 public class CustomerTransaction {
@@ -42,9 +54,17 @@ public class CustomerTransaction {
 	@Column(name = "status")
     private String status;
     
+	/**
+     * Default Constructor.
+     * which create a instance of CustomerTransaction.
+     */
 	public CustomerTransaction() {
 	}
 	
+	/**
+     * parameter Constructor.
+     *     Passes parameters to the constructor and creates an instance of CustomerTransaction.
+     */  
     public CustomerTransaction(int id, double amount,String status, Account debitAccount, Account criditAccount) {
 		this.id = id;
 		this.amount = amount;

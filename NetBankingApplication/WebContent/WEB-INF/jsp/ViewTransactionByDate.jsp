@@ -18,6 +18,7 @@
 		<font size="20"><marquee behavior="alternate">NET
 				BANKING</marquee></font>
 	</div>
+	<center>
 	<h2>
 		Choose from date to date of Transaction Detail
 		</h3>
@@ -27,11 +28,11 @@
 					required></td>
 				<td><input type="date" name="toDate" placeholder="2016-09-11"
 					required></td>
+					<br/><br/>
 				<td><input type="submit" name="view" value="view"></td>
 			</tr>
 			</br> </br>
 		</form>
-		<center>
 			<c:if test="${transactions != null}">
 				<table class=" table table-bordered">
 					<tr>
@@ -81,6 +82,7 @@
 					windows.location.reload();
 				</script>
 			</c:if>
+			<a href="logoutController" style="width: 300px;"> LOGOUT</a>
 		</center>
 </body>
 </html>

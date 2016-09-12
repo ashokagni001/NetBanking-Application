@@ -6,7 +6,7 @@ package com.i2i.netbankingApplication.exception;
  * If there is an error in the given data send message to class.
  * </p>
  * 
- * @author Ashok
+ * @author TEAM-2
  * 
  * @created 2016-09-06 
  */

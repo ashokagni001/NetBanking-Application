@@ -9,20 +9,58 @@ import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Branch;
 
+/**
+ * <p>
+ *     When request comes from branchController. branch service performs add or fetch or fetchAll branch with model(branch),
+ *     DAO(branch) and return the responses to branchController.
+ *     branchService operate passing value's to branchDao based on requset's from branchController.
+ * </p>
+ * 
+ * @author TEAM-2
+ * 
+ * @created 2016-09-03.
+ *
+ */
 public class BranchService {
     BranchDao branchDao = new BranchDao();
     
+    /**
+     * <p> 
+     *     Get the emailId from branchController and pass to addBranch method in branchDao.
+     *     calculate the last ifsCode in BranchDao.
+     * </p>
+     * 
+     * @param emailId
+     *     emailId of branch enter the user add to new Branch.
+     * 
+     * @throws DataBaseException
+     *     If there is an error in the given data like BadElementException.
+     */
     public void getBranch(String emailId) throws DataBaseException {
       	String IFSCode = " ";
       	int tempIFS = getLastIFSCode();
+      	//calculate the branch new ifsc code.
         if (tempIFS >= 0) {
         	IFSCode = "I2I0BK" + String.valueOf(tempIFS + 1);
         } 
     	branchDao.addBranch(new Branch(IFSCode, emailId));
     }
     
+    /**
+     * <p>
+     *     This method Calculate the last ifsCode. 
+     *     return to the last ifSCode.
+     * </p>
+     * 
+     * @return lastIFSC
+     *     return to the Last ifsc code.
+     *     
+     * @throws DataBaseException
+     *     If there is an error in the given data like BadElementException.
+     */
     public int getLastIFSCode() throws DataBaseException {
     	int lastIFSC = 0;
+    	//verify the branch size zero or not.
     	if (branchDao.retriveAllBranch().size() == 0) {
     		return lastIFSC;
     	} else {
@@ -36,19 +74,72 @@ public class BranchService {
     	    return lastIFSC;
     	}
     }
-
+    
+    /**
+     * <p> 
+     *     This method get the IFSCode from Branch controller and
+     *     pass to IFSCode deleteBranchById method in branchDao.
+     * </p>
+     * 
+     * @param IFSCode
+     *     IFSCode of branch.It IfsCode used to delete corresponding records.
+     *     
+     * @throws DataBaseException
+     *     If there is an error in the given data like BadElementException.
+     */
 	public void deleteBranchById(String IFSCode) throws DataBaseException {
 		branchDao.deleteBranchById(IFSCode);
 	}
 	
+	/**
+	 * Retrieves all branches from retriveAllBranch in branchDao.
+	 * 
+	 * @return List
+	 *     Return lists of branch.
+	 *      
+	 * @throws DataBaseException
+	 *     If there is an error in the given data like BadElementException.
+	 */
 	public List<Branch> getAllBranch() throws DataBaseException {
     	return branchDao.retriveAllBranch();
 	}
-
+    
+	/**
+	 * <p> 
+     *     Get the IFSCode from BranchController.
+     *     It is passed to retrieveBranchById method in BranchDao and 
+     *     returns branch object to BranchController.
+     * </p>
+     * 
+	 * @param IFSCode
+	 *     IFSCode of branch.It IfsCode used to view corresponding records.
+	 *     
+	 * @return Object
+	 *     return the branch Object.
+	 *     
+	 * @throws DataBaseException
+	 *     If there is an error in the given data like BadElementException.
+	 */
 	public Branch getBranchById(String IFSCode) throws DataBaseException {
         return branchDao.retrieveBranchById(IFSCode); 
     }
 	
+	/**
+	 * <p> 
+     *    Get the address Id from BranchController.
+     *    It is passed to retrieveAddressById method in branchDao and 
+     *    returns address object to BranchController.
+     * </p>
+     * 
+	 * @param addressId
+	 *     Id of Address.
+	 *     
+	 * @return branchController
+     *     Return to the object of Address class. 
+     *     
+	 * @throws DataBaseException
+	 *     If there is an error in the given data like BadElementException.
+	 */
 	public int getLastAddressId() throws DataBaseException {
     	int id = 0;
     	for (Address address : branchDao.retriveAllAddresses()) {
@@ -60,6 +151,18 @@ public class BranchService {
     	return id;
     }
     
+	/**
+     * <p>
+     *     This method get the branch address from branch controller. 
+     *     pass to branch address addAddress method in branchDao.
+     * </p>
+     * 
+     * @param address
+     *     Object of Address model class.It object used for add branch Address.
+     *     
+     * @throws DataBaseException
+     *     If there is an error in the given data like BadElementException.
+     */
 	public String getAddress(Address address) throws DataBaseException {
 	    int tempIFS = getLastIFSCode();
 	    String IFSCode = "I2I0BK" + String.valueOf(tempIFS);
@@ -68,13 +171,53 @@ public class BranchService {
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
 	    return IFSCode;
     }
-
+    
+	/**
+	 * <p> 
+     *    Get the address Id from branchController.
+     *    It is passed to retrieveAddressById method in branchDao and 
+     *    returns address object to branchController.
+     * </p>
+     * 
+	 * @param addressId
+	 *     Id of Address.
+	 *     
+	 * @return branchController
+     *     Return to the object of Address class. 
+     *     
+	 * @throws DataBaseException
+	 *     If there is an error in the given data like BadElementException.
+	 */
 	public Address getAddressById(int addressId) throws DataBaseException {
 	    return branchDao.retrieveAddressById(addressId);
 	}
 	
+	/**
+	 * <p>
+	 *    This method verify the branch ifsc exist or not.
+	 *    if branch exist add new account.
+	 *    otherwise, return the error message.
+	 * </p>
+	 * 
+	 * @param accountNumber
+	 *     accountNumber of Account.
+	 *     
+	 * @param balance
+	 *     balance of Account.
+	 *     
+	 * @param accounttype
+	 *     accountType of Account.
+	 *     
+	 * @param ifsc
+	 *     ifsc of Account.
+	 *     
+	 * @return 
+	 * @throws DataBaseException
+	 *      If there is an error in the given data like BadElementException.
+	 */
 	public String getAccount(String accountNumber, double balance, String accounttype, String ifsc) throws DataBaseException {
 		Branch branch = branchDao.retrieveBranchById(ifsc);
+		//verify the branch id exist or not.
 		if (branch != null) {
 			return branchDao.addAccount(new Account(accountNumber, balance, accounttype, branch));
 	    } else {
@@ -82,6 +225,21 @@ public class BranchService {
 		}
 	}
 	
+	/**
+	 * <p> 
+	 *     This method use to view account by branch.
+     *     This method get the branch Ifsc from branch controller. 
+     * </p>
+     * 
+	 * @param ifsc
+	 *     ifsc of Account.
+	 *     
+	 * @return List.
+	 *     return the lists of account.
+	 *     
+	 * @throws DataBaseException
+	 *     If there is an error in the given data like BadElementException.
+	 */
 	public List viewAccountByBranch(String ifsc) throws DataBaseException {
 		List accounts = new ArrayList();
 		if (branchDao.retrieveBranchById(ifsc) != null) {

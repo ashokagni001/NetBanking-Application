@@ -55,7 +55,6 @@
                         <td><c:out value="${customer.getMobileNumber()}" /></td>
                         <td><c:out value="${customer.getEmail()}" /></td>
                         <td><c:out value="${customer.getAccountNumber()}" /></td>
-                        <td><c:out value="${customer.getStatus()}" /></td>
                          <c:choose>
                         <c:when test="${null == customer.getAddress()}">
                              <td><c:out value="${'No Address Allocated'}"/></td>
@@ -82,8 +81,6 @@
 	            <th align="center" height="30" width="100">MOB.NUMBER</th>
 	            <th align="center" height="30" width="100">EMAIL</th>
 	            <th align="center" height="30" width="100">ACCOUNT NUMBER</th>
-	            <th align="center" height="30" width="100">STATUS</th>
-	            <th align="center" height="30" width="100">ADDRESS ID</th>
 	            <th colspan="2" align="center" height="30" width="100" >ADDRESS</th>
                 </tr> 
                 <% int sno =1; %>
@@ -98,24 +95,14 @@
                         <td><c:out value="${customers.getMobileNumber()}" /></td>
                         <td><c:out value="${customers.getEmail()}" /></td>
                         <td><c:out value="${customers.getAccountNumber()}" /></td>
-                        <td><c:out value="${customers.getStatus()}" /></td>
-                        <c:choose>
-                        <c:when test="${null == customers.getAddress()}">
-                             <td><c:out value="${'No Address Allocated'}"/></td>
-                        </c:when>
-                        <c:otherwise>
-                            <td><c:set value="${customers.getAddress()}" var="address"/>
-                            <c:out value="${address.addressId}" /></td>
-                        </c:otherwise>
-                    </c:choose>
-                    <td><a href="viewCustomerAddress?addressId=<c:out value="${address.addressId}"/>" style="color:blue">VIEW</a></td>  
+                        <c:set value="${customers.getAddress()}" var="address"/>
+                        <td><a href="viewCustomerAddress?addressId=<c:out value="${address.addressId}"/>" style="color:blue">VIEW</a></td>  
                     </tr>                   
                 <%    
                     sno++;   
                 %> 
                 </c:forEach>
             </table>
-            </c:if>
             <h3>Insert Id</h3>
             <form action="getCustomer" method="get">
             <table>
@@ -125,7 +112,9 @@
                 </tr>
             </table>
             </form>
+            </c:if>
             <b>Go to main page </b><a href="approverHomePage" style="font-sise:18px"> click here</a>
+            <br/><br/>
             <br/><a href="logoutController" style="width:300px;"> LOGOUT</a>
         </center>
 	</c:if>

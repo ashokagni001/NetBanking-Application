@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * When request comes from JSP page. Logout controller performs session invalid.
  * 
- *  @author ASHOK
+ *  @author TEAM-2
  * 
  * @created 2016-09-10
  */
@@ -21,19 +21,13 @@ public class LogoutController extends HttpServlet {
 	 * Performs session invalidate.
      * 
 	 * @param message
-	 *        Display message using add attribute.
-	 * 
-	 * @param req
-	 *        Request of HttpServletRequest.
-	 * 
-	 * @param res
-	 *        Response of HttpServletResponse.
+	 *     Display message using add attribute.
 	 * 
 	 * @param session
-	 *        Session of httpSeesion.
+	 *     Session of httpSeesion.
 	 * 
 	 * @return login
-	 *         Return to the login jsp page.
+	 *     Return to the login JSP page with message.
 	 */
 	@RequestMapping(value = "/logoutController")
     public String logout(ModelMap message, HttpSession session) {

@@ -13,14 +13,14 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  * <p>
- * Model class of User. 
- * It have getter method, setter method,
- * default constructor and parameter constructor.
+ *     Model class of Customer. 
+ *     It have getter method, setter method, default constructor and parameter constructor.
+ *     One to One mapping is established for Address model class.
  * </p>
  * 
- * @author Ashok
+ * @author TEAM-2
  * 
- * @created 2016
+ * @created 2016-09-03
  *
  */
 
@@ -63,9 +63,17 @@ public class Customer {
 	@JoinColumn(name="address_id")
 	public Address address;
     
+	/**
+     * Default Constructor.
+     * which create a instance of Customer.
+     */
     public Customer() {
     }
     
+    /**
+     * parameter Constructor.
+     *     Passes parameters to the constructor and creates an instance of Customer.
+     */  
     public Customer(String customerId, String name, int age, String dob, String gender,
             String mobileNumber, String email, String passWord, String accountNumber, String status) {
     	this.customerId = customerId;

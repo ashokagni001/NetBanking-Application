@@ -20,7 +20,7 @@ import com.i2i.netbankingApplication.service.CustomerService;
  *     service(Customer) and return the response to JSP page.
  * </p>
  * 
- * @author ASHOK
+ * @author TEAM-2
  * 
  * @created 2016-09-10
  *
@@ -41,34 +41,34 @@ public class LoginController {
 	 * <p> 
 	 *     Get the Customer Id and passWord from JSP page and pass 
      *     to ifValidateUser and checkIfRole methods in CustomerService.
-     *     If Admin login goes to menu page and permits all operations.
-     *     If Customer login goes view only his data only.
+     *     If Approver login goes to approver home page.
+     *     If user login goes view only his operation only.
      *     If login fail goes to login page with error message.
      * </p> 
      * 
 	 * @param customerId
-	 *        Id of Customer entered by user to login.
+	 *     Id of Customer entered by user to login.
 	 * 
 	 * @param password
-	 *        Password of Customer entered by user to login.
+	 *     password of Customer entered by user to login.
 	 * 
 	 * @param message
-	 *        Display message using add attribute.
+	 *     Display message using add attribute.
 	 * 
 	 * @param session
-	 *        Object of httpSeesion. Adds the id and role of employee by using setAttribute method.
+	 *     Object of httpSeesion. Adds the id and role of user by using setAttribute method.
 	 * 
-	 * @return menu
-	 *         Return to the menu JSP page to view the NET BANKING operations.
+	 * @return ApproverHomePage
+	 *     Return to the menu JSP page to view the NET BANKING operations.UserHomePage
+	 *     
+	 * @return UserHomePage
+	 *     Return to the UserHomePage JSP page to view user operations.
 	 * 
 	 * @return login
-	 *         If login fails return to the login JSP page with error message.
+	 *     If login fails return to the login JSP page with error message.
 	 * 
-	 * @throws NumberFormatException
-     *         If the data is very large.
-     * 
      * @throws DataBaseException
-     *         If there is an error in the given data like BadElementException.
+     *     If there is an error in the given data like BadElementException.
      */
 	@RequestMapping(value = "/loginController", method = RequestMethod.POST)
     public String loginVerification(@RequestParam("customerId")String customerId, @RequestParam("password")String password, ModelMap message,HttpSession session) {
@@ -88,22 +88,40 @@ public class LoginController {
 				message.addAttribute("message", "CHECK YOUR USERNAME and PASSWORD..");
 				return "login";
 			} 
-		} catch (NumberFormatException e) {
-			message.addAttribute("message", "PLEASE ENTER VALID NUMBER");
-		    return "login";
         } catch (DataBaseException e) {
         	message.addAttribute("message", "SOME PROBLEM OCCUR PLEASE TRY AGAIN LATER");
             return "login";
         }
 	}
 	
+	/**
+	 * <p>
+	 *     Adds the id and role of user by using setAttribute method.
+	 *     Return to the UserHomePage JSP page to view user operations.
+	 * </p>
+	 * 
+	 * @param customerId
+	 *    Id of Customer.
+	 *    
+	 * @param session
+	 *    Object of httpSeesion. Adds the id and role of user by using setAttribute method.
+	 *    
+	 * @return UserHomePage 
+	 *    Return to the UserHomePage JSP page to view user operations.
+	 */
 	@RequestMapping(value = "/userHomePage")
-    public String userHomePage(HttpSession session) {
+    public String userHomePage (HttpSession session) {
 		session.removeAttribute("role");
 		session.setAttribute("role", "user");
 		return "UserHomePage";
 	}
 	
+	/**
+	 * This method return to the approverIndexPage JSP page to view approver operations.
+	 * 
+	 * @return approverIndexPage
+	 *     Return to the approverIndexPage JSP page to view approver operations.
+	 */
 	@RequestMapping(value = "/approverHomePage")
     public String approverHomePage(){ 
 		return "approverIndexPage";

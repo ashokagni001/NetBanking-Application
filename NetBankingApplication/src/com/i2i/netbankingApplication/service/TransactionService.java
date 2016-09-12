@@ -9,116 +9,290 @@ import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Customer;
 import com.i2i.netbankingApplication.model.CustomerTransaction;
 
+/**
+ * <p>
+ *     When request comes from TransactionController. Transaction service performs add or fetch or fetchAll transaction with model(UserTransaction),
+ *     DAO(Transaction) and return the responses to transactionController.
+ *     TransactionService operate passing value's to TransactionDao based on requset's from TransactionController.
+ * </p>
+ * 
+ * @author TEAM-2
+ * 
+ * @created 2016-09-03.
+ *
+ */
 public class TransactionService {
 	TransactionDao transactionDao = new TransactionDao();
-
-	public String getTransactionDetail(String debitAccountNumber, String criditAccountNumber, String ifscode,
-			double amount) throws DataBaseException {
+	/**
+	 * <p> 
+     *    Get the Transaction detail from TransactionController.
+     *    It is passed to addTransaction method in TransactionDao and 
+     *    if exception occurs return error message to TransactionController.
+     * </p>
+     * 
+	 * @param debitAccountNumber
+	 *     debitAccountNumber of Transaction. 
+	 *     
+	 * @param criditAccountNumber
+	 *     criditAccountNumber of Transaction.
+	 *     
+	 * @param ifscode
+	 *     ifscode of criditAccount.
+	 *      
+	 * @param amount
+	 *     amount of Transaction.
+	 *      
+	 * @throws DataBaseException
+	 *     If there is an error in the given data like BadElementException.
+	 */
+	public String getTransactionDetail(String debitAccountNumber, String criditAccountNumber, 
+			String ifscode, double amount) throws DataBaseException {
 		Account debitAccount = transactionDao.retrieveAccountByNumber(debitAccountNumber);
 		Account criditAccount = transactionDao.retrieveAccountByNumber(criditAccountNumber);
+		//verify the Debit Account available or not.
 		if (debitAccount != null) {
+			//verify the cridit Account available or not.
 			if (criditAccount != null) {
+				//verify the criditAccount ifsc code valid or not.
 				if (criditAccount.getBranch().getIFSCode().equals(ifscode)) {
-					double currentAmount = debitAccount.getBalance();
-					double balanceAmount = (currentAmount - amount);
-					if (balanceAmount > 0) {
-						debitAccount.setBalance(balanceAmount);
-						return transactionDao.addTransaction(new CustomerTransaction(getLastTransactionId(), amount,
-								"Request", debitAccount, criditAccount), debitAccount);
-					} else {
-						throw new DataBaseException(
-								"Your cridit amount value is must be lesser than current amount :Rs " + currentAmount);
-					}
-				} else {
-					throw new DataBaseException("criditAccountNumber incorrect IFSC code ");
-				}
-			} else {
-				throw new DataBaseException("criditAccountNumber incorrect ");
+				    double currentAmount = debitAccount.getBalance();
+				    double balanceAmount = (currentAmount - amount);
+				    //check the balanceAmount have or not.
+				    if (balanceAmount > 0) {
+					    debitAccount.setBalance(balanceAmount);
+				        return transactionDao.addTransaction(new CustomerTransaction(getLastTransactionId(), amount, "Request", debitAccount, criditAccount), debitAccount);
+				    } else {
+					    throw new DataBaseException("Your cridit amount value is must be lesser than current amount :Rs "+ currentAmount); 
+				    }
+				} 
 			}
 		} else {
-			throw new DataBaseException("Your debitAccountNumber incorrect");
+			throw new DataBaseException("Your debitAccountNumber or criditAccountNumber incorrect"); 
 		}
+		return ("Please check your details");
 	}
-
+	
+	/**
+	 * <p> 
+     *    Get the accountNumber from TransactionController.
+     *    It is passed to retrieveAccountByNumber method in TransactionDao.
+     *    Return the object of Account.
+     * </p>
+	 * 
+	 * @param accountNumber
+	 *     accountNumber of Account.
+	 *     
+	 * @return object.
+	 *     Return the object of Account.
+	 *     
+	 * @throws DataBaseException
+	 *     If there is an error in the given data like BadElementException.
+	 */
 	public Account retrieveAccountByNumber(String accountNumber) throws DataBaseException {
 		return transactionDao.retrieveAccountByNumber(accountNumber);
 	}
-
+	
+	/**
+	 * Calculate the new transaction Id.
+	 *  
+	 * @return id 
+	 *     Return the new Transaction Id.
+	 *     
+	 * @throws DataBaseException
+	 *     If there is an error in the given data like BadElementException.
+	 */
 	public int getLastTransactionId() throws DataBaseException {
 		int id = 0;
-		for (CustomerTransaction transactions : transactionDao.retriveAllTransactions()) {
-			int temp = transactions.getId();
-			if (id <= temp) {
-				id = temp;
-			}
-		}
-		return id + 1;
-	}
-
+    	for (CustomerTransaction transactions : transactionDao.retriveAllTransactions()) {
+    		int temp = transactions.getId();
+    		if (id <= temp) {
+    			id = temp;
+    		}
+    	}
+    	return id + 1;
+    }
+    
+	/**
+	 * <p> 
+     *    Get the transactionId from TransactionController.
+     *    It is passed to retrieveCustomerTransactionById method in TransactionDao and 
+     *    returns CustomerTransaction object to TransactionController.
+     * </p>
+     * 
+	 * @param transactionId
+	 *     Id of Transaction.
+	 *     
+	 * @return object
+	 *     return object of CustomerTransaction.
+	 * 
+	 * @throws DataBaseException
+	 *     If there is an error in the given data like BadElementException.
+	 */
 	public CustomerTransaction getTransactionById(String transactionId) throws DataBaseException {
-		return transactionDao.retrieveCustomerTransactionById(transactionId);
-	}
-
+        return transactionDao.retrieveCustomerTransactionById(transactionId); 
+    }
+	
+	/**
+	 * <p>
+	 *     If request comes TransactionController, It will calling to retriveAllTransactions method in TransactionDao.
+	 *     Return to the lists of Customer Transactions.
+     * </p>
+     * 
+	 * @return List
+	 *     Return the lists of CustomerTransaction.
+	 *     
+	 * @throws DataBaseException
+	 *     If there is an error in the given data like BadElementException.
+	 */
 	public List<CustomerTransaction> getAllTransaction() throws DataBaseException {
 		List<CustomerTransaction> transactions = new ArrayList<CustomerTransaction>();
 		for (CustomerTransaction transaction : transactionDao.retriveAllTransactions()) {
-			transactions.add(transaction);
+			    transactions.add(transaction);
 		}
 		return transactions;
 	}
-
-	public List<CustomerTransaction> getAllNotification() throws DataBaseException {
+    
+	/**
+	 * <p>
+	 *     If request comes TransactionController, It will calling to retriveAllTransactions method in TransactionDao.
+	 *     Return to the lists of notification.
+     * </p>
+     * 
+	 * @return list
+	 *     Return the lists of Transaction.
+	 *     
+	 * @throws DataBaseException
+	 *     If there is an error in the given data like BadElementException.
+	 */
+    public List<CustomerTransaction> getAllNotification() throws DataBaseException {
 		List<CustomerTransaction> transactions = new ArrayList<CustomerTransaction>();
 		for (CustomerTransaction transaction : transactionDao.retriveAllTransactions()) {
 			if (transaction.getStatus().equals("Request")) {
 				transactions.add(transaction);
-			}
+			} 
 		}
 		return transactions;
 	}
-
-	public List getCustomerMiniStatement(String customerAccountNumber) throws DataBaseException {
+    
+    /**
+     * 
+     * @param customerAccountNumber
+     *     customerAccountNumber of Customer.
+     *     
+     * @return list
+     *     Return the customer transaction lists.
+     *     
+     * @throws DataBaseException
+     *     If there is an error in the given data like BadElementException.
+     */
+    public List getCustomerMiniStatement(String customerAccountNumber) throws DataBaseException {
 		List transactions = new ArrayList();
 		for (CustomerTransaction transaction : transactionDao.retriveAllTransactions()) {
 			if (transaction.getDebitAccount().getAccountNumber().equals(customerAccountNumber)) {
-				transactions.add(transaction);
-			} else if (transaction.getCriditAccount().getAccountNumber().equals(customerAccountNumber)) {
-				if (!(transaction.getStatus().equals("Request"))) {
-					transactions.add(transaction);
-				}
-			}
+	        	transactions.add(transaction);
+	        } else if (transaction.getCriditAccount().getAccountNumber().equals(customerAccountNumber)) {
+	            if (!(transaction.getStatus().equals("Request"))) {
+	                transactions.add(transaction);
+	            }
+	        }
 		}
 		return transactions;
 	}
-
+    /**
+     * <p>
+	 *     If request comes TransactionController,get the accountNumber form Transaction Controller.
+	 *     It will calling to retrieveAccountDetail method in TransactionDao with accountNumber.
+     * </p>
+     * 
+     * @param accountNumber
+     *     accountNumber of Account.
+     *     
+     * @return object
+     *     return to the object of Account,
+     *     
+     * @throws DataBaseException
+     *     If there is an error in the given data like BadElementException.
+     */
 	public Account getCustomerAccount(String accountNumber) throws DataBaseException {
-		return transactionDao.retrieveAccountDetail(accountNumber);
+		return transactionDao.retrieveAccountByNumber(accountNumber);
 	}
-
-	public void transactionSuccess(int transactionId, String criditAccountNumber, Double amount)
-			throws DataBaseException {
+	
+	/**
+	 * <p>
+	 *     If request comes TransactionController, get the transaction details and
+	 *     it will calling to transactionSuccess method in TransactionDao
+	 *     with transaction details.
+     * </p>
+     * 
+	 * @param transactionId
+	 *     id of Transaction.
+	 *     
+	 * @param criditAccountNumber
+	 *     criditAccountNumber of Transaction.
+	 *     
+	 * @param amount
+	 *     amount of Transaction.
+	 *     
+	 * @throws DataBaseException
+	 *     If there is an error in the given data like BadElementException.
+	 */
+	public void transactionSuccess(int transactionId, String criditAccountNumber, Double amount) throws DataBaseException {
 		Account criditAccount = transactionDao.retrieveAccountByNumber(criditAccountNumber);
 		if (criditAccount != null) {
-			double currentAmount = criditAccount.getBalance();
-			double balanceAmount = (currentAmount + amount);
-			transactionDao.transactionSuccess(criditAccount.getAccountNumber(), balanceAmount, transactionId);
-		} else {
-			throw new DataBaseException("CRIDIT ACCOUNT IS NOT AVAILABLE ");
-		}
+			 double currentAmount = criditAccount.getBalance();
+			 double balanceAmount = (currentAmount + amount);
+			 transactionDao.transactionSuccess(criditAccount.getAccountNumber(), balanceAmount, transactionId);
+        } else {
+	        throw new DataBaseException("CRIDIT ACCOUNT IS NOT AVAILABLE "); 
+        }
 	}
-
-	public void transactionFailure(int transactionId, String debitAccountNumber, Double amount)
-			throws DataBaseException {
+	
+	/**
+	 * <p>
+	 *     If request comes TransactionController, get the transaction details and
+	 *     It will calling to transactionFailure method in TransactionDao
+	 *     with transaction details.
+     * </p>
+     * 
+	 * @param transactionId
+	 *     id of Transaction.
+	 *     
+	 * @param debitAccountNumber
+	 *     debitAccountNumber of Transaction.
+	 *     
+	 * @param amount
+	 *     amount of Transaction.
+	 *     
+	 * @throws DataBaseException
+	 *     If there is an error in the given data like BadElementException.
+	 */
+	public void transactionFailure(int transactionId, String debitAccountNumber, Double amount) throws DataBaseException {
 		Account debitAccount = transactionDao.retrieveAccountByNumber(debitAccountNumber);
 		if (debitAccount != null) {
-			double currentAmount = debitAccount.getBalance();
-			double balanceAmount = (currentAmount + amount);
-			transactionDao.transactionFailure(debitAccount.getAccountNumber(), balanceAmount, transactionId);
-		} else {
-			throw new DataBaseException("CRIDIT ACCOUNT IS NOT AVAILABLE ");
-		}
+			 double currentAmount = debitAccount.getBalance();
+			 double balanceAmount = (currentAmount + amount);
+			 transactionDao.transactionFailure(debitAccount.getAccountNumber(), balanceAmount, transactionId);
+        } else {
+	        throw new DataBaseException("CRIDIT ACCOUNT IS NOT AVAILABLE "); 
+        }
 	}
-
+	
+	/**
+	 * <p>
+	 *     If request comes TransactionController, It will calling to getDateTransaction method in TransactionDao.
+	 *     Return to the lists of Transaction by Date.
+     * </p>
+     * 
+	 * @param fromDate
+	 *    fromDate of Transaction.
+	 *    
+	 * @param toDate
+	 *    toDate of Transaction.
+	 *    
+	 * @return
+	 * @throws DataBaseException
+	 *     If there is an error in the given data like BadElementException.
+	 */
 	public List<CustomerTransaction> getDateTransaction(String fromDate, String toDate) throws DataBaseException {
 		return transactionDao.retriveTransactionByDate(fromDate, toDate);
 	}

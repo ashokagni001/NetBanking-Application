@@ -90,7 +90,8 @@
 				</br>
 				</br>
 				<input type="submit" name="addBranch" value="ADD" />
-
+				<br/><br/>
+                <a href="logoutController" style="width: 300px;"> LOGOUT</a>
 			</form:form>
 		</c:if>
 	</center>

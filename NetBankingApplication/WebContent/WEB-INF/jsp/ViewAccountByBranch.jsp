@@ -42,7 +42,7 @@
 		</script>
 	</c:if>
 	<c:if test="${accounts != null}">
-		<h2>Fetching Data From A Project Management System</h2>
+		<h2>Fetching Data From A Branch Management System</h2>
 		<table class="table table-striped">
 			<tr>
 				<th>S.NO</th>

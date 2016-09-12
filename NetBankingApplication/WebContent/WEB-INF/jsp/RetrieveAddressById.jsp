@@ -50,6 +50,7 @@
 		</c:if>
 	</center>
 	<c:if test="${sessionScope['role']== 'approver'}">
+	<br/><br/>
 		<b>Go to main page </b>
 		<a href="approverHomePage" style="font-sise: 18px"> click here</a>
 	</c:if>
@@ -59,7 +60,7 @@
 			href="getCustomer?customerId=<c:out value="${sessionScope['id']}"/>">CUSTOMER
 				DETAIL</a></td>
 	</c:if>
-	<br />
+	<br /></br>
 	<a href="logoutController" style="width: 300px;"> LOGOUT</a>
 </body>
 </html>

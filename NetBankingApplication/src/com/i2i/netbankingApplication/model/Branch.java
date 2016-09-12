@@ -10,12 +10,23 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-
+/**
+ * <p>
+ *     Model class of Branch. 
+ *     It have getter method, setter method, default constructor and parameter constructor.
+ *     One to One mapping is established for Address model class.
+ * </p>
+ * 
+ * @author TEAM-2
+ * 
+ * @created 2016-09-03
+ *
+ */
 @Entity
 @Table(name = "branch_detail")
 public class Branch {
 	@Id
-    @Column(name = "ifscode")
+    @Column(name = "ifsc")
 	private String IFSCode;
 	
 	@Column(name = "email")
@@ -26,9 +37,17 @@ public class Branch {
 	@JoinColumn(name="address_id")
 	public Address address;
 	
+	/**
+     * Default Constructor.
+     * which create a instance of Branch.
+     */
 	public Branch() {
 	}
 	
+	/**
+     * parameter Constructor.
+     *     Passes parameters to the constructor and creates an instance of Branch.
+     */  
 	public Branch(String IFSCode, String emailId) {
 		this.IFSCode = IFSCode;
 		this.emailId = emailId;

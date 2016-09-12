@@ -47,17 +47,15 @@
 					style="color: blue">VIEW USER DETAIL</a></td>
 			</tr>
 		</table>
-		<br /> <br /> <b>Go to main page </b><a href="BranchIndex"
-			style="font-sise: 18px">click here</a> <br /> <br /> <b>Do you
-			want to insert a new Branch</b><a href="addBranch" style="color: blue">Insert
-			here</a> <br /> <br /> <a href="logoutController" style="width: 300px;">
-			LOGOUT</a>
-		<c:if test="${message != null}">
-			<script type="text/javascript">
-				alert('CLICK OK THE PAGE WILL BE REFRESHED...'
-						+ "<c:out value='${message}'/>");
-				windows.location.reload();
-			</script>
-		</c:if>
+		<br /> <br /> <b>Go to main page </b><a href="approverHomePage"
+			style="font-sise: 18px">click here</a> <br /> <br /> <b> <br />
+			<a href="logoutController" style="width: 300px;"> LOGOUT</a> <c:if
+				test="${message != null}">
+				<script type="text/javascript">
+					alert('CLICK OK THE PAGE WILL BE REFRESHED...'
+							+ "<c:out value='${message}'/>");
+					windows.location.reload();
+				</script>
+			</c:if>
 </body>
 </html>

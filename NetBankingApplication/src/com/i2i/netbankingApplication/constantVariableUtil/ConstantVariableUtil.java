@@ -1,9 +1,9 @@
 package com.i2i.netbankingApplication.constantVariableUtil;
 
 /**
- * Declareds static and final variables.
+ * Declared static and final variables.
  *  
- * @author Ashok
+ * @author TEAM-2
  * 
  * @created 2016-09-07
  *

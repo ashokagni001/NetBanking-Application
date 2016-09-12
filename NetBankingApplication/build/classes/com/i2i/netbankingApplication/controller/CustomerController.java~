@@ -41,26 +41,24 @@ public class CustomerController {
 	public String customer() {
 		return "CustomerIndex";
 	}
-    
-   /**
+    /**
     * <p>
     *    It displays a form to input data, here "Customer" is a reserved attribute which is used
     *    to display object data(Customer) into form.
     * </p>
     * 
     * @param model
-    *      Customer model return the customer object.
+    *        Customer model return the customer object.
     * 
     * @return CustomerRegistration
-    *      Return to the CustomerRegistration JSP page with model(Customer) object.
+    *         Return to the CustomerRegistration JSP page with model(Customer) object.
     */
 	@RequestMapping("/CustomerRegistration") 
 	public String addForm(ModelMap model) {
 		model.addAttribute("Customer", new Customer());
 		return "CustomerRegistration";
 	}
-	
-    /**
+		/**
      * <p>
      *    Get the customer object from JSP page and pass to getCustomer method in CustomerService.
      *    Return to JSP page CustomerRegistration with status message(success or failure) Or Address object.
@@ -122,11 +120,10 @@ public class CustomerController {
 			message.addAttribute("message", customerService.getAddress(address));
 		}catch (DataBaseException e) {
     		message.addAttribute("message", "ENTER VALID DATA ONLY"); 
-        }finally {
+        }finally{
 		    return "login";
         }
     }
-	
 	/**
 	 * <p>
      *    It displays a form to input data, here "Customer" is a reserved attribute which is used
@@ -173,7 +170,6 @@ public class CustomerController {
         	return "GetCustomer";
         }
     }
-	
 	/**
 	 * <p>
 	 *    This Method call to getAddressById method in CustomerService.
@@ -194,7 +190,6 @@ public class CustomerController {
     		return new ModelAndView ("CustomerIndex", "message", e.getMessage().toString());
         }
     }
-	
 	/**
 	 * It return to the  GetMiniStatementByCustomerId JSP page.
 	 * It form used for enter customerId to view miniStatement.
@@ -206,7 +201,6 @@ public class CustomerController {
 	public String getMiniStatementByCustomerId() {
 		return "GetMiniStatementByCustomerId";
 	}
-	
 	/**
 	 * <p>
 	 *    Get the Customer Id from JSP page.
@@ -230,23 +224,6 @@ public class CustomerController {
         }
     }
 	
-	/**
-	 * <p>
-	 *    Return to the AddUserRole JSP page with Role(Model) Object.
-	 *    This Method check the role available or not using isRoleAvailable in CustomerService.
-	 *    This Method call to getAllRole method in CustomerService.
-     *    Return to the getMiniStatementByCustomerId JSP page with Customer MiniStatement or status message(failure).
-     * </p>
-	 * 
-	 * @param model
-	 *     Customer model return the customer object.
-	 *     
-	 * @return AddUserRole
-	 *     Return to the AddUserRole JSP page with Role Detail or status message(failure).
-	 * 
-	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
-	 */
 	@RequestMapping(value = "/addUserRole")
 	public String addUserRole(ModelMap model) throws DataBaseException {
 		if (customerService.isRoleAvailable()) {
@@ -256,29 +233,7 @@ public class CustomerController {
 		}
 		return "AddUserRole";
 	}
-    
-	/**
-	 * <p>
-	 *     This method insert to the user role detail.
-	 *     This Method call to getAllRole method in CustomerService.
-	 *     Return to the AddUserRole JSP page with Role Detail  and message (Success) or status message(failure).
-	 * </p>
-	 * 
-	 * @param customerId
-	 *     Id of Customer. 
-	 *     
-	 * @param roleId
-	 *     Id of Role.
-	 *     
-	 * @param message
-	 *     Display message using add attribute.
-	 *     
-	 * @return AddUserRole
-	 *     Return to the AddUserRole JSP page with Role Detail or status message(failure).
-	 *     
-	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
-	 */
+
 	@RequestMapping(value = "/insertRole", method = RequestMethod.GET)
 	public String addUserRole(@RequestParam("customerId") String customerId, @RequestParam("role") String roleId,
 			ModelMap message) throws DataBaseException {

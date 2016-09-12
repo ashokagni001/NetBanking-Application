@@ -36,7 +36,7 @@
 			</tr>
 			<tr>
 				<td align="center" height="40" width="350"><a
-					href="viewTransactionBYDate">FETCH TRANSACTION BY DATE</a></td>
+					href="viewTransactionByDate">FETCH TRANSACTION BY DATE</a></td>
 			</tr>
 		</table>
 	</center>

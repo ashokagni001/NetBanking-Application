@@ -48,34 +48,18 @@
 					<tr>
 						<th>IFSC CODE</th>
 						<th>EMAIL ID</th>
-						<th>ADDRESS ID</th>
 						<th>ADDRESS</th>
 						<th>DALETE</th>
 					</tr>
 					<c:set value="${branch}" var="branch" />
 					<tr>
 						<td align="center"><c:out value="${branch.getIFSCode()}" /></td>
-						<br />
-						<br />
 						<td align="center"><c:out value="${branch.getEmailId()}" /></td>
-						<br />
-						<br />
-						<c:choose>
-							<c:when test="${null == branch.getAddress()}">
-								<td align="center"><c:out value="${'No Address Allocated'}" /></td>
-								<br />
-								<br />
-							</c:when>
-							<c:otherwise>
-								<td align="center"><c:set value="${branch.getAddress()}"
-										var="address" /></td>
+								<c:set value="${branch.getAddress()}"
+										var="address" />
 								<td align="center"><a
 									href="viewBranchAddress?addressId=<c:out value="${address.addressId}"/>"
 									style="color: blue">VIEW</a></td>
-								<br />
-								<br />
-							</c:otherwise>
-						</c:choose>
 						<td><a
 							href="deleteBranchById?ifsc=<c:out value="${branches.getIFSCode()}"/>"
 							style="color: blue">Delete</a></td>
@@ -83,7 +67,7 @@
 				</table>
 			</c:if>
 			<c:if test="${branches != null}">
-				<h3>Fetching Data From A Project Management System</h3>
+				<h3>Fetching Data From A Branch Management System</h3>
 				<table class=" table table-bordered">
 					<tr>
 						<th>S.NO</th>
@@ -100,17 +84,9 @@
 							<td><c:out value="<%=sno%>" /></td>
 							<td><c:out value="${branches.getIFSCode()}" /></td>
 							<td><c:out value="${branches.getEmailId()}" /></td>
-							<c:choose>
-								<c:when test="${null == branches.getAddress()}">
-									<td><c:out value="${'No Address Allocated'}" /></td>
-								</c:when>
-								<c:otherwise>
 									<c:set value="${branches.getAddress()}" var="address" />
-									<td><a
-										href="viewBranchAddress?addressId=<c:out value="${address.addressId}"/>"
+							<td><a href="viewBranchAddress?addressId=<c:out value="${address.addressId}"/>"
 										style="color: blue">VIEW</a></td>
-								</c:otherwise>
-							</c:choose>
 							<td><a
 								href="deleteBranchById?ifsc=<c:out value="${branches.getIFSCode()}"/>"
 								style="color: blue">Delete</a></td>

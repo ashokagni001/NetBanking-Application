@@ -5,6 +5,17 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * <p>
+ *     Model class of Address. 
+ *     It have getter method, setter method, default constructor and parameter constructor.
+ * </p>
+ * 
+ * @author TEAM-2
+ * 
+ * @created 2016-09-03
+ *
+ */
 @Entity
 @Table(name = "address_detail")
 public class Address {
@@ -27,9 +38,17 @@ public class Address {
 	@Column(name = "pincode")
 	private int pincode;
 	
+	/**
+     * Default Constructor.
+     * which create a instance of Address.
+     */
 	public Address() {
 	}
 	
+	/**
+     * parameter Constructor.
+     *     Passes parameters to the constructor and creates an instance of Address.
+     */  
 	public Address(String street, String country, String city, String state, int pincode) {
 		this.street = street;
 		this.country = country;
