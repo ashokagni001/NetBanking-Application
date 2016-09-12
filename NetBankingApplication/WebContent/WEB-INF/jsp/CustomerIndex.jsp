@@ -35,22 +35,12 @@
                  <br/><br/>
                  <tr>
                      <td align="center" height="40" width="350">
-                         <a href="CustomerRegistration">CUSTOMER REGISTRATION</a>
-                     </td>
-                 </tr>
-                 <tr>
-                     <td align="center" height="40" width="350">
                          <a href="GetCustomer">FETCH CUSTOMER</a>
-                     </td>
-                 </tr>
-                 <tr>
-                     <td align="center" height="40" width="350">
-                         <a href="getMiniStatementByCustomerId">CUTOMER MINI STATEMENT</a>
                      </td>
                  </tr>
              </table>
          </center>
-         <b>Go to main page </b><a href="index.jsp" style="font-sise:18px"> click here</a></br></br>
+         <b>Go to main page </b><a href="approverHomePage" style="font-sise:18px"> click here</a></br></br>
          <br/><a href="logoutController" style="width:300px;"> LOGOUT</a>
     </body>
 </html>

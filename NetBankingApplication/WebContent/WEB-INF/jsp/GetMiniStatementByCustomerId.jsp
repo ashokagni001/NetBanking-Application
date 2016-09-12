@@ -4,8 +4,8 @@
 <c:if test="${sessionScope['id']== null}">
     <c:redirect url="login"/>
 </c:if>
-<c:if test="${sessionScope['role']!= 'approver'}">
-    <c:redirect url="userHomePage"/>
+<c:if test="${sessionScope['role']!= 'user'}">
+    <c:redirect url="approverHomePage"/>
 </c:if>
 <html>
     <head>

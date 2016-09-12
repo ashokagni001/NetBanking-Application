@@ -2,8 +2,8 @@
 <c:if test="${sessionScope['id']== null}">
     <c:redirect url="login"/>
 </c:if>
-<c:if test="${sessionScope['role']!= 'approver'}">
-    <c:redirect url="userHomePage"/>
+<c:if test="${sessionScope['role']!= 'user'}">
+    <c:redirect url="approverHomePage"/>
 </c:if>
 <html>
     <head>
@@ -60,7 +60,12 @@
                 </c:forEach>
             </table>
             <br/><br/>
-            <b>Go to main page </b><a href="CustomerIndex" style="font-sise:18px"> click here</a>
+            <c:if test="${sessionScope['role']== 'approver'}">
+            <b>Go to main page </b><a href="approverHomePage"> click here</a>
+             </c:if>
+             <c:if test="${sessionScope['role']== 'user'}">
+            <b>Go to main page </b><a href="userHomePage?customerId= <c:out value="${sessionScope['id']}"/>">click here</a> <br />
+             </c:if>
 	        <br/>
 	        <br/><a href="logoutController" style="width:300px;"> LOGOUT</a>
             <c:if test="${message != null}">

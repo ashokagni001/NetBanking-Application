@@ -23,22 +23,10 @@ keyframes spinner { 0% {
 100%
 {
 transform
-
-
 :
-
- 
-
 rotateZ
 
-
-(359
-deg
-);
-
-
-  
-
+(359 deg);
 }
 }
 * {

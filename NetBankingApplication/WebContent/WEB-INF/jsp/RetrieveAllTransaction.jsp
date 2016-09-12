@@ -27,7 +27,6 @@
 	            <th align="center" height="30" width="100">TRANSACTION ID</th>
 	            <th align="center" height="30" width="100">DEBIT ACCOUNT ID</th>
 	            <th align="center" height="30" width="100">CRIDIT ACCOUNT ID</th>
-	            <th align="center" height="30" width="100">USER ID</th>
 	            <th align="center" height="30" width="100">AMOUNT</th>
 	            <th align="center" height="30" width="100">DATE & TIME</th>
 	            <th align="center" height="30" width="100">TRANSACTION STATUS</th>
@@ -49,10 +48,6 @@
                         <td>
                             <c:set value="${transactions.getCriditAccount()}" var="accountCridit"/>
                             <c:out value="${accountCridit.accountNumber}" />
-                        </td>
-                        <td>
-                            <c:set value="${transactions.getCustomer()}" var="customer"/>
-                            <c:out value="${customer.customerId}"/>
                         </td>
                         <td>
                             <c:out value="${transactions.getAmount()}"/>

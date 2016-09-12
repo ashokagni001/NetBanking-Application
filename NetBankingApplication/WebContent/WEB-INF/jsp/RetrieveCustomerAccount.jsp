@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
-
-=======
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:if test="${sessionScope['id']== null}">
     <c:redirect url="login"/>
@@ -11,7 +5,6 @@
 <c:if test="${sessionScope['role']!= 'approver'}">
     <c:redirect url="userHomePage"/>
 </c:if>
->>>>>>> a8b112fde05d82e54dd071e662bb0dab3e7faa96
 <html>
     <head>
         <link rel="stylesheet" href="css/bootstrap.css">
@@ -35,7 +28,7 @@
 	            <th align="center" height="30" width="100">BRANCH ID</th>
 	            <th align="center" height="30" width="100">BALANCE</th>
 	            <th align="center" height="30" width="100">ACCOUNT TYPE</th>
-	            <th colspan="1" align="center" height="30" width="100">VIEW CUSTOMER DETAIL</th>
+	            <th colspan="2" align="center" height="30" width="100">VIEW CUSTOMER DETAIL</th>
                 </tr> 
                 <c:set value="${accountDetail}" var="accountDetail"/>
                     <tr>

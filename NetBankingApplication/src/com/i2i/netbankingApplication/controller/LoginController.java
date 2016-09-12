@@ -27,7 +27,6 @@ import com.i2i.netbankingApplication.service.CustomerService;
  */
 @Controller
 public class LoginController {
-	HttpSession httpSession;
 	
    /**
 	* @return login
@@ -81,7 +80,7 @@ public class LoginController {
 					session.setAttribute("role", "approver");
 					return "ApproverHomePage";
 				} else {
-					session.setAttribute("id",customerId);
+					session.setAttribute("id", customerId);
 					session.setAttribute("role", "user");
 					return "UserHomePage";
 				}
@@ -100,9 +99,9 @@ public class LoginController {
 	
 	@RequestMapping(value = "/userHomePage")
     public String userHomePage(@RequestParam("customerId")String customerId, HttpSession session) {
-		session.invalidate();
-		httpSession.setAttribute("id", customerId);
-		httpSession.setAttribute("role", "user");
+		session.removeAttribute("role");
+		session.setAttribute("id", customerId);
+		session.setAttribute("role", "user");
 		return "UserHomePage";
 	}
 	

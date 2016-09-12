@@ -25,16 +25,6 @@
              <table>
                  <br/><br/>
                  <tr>
-                     <td align="center" height="40" width="350">
-                         <a href="addTransaction">ADD TRANSACTION</a>
-                     </td>
-                 </tr>
-                 <tr>
-                     <td align="center" height="40" width="350">
-                         <a href="getTransaction">FETCH TRANSACTION</a>
-                     </td>
-                 </tr>
-                 <tr>
                       <td align="center" height="40" width="350">
                          <a href="notification">NOTIFICATIONS</a>
                      </td>
@@ -42,11 +32,6 @@
                  <tr>
                       <td align="center" height="40" width="350">
                          <a href="viewAllTransaction">FETCH ALL TRANSACTION</a>
-                     </td>
-                 </tr>
-                 <tr>
-                      <td align="center" height="40" width="350">
-                         <a href="viewTransactionBYDate">FETCH TRANSACTION BY DATE</a>
                      </td>
                  </tr>
              </table>
