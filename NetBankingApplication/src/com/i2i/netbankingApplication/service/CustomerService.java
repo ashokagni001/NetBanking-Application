@@ -29,8 +29,7 @@ import com.i2i.netbankingApplication.util.StringUtil;
  *
  */
 public class CustomerService {
-    CustomerDao customerDao = new CustomerDao();
-    private TransactionService transactionService = new TransactionService();
+    private CustomerDao customerDao = new CustomerDao();
     
     /**
      * <p> 
@@ -75,7 +74,7 @@ public class CustomerService {
         	throw new CustomerDataException("YOUR AGE IS NOT VALID");  
         }
         String password = "i2i" + String.valueOf((int)(Math.random()*9000));
-        customerDao.insertUser(customer.getAccountNumber(), new Customer(customerId, customer.getName(), customerAge, customer.getDob(), 
+        customerDao.insertUser(customer.getAccountNumber(), new Customer("CUSI2I00" + String.valueOf(getLastCustomerId() + 1), customer.getName(), customerAge, customer.getDob(), 
             customer.getGender(), customer.getMobileNumber(), customer.getEmail(), password, customer.getAccountNumber(), "ACTIVE"));
         insertUserRole(customerId, "1");
     }
@@ -117,19 +116,15 @@ public class CustomerService {
 	 */
     public int getLastCustomerId() throws DataBaseException {
     	int lastCustomerId = 0;
-    	if (customerDao.retriveAllCustomer().size() == 0) {
-    		return lastCustomerId;
-    	} else {
-    		for (Customer customer : customerDao.retriveAllCustomer()) {
-    			String id = customer.getCustomerId();
-    		    int temp = Integer.parseInt(id.substring(6, id.length()));
-                if (lastCustomerId <= temp) {
-                	lastCustomerId = temp;
-                }
-    		}
-    		return lastCustomerId;
+        for (Customer customer : customerDao.retriveAllCustomer()) {
+    		String id = customer.getCustomerId();
+    		int temp = Integer.parseInt(id.substring(6, id.length()));
+            if (lastCustomerId <= temp) {
+               	lastCustomerId = temp;
+            }
     	}
-    }
+   		return lastCustomerId;
+   	}
     
     /**
      * Retrieves all customers from CustomerDao.
@@ -203,31 +198,6 @@ public class CustomerService {
 	    return customerDao.retrieveAddressById(addressId);
 	}
     
-	/**   
-	 * <p>
-	 *    Get the customer Id from customerController.
-     *    It is passed to getCustomerMiniStatement method in customerDao and 
-     *    returns object of CustomerTransaction to customerController.
-     * </p>
-     * 
-	 * @param customerId
-	 *     id of Customer.
-	 *     
-	 * @return customerController
-     *     Return to the object of CustomerTransaction class.
-     *     
-	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
-	 */
-	public List<CustomerTransaction> getMiniStatementByCustomerId(String customerId) throws DataBaseException {
-		Customer customer = customerDao.retrieveCustomerById(customerId);
-		if (customer != null) {
-		    return transactionService.getCustomerMiniStatement(customer.getAccountNumber());
-		} else {
-			throw new DataBaseException("Enter valid id"); 
-		}
-	}
-	
 	/**
 	 * <p>
 	 *    Get the customer Id and roleId from customerController.

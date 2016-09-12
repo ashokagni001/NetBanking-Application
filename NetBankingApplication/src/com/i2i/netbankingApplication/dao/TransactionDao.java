@@ -11,6 +11,7 @@ import org.hibernate.cfg.Configuration;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.hibernateConnection.HibernateConnection;
 import com.i2i.netbankingApplication.model.Account;
+import com.i2i.netbankingApplication.model.Customer;
 import com.i2i.netbankingApplication.model.CustomerTransaction;
 
 /**
@@ -26,9 +27,9 @@ import com.i2i.netbankingApplication.model.CustomerTransaction;
  * @created 2016-09-03
  */
 public class TransactionDao {
-	HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
-	Configuration configuration = hibernateConnectionObject.getConfiguration();
-	SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
+	private HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
+	private Configuration configuration = hibernateConnectionObject.getConfiguration();
+	private SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
     
 	/**
 	 * <p>
@@ -176,25 +177,27 @@ public class TransactionDao {
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
 	 */
-	public void transactionSuccess(String accountNumber, double balanceAmount, int transactionId) throws DataBaseException {
-	    Session session = sessionFactory.openSession();
-	    Transaction transaction = null;
-	    Account account = null;
-	    CustomerTransaction customerTransaction = null;
-	    try {
-	        transaction = session.beginTransaction();
-	        account = (Account)session.get(Account.class, accountNumber);
-	        account.setBalance(balanceAmount);
-	        session.update(account);
-	        customerTransaction = (CustomerTransaction)session.get(CustomerTransaction.class, transactionId);
-	        customerTransaction.setStatus("Success");
-	        session.update(customerTransaction);
-	        transaction.commit(); 
+	public void transactionSuccess(String accountNumber, double balanceAmount, int transactionId, Customer approver)
+			throws DataBaseException {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		Account account = null;
+		CustomerTransaction customerTransaction = null;
+		try {
+			transaction = session.beginTransaction();
+			account = (Account) session.get(Account.class, accountNumber);
+			account.setBalance(balanceAmount);
+			session.update(account);
+			customerTransaction = (CustomerTransaction) session.get(CustomerTransaction.class, transactionId);
+			customerTransaction.setCustomer(approver);
+			customerTransaction.setStatus("Success");
+			session.update(customerTransaction);
+			transaction.commit();
 		} catch (HibernateException e) {
-			throw new DataBaseException("Oops Some Problem occured.. please try again later" );  
-	    } finally {
-	        session.close(); 
-	    }
+			throw new DataBaseException("Oops Some Problem occured.. please try again later");
+		} finally {
+			session.close();
+		}
 	}
 	
 	/**
@@ -212,25 +215,27 @@ public class TransactionDao {
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
 	 */
-	public void transactionFailure(String accountNumber, double balanceAmount, int transactionId) throws DataBaseException {
-	    Session session = sessionFactory.openSession();
-	    Transaction transaction = null;
-	    Account account = null;
-	    CustomerTransaction customerTransaction = null;
-	    try {
-	        transaction = session.beginTransaction();
-	        account = (Account)session.get(Account.class, accountNumber);
-	        account.setBalance(balanceAmount);
-	        session.update(account);
-	        customerTransaction = (CustomerTransaction)session.get(CustomerTransaction.class, transactionId);
-	        customerTransaction.setStatus("Failure");
-	        session.update(customerTransaction);
-	        transaction.commit(); 
+	public void transactionFailure(String accountNumber, double balanceAmount, int transactionId, Customer approver)
+			throws DataBaseException {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		Account account = null;
+		CustomerTransaction customerTransaction = null;
+		try {
+			transaction = session.beginTransaction();
+			account = (Account) session.get(Account.class, accountNumber);
+			account.setBalance(balanceAmount);
+			session.update(account);
+			customerTransaction = (CustomerTransaction) session.get(CustomerTransaction.class, transactionId);
+			customerTransaction.setCustomer(approver);
+			customerTransaction.setStatus("Failure");
+			session.update(customerTransaction);
+			transaction.commit();
 		} catch (HibernateException e) {
-			throw new DataBaseException("Oops Some Problem occured.. please try again later" );  
-	    } finally {
-	        session.close(); 
-	    }
+			throw new DataBaseException("Oops Some Problem occured.. please try again later");
+		} finally {
+			session.close();
+		}
 	}
 	
 	/**

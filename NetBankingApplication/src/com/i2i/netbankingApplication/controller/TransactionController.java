@@ -25,7 +25,7 @@ import com.i2i.netbankingApplication.service.TransactionService;
  */
 @Controller
 public class TransactionController {
-	TransactionService transactionService = new TransactionService();
+	private TransactionService transactionService = new TransactionService();
         
         	
 	/**
@@ -149,7 +149,30 @@ public class TransactionController {
 			return new ModelAndView("RetrieveCustomerAccount", "message", "ENTER VALID IFSC ONLY");
 		}
 	}
-
+        
+        /**
+	 * <p>
+	 *    Get the Customer Id from JSP page.
+	 *    This Method call to getMiniStatementByCustomerId method in CustomerService.
+     *    Return to the getMiniStatementByCustomerId JSP page with Customer MiniStatement or status message(failure).
+     * </p>
+     * 
+	 * @param customerId
+	 *     Id of Customer entered by user to view the corresponding record(MiniStatement).
+	 *     
+	 * @return RetrieveMiniStatementByCustomerId
+	 *      Return to the RetrieveMiniStatementByCustomerId JSP page with Customer MiniStatement or status message(failure).
+	 * 
+	 */
+	@RequestMapping(value="/viewMiniStatementByCustomerId", method = RequestMethod.GET)  
+    public ModelAndView viewMiniStatementByCustomerId (@RequestParam("customerId")String customerId, ModelMap message) {
+        try {
+        	return new ModelAndView("RetrieveMiniStatementByCustomerId", "miniStatement", transactionService.getCustomerMiniStatement(customerId));
+        }catch (DataBaseException e) {
+        	return new ModelAndView("CustomerIndex", "message", "ENTER VALID CUSTOMER ID ONLY");
+        }
+	}
+    
         /**
 	 * <p>
 	 *     It method used for approver permission active.
@@ -172,9 +195,9 @@ public class TransactionController {
 	@RequestMapping(value = "/transactionSuccess", method = RequestMethod.GET)
 	public String transactionSuccess(@RequestParam("id") int transactionId,
 			@RequestParam("criditAccountNumber") String criditAccountNumber, @RequestParam("amount") Double amount,
-			ModelMap message) {
+			@RequestParam("userId") String userId, ModelMap message) {
 		try {
-			transactionService.transactionSuccess(transactionId, criditAccountNumber, amount);
+			transactionService.transactionSuccess(transactionId, criditAccountNumber, amount, userId);
 			message.addAttribute("message", "TRANSACTION ACTION SUCCESSFULLY");
 			message.addAttribute("notifications", transactionService.getAllNotification());
 		} catch (DataBaseException e) {
@@ -206,9 +229,9 @@ public class TransactionController {
 	@RequestMapping(value = "/transactionCancel", method = RequestMethod.GET)
 	public String transactionFailure(@RequestParam("id") int transactionId,
 			@RequestParam("debitAccountNumber") String debitAccountNumber, @RequestParam("amount") Double amount,
-			ModelMap message) {
+			@RequestParam("userId") String userId, ModelMap message) {
 		try {
-			transactionService.transactionFailure(transactionId, debitAccountNumber, amount);
+			transactionService.transactionFailure(transactionId, debitAccountNumber, amount, userId);
 			message.addAttribute("transactions", "TRANSACTION ACTION SUCCESSFULLY");
 			message.addAttribute("notifications", transactionService.getAllNotification());
 		} catch (DataBaseException e) {

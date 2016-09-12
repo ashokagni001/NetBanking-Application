@@ -28,7 +28,7 @@ import com.i2i.netbankingApplication.service.BranchService;
  */
 @Controller
 public class BranchController {
-	BranchService branchService = new BranchService();
+	private BranchService branchService = new BranchService();
 	
 	
    /**

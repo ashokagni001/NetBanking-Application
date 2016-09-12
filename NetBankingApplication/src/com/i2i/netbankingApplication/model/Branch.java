@@ -26,7 +26,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 @Table(name = "branch_detail")
 public class Branch {
 	@Id
-    @Column(name = "ifsc")
+    @Column(name = "ifscode")
 	private String IFSCode;
 	
 	@Column(name = "email")

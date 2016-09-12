@@ -29,7 +29,7 @@ import com.i2i.netbankingApplication.service.CustomerService;
  */
 @Controller
 public class CustomerController {
-    CustomerService customerService = new CustomerService();
+    private CustomerService customerService = new CustomerService();
     
     /**
      * Return the JSP page that contains options for customer operation
@@ -195,40 +195,6 @@ public class CustomerController {
         }
     }
 	
-	/**
-	 * It return to the  GetMiniStatementByCustomerId JSP page.
-	 * It form used for enter customerId to view miniStatement.
-	 *  
-	 * @return GetMiniStatementByCustomerId
-	 *     Return to the GetMiniStatementByCustomerId JSP page.
-	 */  
-	@RequestMapping(value = "/getMiniStatementByCustomerId")
-	public String getMiniStatementByCustomerId() {
-		return "GetMiniStatementByCustomerId";
-	}
-	
-	/**
-	 * <p>
-	 *    Get the Customer Id from JSP page.
-	 *    This Method call to getMiniStatementByCustomerId method in CustomerService.
-     *    Return to the getMiniStatementByCustomerId JSP page with Customer MiniStatement or status message(failure).
-     * </p>
-     * 
-	 * @param customerId
-	 *     Id of Customer entered by user to view the corresponding record(MiniStatement).
-	 *     
-	 * @return RetrieveMiniStatementByCustomerId
-	 *      Return to the RetrieveMiniStatementByCustomerId JSP page with Customer MiniStatement or status message(failure).
-	 * 
-	 */
-	@RequestMapping(value="/viewMiniStatementByCustomerId", method = RequestMethod.GET)  
-    public ModelAndView viewMiniStatementByCustomerId (@RequestParam("customerId")String customerId, ModelMap message) {
-        try {
-            return new ModelAndView("RetrieveMiniStatementByCustomerId", "miniStatement", customerService.getMiniStatementByCustomerId(customerId));
-        }catch (DataBaseException e) {
-        	return new ModelAndView("CustomerIndex", "message", "ENTER VALID CUSTOMER ID ONLY");
-        }
-    }
 	
 	/**
 	 * <p>

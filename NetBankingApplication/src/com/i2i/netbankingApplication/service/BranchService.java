@@ -22,7 +22,8 @@ import com.i2i.netbankingApplication.model.Branch;
  *
  */
 public class BranchService {
-    BranchDao branchDao = new BranchDao();
+	private BranchDao branchDao = new BranchDao();
+	private CustomerService customerService = new CustomerService();
     
     /**
      * <p> 
@@ -37,13 +38,7 @@ public class BranchService {
      *     If there is an error in the given data like BadElementException.
      */
     public void getBranch(String emailId) throws DataBaseException {
-      	String IFSCode = " ";
-      	int tempIFS = getLastIFSCode();
-      	//calculate the branch new ifsc code.
-        if (tempIFS >= 0) {
-        	IFSCode = "I2I0BK" + String.valueOf(tempIFS + 1);
-        } 
-    	branchDao.addBranch(new Branch(IFSCode, emailId));
+    	branchDao.addBranch(new Branch("I2I0BK" + String.valueOf(getLastIFSCode() + 1), emailId));
     }
     
     /**
@@ -60,20 +55,15 @@ public class BranchService {
      */
     public int getLastIFSCode() throws DataBaseException {
     	int lastIFSC = 0;
-    	//verify the branch size zero or not.
-    	if (branchDao.retriveAllBranch().size() == 0) {
-    		return lastIFSC;
-    	} else {
-    		for (Branch branch : branchDao.retriveAllBranch()) {
-    			String IFSC = branch.getIFSCode();
-    			int temp = Integer.parseInt(IFSC.substring(6, IFSC.length()));
-                if (lastIFSC <= temp) {
-                	lastIFSC = temp;
-                }
-    		}
-    	    return lastIFSC;
+    	for (Branch branch : branchDao.retriveAllBranch()) {
+    		String IFSC = branch.getIFSCode();
+   			int temp = Integer.parseInt(IFSC.substring(6, IFSC.length()));
+   			if (lastIFSC <= temp) {
+               	lastIFSC = temp;
+            }
     	}
-    }
+   	    return lastIFSC;
+   	}
     
     /**
      * <p> 
@@ -124,32 +114,6 @@ public class BranchService {
         return branchDao.retrieveBranchById(IFSCode); 
     }
 	
-	/**
-	 * <p> 
-     *    Get the address Id from BranchController.
-     *    It is passed to retrieveAddressById method in branchDao and 
-     *    returns address object to BranchController.
-     * </p>
-     * 
-	 * @param addressId
-	 *     Id of Address.
-	 *     
-	 * @return branchController
-     *     Return to the object of Address class. 
-     *     
-	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
-	 */
-	public int getLastAddressId() throws DataBaseException {
-    	int id = 0;
-    	for (Address address : branchDao.retriveAllAddresses()) {
-    		int temp = address.getAddressId();
-    		if (id <= temp) {
-    			id = temp;
-    		}
-    	}
-    	return id;
-    }
     
 	/**
      * <p>
@@ -164,10 +128,8 @@ public class BranchService {
      *     If there is an error in the given data like BadElementException.
      */
 	public String getAddress(Address address) throws DataBaseException {
-	    int tempIFS = getLastIFSCode();
-	    String IFSCode = "I2I0BK" + String.valueOf(tempIFS);
-	    int id = getLastAddressId();
-	    branchDao.addAddress(IFSCode,new Address(id+1, address.getStreet(),
+	    String IFSCode = "I2I0BK" + String.valueOf(getLastIFSCode());
+	    branchDao.addAddress(IFSCode, new Address(customerService.getLastAddressId() + 1, address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
 	    return IFSCode;
     }

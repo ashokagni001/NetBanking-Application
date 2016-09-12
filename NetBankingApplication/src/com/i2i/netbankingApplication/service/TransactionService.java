@@ -22,7 +22,9 @@ import com.i2i.netbankingApplication.model.CustomerTransaction;
  *
  */
 public class TransactionService {
-	TransactionDao transactionDao = new TransactionDao();
+	private TransactionDao transactionDao = new TransactionDao();
+	private CustomerService customerService = new CustomerService();
+	
 	/**
 	 * <p> 
      *    Get the Transaction detail from TransactionController.
@@ -59,17 +61,22 @@ public class TransactionService {
 				    double balanceAmount = (currentAmount - amount);
 				    //check the balanceAmount have or not.
 				    if (balanceAmount > 0) {
-					    debitAccount.setBalance(balanceAmount);
-				        return transactionDao.addTransaction(new CustomerTransaction(getLastTransactionId(), amount, "Request", debitAccount, criditAccount), debitAccount);
-				    } else {
-					    throw new DataBaseException("Your cridit amount value is must be lesser than current amount :Rs "+ currentAmount); 
-				    }
-				} 
+						debitAccount.setBalance(balanceAmount);
+						return transactionDao.addTransaction(new CustomerTransaction(getLastTransactionId(), amount,
+								"Request", debitAccount, criditAccount), debitAccount);
+					} else {
+						throw new DataBaseException(
+								"Your cridit amount value is must be lesser than current amount :Rs " + currentAmount);
+					}
+				} else {
+					throw new DataBaseException("criditAccountNumber incorrect IFSC code ");
+				}
+			} else {
+				throw new DataBaseException("criditAccountNumber incorrect ");
 			}
 		} else {
-			throw new DataBaseException("Your debitAccountNumber or criditAccountNumber incorrect"); 
+			throw new DataBaseException("Your debitAccountNumber incorrect");
 		}
-		return ("Please check your details");
 	}
 	
 	/**
@@ -185,16 +192,17 @@ public class TransactionService {
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
      */
-    public List getCustomerMiniStatement(String customerAccountNumber) throws DataBaseException {
+   public List getCustomerMiniStatement(String customerId) throws DataBaseException {
 		List transactions = new ArrayList();
+		String customerAccountNumber = customerService.getCustomerById(customerId).getAccountNumber();
 		for (CustomerTransaction transaction : transactionDao.retriveAllTransactions()) {
 			if (transaction.getDebitAccount().getAccountNumber().equals(customerAccountNumber)) {
-	        	transactions.add(transaction);
-	        } else if (transaction.getCriditAccount().getAccountNumber().equals(customerAccountNumber)) {
-	            if (!(transaction.getStatus().equals("Request"))) {
-	                transactions.add(transaction);
-	            }
-	        }
+				transactions.add(transaction);
+			} else if (transaction.getCriditAccount().getAccountNumber().equals(customerAccountNumber)) {
+				if (!(transaction.getStatus().equals("Request"))) {
+					transactions.add(transaction);
+				}
+			}
 		}
 		return transactions;
 	}
@@ -236,15 +244,18 @@ public class TransactionService {
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
 	 */
-	public void transactionSuccess(int transactionId, String criditAccountNumber, Double amount) throws DataBaseException {
+	public void transactionSuccess(int transactionId, String criditAccountNumber, Double amount, String userId)
+			throws DataBaseException {
 		Account criditAccount = transactionDao.retrieveAccountByNumber(criditAccountNumber);
+		Customer approver = customerService.getCustomerById(userId);
 		if (criditAccount != null) {
-			 double currentAmount = criditAccount.getBalance();
-			 double balanceAmount = (currentAmount + amount);
-			 transactionDao.transactionSuccess(criditAccount.getAccountNumber(), balanceAmount, transactionId);
-        } else {
-	        throw new DataBaseException("CRIDIT ACCOUNT IS NOT AVAILABLE "); 
-        }
+			double currentAmount = criditAccount.getBalance();
+			double balanceAmount = (currentAmount + amount);
+			transactionDao.transactionSuccess(criditAccount.getAccountNumber(), balanceAmount, transactionId,
+					approver);
+		} else {
+			throw new DataBaseException("CREDIT ACCOUNT IS NOT AVAILABLE ");
+		}
 	}
 	
 	/**
@@ -266,15 +277,18 @@ public class TransactionService {
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
 	 */
-	public void transactionFailure(int transactionId, String debitAccountNumber, Double amount) throws DataBaseException {
+	public void transactionFailure(int transactionId, String debitAccountNumber, Double amount, String userId)
+			throws DataBaseException {
 		Account debitAccount = transactionDao.retrieveAccountByNumber(debitAccountNumber);
+		Customer approver = customerService.getCustomerById(userId);
 		if (debitAccount != null) {
-			 double currentAmount = debitAccount.getBalance();
-			 double balanceAmount = (currentAmount + amount);
-			 transactionDao.transactionFailure(debitAccount.getAccountNumber(), balanceAmount, transactionId);
-        } else {
-	        throw new DataBaseException("CRIDIT ACCOUNT IS NOT AVAILABLE "); 
-        }
+			double currentAmount = debitAccount.getBalance();
+			double balanceAmount = (currentAmount + amount);
+			transactionDao.transactionFailure(debitAccount.getAccountNumber(), balanceAmount, transactionId,
+					approver);
+		} else {
+			throw new DataBaseException("CREDIT ACCOUNT IS NOT AVAILABLE ");
+		}
 	}
 	
 	/**

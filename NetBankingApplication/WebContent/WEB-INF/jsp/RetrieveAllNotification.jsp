@@ -65,10 +65,10 @@
 						href="viewCustomerAccount?accountNumber=<c:out value="${accountCridit.accountNumber}"/>"
 						style="color: blue">VIEW CRIDIT ACCOUNT</a></td>
 					<td align="center" height="30" width="100"><a
-						href="transactionSuccess?id=<c:out value="${notifications.getId()}"/>&criditAccountNumber=<c:out value="${accountCridit.accountNumber}"/>&amount=<c:out value="${notifications.getAmount()}"/>"
+						href="transactionSuccess?id=<c:out value="${notifications.getId()}"/>&criditAccountNumber=<c:out value="${accountCridit.accountNumber}"/>&amount=<c:out value="${notifications.getAmount()}"/>&userId=<c:out value="${sessionScope['id']}"/>"
 						style="color: blue">PERMISSION</a></td>
 					<td align="center" height="30" width="100"><a
-						href="transactionCancel?id=<c:out value="${notifications.getId()}"/>&debitAccountNumber=<c:out value="${accountDebit.accountNumber}"/>&amount=<c:out value="${notifications.getAmount()}"/>"
+						href="transactionCancel?id=<c:out value="${notifications.getId()}"/>&debitAccountNumber=<c:out value="${accountDebit.accountNumber}"/>&amount=<c:out value="${notifications.getAmount()}"/>&userId=<c:out value="${sessionScope['id']}"/>"
 						style="color: blue">IGNORE</a></td>
 				</tr>
 				<%

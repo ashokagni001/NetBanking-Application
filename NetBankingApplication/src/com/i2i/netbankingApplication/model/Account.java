@@ -39,7 +39,7 @@ public class Account {
     
 	@LazyCollection(LazyCollectionOption.FALSE)
     @OneToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name="ifsc")
+	@JoinColumn(name="ifscode")
     private Branch branch;
     
     @Column(name = "balance")
