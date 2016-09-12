@@ -34,7 +34,7 @@ public class LoginController {
 	*/
 	@RequestMapping(value = "/login")
     public String login(){
-		return "login";
+		return "redirect:login.jsp";
 	}
 	
 	/**
@@ -86,11 +86,11 @@ public class LoginController {
 				}
 			} else {
 				message.addAttribute("message", "CHECK YOUR USERNAME and PASSWORD..");
-				return "login";
+				return "redirect:login.jsp";
 			} 
         } catch (DataBaseException e) {
         	message.addAttribute("message", "SOME PROBLEM OCCUR PLEASE TRY AGAIN LATER");
-            return "login";
+            return "redirect:login.jsp";
         }
 	}
 	

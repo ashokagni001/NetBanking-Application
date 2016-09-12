@@ -33,6 +33,6 @@ public class LogoutController extends HttpServlet {
     public String logout(ModelMap message, HttpSession session) {
         session.invalidate();
         message.addAttribute("message", "LOGOUT SUCCESSFULLY");
-        return "login";
+        return "redirect:login.jsp";
     }
 }

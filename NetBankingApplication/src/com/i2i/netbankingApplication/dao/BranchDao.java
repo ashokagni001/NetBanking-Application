@@ -27,9 +27,9 @@ import com.i2i.netbankingApplication.model.Branch;
  * @created 2016-09-03
  */
 public class BranchDao {
-    private HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
-    private Configuration configuration = hibernateConnectionObject.getConfiguration();
-    private SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
+    HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
+	Configuration configuration = hibernateConnectionObject.getConfiguration();
+	SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
 	
 	/**
 	 * Get the branch object from BranchService and add Branch to database. 
@@ -161,29 +161,7 @@ public class BranchDao {
 	        session.close(); 
 	    }
 	}
-	/**
-	 * <p>
-     *     Retrieves all addresses from database.
-     *     Return all addresses in List type.
-     * </p>
-     * 
-	 * @return list
-	 *     Return the list of Address.
-	 *     
-	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException and HibernateException.
-	 */
-	public List<Address> retriveAllAddresses() throws DataBaseException {
-	    Session session = sessionFactory.openSession();
-	    try {
-	        return session.createQuery("from Address").list();
-	    } catch(HibernateException e) {
-	        throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
-	    } finally {
-	        session.close();
-	    }
-	}
-    
+
 	/**
 	 * <p>
 	 *     Get the address Id from BranchService.

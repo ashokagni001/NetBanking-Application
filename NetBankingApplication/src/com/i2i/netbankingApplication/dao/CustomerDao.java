@@ -31,9 +31,9 @@ import com.i2i.netbankingApplication.model.UserRole;
  */
 
 public class CustomerDao {
-	private HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
-	private Configuration configuration = hibernateConnectionObject.getConfiguration();
-	private SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
+	HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
+	Configuration configuration = hibernateConnectionObject.getConfiguration();
+	SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
     
 	/**
 	 * <p>
