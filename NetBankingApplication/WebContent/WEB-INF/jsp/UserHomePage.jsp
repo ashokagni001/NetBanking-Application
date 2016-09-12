@@ -19,20 +19,31 @@
 </style>
 </head>
 <body>
+	<c:if test="${message != null}">
+		<script type="text/javascript">
+			alert('CLICK OK THE PAGE WILL BE REFRESHED...'
+					+ "<c:out value='${message}'/>");
+			windows.location.reload();
+		</script>
+	</c:if>
 	<center>
 		<h2>CUSTOMER INFORMATION</h2>
 		<table>
 			<br />
 			<br />
 			<tr>
-				<td><a href="getCustomer?customerId=<c:out value="${sessionScope['id']}"/>">CUSTOMER DETAIL</a></td>
+				<td align="center" height="40" width="350"><a
+					href="getCustomer?customerId=<c:out value="${sessionScope['id']}"/>">CUSTOMER
+						DETAIL</a></td>
 			</tr>
 			<tr>
-				<td><a href="viewMiniStatementByCustomerId?customerId=<c:out value="${sessionScope['id']}"/>">CUTOMER MINI
-						STATEMENT</a></td>
+				<td align="center" height="40" width="350"><a
+					href="viewMiniStatementByCustomerId?customerId=<c:out value="${sessionScope['id']}"/>">CUTOMER
+						MINI STATEMENT</a></td>
 			</tr>
 			<tr>
-				<td><a href="addTransaction">ADD TRANSACTION</a></td>
+				<td align="center" height="40" width="350"><a
+					href="addTransaction">ADD TRANSACTION</a></td>
 			</tr>
 			<tr>
 				<td><br /> <a href="logoutController" style="width: 300px;">

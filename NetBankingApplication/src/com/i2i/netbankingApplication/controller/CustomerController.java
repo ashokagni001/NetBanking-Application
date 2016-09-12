@@ -50,7 +50,7 @@ public class CustomerController {
 		}catch (DataBaseException e) {
     		message.addAttribute("message", "ENTER VALID DATA ONLY"); 
         }finally{
-		    return "CustomerRegistration";
+		    return "login";
         }
     }
 	
@@ -89,15 +89,12 @@ public class CustomerController {
         }
     }
 	
-	@RequestMapping(value = "/getMiniStatementByCustomerId")
-	public String getMiniStatementByCustomerId() {
-		return "GetMiniStatementByCustomerId";
-	}
-	
 	@RequestMapping(value="/viewMiniStatementByCustomerId", method = RequestMethod.GET)  
     public ModelAndView viewMiniStatementByCustomerId (@RequestParam("customerId")String customerId, ModelMap message) {
         try {
-            return new ModelAndView("RetrieveMiniStatementByCustomerId", "miniStatement", customerService.getMiniStatementByCustomerId(customerId));
+        	if ( customerService.getMiniStatementByCustomerId(customerId) != null) {
+        	}
+        	return new ModelAndView("RetrieveMiniStatementByCustomerId", "miniStatement", customerService.getMiniStatementByCustomerId(customerId));
         }catch (DataBaseException e) {
         	return new ModelAndView("CustomerIndex", "message", "ENTER VALID CUSTOMER ID ONLY");
         }

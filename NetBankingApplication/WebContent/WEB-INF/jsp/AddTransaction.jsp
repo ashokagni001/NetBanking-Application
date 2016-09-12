@@ -26,19 +26,32 @@
 	</div>
 	<h2>INSERT TRANSACTION</h2>
 	<center>
-		<form method="post" action="insertTransaction">
-			<b>Debit Account Number</b> <input name="debitAccountNumber"
-				placeholder="debitAccountNumber" /> </br> <b>Cridit Account Number </b>
-			<input name="criditAccountNumber" placeholder="criditAccountNumber" />
-			</br> <b>Cridit Account IFSC number </b> <input name="ifscode"
-				placeholder="ifscode" /> </br> <b>Enter your Amount </b> <input
-				name="amount" placeholder="Amount" /> </br> <input type="submit"
-				name="proceed" value="insertTransaction" />
-		</form>
-		<b>Go to main page </b><a href="BranchIndex" style="font-size: 18px">
-			click here</a></br>
-		</br> <br />
-		<a href="logoutController" style="width: 300px;"> LOGOUT</a>
+		<div class="container">
+			<form method="post" action="insertTransaction">
+				<div class="form-group">
+					<label for="usr">Debit Account Number:</label> <input
+						name="debitAccountNumber" placeholder="debitAccountNumber" /> </br>
+				</div>
+				<div class="form-group">
+					<label for="usr">Cridit Account Number:</label> <input
+						name="criditAccountNumber" placeholder="criditAccountNumber" /> </br>
+				</div>
+				<div class="form-group">
+					<label for="usr">Cridit Account IFSC number :</label> <input
+						name="ifscode" placeholder="ifscode" /> </br>
+				</div>
+				<div class="form-group">
+					<label for="usr">Enter your Amoun:</label> <input name="amount"
+						placeholder="Amount" /> </br>
+				</div>
+				<div class="form-group">
+					<input type="submit" name="proceed" value="insertTransaction" />
+				</div>
+
+			</form>
+		</div>
+		<b>Go to main page </b><a href="userHomePage">click here</a> <br /> </br>
+		<br /> <a href="logoutController" style="width: 300px;"> LOGOUT</a>
 	</center>
 </body>
 </html>

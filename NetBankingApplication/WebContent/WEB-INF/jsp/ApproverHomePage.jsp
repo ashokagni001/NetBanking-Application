@@ -34,7 +34,7 @@
 		<br />
 		<br /> If U Want Customer Operation Open Click On <br />
 		<br />
-		<a href="userHomePage?customerId= <c:out value="${sessionScope['id']}"/>">OPEN</a> <br />
+		<a href="userHomePage">OPEN</a> <br />
 		<br /> If U Want Admin Operation Open Click On <br />
 		<br />
 		<a href=approverHomePage>OPEN</a>

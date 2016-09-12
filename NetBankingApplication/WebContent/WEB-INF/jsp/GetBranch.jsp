@@ -33,8 +33,7 @@
 					<td><input type="text" name="ifsc" placeholder="IFSC" required></td>
 					<td><input type="submit" name="view" value="view"></td>
 				</tr>
-				</br>
-				</br>
+				</br> </br>
 			</form>
 			<c:if test="${message != null}">
 				<script type="text/javascript">
@@ -55,21 +54,22 @@
 					</tr>
 					<c:set value="${branch}" var="branch" />
 					<tr>
-						<td><c:out value="${branch.getIFSCode()}" /></td>
+						<td align="center"><c:out value="${branch.getIFSCode()}" /></td>
 						<br />
 						<br />
-						<td><c:out value="${branch.getEmailId()}" /></td>
+						<td align="center"><c:out value="${branch.getEmailId()}" /></td>
 						<br />
 						<br />
 						<c:choose>
 							<c:when test="${null == branch.getAddress()}">
-								<td><c:out value="${'No Address Allocated'}" /></td>
+								<td align="center"><c:out value="${'No Address Allocated'}" /></td>
 								<br />
 								<br />
 							</c:when>
 							<c:otherwise>
-								<td><c:set value="${branch.getAddress()}" var="address" /></td>
-								<td><a
+								<td align="center"><c:set value="${branch.getAddress()}"
+										var="address" /></td>
+								<td align="center"><a
 									href="viewBranchAddress?addressId=<c:out value="${address.addressId}"/>"
 									style="color: blue">VIEW</a></td>
 								<br />
@@ -122,7 +122,7 @@
 				</table>
 			</c:if>
 			<b>Go to main page </b><a href="BranchIndex" style="font-sise: 18px">
-				click here</a> <br />
-			<a href="logoutController" style="width: 300px;"> LOGOUT</a>
+				click here</a> <br /> <a href="logoutController" style="width: 300px;">
+				LOGOUT</a>
 	</center>
 </html>

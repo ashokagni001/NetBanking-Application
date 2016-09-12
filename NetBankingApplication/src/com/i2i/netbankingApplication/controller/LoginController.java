@@ -98,9 +98,8 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/userHomePage")
-    public String userHomePage(@RequestParam("customerId")String customerId, HttpSession session) {
+    public String userHomePage(HttpSession session) {
 		session.removeAttribute("role");
-		session.setAttribute("id", customerId);
 		session.setAttribute("role", "user");
 		return "UserHomePage";
 	}

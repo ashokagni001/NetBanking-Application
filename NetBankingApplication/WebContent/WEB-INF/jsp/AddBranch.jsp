@@ -41,9 +41,8 @@
 			</script>
 		</c:if>
 		<b>Go to main page </b><a href="BranchIndex" style="font-sise: 18px">
-			click here</a></br>
-		</br> <br />
-		<a href="logoutController" style="width: 300px;"> LOGOUT</a>
+			click here</a></br> </br> <br /> <a href="logoutController" style="width: 300px;">
+			LOGOUT</a>
 	</center>
 </body>
 </html>

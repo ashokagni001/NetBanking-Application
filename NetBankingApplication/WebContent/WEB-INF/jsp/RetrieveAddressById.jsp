@@ -24,24 +24,23 @@
 			<h1>Fetching Data From A Branch Database</h1>
 			<table class=" table table-bordered">
 				<tr>
-					<th align="center" height="30" width="100">STREET</th>
-					<th align="center" height="30" width="100">CITY</th>
-					<th align="center" height="30" width="100">STATE</th>
-					<th align="center" height="30" width="100">COUNTRY</th>
-					<th align="center" height="30" width="100">PIN CODE</th>
+					<th>STREET</th>
+					<th>CITY</th>
+					<th>STATE</th>
+					<th>COUNTRY</th>
+					<th>PIN CODE</th>
 				</tr>
 				<c:set value="${address}" var="address" />
 				<tr>
-					<td><c:out value="${address.getStreet()}" /></td>
-					<td><c:out value="${address.getCity()}" /></td>
-					<td><c:out value="${address.getState()}" /></td>
-					<td><c:out value="${address.getCountry()}" /></td>
-					<td><c:out value="${address.getPincode()}" /></td>
+					<td align="center"><c:out value="${address.getStreet()}" /></td>
+					<td align="center"><c:out value="${address.getCity()}" /></td>
+					<td align="center"><c:out value="${address.getState()}" /></td>
+					<td align="center"><c:out value="${address.getCountry()}" /></td>
+					<td align="center"><c:out value="${address.getPincode()}" /></td>
 				</tr>
 			</table>
 		</c:if>
-		<br />
-		<br />
+		<br /> <br />
 		<c:if test="${message != null}">
 			<script type="text/javascript">
 				alert('CLICK OK THE PAGE WILL BE REFRESHED...'
@@ -52,15 +51,13 @@
 	</center>
 	<c:if test="${sessionScope['role']== 'approver'}">
 		<b>Go to main page </b>
-		<a href="ViewAccountByBranch" style="font-sise: 18px"> click here</a>
-		</br>
-		</br>
+		<a href="approverHomePage" style="font-sise: 18px"> click here</a>
 	</c:if>
 	<c:if test="${sessionScope['role']== 'user'}">
 		<b>Go to main page </b>
-		<a href="GetCustomer" style="font-sise: 18px"> click here</a>
-		</br>
-		</br>
+		<td><a
+			href="getCustomer?customerId=<c:out value="${sessionScope['id']}"/>">CUSTOMER
+				DETAIL</a></td>
 	</c:if>
 	<br />
 	<a href="logoutController" style="width: 300px;"> LOGOUT</a>
