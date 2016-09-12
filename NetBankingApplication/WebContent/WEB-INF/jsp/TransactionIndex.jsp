@@ -47,6 +47,11 @@
                          <a href="viewAllTransaction">FETCH ALL TRANSACTION</a>
                      </td>
                  </tr>
+                 <tr>
+                      <td align="center" height="40" width="350">
+                         <a href="viewTransactionBYDate">FETCH TRANSACTION BY DATE</a>
+                     </td>
+                 </tr>
              </table>
          </center>
          <b>Go to main page </b><a href="index.jsp" style="font-sise:18px"> click here</a></br></br>

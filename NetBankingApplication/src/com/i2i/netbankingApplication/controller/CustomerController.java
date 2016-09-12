@@ -30,14 +30,14 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value="/register", method = RequestMethod.POST)
-    public String addAddress(@ModelAttribute("Customer") Customer user, ModelMap message) {  
+    public String addCustomer(@ModelAttribute("Customer") Customer user, ModelMap message) {  
 		try {
 			customerService.getUser(user);
 			message.addAttribute("Address", new Address());
             return "AddAddress";
-		} catch (CustomerDataException e) {
+		}catch (CustomerDataException e) {
     		message.addAttribute("message", e.getMessage().toString()); 
-        } catch (DataBaseException e) {
+        }catch (DataBaseException e) {
     		message.addAttribute("message", e.getMessage().toString()); 
         } 
 		return "CustomerRegistration";
@@ -47,11 +47,11 @@ public class CustomerController {
     public String addAddress(@ModelAttribute("Address") Address address, ModelMap message) {  
 		try {
 			message.addAttribute("message", customerService.getAddress(address));
-            return "CustomerIndex";
-		} catch (DataBaseException e) {
+		}catch (DataBaseException e) {
     		message.addAttribute("message", "ENTER VALID DATA ONLY"); 
+        }finally{
+		    return "CustomerRegistration";
         }
-		return "CustomerRegistration";
     }
 	
 	@RequestMapping(value = "/GetCustomer")
@@ -73,9 +73,9 @@ public class CustomerController {
         			message.addAttribute("message", "ENTER VALID CUSTOMER ID ONLY");
         		}
         	}
-        } catch (DataBaseException e) {
+        }catch (DataBaseException e) {
         	message.addAttribute("message", e.getMessage().toString());
-        } finally {
+        }finally {
         	return "GetCustomer";
         }
     }
@@ -84,7 +84,7 @@ public class CustomerController {
     public ModelAndView viewAddressById(@RequestParam("addressId")int addressId, ModelMap message) {
     	try {                     
             return new ModelAndView ("RetrieveAddressById", "address", customerService.getAddressById(addressId)); 
-    	} catch (DataBaseException e) {
+    	}catch (DataBaseException e) {
     		return new ModelAndView ("CustomerIndex", "message", e.getMessage().toString());
         }
     }
@@ -98,7 +98,7 @@ public class CustomerController {
     public ModelAndView viewMiniStatementByCustomerId (@RequestParam("customerId")String customerId, ModelMap message) {
         try {
             return new ModelAndView("RetrieveMiniStatementByCustomerId", "miniStatement", customerService.getMiniStatementByCustomerId(customerId));
-        } catch (DataBaseException e) {
+        }catch (DataBaseException e) {
         	return new ModelAndView("CustomerIndex", "message", "ENTER VALID CUSTOMER ID ONLY");
         }
     }
@@ -117,14 +117,14 @@ public class CustomerController {
 	public String addUserRole(@RequestParam("customerId") String customerId, @RequestParam("role") String roleId,
 			ModelMap message) throws DataBaseException {
 		try {
-			customerService.insertRole(customerId, roleId);
+			customerService.insertUserRole(customerId, roleId);
 			message.addAttribute("message", "INFORMATION SAVED SUCESSFULLY");
 			message.addAttribute("roles", customerService.getAllRole());
-		} catch (DataBaseException  e) {
+		}catch (DataBaseException  e) {
 			message.addAttribute("message", e.getMessage().toString());
 			message.addAttribute("roles", customerService.getAllRole());
+		}finally{
+		    return "AddUserRole";
 		}
-		return "AddUserRole";
 	}
-
 }

@@ -143,4 +143,15 @@ public class TransactionDao {
 	        session.close(); 
 	    }
 	}
+	
+	public List<CustomerTransaction> retriveTransactionByDate(String formDate, String toDate) throws DataBaseException {
+	    Session session = sessionFactory.openSession();
+	    try {
+	        return session.createQuery("FROM CustomerTransaction WHERE date BETWEEN '"+formDate +"' AND '" +toDate +"'").list();
+	    } catch (HibernateException e) {
+	        throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
+	    } finally {
+	        session.close();
+	    }
+	}
 }

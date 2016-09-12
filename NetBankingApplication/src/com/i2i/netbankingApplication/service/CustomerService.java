@@ -61,10 +61,10 @@ public class CustomerService {
         if (customerAge > ConstantVariableUtil.maxAgeLimit) {
         	throw new CustomerDataException("YOUR AGE IS NOT VALID");  
         }
-        
+        insertUserRole(customerId, "1");
         String password = "i2i" + String.valueOf((int)(Math.random()*9000));
         customerDao.insertUser(customer.getAccountNumber(), new Customer(customerId, customer.getName(), customerAge, customer.getDob(), 
-            customer.getGender(), customer.getMobileNumber(), customer.getEmail(), password, customer.getAccountNumber(), "Request"));
+            customer.getGender(), customer.getMobileNumber(), customer.getEmail(), password, customer.getAccountNumber(), "ACTIVE"));
     	 
     }
     
@@ -122,7 +122,7 @@ public class CustomerService {
 		}
 	}
 	
-	public void insertRole(String customerId, String roleId) throws DataBaseException {
+	public void insertUserRole(String customerId, String roleId) throws DataBaseException {
 		Customer customer = customerDao.retrieveCustomerById(customerId);
 		if (customer != null) {
 			Role role = customerDao.retrieveRoleById(roleId);

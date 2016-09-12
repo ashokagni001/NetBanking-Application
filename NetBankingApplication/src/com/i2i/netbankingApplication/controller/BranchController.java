@@ -34,11 +34,10 @@ public class BranchController {
 			branchService.getBranch(emailId);
             message.addAttribute("Address1", new Address());
             return "AddAddress";
-		} catch (DataBaseException e) {
+		}catch (DataBaseException e) {
     		message.addAttribute("message", e.getMessage()); 
     		return "BranchIndex";
         } 
-		
     }
 	
 	@RequestMapping(value="/address", method = RequestMethod.POST)
@@ -46,7 +45,7 @@ public class BranchController {
 		try {
 			message.addAttribute("message","Branch added suceess. Branch IFSC is :: " + branchService.getAddress(address));
             return "BranchIndex";
-		} catch (DataBaseException e) {
+		}catch (DataBaseException e) {
     		message.addAttribute("message", e.getMessage()); 
     		return "BranchIndex";
         }
@@ -58,11 +57,11 @@ public class BranchController {
             branchService.deleteBranchById(ifsc);
             message.addAttribute("message", "BRANCH DELETED SUCESSFULLY");
             message.addAttribute("branches", branchService.getAllBranch());
-            return "GetBranch";
-    	} catch (DataBaseException e) {
+    	}catch (DataBaseException e) {
     		message.addAttribute("message", e.getMessage()); 
     		message.addAttribute("branches", branchService.getAllBranch());
-            return "GetBranch";
+        }finally {
+        	return "GetBranch";
         }
     }
 	
@@ -84,7 +83,7 @@ public class BranchController {
         			return new ModelAndView("GetBranch","message", "ENTER VALID IFSC ONLY");
         		}
         	}
-        } catch (DataBaseException e) {
+        }catch (DataBaseException e) {
         	return new ModelAndView("GetBranch","message",  e.getMessage());
         }
     }
@@ -93,7 +92,7 @@ public class BranchController {
     public ModelAndView viewAddressById(@RequestParam("addressId")int addressId, ModelMap message) {
     	try {                     
             return new ModelAndView ("RetrieveAddressById", "address", branchService.getAddressById(addressId)); 
-    	} catch (DataBaseException e) {
+    	}catch (DataBaseException e) {
     		return new ModelAndView ("RetrieveAddressById", "message", e.getMessage());
         }
 	}
@@ -109,7 +108,7 @@ public class BranchController {
 			message.addAttribute("message", branchService.getAccount(accountNumber, Double.parseDouble(balance), accounttype, ifsc));
 		}catch(DataBaseException e) {
 			message.addAttribute("message", e.getMessage());
-		} finally {
+		}finally {
 	     	return "BranchIndex";
 		}
 	}
@@ -122,11 +121,10 @@ public class BranchController {
 	@RequestMapping(value="/getAccount", method = RequestMethod.GET)  
     public String viewAccountByBranch (@RequestParam("ifsc")String ifsc, ModelMap message) {
 		try { 
-			System.out.println(ifsc);
 			message.addAttribute("accounts", branchService.viewAccountByBranch(ifsc));
 		}catch(DataBaseException e) {
 			message.addAttribute("message", e.getMessage().toString());
-		} finally {
+		}finally {
 	     	return "ViewAccountByBranch";
 		}
 	}

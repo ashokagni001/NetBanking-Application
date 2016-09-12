@@ -30,9 +30,9 @@ public class TransactionController {
 	    @RequestParam("amount")String amount,ModelMap message) {  
 		try {
 			message.addAttribute("message", transactionService.getTransactionDetail(debitAccountNumber, criditAccountNumber, ifscode, Double.parseDouble(amount)));
-		} catch (DataBaseException e) {
+		}catch (DataBaseException e) {
 			message.addAttribute("message", e.toString()); 
-	    } finally {
+	    }finally {
 		    return "TransactionIndex";
 	    }
 	}
@@ -41,7 +41,7 @@ public class TransactionController {
     public ModelAndView notification() {
     	try {                     
             return new ModelAndView ("RetrieveAllNotification", "notifications", transactionService.getAllNotification()); 
-    	} catch (DataBaseException e) {
+    	}catch (DataBaseException e) {
     		return new ModelAndView ("RetrieveAllNotification", "message", e.getMessage().toString());
         }
 	}
@@ -50,7 +50,7 @@ public class TransactionController {
     public ModelAndView viewAllTransaction() {
     	try {                     
             return new ModelAndView ("RetrieveAllTransaction", "transactions", transactionService.getAllTransaction()); 
-    	} catch (DataBaseException e) {
+    	}catch (DataBaseException e) {
     		return new ModelAndView ("RetrieveAllTransaction", "message", e.getMessage().toString());
         }
 	}
@@ -59,7 +59,7 @@ public class TransactionController {
     public ModelAndView viewCustomerAccount (@RequestParam("accountNumber")String accountNumber, ModelMap message) {
         try {
             return new ModelAndView("RetrieveCustomerAccount","accountDetail", transactionService.getCustomerAccount (accountNumber));
-        } catch (DataBaseException e) {
+        }catch (DataBaseException e) {
         	return new ModelAndView("RetrieveCustomerAccount","message", "ENTER VALID IFSC ONLY");
         }
     }
@@ -70,10 +70,11 @@ public class TransactionController {
     	try {           
     		transactionService.transactionSuccess(transactionId, criditAccountNumber, amount);
     		message.addAttribute("message", "TRANSACTION ACTION SUCCESSFULLY"); 
-    	} catch (DataBaseException e) {
+    	}catch (DataBaseException e) {
     		message.addAttribute( "message", e.getMessage().toString());
+        }finally {
+		    return "viewAllTransaction";
         }
-		return "viewAllTransaction";
 	}
 	
 	@RequestMapping(value="/transactionCancel", method = RequestMethod.GET)
@@ -82,9 +83,26 @@ public class TransactionController {
     	try {           
     		transactionService.transactionFailure(transactionId, debitAccountNumber, amount);
             message.addAttribute("transactions", "TRANSACTION ACTION SUCCESSFULLY"); 
-    	} catch (DataBaseException e) {
+    	}catch (DataBaseException e) {
     		message.addAttribute("message", e.getMessage().toString());
+        }finally {
+		    return "viewAllTransaction";
         }
-		return "viewAllTransaction";
+	}
+	
+	@RequestMapping(value = "/viewTransactionBYDate")
+	public String getDateTransaction() throws DataBaseException {
+		return "viewTransactionBYDate";
+	}
+	
+	@RequestMapping(value = "/getDates", method = RequestMethod.GET)
+	public String getDateTransaction(@RequestParam("fromDate")String fromDate, @RequestParam("toDate")String toDate,  ModelMap message) throws DataBaseException {
+		try {
+			message.addAttribute("transactions", transactionService.getDateTransaction(fromDate, toDate));
+		}catch (DataBaseException e) {
+    		message.addAttribute( "message", "Sorry try again .." + e.getMessage().toString());
+        }finally {
+		    return "viewTransactionBYDate";
+        }
 	}
 }

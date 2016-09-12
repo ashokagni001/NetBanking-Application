@@ -111,4 +111,8 @@ public class TransactionService {
 	        throw new DataBaseException("CRIDIT ACCOUNT IS NOT AVAILABLE "); 
         }
 	}
+	
+	public List<CustomerTransaction> getDateTransaction(String fromDate, String toDate) throws DataBaseException {
+		return transactionDao.retriveTransactionByDate(fromDate, toDate);
+	}
 }
