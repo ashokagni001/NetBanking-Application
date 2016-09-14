@@ -9,7 +9,6 @@ import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Customer;
-import com.i2i.netbankingApplication.model.CustomerTransaction;
 import com.i2i.netbankingApplication.model.Role;
 import com.i2i.netbankingApplication.model.UserRole;
 import com.i2i.netbankingApplication.util.StringUtil;
@@ -52,7 +51,8 @@ public class CustomerService {
      *     If there is an error in the given data like BadElementException.
      */
     public void getUser(Customer customer) throws DataBaseException, CustomerDataException {
-    	Account account = customerDao.retrieveAccountByNumber(customer.getAccountNumber());
+    	String accountNumer = customer.getAccountNumber();
+    	Account account = customerDao.retrieveAccountByNumber(accountNumer);
     	//verify the Customer account number validate or not.
     	if (account == null) {
     		throw new CustomerDataException("YOUR ACCOUNT NUMBER IS NOT VALID");  
@@ -61,21 +61,21 @@ public class CustomerService {
     	if (account.getCustomer() != null) {
     		throw new CustomerDataException("YOUR ALREADY REGISTER THE NETBANKING..."); 
     	}
-    	//verify the Customer DOB valid or not
     	String customerId = "CUSI2I00" + String.valueOf(getLastCustomerId() + 1);
-        if (StringUtil.isValidFormat(customer.getDob())) {
-            throw new DataBaseException("YOUR FORMAT" + customer.getDob() +
+    	//verify the Customer DOB valid or not
+    	String dateOBirth = customer.getDob();
+        if (StringUtil.isValidFormat(dateOBirth)) {
+            throw new DataBaseException("YOUR FORMAT" + dateOBirth +
                 "FORMAT MUST 1/05/2000.INSERT VALID DOB..!!");  
         }
         
-        int customerAge = StringUtil.calculateAge(customer.getDob());
+        int customerAge = StringUtil.calculateAge(dateOBirth);
         //verify the customer age valid limit or not
         if (customerAge > ConstantVariableUtil.maxAgeLimit) {
         	throw new CustomerDataException("YOUR AGE IS NOT VALID");  
         }
-        String password = "i2i" + String.valueOf((int)(Math.random()*9000));
-        customerDao.insertUser(customer.getAccountNumber(), new Customer("CUSI2I00" + String.valueOf(getLastCustomerId() + 1), customer.getName(), customerAge, customer.getDob(), 
-            customer.getGender(), customer.getMobileNumber(), customer.getEmail(), password, customer.getAccountNumber(), "ACTIVE"));
+        customerDao.insertUser(customer.getAccountNumber(), new Customer(customerId, customer.getName(), customerAge, dateOBirth, 
+            customer.getGender(), customer.getMobileNumber(), customer.getEmail(), "i2i" + String.valueOf((int)(Math.random()*9000)), accountNumer, "ACTIVE"));
         insertUserRole(customerId, "1");
     }
     
@@ -153,8 +153,7 @@ public class CustomerService {
      *     If there is an error in the given data like BadElementException.
      */
 	public String getAddress(Address address) throws DataBaseException {
-	    String customerId = "CUSI2I00" + String.valueOf(getLastCustomerId());
-	    return customerDao.addAddress(customerId, new Address(getLastAddressId() + 1, address.getStreet(),
+	    return customerDao.addAddress("CUSI2I00" + String.valueOf(getLastCustomerId()), new Address(getLastAddressId() + 1, address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
     }
     
@@ -180,9 +179,9 @@ public class CustomerService {
 	
 	/**
 	 * <p> 
-     *    Get the address Id from customerController.
-     *    It is passed to retrieveAddressById method in customerDao and 
-     *    returns address object to customerController.
+     *     Get the address Id from customerController.
+     *     It is passed to retrieveAddressById method in customerDao and 
+     *     returns address object to customerController.
      * </p>
      * 
 	 * @param addressId

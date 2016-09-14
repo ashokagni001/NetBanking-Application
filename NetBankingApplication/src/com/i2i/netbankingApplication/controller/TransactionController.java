@@ -39,11 +39,11 @@ public class TransactionController {
 		return "TransactionIndex";
 	}
         
-        /**
-	 *  <p>
+    /**
+	 * <p>
 	 *     It is return to the AddTransaction JSP page.
 	 *     This form used to user transaction.
-	 *  </p>
+	 * </p>
 	 * 
 	 * @return AddTransaction
 	 *     Return to the AddTransaction JSP page.
@@ -53,10 +53,10 @@ public class TransactionController {
 		return "AddTransaction";
 	}
         
-        /**
+    /**
 	 * <p>
-     *    Get the transaction detail from JSP page and pass to getTransactionDetail method in transactionService.
-     *    Return to JSP page transactionRegistration with status message(success or failure) Or Address object.
+     *     Get the transaction detail from JSP page and pass to getTransactionDetail method in transactionService.
+     *     Return to JSP page transactionRegistration with status message(success or failure) Or Address object.
      * </p>
      * 
 	 * @param debitAccountNumber
@@ -91,10 +91,10 @@ public class TransactionController {
 		}
 	}
 
-        /**
+    /**
 	 * <p>
-	 *    This Method call to getAllNotification method in transactionService.
-     *    Return to the RetrieveAllNotification JSP page with notification lists or status message(failure).
+	 *     This Method call to getAllNotification method in transactionService.
+     *     Return to the RetrieveAllNotification JSP page with notification lists or status message(failure).
      * </p>
      * 
 	 * @return RetrieveAllNotification
@@ -110,10 +110,10 @@ public class TransactionController {
 		}
 	}
 
-        /**
+    /**
 	 * <p>
-	 *    This Method call to getAllTransaction method in transactionService.
-     *    Return to the RetrieveAllTransaction JSP page with transaction lists or status message(failure).
+	 *     This Method call to getAllTransaction method in transactionService.
+     *     Return to the RetrieveAllTransaction JSP page with transaction lists or status message(failure).
      * </p>
 	 *     
 	 * @return RetrieveAllTransaction
@@ -128,10 +128,10 @@ public class TransactionController {
 		}
 	}
         
-        /**
+    /**
 	 * <p>
-	 *    This Method call to getAddressById method in transactionService.
-     *    Return to the RetrieveAlltransaction JSP page with customer account or status message(failure).
+	 *     This Method call to getAddressById method in transactionService.
+     *     Return to the RetrieveAlltransaction JSP page with customer account or status message(failure).
      * </p>
      * 
 	 * @param accountNumber
@@ -150,18 +150,18 @@ public class TransactionController {
 		}
 	}
         
-        /**
+    /**
 	 * <p>
-	 *    Get the Customer Id from JSP page.
-	 *    This Method call to getMiniStatementByCustomerId method in CustomerService.
-     *    Return to the getMiniStatementByCustomerId JSP page with Customer MiniStatement or status message(failure).
+	 *     Get the Customer Id from JSP page.
+	 *     This Method call to getMiniStatementByCustomerId method in CustomerService.
+     *     Return to the getMiniStatementByCustomerId JSP page with Customer MiniStatement or status message(failure).
      * </p>
      * 
 	 * @param customerId
 	 *     Id of Customer entered by user to view the corresponding record(MiniStatement).
 	 *     
 	 * @return RetrieveMiniStatementByCustomerId
-	 *      Return to the RetrieveMiniStatementByCustomerId JSP page with Customer MiniStatement or status message(failure).
+	 *     Return to the RetrieveMiniStatementByCustomerId JSP page with Customer MiniStatement or status message(failure).
 	 * 
 	 */
 	@RequestMapping(value="/viewMiniStatementByCustomerId", method = RequestMethod.GET)  
@@ -173,7 +173,7 @@ public class TransactionController {
         }
 	}
     
-        /**
+    /**
 	 * <p>
 	 *     It method used for approver permission active.
 	 *     This Method call to transactionSuccess method in transactionService with transaction details.
@@ -207,7 +207,7 @@ public class TransactionController {
 		}
 	}
 
-        /**
+    /**
 	 * <p> 
 	 *     It method used for approver ignore active.
 	 *     This Method call to transactionFailure method in transactionService with transaction details.
@@ -241,8 +241,7 @@ public class TransactionController {
 		}
 	}
         
-        /**
-	 * 
+    /**
 	 * <p> 
 	 *     This form used to view transaction by date.
 	 *     It is return to the viewTransactionBYDate JSP page.
@@ -257,7 +256,7 @@ public class TransactionController {
 		return "ViewTransactionByDate";
 	}
         
-        /**
+    /**
 	 * <p> 
 	 *     It method used for view transaction by Date.
 	 *     This Method call to getDateTransaction method in transactionService with transaction details.
@@ -271,7 +270,7 @@ public class TransactionController {
 	 *     toDate of transaction.
 	 *     
 	 * @param message
-	 *      Display message using add attribute.
+	 *     Display message using add attribute.
 	 *      
 	 * @return viewTransactionBYDate
 	 *     Return to the viewTransactionBYDate JSP page with transaction lists or failure message.
@@ -282,7 +281,7 @@ public class TransactionController {
 		try {
 			message.addAttribute("transactions", transactionService.getDateTransaction(fromDate, toDate));
 		} catch (DataBaseException e) {
-			message.addAttribute("message", "Sorry try again .." + e.getMessage().toString());
+			message.addAttribute("message", e.getMessage().toString());
 		} finally {
 			return "ViewTransactionBYDate";
 		}

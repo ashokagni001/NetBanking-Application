@@ -27,6 +27,7 @@ import com.i2i.netbankingApplication.service.CustomerService;
  */
 @Controller
 public class LoginController {
+	private CustomerService customerService = new CustomerService();
 	
    /**
 	* @return login
@@ -73,7 +74,6 @@ public class LoginController {
 	@RequestMapping(value = "/loginController", method = RequestMethod.POST)
     public String loginVerification(@RequestParam("customerId")String customerId, @RequestParam("password")String password, ModelMap message,HttpSession session) {
 		try {
-			CustomerService customerService = new CustomerService();
 		    if (customerService.ifValidateUser(customerId, password)) {
 				if (customerService.checkIfRole(customerId)){
 					session.setAttribute("id", customerId);
@@ -101,13 +101,13 @@ public class LoginController {
 	 * </p>
 	 * 
 	 * @param customerId
-	 *    Id of Customer.
+	 *     Id of Customer.
 	 *    
 	 * @param session
-	 *    Object of httpSeesion. Adds the id and role of user by using setAttribute method.
+	 *     Object of httpSeesion. Adds the id and role of user by using setAttribute method.
 	 *    
 	 * @return UserHomePage 
-	 *    Return to the UserHomePage JSP page to view user operations.
+	 *     Return to the UserHomePage JSP page to view user operations.
 	 */
 	@RequestMapping(value = "/userHomePage")
     public String userHomePage (HttpSession session) {

@@ -56,7 +56,7 @@ public class TransactionDao {
 	        session.save(customerTransaction);
 	        session.update(debitAccount);
 	        transaction.commit(); 
-	        return ("Your transaction detail send our Transaction Approver please wait");
+	        return ("YOUR TRANSACTION DETAIL SEND OUR TRANSACTION APPROVER PLEASE WAIT");
 		} catch (HibernateException e) {
 			throw new DataBaseException("PLEASE CHECK YOUR DATAS YOUR DATA IS NOT VALID.PLEASE TRY AGAIN.addTransaction" );  
 	    } finally {
@@ -143,7 +143,7 @@ public class TransactionDao {
 	 * </p>
 	 * 
 	 * @param accountNumber
-	 *      accountNumber of Customer Account.
+	 *     accountNumber of Customer Account.
 	 *      
 	 * @return account
 	 *     Object of Account class.
@@ -169,32 +169,29 @@ public class TransactionDao {
 	 *     accountNumber of Customer.
 	 *     
 	 * @param balanceAmount
-	 *      balanceAmount of customer Account.
+	 *     balanceAmount of customer Account.
 	 *      
 	 * @param transactionId
-	 *      transactionId of Transaction.
+	 *     transactionId of Transaction.
 	 *      
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
 	 */
-	public void transactionSuccess(String accountNumber, double balanceAmount, int transactionId, Customer approver)
+	public void transactionSuccess(Account criditAccount, int transactionId, Customer approver)
 			throws DataBaseException {
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
-		Account account = null;
 		CustomerTransaction customerTransaction = null;
 		try {
 			transaction = session.beginTransaction();
-			account = (Account) session.get(Account.class, accountNumber);
-			account.setBalance(balanceAmount);
-			session.update(account);
+			session.update(criditAccount);
 			customerTransaction = (CustomerTransaction) session.get(CustomerTransaction.class, transactionId);
 			customerTransaction.setCustomer(approver);
 			customerTransaction.setStatus("Success");
 			session.update(customerTransaction);
 			transaction.commit();
 		} catch (HibernateException e) {
-			throw new DataBaseException("Oops Some Problem occured.. please try again later");
+			throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
 		} finally {
 			session.close();
 		}
@@ -215,7 +212,7 @@ public class TransactionDao {
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
 	 */
-	public void transactionFailure(String accountNumber, double balanceAmount, int transactionId, Customer approver)
+	public void transactionFailure(Account debitAccount, int transactionId, Customer approver)
 			throws DataBaseException {
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
@@ -223,16 +220,14 @@ public class TransactionDao {
 		CustomerTransaction customerTransaction = null;
 		try {
 			transaction = session.beginTransaction();
-			account = (Account) session.get(Account.class, accountNumber);
-			account.setBalance(balanceAmount);
-			session.update(account);
+			session.update(debitAccount);
 			customerTransaction = (CustomerTransaction) session.get(CustomerTransaction.class, transactionId);
 			customerTransaction.setCustomer(approver);
 			customerTransaction.setStatus("Failure");
 			session.update(customerTransaction);
 			transaction.commit();
 		} catch (HibernateException e) {
-			throw new DataBaseException("Oops Some Problem occured.. please try again later");
+			throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
 		} finally {
 			session.close();
 		}

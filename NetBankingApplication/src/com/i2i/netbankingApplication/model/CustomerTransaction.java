@@ -63,7 +63,7 @@ public class CustomerTransaction {
 	
 	/**
      * parameter Constructor.
-     *     Passes parameters to the constructor and creates an instance of CustomerTransaction.
+     * Passes parameters to the constructor and creates an instance of CustomerTransaction.
      */  
     public CustomerTransaction(int id, double amount,String status, Account debitAccount, Account criditAccount) {
 		this.id = id;

@@ -136,9 +136,9 @@ public class BranchService {
     
 	/**
 	 * <p> 
-     *    Get the address Id from branchController.
-     *    It is passed to retrieveAddressById method in branchDao and 
-     *    returns address object to branchController.
+     *     Get the address Id from branchController.
+     *     It is passed to retrieveAddressById method in branchDao and 
+     *     returns address object to branchController.
      * </p>
      * 
 	 * @param addressId
@@ -173,7 +173,6 @@ public class BranchService {
 	 * @param ifsc
 	 *     ifsc of Account.
 	 *     
-	 * @return 
 	 * @throws DataBaseException
 	 *      If there is an error in the given data like BadElementException.
 	 */
@@ -183,7 +182,7 @@ public class BranchService {
 		if (branch != null) {
 			return branchDao.addAccount(new Account(accountNumber, balance, accounttype, branch));
 	    } else {
-	     	return ("Please enter valid IFSC number"); 
+	     	return ("PLEASE ENTER VALID IFSC NUMBER"); 
 		}
 	}
 	
@@ -202,8 +201,8 @@ public class BranchService {
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
 	 */
-	public List viewAccountByBranch(String ifsc) throws DataBaseException {
-		List accounts = new ArrayList();
+	public List<Account> viewAccountByBranch(String ifsc) throws DataBaseException {
+		List<Account> accounts = new ArrayList<Account>();
 		if (branchDao.retrieveBranchById(ifsc) != null) {
 			for (Account account : branchDao.retriveAllAccount()) {
 				if (account.getBranch().getIFSCode().equals(ifsc)) {
@@ -212,7 +211,7 @@ public class BranchService {
 			}
 			return accounts;
 		} else {
-			throw new DataBaseException("Please enter valid IFSC number"); 
+			throw new DataBaseException("PLEASE ENTER VALID IFSC NUMBER"); 
 		}
 	}
 }

@@ -31,9 +31,9 @@ import com.i2i.netbankingApplication.model.UserRole;
  */
 
 public class CustomerDao {
-	HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
-	Configuration configuration = hibernateConnectionObject.getConfiguration();
-	SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
+	private HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
+	private Configuration configuration = hibernateConnectionObject.getConfiguration();
+	private SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
     
 	/**
 	 * <p>
@@ -74,13 +74,13 @@ public class CustomerDao {
      * </p>
      * 
      * @param customerId
-     *      Id of Customer to view.
+     *     Id of Customer to view.
      * 
      * @return customer
-     *      Object of Customer class.
+     *     Object of Customer class.
      * 
      * @throws DataBaseException
-     *      If there is an error in the given data like BadElementException and HibernateException.
+     *     If there is an error in the given data like BadElementException and HibernateException.
 	 */
 	public Customer retrieveCustomerById(String customerId) throws DataBaseException {
 	    Customer customer = null ;
@@ -200,7 +200,7 @@ public class CustomerDao {
 		try {
 			return (Address)session.get(Address.class, addressId);
 		} catch (HibernateException e) {
-			throw new DataBaseException("Oops Some Problem occured.. please try again later");
+			throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
 		} finally {
 			session.close();
 		}
@@ -226,7 +226,7 @@ public class CustomerDao {
 	    try {
 	        return (Account)session.get(Account.class, accountNumber); 
 	    } catch (HibernateException e) {
-	    	throw new DataBaseException("Oops Some Problem occured.. please try again later");
+	    	throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
 	    } finally {
 	        session.close(); 
 	    } 
@@ -245,8 +245,8 @@ public class CustomerDao {
 			transaction = session.beginTransaction();
 			session.save(userRole);
 			transaction.commit();
-		} catch (HibernateException exp) {
-			throw new DataBaseException("Sorry information can't save please try again" + exp);
+		} catch (HibernateException e) {
+			throw new DataBaseException("SORRY INFORMATION CAN'T SAVE PLEASE TRY AGAIN" + e);
 		} finally {
 			session.close();
 		}
@@ -268,8 +268,8 @@ public class CustomerDao {
 		Session session = sessionFactory.openSession();
 		try {
 			return session.createQuery("FROM Role").list();
-		} catch (HibernateException exp) {
-			throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA." + exp);
+		} catch (HibernateException e) {
+			throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA." + e);
 		} finally {
 			session.close();
 		}
@@ -318,7 +318,7 @@ public class CustomerDao {
 		try {
 			return session.createQuery("FROM UserRole").list();
 		} catch (HibernateException e) {
-			throw new DataBaseException("Data is not available please insert the data." + e);
+			throw new DataBaseException("DATA IS NOT AVAILABLE PLEASE INSERT THE DATA." + e);
 		} finally {
 			session.close();
 		}

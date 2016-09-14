@@ -10,9 +10,9 @@ public class StringUtil {
      * Check the customer Name valid Format or not.
      * 
      * @param input
-     *        A String data type.  
+     *     A String data type.  
      * @return Boolean
-     *         Return true or false.
+     *     Return true or false.
      */
     public static boolean isAlphabetic(String input) {
         return (input.matches("^[a-zA-Z]+$"));
@@ -22,9 +22,9 @@ public class StringUtil {
      * Check the customer salary valid Format or not.
      * 
      * @param input
-     *        A int data type.  
+     *     A int data type.  
      * @return Boolean
-     *         Return true or false.
+     *     Return true or false.
      */
     public static boolean isNumeric(String input) {
         return (input.matches("^[0-9]+$"));
@@ -34,9 +34,9 @@ public class StringUtil {
      * Check the customer P.Number valid Format or not.
      * 
      * @param input
-     *        A int data type.  
+     *     A int data type.  
      * @return Boolean
-     *         Return true or false.
+     *     Return true or false.
      */
     public static boolean isSixDigit(String input) {
         return (input.matches("^[0-9][0-9][0-9][0-9][0-9][0-9]"));
@@ -46,9 +46,9 @@ public class StringUtil {
      * Check the customer address valid Format or not.
      * 
      * @param input
-     *        A string data type.  
+     *     A string data type.  
      * @return Boolean
-     *         Return true or false.
+     *     Return true or false.
      */
     public static boolean isAddress(String input) {
         return (input.matches("^[a-zA-Z0-9]+$"));
@@ -58,10 +58,10 @@ public class StringUtil {
      * Check the customer DOB valid Format or not.
      * 
      * @param DOB
-     *        DOB of customer.
+     *     DOB of customer.
      *        
      * @return Boolean
-     *         Return true or false.
+     *     Return true or false.
      */
     public static boolean isValidFormat(String DOB) {
         try {
@@ -78,9 +78,9 @@ public class StringUtil {
      * It is calculate the customer age.
      * 
      * @param customerDateOfBirth
-     *        DOB of customer.
+     *     DOB of customer.
      * @return year
-     *         return age of customer.
+     *     return age of customer.
      */
     public static int calculateAge (String customerDateOfBirth) {
         int month;

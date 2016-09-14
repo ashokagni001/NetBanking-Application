@@ -26,7 +26,7 @@
 	</div>
 	<h2>INSERT BRANCH</h2>
 	<center>
-		<form:form method="post" action="insertBranch" modelAttribute="Branch">
+		<form:form method="post" action="insertBranch">
 			<form:input path="emailId" type="text"
 				placeholder="EMAIL ID" requried=""/>
 			<br />

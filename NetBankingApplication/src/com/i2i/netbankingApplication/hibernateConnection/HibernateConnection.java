@@ -6,9 +6,9 @@ import org.hibernate.SessionFactory;
 
 /**
  * <p>
- * Class for creating hibernate connection using singleton concept.
- * Creates configuration and sessionFactory object.
- * Mapping to the hibernate configuration file.
+ *     Class for creating hibernate annotation connection using singleton concept.
+ *     Creates configuration and sessionFactory object.
+ *     Mapping to the hibernate annotation configuration file.
  * </p> 
  *
  * @author Ashok
@@ -23,8 +23,8 @@ public class HibernateConnection {
      
     /**
 	 * <p>
-     * Default Constructor.
-     * It is private type. so no need create for outside object.
+     *     Default Constructor.
+     *     It is private type. so no need create for outside object.
      * </p>
      */
     private HibernateConnection() {
@@ -35,7 +35,7 @@ public class HibernateConnection {
 	 * Create the hibernate Connection.
 	 * 
 	 * @return hibernateConnection
-	 *         Return a Connection object.
+	 *     Return a Connection object.
 	 */
     public static HibernateConnection getInstance() {
         if (hibernateConnection == null) {
@@ -49,7 +49,7 @@ public class HibernateConnection {
 	 * Create a AnnotationConfiguration and connect the hibernate configuration file.
 	 * 
 	 * @return configuration
-	 *         Return a annotation Configuration object.
+	 *     Return a annotation Configuration object.
 	 */
     public AnnotationConfiguration getConfiguration() {
         try {
@@ -67,7 +67,7 @@ public class HibernateConnection {
 	 * Create the sessionFactory object.
 	 * 
 	 * @return sessionFactory
-	 *         Return a SessionFactory object.
+	 *     Return a SessionFactory object.
 	 */
     public SessionFactory getSessionFactory() {
         try {

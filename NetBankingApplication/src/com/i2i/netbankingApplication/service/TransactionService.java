@@ -27,9 +27,9 @@ public class TransactionService {
 	
 	/**
 	 * <p> 
-     *    Get the Transaction detail from TransactionController.
-     *    It is passed to addTransaction method in TransactionDao and 
-     *    if exception occurs return error message to TransactionController.
+     *     Get the Transaction detail from TransactionController.
+     *     It is passed to addTransaction method in TransactionDao and 
+     *     If exception occurs return error message to TransactionController.
      * </p>
      * 
 	 * @param debitAccountNumber
@@ -53,7 +53,7 @@ public class TransactionService {
 		Account criditAccount = transactionDao.retrieveAccountByNumber(criditAccountNumber);
 		//verify the Debit Account available or not.
 		if (debitAccount != null) {
-			//verify the cridit Account available or not.
+			//verify the credit Account available or not.
 			if (criditAccount != null) {
 				//verify the criditAccount ifsc code valid or not.
 				if (criditAccount.getBranch().getIFSCode().equals(ifscode)) {
@@ -65,25 +65,24 @@ public class TransactionService {
 						return transactionDao.addTransaction(new CustomerTransaction(getLastTransactionId(), amount,
 								"Request", debitAccount, criditAccount), debitAccount);
 					} else {
-						throw new DataBaseException(
-								"Your cridit amount value is must be lesser than current amount :Rs " + currentAmount);
+						return ("YOUR CREDIT AMOUNT VALUE IS MUST BE LESSER THAN CURRENT AMOUNT :Rs " + currentAmount);
 					}
 				} else {
-					throw new DataBaseException("criditAccountNumber incorrect IFSC code ");
+					return ("CREDITACCOUNTNUMBER INCORRECT incorrect IFSC code ");
 				}
 			} else {
-				throw new DataBaseException("criditAccountNumber incorrect ");
+				return ("CREDITACCOUNTNUMBER INCORRECT");
 			}
 		} else {
-			throw new DataBaseException("Your debitAccountNumber incorrect");
+			return ("YOUR DEBITACCOUNTNUMBER INCORRECT");
 		}
 	}
 	
 	/**
 	 * <p> 
-     *    Get the accountNumber from TransactionController.
-     *    It is passed to retrieveAccountByNumber method in TransactionDao.
-     *    Return the object of Account.
+     *     Get the accountNumber from TransactionController.
+     *     It is passed to retrieveAccountByNumber method in TransactionDao.
+     *     Return the object of Account.
      * </p>
 	 * 
 	 * @param accountNumber
@@ -121,9 +120,9 @@ public class TransactionService {
     
 	/**
 	 * <p> 
-     *    Get the transactionId from TransactionController.
-     *    It is passed to retrieveCustomerTransactionById method in TransactionDao and 
-     *    returns CustomerTransaction object to TransactionController.
+     *     Get the transactionId from TransactionController.
+     *     It is passed to retrieveCustomerTransactionById method in TransactionDao and 
+     *     Returns CustomerTransaction object to TransactionController.
      * </p>
      * 
 	 * @param transactionId
@@ -192,8 +191,8 @@ public class TransactionService {
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
      */
-   public List getCustomerMiniStatement(String customerId) throws DataBaseException {
-		List transactions = new ArrayList();
+   public List<CustomerTransaction> getCustomerMiniStatement(String customerId) throws DataBaseException {
+		List<CustomerTransaction> transactions = new ArrayList<CustomerTransaction>();
 		String customerAccountNumber = customerService.getCustomerById(customerId).getAccountNumber();
 		for (CustomerTransaction transaction : transactionDao.retriveAllTransactions()) {
 			if (transaction.getDebitAccount().getAccountNumber().equals(customerAccountNumber)) {
@@ -251,8 +250,8 @@ public class TransactionService {
 		if (criditAccount != null) {
 			double currentAmount = criditAccount.getBalance();
 			double balanceAmount = (currentAmount + amount);
-			transactionDao.transactionSuccess(criditAccount.getAccountNumber(), balanceAmount, transactionId,
-					approver);
+			criditAccount.setBalance(balanceAmount);
+			transactionDao.transactionSuccess(criditAccount, transactionId,	approver);
 		} else {
 			throw new DataBaseException("CREDIT ACCOUNT IS NOT AVAILABLE ");
 		}
@@ -284,8 +283,8 @@ public class TransactionService {
 		if (debitAccount != null) {
 			double currentAmount = debitAccount.getBalance();
 			double balanceAmount = (currentAmount + amount);
-			transactionDao.transactionFailure(debitAccount.getAccountNumber(), balanceAmount, transactionId,
-					approver);
+			debitAccount.setBalance(balanceAmount);
+			transactionDao.transactionFailure(debitAccount, transactionId, approver);
 		} else {
 			throw new DataBaseException("CREDIT ACCOUNT IS NOT AVAILABLE ");
 		}

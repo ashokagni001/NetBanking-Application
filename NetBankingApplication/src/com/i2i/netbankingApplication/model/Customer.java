@@ -72,7 +72,7 @@ public class Customer {
     
     /**
      * parameter Constructor.
-     *     Passes parameters to the constructor and creates an instance of Customer.
+     * Passes parameters to the constructor and creates an instance of Customer.
      */  
     public Customer(String customerId, String name, int age, String dob, String gender,
             String mobileNumber, String email, String passWord, String accountNumber, String status) {

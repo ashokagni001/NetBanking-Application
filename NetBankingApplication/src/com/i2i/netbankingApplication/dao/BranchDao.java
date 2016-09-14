@@ -27,9 +27,9 @@ import com.i2i.netbankingApplication.model.Branch;
  * @created 2016-09-03
  */
 public class BranchDao {
-    HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
-	Configuration configuration = hibernateConnectionObject.getConfiguration();
-	SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
+	private HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
+	private Configuration configuration = hibernateConnectionObject.getConfiguration();
+	private SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
 	
 	/**
 	 * Get the branch object from BranchService and add Branch to database. 
@@ -137,7 +137,7 @@ public class BranchDao {
 	 * </p>
 	 * 
 	 * @param IFSCode
-	 *      IFSCode of branch
+	 *     IFSCode of branch
 	 *      
 	 * @param address
 	 *     object of Address class to add.
@@ -186,7 +186,7 @@ public class BranchDao {
 		    address = (Address)session.get(Address.class, addressId);
 			transaction.commit();
 		} catch (HibernateException e) {
-			throw new DataBaseException("Oops Some Problem occured.. please try again later");
+			throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
 		} finally {
 			session.close();
 		}

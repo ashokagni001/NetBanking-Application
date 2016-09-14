@@ -39,7 +39,7 @@ public class Account {
     
 	@LazyCollection(LazyCollectionOption.FALSE)
     @OneToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name="ifsc")
+	@JoinColumn(name="ifscode")
     private Branch branch;
     
     @Column(name = "balance")
@@ -56,8 +56,10 @@ public class Account {
     }
     
     /**
-     * parameter Constructor.
+     * <p>
+     *     parameter Constructor.
      *     Passes parameters to the constructor and creates an instance of Account.
+     * </p>
      */           
     public Account(String accountNumber, double balance, String accountType, Branch branch){
     	this.accountNumber = accountNumber;

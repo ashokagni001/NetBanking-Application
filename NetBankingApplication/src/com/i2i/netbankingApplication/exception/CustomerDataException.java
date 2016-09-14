@@ -2,8 +2,8 @@ package com.i2i.netbankingApplication.exception;
 
 /**
  * <p>
- * custom exception to check the customer attribute.
- * If there is an error in the given data send message to class.
+ *     custom exception to check the customer attribute.
+ *     If there is an error in the given data send message to class.
  * </p>
  * 
  * @author TEAM-2
@@ -12,13 +12,28 @@ package com.i2i.netbankingApplication.exception;
  */
 public class CustomerDataException extends Exception {  
 	/**
-	 * parameter Constructor.
-     * Passes parameters to the constructor and creates an instance of CustomerDataException.
+	 * <p>
+	 *     parameter Constructor.
+     *     Passes parameters to the constructor and creates an instance of CustomerDataException.
+     * </p>
      * 
 	 * @param message
 	 *        A String data type.
 	 */
-    public CustomerDataException (String message) {  
-        super(message);  
-    }  
+	private String message;
+	
+    public CustomerDataException() {
+    }
+
+    public CustomerDataException(String message) {
+        super(message);
+    }
+
+    public CustomerDataException(String message, Throwable cause) {
+        super (message, cause);
+    }
+
+    public String toString() { 
+        return this.message;
+    }
 }  

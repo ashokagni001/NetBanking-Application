@@ -47,7 +47,7 @@ public class Address {
 	
 	/**
      * parameter Constructor.
-     *     Passes parameters to the constructor and creates an instance of Address.
+     * Passes parameters to the constructor and creates an instance of Address.
      */  
 	public Address(String street, String country, String city, String state, int pincode) {
 		this.street = street;

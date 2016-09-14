@@ -13,6 +13,16 @@ package com.i2i.netbankingApplication.exception;
  */
 public class DataBaseException extends Exception {
     private String message;
+    
+    /**
+	 * <p>
+	 *     parameter Constructor.
+     *     Passes parameters to the constructor and creates an instance of CustomerDataException.
+     * </p>
+     * 
+	 * @param message
+	 *        A String data type.
+	 */
     public DataBaseException() {
     }
 

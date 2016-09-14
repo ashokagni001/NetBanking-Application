@@ -26,7 +26,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 @Table(name = "branch_detail")
 public class Branch {
 	@Id
-    @Column(name = "ifsc")
+    @Column(name = "ifscode")
 	private String IFSCode;
 	
 	@Column(name = "email")
@@ -46,7 +46,7 @@ public class Branch {
 	
 	/**
      * parameter Constructor.
-     *     Passes parameters to the constructor and creates an instance of Branch.
+     * Passes parameters to the constructor and creates an instance of Branch.
      */  
 	public Branch(String IFSCode, String emailId) {
 		this.IFSCode = IFSCode;

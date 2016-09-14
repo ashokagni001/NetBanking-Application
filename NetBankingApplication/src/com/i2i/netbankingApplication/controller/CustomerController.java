@@ -16,11 +16,11 @@ import com.i2i.netbankingApplication.service.CustomerService;
 
 /**
  * <p>
- * When request comes from JSP page. 
- * Customer controller performs add or delete or fetch or fetchAll customer with model(Customer),
- * service(Customer) and return the responses to JSP page.
- * It handles the NumberFormatException, CustomerDataException, DataBaseException.
- * If exception occurs it will write what type of exception occurred.
+ *     When request comes from JSP page. 
+ *     Customer controller performs add or delete or fetch or fetchAll customer with model(Customer),
+ *     service(Customer) and return the responses to JSP page.
+ *     It handles the NumberFormatException, CustomerDataException, DataBaseException.
+ *     If exception occurs it will write what type of exception occurred.
  * </p>
  * 
  * @author TEAM-2
@@ -44,8 +44,8 @@ public class CustomerController {
     
    /**
     * <p>
-    *    It displays a form to input data, here "Customer" is a reserved attribute which is used
-    *    to display object data(Customer) into form.
+    *     It displays a form to input data, here "Customer" is a reserved attribute which is used
+    *     to display object data(Customer) into form.
     * </p>
     * 
     * @param model
@@ -62,27 +62,27 @@ public class CustomerController {
 	
     /**
      * <p>
-     *    Get the customer object from JSP page and pass to getCustomer method in CustomerService.
-     *    Return to JSP page CustomerRegistration with status message(success or failure) Or Address object.
+     *     Get the customer object from JSP page and pass to getCustomer method in CustomerService.
+     *     Return to JSP page CustomerRegistration with status message(success or failure) Or Address object.
      * </p>
      * 
      * @param customer
-     *        Object of Customer model class.
+     *     Object of Customer model class.
      * 
      * @param message
-     *        Display message using add attribute.
+     *     Display message using add attribute.
      * 
      * @return CustomerRegistration
-     *         Return to JSP page CustomerRegistration with status message(success or failure).
+     *     Return to JSP page CustomerRegistration with status message(success or failure).
      * 
      * @throws NumberFormatException
-     *         If the data is very large.
+     *     If the data is very large.
      * 
      * @throws CustomerDataException
-     *         If there is an error in the Customer Attribute exception is handle by CustomerDataException.
+     *     If there is an error in the Customer Attribute exception is handle by CustomerDataException.
      * 
      * @throws DataBaseException
-     *         If there is an error in the given data like BadElementException.
+     *     If there is an error in the given data like BadElementException.
      */
 	@RequestMapping(value="/register", method = RequestMethod.POST)
     public String addCustomer(@ModelAttribute("Customer") Customer user, ModelMap message) {  
@@ -100,8 +100,8 @@ public class CustomerController {
 	
 	/**
 	 * <p>
-     *    Get the address object from JSP page and pass to getAddress method in CustomerService.
-     *    Return to JSP page CustomerRegistration with status message(success or failure) Or Address object.
+     *     Get the address object from JSP page and pass to getAddress method in CustomerService.
+     *     Return to JSP page CustomerRegistration with status message(success or failure) Or Address object.
      * </p>
      * 
 	 * @param address
@@ -129,8 +129,8 @@ public class CustomerController {
 	
 	/**
 	 * <p>
-     *    It displays a form to input data, here "Customer" is a reserved attribute which is used
-     *    to display object data(Customer) into form.
+     *     It displays a form to input data, here "Customer" is a reserved attribute which is used
+     *     to display object data(Customer) into form.
      * </p>
 	 * 
 	 * @return GetCustomer
@@ -145,8 +145,8 @@ public class CustomerController {
 	}
 /**
 	 * <p>
-	 *    This Method call to getAllCustomer method in CustomerService.
-     *    Return to the RetrieveAllCustomer JSP page with customer lists or status message(failure).
+	 *     This Method call to getAllCustomer method in CustomerService.
+     *     Return to the RetrieveAllCustomer JSP page with customer lists or status message(failure).
      * </p>
 	 * @param customerId
 	 *     Id of Customer entered by user to view the corresponding record.
@@ -176,8 +176,8 @@ public class CustomerController {
 	
 	/**
 	 * <p>
-	 *    This Method call to getAddressById method in CustomerService.
-     *    Return to the RetrieveAllCustomer JSP page with customer lists or status message(failure).
+	 *     This Method call to getAddressById method in CustomerService.
+     *     Return to the RetrieveAllCustomer JSP page with customer lists or status message(failure).
      * </p>
      * 
 	 * @param addressId
@@ -198,10 +198,10 @@ public class CustomerController {
 	
 	/**
 	 * <p>
-	 *    Return to the AddUserRole JSP page with Role(Model) Object.
-	 *    This Method check the role available or not using isRoleAvailable in CustomerService.
-	 *    This Method call to getAllRole method in CustomerService.
-     *    Return to the getMiniStatementByCustomerId JSP page with Customer MiniStatement or status message(failure).
+	 *     Return to the AddUserRole JSP page with Role(Model) Object.
+	 *     This Method check the role available or not using isRoleAvailable in CustomerService.
+	 *     This Method call to getAllRole method in CustomerService.
+     *     Return to the getMiniStatementByCustomerId JSP page with Customer MiniStatement or status message(failure).
      * </p>
 	 * 
 	 * @param model
@@ -218,7 +218,7 @@ public class CustomerController {
 		if (customerService.isRoleAvailable()) {
 			model.addAttribute("roles", customerService.getAllRole());
 		} else {
-			model.addAttribute("message", "Sorry role is not present");
+			model.addAttribute("message", "SORRY ROLE IS NOT PRESENT");
 		}
 		return "AddUserRole";
 	}

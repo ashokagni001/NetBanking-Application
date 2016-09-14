@@ -37,7 +37,7 @@ public class Role {
     
 	/**
      * parameter Constructor.
-     *     Passes parameters to the constructor and creates an instance of Role.
+     * Passes parameters to the constructor and creates an instance of UserRole.
      */  
 	public Role(String roleId, String roleName) {
 		this.roleId = roleId;
