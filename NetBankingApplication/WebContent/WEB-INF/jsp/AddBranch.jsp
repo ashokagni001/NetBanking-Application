@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:if test="${sessionScope['id']== null}">
 	<c:redirect url="login" />
@@ -26,13 +25,12 @@
 	</div>
 	<h2>INSERT BRANCH</h2>
 	<center>
-		<form:form method="post" action="insertBranch">
-			<form:input path="emailId" type="text"
-				placeholder="EMAIL ID" requried=""/>
+		<form method="post" action="insertBranch">
+			<input type ="text" name="emailId" placeholder="EMAIL ID"/>
 			<br />
 			<input type="submit" path="addBranch" value="ADD"
-				class="btn btn-success" />
-		</form:form>
+				class="btn btn-success" /><br/><br/>
+		<form>
 		<c:if test="${message != null}">
 			<script type="text/javascript">
 				alert('CLICK OK THE PAGE WILL BE REFRESHED...'

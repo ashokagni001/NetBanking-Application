@@ -128,7 +128,6 @@
 				<th>MOB.NUMBER</th>
 				<th>EMAIL</th>
 				<th>ACCOUNT NUMBER</th>
-				<th>ADDRESS ID</th>
 				<th colspan="2" align="center" height="30" width="100">ADDRESS</th>
 			</tr>
 			<c:set value="${customer}" var="customer" />
@@ -140,17 +139,8 @@
 				<td align="center"><c:out value="${customer.getGender()}" /></td>
 				<td align="center"><c:out value="${customer.getMobileNumber()}" /></td>
 				<td align="center"><c:out value="${customer.getEmail()}" /></td>
-				<td align="center"><c:out
-						value="${customer.getAccountNumber()}" /></td>
-				<c:choose>
-					<c:when test="${null == customer.getAddress()}">
-						<td><c:out value="${'No Address Allocated'}" /></td>
-					</c:when>
-					<c:otherwise>
-						<td><c:set value="${customer.getAddress()}" var="address" />
-							<c:out value="${address.addressId}" /></td>
-					</c:otherwise>
-				</c:choose>
+				<td align="center"><c:out value="${customer.getAccountNumber()}" /></td>
+				<c:set value="${customer.getAddress()}" var="address" />
 				<td><a
 					href="viewCustomerAddress?addressId=<c:out value="${address.addressId}"/>"
 					style="color: blue">VIEW</a></td>

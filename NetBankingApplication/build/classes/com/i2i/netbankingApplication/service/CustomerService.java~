@@ -70,6 +70,7 @@ public class CustomerService {
         
     	String customerDOB = customer.getDob();
     	//verify the Customer DOB valid or not
+    	String customerId = "CUSI2I00" + String.valueOf(getLastCustomerId() + 1);
         if (StringUtil.isValidFormat(customerDOB)) {
             throw new DataBaseException("YOUR FORMAT" + customerDOB +
                 "FORMAT MUST 1/05/2000.INSERT VALID DOB..!!");  

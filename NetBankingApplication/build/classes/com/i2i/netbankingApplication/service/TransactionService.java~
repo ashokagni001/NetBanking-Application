@@ -52,26 +52,34 @@ public class TransactionService {
 			String ifscode, double amount) throws DataBaseException {
 		Account debitAccount = getAccountByCustomerId(customerId);
 		Account creditAccount = transactionDao.retrieveAccountByNumber(creditAccountNumber);
-		//verify the Credit Account available or not.
-		if (creditAccount != null) {
-			//verify the creditAccount IFSCode valid or not.
-			if (creditAccount.getBranch().getIFSCode().equals(ifscode)) {
-		        double currentAmount = debitAccount.getBalance();
-		        double balanceAmount = (currentAmount - amount);
-				//check the balanceAmount have or not.
-				if (balanceAmount > ConstantVariableUtil.initializeVariable) {
-					debitAccount.setBalance(balanceAmount);
-					return transactionDao.addTransaction(new CustomerTransaction(getLastTransactionId(), amount,
+		//verify the Debit Account available or not.
+		if (debitAccount != null) {
+			//verify the credit Account available or not.
+			if (creditAccount != null) {
+				//verify the creditAccount IFSCode valid or not.
+				if (creditAccount.getBranch().getIFSCode().equals(ifscode)) {
+				    double currentAmount = debitAccount.getBalance();
+				    double balanceAmount = (currentAmount - amount);
+				    //check the balanceAmount have or not.
+				    if (balanceAmount > ConstantVariableUtil.initializeVariable) {
+						debitAccount.setBalance(balanceAmount);
+						return transactionDao.addTransaction(new CustomerTransaction(getLastTransactionId(), amount,
 								"Request", debitAccount, creditAccount), debitAccount);
-				} else {
+					} else {
 
-					return ("YOUR CREDIT AMOUNT VALUE IS MUST BE LESSER THAN CURRENT AMOUNT :Rs " + currentAmount);
+						return ("YOUR CREDIT AMOUNT VALUE IS MUST BE LESSER THAN CURRENT AMOUNT :Rs " + currentAmount);
+					}
+				} 
+			} else {
+				return ("CREDITACCOUNTNUMBER INCORRECT");
+					}
+				} else {
 				}
-			} 
+			} else {
+			}
 		} else {
-			return ("CREDITACCOUNTNUMBER INCORRECT");
+			return ("YOUR DEBITACCOUNTNUMBER INCORRECT");
 		}
-		return "YOUR TRANSACTION IS SCUCCESSED";
 	}
 	
 	/**
@@ -255,7 +263,7 @@ public class TransactionService {
 		if (creditAccount != null) {
 			double currentAmount = creditAccount.getBalance();
 			double balanceAmount = (currentAmount + amount);
-			creditAccount.setBalance(balanceAmount);
+			criditAccount.setBalance(balanceAmount);
 			transactionDao.transactionSuccess(creditAccount, transactionId,	approver);
 		} else {
 			throw new DataBaseException("CREDIT ACCOUNT IS NOT AVAILABLE ");

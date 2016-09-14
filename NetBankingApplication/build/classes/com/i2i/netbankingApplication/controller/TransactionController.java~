@@ -78,7 +78,7 @@ public class TransactionController {
      *     Return to JSP page TransactionIndex with status message(success or failure).
      */
 	@RequestMapping(value = "/insertTransaction", method = RequestMethod.POST)
-	public String insertransaction(@RequestParam("customerId") String customerId,
+	public String transaction(@RequestParam("customerId") String customerId,
 			@RequestParam("creditAccountNumber") String creditAccountNumber, @RequestParam("ifscode") String ifscode,
 			@RequestParam("amount") String amount, ModelMap message) {
 		try {

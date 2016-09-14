@@ -82,8 +82,8 @@
 					style="color: blue">VIEW USER DETAIL</a></td>
 			</tr>
 		</table>
-		<a href="approverIndexPage">Go to main page</a> <br /> <br /> <b> <br />
-			<a href="logoutController" style="width: 300px;"> LOGOUT</a> <c:if
+		<a href="approverIndexPage">Go to main page</a> <br/><br/>
+			<a href="logoutController"> LOGOUT</a> <c:if
 				test="${message != null}">
 				<script type="text/javascript">
 					alert('CLICK OK THE PAGE WILL BE REFRESHED...'
