@@ -85,14 +85,14 @@ public class CustomerController {
      *     If there is an error in the given data like BadElementException.
      */
 	@RequestMapping(value="/register", method = RequestMethod.POST)
-    public String addCustomer(@ModelAttribute("Customer") Customer user, ModelMap message) {  
+    public String addCustomer(@ModelAttribute("Customer") Customer customer, ModelMap message) {  
 		try {
-			customerService.getUser(user);
+			customerService.getCustomer(customer);
 			message.addAttribute("Address", new Address());
             return "AddAddress";
-		}catch (CustomerDataException e) {
+		} catch (CustomerDataException e) {
     		message.addAttribute("message", e.getMessage().toString()); 
-        }catch (DataBaseException e) {
+        } catch (DataBaseException e) {
     		message.addAttribute("message", e.getMessage().toString()); 
         } 
 		return "CustomerRegistration";
@@ -120,9 +120,9 @@ public class CustomerController {
     public String addAddress(@ModelAttribute("Address") Address address, ModelMap message) {  
 		try {
 			message.addAttribute("message", customerService.getAddress(address));
-		}catch (DataBaseException e) {
-    		message.addAttribute("message", "ENTER VALID DATA ONLY"); 
-        }finally {
+		} catch (DataBaseException e) {
+    		message.addAttribute("message", e.getMessage()); 
+        } finally {
 		    return "login";
         }
     }
@@ -139,11 +139,16 @@ public class CustomerController {
      *     If there is an error in the given data like BadElementException.
 	 */
 	@RequestMapping(value = "/GetCustomer")
-	public String getCustomerById( ModelMap message) throws DataBaseException {
-		message.addAttribute("customers", customerService.getAllCustomer());
-		return "RetrieveAllCustomer";
+	public String getCustomerById(ModelMap message) {
+        try {
+		    message.addAttribute("customers", customerService.getAllCustomer());
+        } catch(DataBaseException e) {
+        	message.addAttribute("message", e.getMessage()); 
+        }
+        return "RetrieveAllCustomer"; 
 	}
-/**
+	
+    /**
 	 * <p>
 	 *     This Method call to getAllCustomer method in CustomerService.
      *     Return to the RetrieveAllCustomer JSP page with customer lists or status message(failure).
@@ -167,9 +172,9 @@ public class CustomerController {
         			message.addAttribute("message", "ENTER VALID CUSTOMER ID ONLY");
         		}
         	}
-        }catch (DataBaseException e) {
-        	message.addAttribute("message", e.getMessage().toString());
-        }finally {
+        } catch (DataBaseException e) {
+        	message.addAttribute("message", e.getMessage());
+        } finally {
         	return "RetrieveAllCustomer";
         }
     }
@@ -190,7 +195,7 @@ public class CustomerController {
     public ModelAndView viewAddressById(@RequestParam("addressId")int addressId, ModelMap message) {
     	try {                     
             return new ModelAndView ("RetrieveAddressById", "address", customerService.getAddressById(addressId)); 
-    	}catch (DataBaseException e) {
+    	} catch (DataBaseException e) {
     		return new ModelAndView ("CustomerIndex", "message", e.getMessage().toString());
         }
     }
@@ -206,6 +211,7 @@ public class CustomerController {
 	 * 
 	 * @param model
 	 *     Customer model return the customer object.
+	 * @param message 
 	 *     
 	 * @return AddUserRole
 	 *     Return to the AddUserRole JSP page with Role Detail or status message(failure).
@@ -214,13 +220,18 @@ public class CustomerController {
 	 *     If there is an error in the given data like BadElementException.
 	 */
 	@RequestMapping(value = "/addUserRole")
-	public String addUserRole(ModelMap model) throws DataBaseException {
-		if (customerService.isRoleAvailable()) {
-			model.addAttribute("roles", customerService.getAllRole());
-		} else {
-			model.addAttribute("message", "SORRY ROLE IS NOT PRESENT");
+	public String addUserRole(ModelMap model, ModelMap message) {
+		try {
+		    if (customerService.isRoleAvailable()) {
+			    model.addAttribute("roles", customerService.getAllRole());
+		    } else {
+			    model.addAttribute("message", "SORRY ROLE IS NOT PRESENT");
+		    }
+		} catch (DataBaseException e) {
+	        message.addAttribute("message", e.getMessage());
+	    } finally {
+	    	return "AddUserRole";
 		}
-		return "AddUserRole";
 	}
     
 	/**
@@ -247,15 +258,15 @@ public class CustomerController {
 	 */
 	@RequestMapping(value = "/insertRole", method = RequestMethod.GET)
 	public String addUserRole(@RequestParam("customerId") String customerId, @RequestParam("role") String roleId,
-			ModelMap message) throws DataBaseException {
+			ModelMap message) {
 		try {
 			customerService.insertUserRole(customerId, roleId);
 			message.addAttribute("message", "INFORMATION SAVED SUCESSFULLY");
 			message.addAttribute("roles", customerService.getAllRole());
-		}catch (DataBaseException  e) {
+		} catch (DataBaseException  e) {
 			message.addAttribute("message", e.getMessage().toString());
 			message.addAttribute("roles", customerService.getAllRole());
-		}finally{
+		} finally {
 		    return "AddUserRole";
 		}
 	}

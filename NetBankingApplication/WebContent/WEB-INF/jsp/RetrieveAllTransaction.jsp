@@ -49,10 +49,10 @@
 					<td align="center"><c:out value="${transactions.getAmount()}" /></td>
 					<td align="center"><c:out value="${transactions.getDate()}" /></td>
 					<td align="center"><c:out value="${transactions.getStatus()}" /></td>
-					<td align="center" height="30" width="100"><a
+					<td align="center"><a
 						href="viewCustomerAccount?accountNumber=<c:out value="${accountDebit.accountNumber}"/>"
 						style="color: blue">VIEW DEBIT ACCOUNT</a></td>
-					<td align="center" height="30" width="100"><a
+					<td align="center"><a
 						href="viewCustomerAccount?accountNumber=<c:out value="${accountCredit.accountNumber}"/>"
 						style="color: blue">VIEW CREDIT ACCOUNT</a></td>
 				</tr>

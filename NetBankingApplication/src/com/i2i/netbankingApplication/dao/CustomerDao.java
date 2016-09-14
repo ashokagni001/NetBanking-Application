@@ -31,9 +31,16 @@ import com.i2i.netbankingApplication.model.UserRole;
  */
 
 public class CustomerDao {
-	private HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
-	private Configuration configuration = hibernateConnectionObject.getConfiguration();
-	private SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
+	private Session hibernateConncetion() throws DataBaseException {
+		try {
+		    HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
+		    Configuration configuration = hibernateConnectionObject.getConfiguration();
+		    SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
+		    return sessionFactory.openSession();
+		} catch (DataBaseException e) {
+			throw new DataBaseException(e.getMessage());
+		}
+	}
     
 	/**
 	 * <p>
@@ -49,9 +56,10 @@ public class CustomerDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws ConfigurationException 
 	 */
 	public void insertUser(String accountNumber, Customer customer) throws DataBaseException {
-		Session session = sessionFactory.openSession();
+		Session session = hibernateConncetion();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
@@ -60,7 +68,7 @@ public class CustomerDao {
             account.setCustomer(customer);
             session.update(account);
             transaction.commit();
-        } catch(Exception e) {
+        } catch(HibernateException e) {
         	throw new DataBaseException("CHECK YOUR PLEASE INSERT VALID CUSTOMER DETAIL..");
         } finally {
             session.close();
@@ -81,10 +89,11 @@ public class CustomerDao {
      * 
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws ConfigurationException 
 	 */
 	public Customer retrieveCustomerById(String customerId) throws DataBaseException {
 	    Customer customer = null ;
-	    Session session = sessionFactory.openSession();
+	    Session session = hibernateConncetion();
 	    Transaction transaction = null;
 	    try {
 	        transaction = session.beginTransaction();
@@ -109,9 +118,10 @@ public class CustomerDao {
      *         
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws ConfigurationException 
 	 */
 	public List<Customer> retriveAllCustomer() throws DataBaseException {
-	    Session session = sessionFactory.openSession();
+		Session session = hibernateConncetion();
 	    try {
 	        return session.createQuery("FROM Customer").list();
 	    } catch (HibernateException e) {
@@ -138,9 +148,10 @@ public class CustomerDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws ConfigurationException 
 	 */
 	public String addAddress(String customerId, Address address) throws DataBaseException {
-	    Session session = sessionFactory.openSession();
+		Session session = hibernateConncetion();
 	    Transaction transaction = null;
 	    try {
 	        transaction = session.beginTransaction();
@@ -168,9 +179,10 @@ public class CustomerDao {
 	 *      
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws ConfigurationException 
 	 */
 	public List<Address> retriveAllAddresses() throws DataBaseException {
-	    Session session = sessionFactory.openSession();
+	    Session session = hibernateConncetion();
 	    try {
 	        return session.createQuery("from Address").list();
 	    } catch(HibernateException e) {
@@ -194,9 +206,10 @@ public class CustomerDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws ConfigurationException 
 	 */
 	public Address retrieveAddressById(int addressId) throws DataBaseException {
-		Session session = sessionFactory.openSession();
+		Session session = hibernateConncetion();
 		try {
 			return (Address)session.get(Address.class, addressId);
 		} catch (HibernateException e) {
@@ -220,9 +233,10 @@ public class CustomerDao {
 	 * 
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws ConfigurationException 
 	 */
 	public Account retrieveAccountByNumber(String accountNumber) throws DataBaseException {
-	    Session session = sessionFactory.openSession();
+	    Session session = hibernateConncetion();
 	    try {
 	        return (Account)session.get(Account.class, accountNumber); 
 	    } catch (HibernateException e) {
@@ -237,9 +251,10 @@ public class CustomerDao {
 	 * 
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws ConfigurationException 
 	 */
 	public void insertRole(UserRole userRole) throws DataBaseException {
-		Session session = sessionFactory.openSession();
+		Session session = hibernateConncetion();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
@@ -263,9 +278,10 @@ public class CustomerDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws ConfigurationException 
 	 */
 	public List<Role> retriveAllRole() throws DataBaseException {
-		Session session = sessionFactory.openSession();
+		Session session = hibernateConncetion();
 		try {
 			return session.createQuery("FROM Role").list();
 		} catch (HibernateException e) {
@@ -281,7 +297,7 @@ public class CustomerDao {
 	 *     Retrieves Role from database and returns Role object to CustomerService.
 	 * </p>
 	 * 
-	 * @param id
+	 * @param idConfigurationException
 	 *     id of Role to view.
 	 * 
 	 * @return Role
@@ -289,9 +305,10 @@ public class CustomerDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws ConfigurationException 
 	 */
 	public Role retrieveRoleById(String id) throws DataBaseException {
-		Session session = sessionFactory.openSession();
+		Session session = hibernateConncetion();
 		try {
 			return (Role) session.get(Role.class, id);
 		} catch (HibernateException e) {
@@ -312,9 +329,10 @@ public class CustomerDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws ConfigurationException 
 	 */
 	public List<UserRole> retriveAllUserRole() throws DataBaseException {
-		Session session = sessionFactory.openSession();
+		Session session = hibernateConncetion();
 		try {
 			return session.createQuery("FROM UserRole").list();
 		} catch (HibernateException e) {

@@ -27,9 +27,16 @@ import com.i2i.netbankingApplication.model.Branch;
  * @created 2016-09-03
  */
 public class BranchDao {
-	private HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
-	private Configuration configuration = hibernateConnectionObject.getConfiguration();
-	private SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
+	private Session hibernateConncetion() throws DataBaseException {
+		try {
+		    HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
+		    Configuration configuration = hibernateConnectionObject.getConfiguration();
+		    SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
+		    return sessionFactory.openSession();
+		} catch (DataBaseException e) {
+			throw new DataBaseException(e.getMessage());
+		}
+	}
 	
 	/**
 	 * Get the branch object from BranchService and add Branch to database. 
@@ -39,9 +46,10 @@ public class BranchDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws ConfigurationException 
 	 */
 	public void addBranch(Branch branch) throws DataBaseException {
-	    Session session = sessionFactory.openSession();
+	    Session session = hibernateConncetion();
 	    Transaction transaction = null;
 	    try {
 	        transaction = session.beginTransaction();
@@ -65,9 +73,10 @@ public class BranchDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws ConfigurationException 
 	 */
 	public void deleteBranchById(String IFSCode) throws DataBaseException {
-	    Session session = sessionFactory.openSession();
+	    Session session = hibernateConncetion();
 	    Transaction transaction = null;
 	    try {
 	        transaction = session.beginTransaction();
@@ -95,9 +104,10 @@ public class BranchDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws ConfigurationException 
 	 */
 	public Branch retrieveBranchById(String IFSCode) throws DataBaseException {
-	    Session session = sessionFactory.openSession();
+	    Session session = hibernateConncetion();
 	    try {
 	        return((Branch)session.get(Branch.class, IFSCode)); 
 	    } catch (HibernateException e) {
@@ -118,9 +128,10 @@ public class BranchDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws ConfigurationException 
 	 */
 	public List<Branch> retriveAllBranch() throws DataBaseException {
-	    Session session = sessionFactory.openSession();
+	    Session session = hibernateConncetion();
 	    try {
 	        return session.createQuery("FROM Branch").list();
 	    } catch (HibernateException e) {
@@ -144,9 +155,10 @@ public class BranchDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws ConfigurationException 
 	 */
 	public void addAddress(String IFSCode, Address address) throws DataBaseException {
-	    Session session = sessionFactory.openSession();
+	    Session session = hibernateConncetion();
 	    Transaction transaction = null;
 	    try {
 	        transaction = session.beginTransaction();
@@ -176,10 +188,11 @@ public class BranchDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws ConfigurationException 
 	 */
 	public Address retrieveAddressById(int addressId) throws DataBaseException {
 		Address address;
-		Session session = sessionFactory.openSession();
+		Session session = hibernateConncetion();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
@@ -204,9 +217,10 @@ public class BranchDao {
 	 * 
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws ConfigurationException 
 	 */
 	public String addAccount(Account account) throws DataBaseException {
-		Session session = sessionFactory.openSession();
+		Session session = hibernateConncetion();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
@@ -231,9 +245,10 @@ public class BranchDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws ConfigurationException 
 	 */
 	public List<Account> retriveAllAccount() throws DataBaseException {
-	    Session session = sessionFactory.openSession();
+	    Session session = hibernateConncetion();
 	    try {
 	        return session.createQuery("from Account").list();
 	    } catch(HibernateException e) {

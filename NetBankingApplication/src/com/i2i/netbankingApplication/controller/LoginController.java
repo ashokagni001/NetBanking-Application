@@ -2,7 +2,6 @@ package com.i2i.netbankingApplication.controller;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,24 +72,25 @@ public class LoginController {
      */
 	@RequestMapping(value = "/loginController", method = RequestMethod.POST)
     public String loginVerification(@RequestParam("customerId")String customerId, @RequestParam("password")String password, ModelMap message,HttpSession session) {
+		String URL = "redirect:login.jsp";
 		try {
 		    if (customerService.ifValidateUser(customerId, password)) {
 				if (customerService.checkIfRole(customerId)){
 					session.setAttribute("id", customerId);
 					session.setAttribute("role", "approver");
-					return "ApproverHomePage";
+					URL = "ApproverHomePage";
 				} else {
 					session.setAttribute("id", customerId);
 					session.setAttribute("role", "user");
-					return "UserHomePage";
+					URL = "UserHomePage";
 				}
 			} else {
 				message.addAttribute("message", "CHECK YOUR USERNAME and PASSWORD..");
-				return "redirect:login.jsp";
 			} 
         } catch (DataBaseException e) {
-        	message.addAttribute("message", "SOME PROBLEM OCCUR PLEASE TRY AGAIN LATER");
-            return "redirect:login.jsp";
+        	message.addAttribute("message", e.getMessage());
+        } finally {
+        	return URL;
         }
 	}
 	

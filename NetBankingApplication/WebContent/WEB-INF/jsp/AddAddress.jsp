@@ -3,10 +3,10 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
-<head>
-<link rel="stylesheet" href="css/bootstrap.css">
-<script src="js/bootstrap.js"></script>
-<script src="js/bootstrap.min.js"></script>
+    <head>
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <script src="js/bootstrap.js"></script>
+       <script src="js/bootstrap.min.js"></script>
 <style type="text/css">
 .well {
 	background-color: #8ddfe1;

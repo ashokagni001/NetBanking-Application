@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import com.i2i.netbankingApplication.exception.DataBaseException;
+import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.hibernateConnection.HibernateConnection;
 import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Customer;
@@ -27,9 +28,16 @@ import com.i2i.netbankingApplication.model.CustomerTransaction;
  * @created 2016-09-03
  */
 public class TransactionDao {
-	private HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
-	private Configuration configuration = hibernateConnectionObject.getConfiguration();
-	private SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
+	private Session hibernateConncetion() throws DataBaseException {
+		try {
+		    HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
+		    Configuration configuration = hibernateConnectionObject.getConfiguration();
+		    SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
+		    return sessionFactory.openSession();
+		} catch (DataBaseException e) {
+			throw new DataBaseException(e.getMessage());
+		}
+	}
     
 	/**
 	 * <p>
@@ -47,9 +55,10 @@ public class TransactionDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws DataBaseException 
 	 */
-	public String addTransaction(CustomerTransaction customerTransaction, Account debitAccount) throws DataBaseException {
-	    Session session = sessionFactory.openSession();
+	public String addTransaction(CustomerTransaction customerTransaction, Account debitAccount) throws DataBaseException, DataBaseException {
+	    Session session = hibernateConncetion();
 	    Transaction transaction = null;
 	    try {
 	    	transaction = session.beginTransaction();
@@ -78,9 +87,10 @@ public class TransactionDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws DataBaseException 
 	 */
 	public CustomerTransaction retrieveCustomerTransactionById(String transactionId) throws DataBaseException {
-	    Session session = sessionFactory.openSession();
+	    Session session = hibernateConncetion();
 	    try {
 	       return(CustomerTransaction)session.get(CustomerTransaction.class, transactionId); 
 	    } catch (HibernateException e) {
@@ -101,9 +111,10 @@ public class TransactionDao {
 	 * 
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws DataBaseException 
 	 */
 	public List<CustomerTransaction> retriveAllTransactions() throws DataBaseException {
-	    Session session = sessionFactory.openSession();
+	    Session session = hibernateConncetion();
 	    try {
 	        return session.createQuery("FROM CustomerTransaction").list();
 	    } catch (HibernateException e) {
@@ -124,9 +135,10 @@ public class TransactionDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws DataBaseException 
 	 */
 	public List<Account> retriveAllAccounts() throws DataBaseException {
-	    Session session = sessionFactory.openSession();
+	    Session session = hibernateConncetion();
 	    try {
 	        return session.createQuery("FROM Account").list();
 	    } catch (HibernateException e) {
@@ -150,9 +162,10 @@ public class TransactionDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws DataBaseException 
 	 */
 	public Account retrieveAccountByNumber(String accountNumber) throws DataBaseException {
-	    Session session = sessionFactory.openSession();
+	    Session session = hibernateConncetion();
 	    try {
 	        return (Account)session.get(Account.class, accountNumber); 
 	    } catch (HibernateException e) {
@@ -176,10 +189,11 @@ public class TransactionDao {
 	 *      
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws DataBaseException 
 	 */
 	public void transactionSuccess(Account criditAccount, int transactionId, Customer approver)
 			throws DataBaseException {
-		Session session = sessionFactory.openSession();
+		Session session = hibernateConncetion();
 		Transaction transaction = null;
 		CustomerTransaction customerTransaction = null;
 		try {
@@ -211,10 +225,11 @@ public class TransactionDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws DataBaseException 
 	 */
 	public void transactionFailure(Account debitAccount, int transactionId, Customer approver)
 			throws DataBaseException {
-		Session session = sessionFactory.openSession();
+		Session session = hibernateConncetion();
 		Transaction transaction = null;
 		Account account = null;
 		CustomerTransaction customerTransaction = null;
@@ -250,9 +265,10 @@ public class TransactionDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 * @throws DataBaseException 
 	 */
 	public List<CustomerTransaction> retriveTransactionByDate(String formDate, String toDate) throws DataBaseException {
-	    Session session = sessionFactory.openSession();
+	    Session session = hibernateConncetion();
 	    try {
 	        return session.createQuery("FROM CustomerTransaction WHERE date BETWEEN '"+formDate +"' AND '" +toDate +"'").list();
 	    } catch (HibernateException e) {

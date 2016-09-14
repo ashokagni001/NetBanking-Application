@@ -47,6 +47,7 @@ public class TransactionService {
 	 *      
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
+	 * @throws ConfigurationException 
 	 */
 	public String getTransactionDetail(String customerId, String creditAccountNumber, 
 			String ifscode, double amount) throws DataBaseException {
@@ -65,11 +66,11 @@ public class TransactionService {
 								"Request", debitAccount, creditAccount), debitAccount);
 				} else {
 
-					return ("YOUR CREDIT AMOUNT VALUE IS MUST BE LESSER THAN CURRENT AMOUNT :Rs " + currentAmount);
+					return "YOUR CREDIT AMOUNT VALUE IS MUST BE LESSER THAN CURRENT AMOUNT :Rs " + currentAmount;
 				}
 			} 
 		} else {
-			return ("CREDITACCOUNTNUMBER INCORRECT");
+			return "CREDITACCOUNTNUMBER INCORRECT";
 		}
 		return "YOUR TRANSACTION IS SCUCCESSED";
 	}
@@ -89,6 +90,7 @@ public class TransactionService {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
+	 * @throws ConfigurationException 
 	 */
 	public Account retrieveAccountByNumber(String accountNumber) throws DataBaseException {
 		return transactionDao.retrieveAccountByNumber(accountNumber);
@@ -102,6 +104,7 @@ public class TransactionService {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
+	 * @throws ConfigurationException 
 	 */
 	public int getLastTransactionId() throws DataBaseException {
 		int id = ConstantVariableUtil.initializeVariable;
@@ -129,6 +132,7 @@ public class TransactionService {
 	 * 
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
+	 * @throws ConfigurationException 
 	 */
 	public CustomerTransaction getTransactionById(String transactionId) throws DataBaseException {
         return transactionDao.retrieveCustomerTransactionById(transactionId); 
@@ -145,6 +149,7 @@ public class TransactionService {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
+	 * @throws ConfigurationException 
 	 */
 	public List<CustomerTransaction> getAllTransaction() throws DataBaseException {
 		List<CustomerTransaction> transactions = new ArrayList<CustomerTransaction>();
@@ -165,6 +170,7 @@ public class TransactionService {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
+	 * @throws ConfigurationException 
 	 */
     public List<CustomerTransaction> getAllNotification() throws DataBaseException {
 		List<CustomerTransaction> transactions = new ArrayList<CustomerTransaction>();
@@ -193,6 +199,7 @@ public class TransactionService {
      *     
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
+     * @throws ConfigurationException 
      */
    public List<CustomerTransaction> getCustomerMiniStatement(String customerId) throws DataBaseException {
 		List<CustomerTransaction> transactions = new ArrayList<CustomerTransaction>();
@@ -224,6 +231,7 @@ public class TransactionService {
      *     
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
+     * @throws ConfigurationException 
      */
 	public Account getCustomerAccount(String accountNumber) throws DataBaseException {
 		return transactionDao.retrieveAccountByNumber(accountNumber);
@@ -247,6 +255,7 @@ public class TransactionService {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
+	 * @throws ConfigurationException 
 	 */
 	public void transactionSuccess(int transactionId, String creditAccountNumber, Double amount, String userId)
 			throws DataBaseException {

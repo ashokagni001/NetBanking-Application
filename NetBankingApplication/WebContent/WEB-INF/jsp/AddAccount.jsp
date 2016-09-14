@@ -18,10 +18,10 @@
 }
 </style>
 </head>
-<body">
+<body>
 	<div class="well">
-		<font size="20"><marquee behavior="alternate">NET
-				BANKING</marquee></font>
+		<font size="20"> <marquee behavior="alternate">NETBANKING</marquee>
+		</font>
 	</div>
 	<h2>INSERT ACCOUNT</h2>
 	<center>
@@ -39,12 +39,11 @@
 			<b>Account Type</b></br> <select name="accounttype">
 				<option value="Current">Current</option>
 				<option value="Saving">Saving</option>
-			</select><br /> <input name="ifscode" type="text"
+			</select> <br /> <input name="ifscode" type="text"
 				placeholder="Enter the ifscode" /><br /> <input type="submit"
 				name="addaccount" value="ADD" />
 		</form>
-		<a href="BranchIndex">Go to main page </a></br> </br> <br /> <a href="logoutController" style="width: 300px;">
-			LOGOUT</a>
+		<a href="BranchIndex">Go to main page</a></br> </br> <a href="logoutController">LOGOUT</a>
 	</center>
 </body>
 </html>

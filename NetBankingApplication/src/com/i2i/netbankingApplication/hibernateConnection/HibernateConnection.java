@@ -1,6 +1,9 @@
 package com.i2i.netbankingApplication.hibernateConnection;
 
 import org.hibernate.cfg.AnnotationConfiguration;
+
+import com.i2i.netbankingApplication.exception.DataBaseException;
+
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 
@@ -30,7 +33,6 @@ public class HibernateConnection {
     private HibernateConnection() {
     }
     
-
     /**
 	 * Create the hibernate Connection.
 	 * 
@@ -50,15 +52,17 @@ public class HibernateConnection {
 	 * 
 	 * @return configuration
 	 *     Return a annotation Configuration object.
+     * @throws DataBaseException 
+     * @throws ConfigurationException 
 	 */
-    public AnnotationConfiguration getConfiguration() {
+    public AnnotationConfiguration getConfiguration() throws DataBaseException {
         try {
             if(configuration == null) {
                configuration = new AnnotationConfiguration();
                configuration.configure("hibernate.cfg.xml");
-	    }
-        } catch(HibernateException e) {
-             System.err.println("configuration not found Exception" + e);
+	        }
+        } catch (HibernateException e) {
+        	throw new DataBaseException("OOPS SOME PROBLEM OCCURED.PLEASE TRY AGAIN LATER");
         }
         return configuration;
     }
@@ -68,14 +72,15 @@ public class HibernateConnection {
 	 * 
 	 * @return sessionFactory
 	 *     Return a SessionFactory object.
+     * @throws DataBaseException 
 	 */
-    public SessionFactory getSessionFactory() {
+    public SessionFactory getSessionFactory() throws DataBaseException {
         try {
             if(sessionFactory == null) {
                 sessionFactory = configuration.buildSessionFactory();
            }
-        } catch(HibernateException e) {
-             System.err.println("sessionFactory not found Exception----->" + e);
+        } catch (HibernateException e) {
+        	throw new DataBaseException("OOPS SOME PROBLEM OCCURED.PLEASE TRY AGAIN LATER");
         }
         return sessionFactory ;
     }

@@ -70,7 +70,7 @@
 			</c:forEach>
 		</table>
 	</c:if>
-	<a href="TransactionIndex" style="font-sise: 18px">Go to main page</a>
+	<a href="BranchIndex" style="font-sise: 18px">Go to main page</a>
 	<br />
 	<a href="logoutController" style="width: 300px"> LOGOUT</a>
 </html>

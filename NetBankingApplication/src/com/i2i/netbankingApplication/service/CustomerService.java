@@ -49,8 +49,9 @@ public class CustomerService {
      * 
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
+     * @throws ConfigurationException 
      */
-    public void getUser(Customer customer) throws DataBaseException, CustomerDataException {
+    public void getCustomer(Customer customer) throws DataBaseException, CustomerDataException {
     	String accountNumer = customer.getAccountNumber();
     	Account account = customerDao.retrieveAccountByNumber(accountNumer);
     	//verify the Customer account number validate or not.
@@ -97,16 +98,17 @@ public class CustomerService {
      *     
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
+     * @throws ConfigurationException 
      */
 	public int getLastAddressId() throws DataBaseException {
-    	int id = ConstantVariableUtil.initializeVariable;
+    	int newAddressId = ConstantVariableUtil.initializeVariable;
     	for (Address address : customerDao.retriveAllAddresses()) {
-    		int temp = address.getAddressId();
-    		if (id <= temp) {
-    			id = temp;
+    		int lastAddressId = address.getAddressId();
+    		if (newAddressId <= lastAddressId) {
+    			newAddressId = lastAddressId + 1;
     		}
     	}
-    	return id;
+    	return newAddressId;
     }
     
 	/**
@@ -115,22 +117,24 @@ public class CustomerService {
      *     return to the last customer Id.
      * </p>
      * 
-	 * @return
-	 *     return to the last customer Id.
+	 * @return id
+	 *     return to the last customer id value.
 	 *     
-	 * @throws DataBaseException
+	 * @throws DataBaseException ConfigurationException
 	 *     If there is an error in the given data like BadElementException.
+	 * @throws ConfigurationException 
+	 * @throws NumberFormatException 
 	 */
     public int getLastCustomerId() throws DataBaseException {
-    	int lastCustomerId = ConstantVariableUtil.initializeVariable;
+    	int id = ConstantVariableUtil.initializeVariable;
         for (Customer customer : customerDao.retriveAllCustomer()) {
-    		String id = customer.getCustomerId();
-    		int temp = Integer.parseInt(id.substring(6, id.length()));
-            if (lastCustomerId <= temp) {
-               	lastCustomerId = temp;
+    		String lastCustomerId = customer.getCustomerId();
+    		int temp = Integer.parseInt(lastCustomerId.substring(6, lastCustomerId.length()));
+            if (id <= temp) {
+            	id = temp;
             }
     	}
-   		return lastCustomerId;
+   		return id;
    	}
     
     /**
@@ -138,10 +142,10 @@ public class CustomerService {
      * 
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
-     *         
+     *          ConfigurationException
      * @return List
      *     Return list of customers.
-     *     
+     * @throws ConfigurationException 
      */
     public List<Customer> getAllCustomer() throws DataBaseException {
     	return customerDao.retriveAllCustomer();
@@ -158,9 +162,10 @@ public class CustomerService {
      *     
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
-     */
+     * @throws ConfigurationException 
+     */ 
 	public String getAddress(Address address) throws DataBaseException {
-	    return customerDao.addAddress("CUSI2I00" + String.valueOf(getLastCustomerId()), new Address(getLastAddressId() + 1, address.getStreet(),
+	    return customerDao.addAddress("CUSI2I00" + String.valueOf(getLastCustomerId()), new Address(getLastAddressId(), address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
     }
     
@@ -171,7 +176,7 @@ public class CustomerService {
      *     returns customer object to CustomerController.
      * </p>
      * 
-     * @param customerId
+     * @param customerId ConfigurationException
      *     Id of Customer.
      * 
      * @return customerController
@@ -179,6 +184,7 @@ public class CustomerService {
      * 
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
+	 * @throws ConfigurationException 
 	 */
 	public Customer getCustomerById(String customerId) throws DataBaseException {
         return customerDao.retrieveCustomerById(customerId); 
@@ -196,9 +202,10 @@ public class CustomerService {
 	 *     
 	 * @return customerController
      *     Return to the object of Address class. 
-     *     
+     *      ConfigurationException
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
+	 * @throws ConfigurationException 
 	 */
 	public Address getAddressById(int addressId) throws DataBaseException {
 	    return customerDao.retrieveAddressById(addressId);
@@ -208,7 +215,7 @@ public class CustomerService {
 	 * <p>
 	 *    Get the customer Id and roleId from customerController.
      *    It is called to insertRole method in customerDao.
-     * </p>
+     * </p> ConfigurationException
 	 * 
 	 * @param customerId
 	 *     id of Customer.
@@ -218,6 +225,7 @@ public class CustomerService {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
+	 * @throws ConfigurationException 
 	 */
 	public void insertUserRole(String customerId, String roleId) throws DataBaseException {
 		Customer customer = customerDao.retrieveCustomerById(customerId);
@@ -226,15 +234,14 @@ public class CustomerService {
 			Role role = customerDao.retrieveRoleById(roleId);
 			//verify the user already exist or not
 			if (IfUserRoleExist(customerId, roleId)) {
-			    customerDao.insertRole(new UserRole(getUserRoleLastId() + 1, customer, role));
+			    customerDao.insertRole(new UserRole(getUserRoleId(), customer, role));
 			} else {
 				throw new DataBaseException("ALREADY CUSTOMER ASSINED SAME ROLE");
 			}
 		} else {
 			throw new DataBaseException("Please enter the valid userId");
 		}
-	}
-    
+	}    
 	/**
 	 * <p>
 	 *     If request comes CustomerController, it will calling to retriveAllRole method in customerDao.
@@ -247,13 +254,13 @@ public class CustomerService {
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
 	 */
-	public List<Role> getAllRole() throws DataBaseException {
+	public List<Role>getAllRole() throws DataBaseException {
 		return customerDao.retriveAllRole();
 	}
     
 	/**
 	 * <p>
-	 *     If role size zero return false otherwise true.
+	 *     If role size zero return false otherwiseConfigurationException true.
 	 *     It method called to getAllRole method in CustomerService.
 	 * </p>
 	 * 
@@ -279,21 +286,16 @@ public class CustomerService {
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
 	 */
-	public int getUserRoleLastId() throws DataBaseException {
-		int lastId = ConstantVariableUtil.initializeVariable;
-		//verify the userRole size zero or not. 
-		if (customerDao.retriveAllUserRole().size() == 0) {
-			return lastId;
-		} else {
-		    for (UserRole userRole : customerDao.retriveAllUserRole()) {
-			    int tempId = userRole.getId();
-			    if (lastId <= tempId) {
-				    lastId = tempId;
-			    }
-		    }
-		return lastId;
+	public int getUserRoleId() throws DataBaseException {
+		int newUserRoleId = ConstantVariableUtil.initializeVariable;
+		for (UserRole userRole : customerDao.retriveAllUserRole()) {
+			 int lastUserRoleId = userRole.getId();
+			 if (newUserRoleId <= lastUserRoleId) {
+				 newUserRoleId = lastUserRoleId + 1;
+			 }
 		}
-	}
+		return newUserRoleId;
+    }
 	
 	/**
 	 * <p>

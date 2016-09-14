@@ -30,7 +30,7 @@
 			<br />
 			<input type="submit" path="addBranch" value="ADD"
 				class="btn btn-success" /><br/><br/>
-		<form>
+		</form>
 		<c:if test="${message != null}">
 			<script type="text/javascript">
 				alert('CLICK OK THE PAGE WILL BE REFRESHED...'
