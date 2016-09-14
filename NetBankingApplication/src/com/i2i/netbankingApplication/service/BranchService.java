@@ -3,6 +3,7 @@ package com.i2i.netbankingApplication.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.i2i.netbankingApplication.constantVariableUtil.ConstantVariableUtil;
 import com.i2i.netbankingApplication.dao.BranchDao;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.Account;
@@ -54,7 +55,7 @@ public class BranchService {
      *     If there is an error in the given data like BadElementException.
      */
     public int getLastIFSCode() throws DataBaseException {
-    	int lastIFSC = 0;
+    	int lastIFSC = ConstantVariableUtil.initializeVariable;
     	for (Branch branch : branchDao.retriveAllBranch()) {
     		String IFSC = branch.getIFSCode();
    			int temp = Integer.parseInt(IFSC.substring(6, IFSC.length()));

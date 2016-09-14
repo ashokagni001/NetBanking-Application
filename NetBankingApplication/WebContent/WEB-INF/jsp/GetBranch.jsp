@@ -97,8 +97,8 @@
 					</c:forEach>
 				</table>
 			</c:if>
-			<b>Go to main page </b><a href="BranchIndex" style="font-sise: 18px">
-				click here</a> <br /> <a href="logoutController" style="width: 300px;">
+			<a href="BranchIndex">Go to main page</a><br/><br/>
+		    <a href="logoutController">
 				LOGOUT</a>
 	</center>
 </html>

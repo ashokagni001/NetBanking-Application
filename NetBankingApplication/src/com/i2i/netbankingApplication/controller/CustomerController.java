@@ -141,7 +141,7 @@ public class CustomerController {
 	@RequestMapping(value = "/GetCustomer")
 	public String getCustomerById( ModelMap message) throws DataBaseException {
 		message.addAttribute("customers", customerService.getAllCustomer());
-		return "GetCustomer";
+		return "RetrieveAllCustomer";
 	}
 /**
 	 * <p>
@@ -170,7 +170,7 @@ public class CustomerController {
         }catch (DataBaseException e) {
         	message.addAttribute("message", e.getMessage().toString());
         }finally {
-        	return "GetCustomer";
+        	return "RetrieveAllCustomer";
         }
     }
 	

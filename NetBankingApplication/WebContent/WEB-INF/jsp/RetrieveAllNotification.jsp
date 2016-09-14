@@ -53,18 +53,18 @@
 							value="${notifications.getDebitAccount()}" var="accountDebit" />
 						<c:out value="${accountDebit.accountNumber}" /></td>
 					<td align="center"><c:set
-							value="${notifications.getCriditAccount()}" var="accountCridit" />
-						<c:out value="${accountCridit.accountNumber}" /></td>
+							value="${notifications.getCreditAccount()}" var="accountCredit" />
+						<c:out value="${accountCredit.accountNumber}" /></td>
 					<td align="center"><c:out value="${notifications.getAmount()}" /></td>
 					<td align="center"><c:out value="${notifications.getDate()}" /></td>
 					<td align="center" height="30" width="100"><a
 						href="viewCustomerAccount?accountNumber=<c:out value="${accountDebit.accountNumber}"/>"
 						style="color: blue">VIEW DEBIT ACCOUNT</a></td>
 					<td align="center" height="30" width="100"><a
-						href="viewCustomerAccount?accountNumber=<c:out value="${accountCridit.accountNumber}"/>"
-						style="color: blue">VIEW CRIDIT ACCOUNT</a></td>
+						href="viewCustomerAccount?accountNumber=<c:out value="${accountCredit.accountNumber}"/>"
+						style="color: blue">VIEW CREDIT ACCOUNT</a></td>
 					<td align="center" height="30" width="100"><a
-						href="transactionSuccess?id=<c:out value="${notifications.getId()}"/>&criditAccountNumber=<c:out value="${accountCridit.accountNumber}"/>&amount=<c:out value="${notifications.getAmount()}"/>&userId=<c:out value="${sessionScope['id']}"/>"
+						href="transactionSuccess?id=<c:out value="${notifications.getId()}"/>&creditAccountNumber=<c:out value="${accountCredit.accountNumber}"/>&amount=<c:out value="${notifications.getAmount()}"/>&userId=<c:out value="${sessionScope['id']}"/>"
 						style="color: blue">PERMISSION</a></td>
 					<td align="center" height="30" width="100"><a
 						href="transactionCancel?id=<c:out value="${notifications.getId()}"/>&debitAccountNumber=<c:out value="${accountDebit.accountNumber}"/>&amount=<c:out value="${notifications.getAmount()}"/>&userId=<c:out value="${sessionScope['id']}"/>"
@@ -75,9 +75,8 @@
 				%>
 			</c:forEach>
 		</table>
-		<br /> <br /> <b>Go to main page </b><a href="approverHomePage"
-			style="font-sise: 18px"> click here</a> <br />
-		<a href="logoutController" style="width: 300px"> LOGOUT</a>
+		<a href="approverIndexPage">Go to main page </a> <br/><br/>
+		<a href="logoutController"> LOGOUT</a>
 	</center>
 </body>
 </html>

@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:if test="${sessionScope['id']!= approver}">
-        <c:redirect url = "approverHomePage"/>
+        <c:redirect url = "approverIndexPage"/>
 </c:if>
 <c:if test="${sessionScope['role']!= user}">
         <c:redirect url = "userHomePage"/>

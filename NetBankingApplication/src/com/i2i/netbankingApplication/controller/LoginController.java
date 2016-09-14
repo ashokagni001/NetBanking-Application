@@ -122,9 +122,9 @@ public class LoginController {
 	 * @return approverIndexPage
 	 *     Return to the approverIndexPage JSP page to view approver operations.
 	 */
-	@RequestMapping(value = "/approverHomePage")
-    public String approverHomePage(){ 
-		return "approverIndexPage";
+	@RequestMapping(value = "/approverIndexPage")
+    public String approverIndexPage(){ 
+		return "ApproverIndexPage";
 	}
 }
 

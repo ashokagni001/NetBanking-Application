@@ -37,7 +37,7 @@
 		<a href="userHomePage">OPEN</a> <br />
 		<br /> If U Want Admin Operation Open Click On <br />
 		<br />
-		<a href=approverHomePage>OPEN</a>
+		<a href=approverIndexPage>OPEN</a>
 	</center>
 	<br />
 	<br />

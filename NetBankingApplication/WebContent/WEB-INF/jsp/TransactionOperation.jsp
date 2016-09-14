@@ -29,10 +29,10 @@
                 <b>Debit Account Number</b>
                 <input name="debitAccountNumber" placeholder="debitAccountNumber" />
                 </br>
-                <b>Cridit Account Number </b>
-                <input name="criditAccountNumber" placeholder="criditAccountNumber" />
+                <b>Credit Account Number </b>
+                <input name="creditAccountNumber" placeholder="creditAccountNumber" />
                 </br>
-                <b>Cridit Account IFSC number </b>
+                <b>Credit Account IFSC number </b>
                 <input name="ifscode" placeholder="ifscode" />
                 </br>
                 <b>Enter your Amount </b>
@@ -40,8 +40,8 @@
                 </br>
                 <input type="submit" name="proceed" value="insertTransaction" />
             </form>
-     <b>Go to main page </b><a href="BranchIndex" style="font-size:18px"> click here</a></br></br>
-     <br/><a href="logoutController" style="width:300px;"> LOGOUT</a>
+     <a href="BranchIndex">Go to main page</a></br></br>
+     <br/><a href="logoutController"> LOGOUT</a>
      </center>
 </body>
 </html>

@@ -58,8 +58,7 @@
 			<input type="submit" path="submit" value="NEXT" />
 		</form:form>
 	</center>
-	<b>Go to main page </b>
-	<a href="login" style="font-sise: 18px"> click here</a>
+	<a href="login" style="font-sise: 18px">Go to main page </a>
 	</br>
 	</br>
 </body>

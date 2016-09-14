@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<c:if test="${sessionScope['id']== null}">
+	<c:redirect url="login" />
+</c:if>
+<c:if test="${sessionScope['role']!= 'approver'}">
+	<c:redirect url="approverIndexPage" />
+</c:if>
 <html>
 <head>
 <link rel="stylesheet" href="resource/css/bootstrap.css">
@@ -55,7 +60,7 @@
 								value="${transactions.getDebitAccount()}" var="accountDebit" />
 							<c:out value="${accountDebit.accountNumber}" /></td>
 						<td align="center"><c:set
-								value="${transactions.getCriditAccount()}" var="accountCredit" />
+								value="${transactions.getCreditAccount()}" var="accountCredit" />
 							<c:out value="${accountCredit.accountNumber}" /></td>
 						<td align="center"><c:out value="${transactions.getAmount()}" /></td>
 						<td align="center"><c:out value="${transactions.getDate()}" /></td>
@@ -64,8 +69,8 @@
 							href="viewCustomerAccount?accountNumber=<c:out value="${accountDebit.accountNumber}"/>"
 							style="color: blue">VIEW DEBIT ACCOUNT</a></td>
 						<td align="center"><a
-							href="viewCustomerAccount?accountNumber=<c:out value="${accountCridit.accountNumber}"/>"
-							style="color: blue">VIEW CRIDIT ACCOUNT</a></td>
+							href="viewCustomerAccount?accountNumber=<c:out value="${accountCredit.accountNumber}"/>"
+							style="color: blue">VIEW CREDIT ACCOUNT</a></td>
 						</tr>
 						<%
 							sno++;
@@ -73,8 +78,7 @@
 					</c:forEach>
 				</table>
 			</c:if>
-			<br /> <br /> <b>Go to main page </b><a href="TransactionIndex"
-				style="font-sise: 18px"> click here</a> <br /> <br />
+			<a href="TransactionIndex">Go to main page</a><br/><br/>
 			<c:if test="${message != null}">
 				<script type="text/javascript">
 					alert('CLICK OK THE PAGE WILL BE REFRESHED...'
@@ -82,7 +86,7 @@
 					windows.location.reload();
 				</script>
 			</c:if>
-			<a href="logoutController" style="width: 300px;"> LOGOUT</a>
+			<a href="logoutController">LOGOUT</a>
 		</center>
 </body>
 </html>

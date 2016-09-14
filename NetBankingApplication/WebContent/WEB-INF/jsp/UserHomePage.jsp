@@ -5,7 +5,7 @@
 	<c:redirect url="login" />
 </c:if>
 <c:if test="${sessionScope['role']!= 'user'}">
-	<c:redirect url="ApproverHomePage" />
+	<c:redirect url="approverIndexPage" />
 </c:if>
 <html>
 <head>
@@ -38,6 +38,10 @@
 			</tr>
 			<tr>
 				<td align="center" height="40" width="350"><a
+					href="getAccountByCustomerId?customerId=<c:out value="${sessionScope['id']}"/>">VIEW ACCOUNT</a></td>
+			</tr>
+			<tr>
+				<td align="center" height="40" width="350"><a
 					href="viewMiniStatementByCustomerId?customerId=<c:out value="${sessionScope['id']}"/>">CUTOMER
 						MINI STATEMENT</a></td>
 			</tr>
@@ -45,11 +49,7 @@
 				<td align="center" height="40" width="350"><a
 					href="addTransaction">ADD TRANSACTION</a></td>
 			</tr>
-			<tr>
-				<td><br /> <a href="logoutController" style="width: 300px;">
-						LOGOUT</a></td>
-			</tr>
-		</table>
-	</center>
+			</table>
+		    <br/><a href="logoutController">LOGOUT</a>
 </body>
 </html>

@@ -163,7 +163,7 @@ public class TransactionDao {
 	}
     
 	/**
-	 * Update the balanceAmount to Cridit Account using database.
+	 * Update the balanceAmount to Credit Account using database.
 	 * 
 	 * @param accountNumber
 	 *     accountNumber of Customer.

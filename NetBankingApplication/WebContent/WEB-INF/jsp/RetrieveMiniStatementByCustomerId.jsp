@@ -3,7 +3,7 @@
 	<c:redirect url="login" />
 </c:if>
 <c:if test="${sessionScope['role']!= 'user'}">
-	<c:redirect url="approverHomePage" />
+	<c:redirect url="approverIndexPage" />
 </c:if>
 <html>
 <head>
@@ -48,8 +48,8 @@
 							value="${miniStatement.getDebitAccount()}" var="accountDebit" />
 						<c:out value="${accountDebit.accountNumber}" /></td>
 					<td align="center"><c:set
-							value="${miniStatement.getCriditAccount()}" var="accountCridit" />
-						<c:out value="${accountCridit.accountNumber}" /></td>
+							value="${miniStatement.getCreditAccount()}" var="accountCredit" />
+						<c:out value="${accountCredit.accountNumber}" /></td>
 					<td align="center"><c:out value="${miniStatement.getAmount()}" />
 					</td>
 					<td align="center"><c:out value="${miniStatement.getDate()}" />
@@ -62,9 +62,8 @@
 				%>
 			</c:forEach>
 		</table>
-		<br /> <br /> <b>Go to main page </b><a href="userHomePage">click
-			here</a> <br /> <br /> <br /> <a href="logoutController"
-			style="width: 300px;"> LOGOUT</a>
+		<a href="userHomePage">Go to main page </a> <br/> <br/>
+		 <a href="logoutController"> LOGOUT</a>
 	</center>
 </body>
 </html>

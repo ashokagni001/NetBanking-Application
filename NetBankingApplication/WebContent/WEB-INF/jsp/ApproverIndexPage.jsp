@@ -25,11 +25,12 @@
 	</div>
 	<center>
 		<h1>WELCOME NETBANKING APPLICATION</h1>
-		If U Want Branch Operation Open Click On <br /> <br /> <a
-			href=BranchIndex>OPEN</a> <br /> <br /> If U Want Customer
-		Operation Open Click On <br /> <br /> <a href=GetCustomer>OPEN</a>
-		<br /> <br /> If U Want Transaction Operation Open Click On <br />
-		<br /> <a href=TransactionIndex>OPEN</a>
+		If U Want Branch Operation Open Click On <br /> <br />
+		 <a href=BranchIndex>OPEN</a> <br /> <br /> If U Want Customer
+		Operation Open Click On <br /> <br /> 
+		<a href=GetCustomer>OPEN</a> <br />
+		<br /> If U Want Transaction Operation Open Click On <br /> <br />
+		<a href=TransactionIndex>OPEN</a>
 	</center>
 	<br />
 	<br />

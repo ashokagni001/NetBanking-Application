@@ -6,7 +6,7 @@
 	<c:redirect url="login" />
 </c:if>
 <c:if test="${sessionScope['role']!= 'user'}">
-	<c:redirect url="approverHomePage" />
+	<c:redirect url="approverIndexPage" />
 </c:if>
 <html>
 <head>
@@ -29,28 +29,24 @@
 		<div class="container">
 			<form method="post" action="insertTransaction">
 				<div class="form-group">
-					<label for="usr">Debit Account Number:</label> <input
-						name="debitAccountNumber" placeholder="debitAccountNumber" /> </br>
+					<label for="usr">Credit Account Number:</label> <input
+						name="creditAccountNumber" placeholder="creditAccountNumber" /> </br>
 				</div>
 				<div class="form-group">
-					<label for="usr">Cridit Account Number:</label> <input
-						name="criditAccountNumber" placeholder="criditAccountNumber" /> </br>
-				</div>
-				<div class="form-group">
-					<label for="usr">Cridit Account IFSC number :</label> <input
+					<label for="usr">Credit Account IFSC number :</label> <input
 						name="ifscode" placeholder="ifscode" /> </br>
 				</div>
 				<div class="form-group">
-					<label for="usr">Enter your Amoun:</label> <input name="amount"
+					<label for="usr">Enter your Amount:</label> <input name="amount"
 						placeholder="Amount" /> </br>
 				</div>
 				<div class="form-group">
-					<input type="submit" name="proceed" value="insertTransaction" />
+					<input type="submit" name="insertTransaction" value="insertTransaction" />
 				</div>
-
+				<input type="hidden" name="customerId" value=<c:out value="${sessionScope['id']}"/> />
 			</form>
 		</div>
-		<b>Go to main page </b><a href="userHomePage">click here</a> <br /> </br>
+		<a href="userHomePage">Go to main page </a> <br /> </br>
 		<br /> <a href="logoutController" style="width: 300px;"> LOGOUT</a>
 	</center>
 </body>

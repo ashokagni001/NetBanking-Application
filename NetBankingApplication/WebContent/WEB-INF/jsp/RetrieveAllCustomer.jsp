@@ -42,7 +42,6 @@
 	                <th align="center" height="30" width="100">MOB.NUMBER</th>
 	                <th align="center" height="30" width="100">EMAIL</th>
 	                <th align="center" height="30" width="100">ACCOUNT NUMBER</th>
-	                <th align="center" height="30" width="100">ADDRESS ID</th>
 	                <th colspan="2" align="center" height="30" width="100" >ADDRESS</th>
                 </tr> 
                 <c:set value="${customer}" var="customer"/>
@@ -55,16 +54,8 @@
                         <td><c:out value="${customer.getMobileNumber()}" /></td>
                         <td><c:out value="${customer.getEmail()}" /></td>
                         <td><c:out value="${customer.getAccountNumber()}" /></td>
-                         <c:choose>
-                        <c:when test="${null == customer.getAddress()}">
-                             <td><c:out value="${'No Address Allocated'}"/></td>
-                        </c:when>
-                        <c:otherwise>
-                            <td><c:set value="${customer.getAddress()}" var="address"/>
-                            <c:out value="${address.addressId}" /></td>
-                        </c:otherwise>
-                    </c:choose>
-                    <td><a href="viewCustomerAddress?addressId=<c:out value="${address.addressId}"/>" style="color:blue">VIEW</a></td>  
+                        <c:set value="${customer.getAddress()}" var="address"/>
+                        <td><a href="viewCustomerAddress?addressId=<c:out value="${address.addressId}"/>" style="color:blue">VIEW</a></td>  
                     </tr> 
             </table>
             </c:if>
@@ -103,17 +94,18 @@
                 %> 
                 </c:forEach>
             </table>
-            <h3>Insert Id</h3>
+            <h3>If u want any one Customer Details</h3>
+            <h5>Insert Customer Id</h5>
             <form action="getCustomer" method="get">
             <table>
                 <tr>
-                    <td><input type="text" name="customerId" placeholder="CUSTOMER ID" required></td>
+                  <td><input type="text" name="customerId" placeholder="CUSTOMER ID" required></td>
                     <td><input type="submit" name="view" value="VIEW"></td>
                 </tr>
             </table>
             </form>
             </c:if>
-            <b>Go to main page </b><a href="approverHomePage" style="font-sise:18px"> click here</a>
+            <a href="approverIndexPage" style="font-sise:18px">Go to main page </a>
             <br/><br/>
             <br/><a href="logoutController" style="width:300px;"> LOGOUT</a>
         </center>
@@ -126,7 +118,7 @@
 				windows.location.reload();
 			</script>
 		</c:if>
-		<table class=" table table-condensed">
+		<table class="table table-condensed">
 			<tr>
 				<th>CUSTOMER ID</th>
 				<th>NAME</th>
@@ -164,9 +156,8 @@
 					style="color: blue">VIEW</a></td>
 			</tr>
 		</table>
-		<b>Go to main page </b>
-		<a href="userHomePage">click here</a>
-		<br />
+		<a href="userHomePage">Go to main page</a>
+		<br/><br/>
 		<a href="logoutController" style="width: 300px;"> LOGOUT</a>
 	</c:if>
 </body>

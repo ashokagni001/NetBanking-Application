@@ -21,7 +21,7 @@
 	</div>
 	<center>
 		<c:if test="${address != null}">
-			<h1>Fetching Data From A Branch Database</h1>
+			<h1>Address</h1>
 			<table class=" table table-bordered">
 				<tr>
 					<th>STREET</th>
@@ -51,16 +51,13 @@
 	</center>
 	<c:if test="${sessionScope['role']== 'approver'}">
 	<br/><br/>
-		<b>Go to main page </b>
-		<a href="approverHomePage" style="font-sise: 18px"> click here</a>
+		<a href="approverIndexPage" style="font-sise: 18px">Go to main page</a>
 	</c:if>
 	<c:if test="${sessionScope['role']== 'user'}">
-		<b>Go to main page </b>
 		<td><a
-			href="getCustomer?customerId=<c:out value="${sessionScope['id']}"/>">CUSTOMER
-				DETAIL</a></td>
+			href="getCustomer?customerId=<c:out value="${sessionScope['id']}"/>">Go to main page</a></td>
 	</c:if>
-	<br /></br>
+	<br/></br>
 	<a href="logoutController" style="width: 300px;"> LOGOUT</a>
 </body>
 </html>

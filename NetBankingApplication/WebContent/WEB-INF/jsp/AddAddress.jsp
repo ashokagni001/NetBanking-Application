@@ -19,8 +19,8 @@
 				BANKING</marquee></font>
 	</div>
 	<center>
-		<c:if test="${Address1 != null }">
-			<form:form method="post" action="address" modelAttribute="Address1">
+		<c:if test="${BranchAddress != null }">
+			<form:form method="post" action="address" modelAttribute="BranchAddress">
 				<tr>
 					<td>Street :</td>
 					<td><form:input path="street" placeholder="street" /></td>

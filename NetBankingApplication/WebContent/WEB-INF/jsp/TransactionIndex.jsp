@@ -40,8 +40,7 @@
 			</tr>
 		</table>
 	</center>
-	<b>Go to main page </b>
-	<a href="approverHomePage" style="font-sise: 18px"> click here</a>
+	<a href="approverIndexPage" style="font-sise: 18px">Go to main page</a>
 	</br>
 	<br />
 	<a href="logoutController" style="width: 300px"> LOGOUT</a>

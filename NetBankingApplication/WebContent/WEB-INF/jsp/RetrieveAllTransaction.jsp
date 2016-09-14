@@ -44,7 +44,7 @@
 							value="${transactions.getDebitAccount()}" var="accountDebit" />
 						<c:out value="${accountDebit.accountNumber}" /></td>
 					<td align="center"><c:set
-							value="${transactions.getCriditAccount()}" var="accountCredit" />
+							value="${transactions.getCreditAccount()}" var="accountCredit" />
 						<c:out value="${accountCredit.accountNumber}" /></td>
 					<td align="center"><c:out value="${transactions.getAmount()}" /></td>
 					<td align="center"><c:out value="${transactions.getDate()}" /></td>
@@ -61,9 +61,8 @@
 				%>
 			</c:forEach>
 		</table>
-		<br /> <br /> <b>Go to main page </b><a href="approverHomePage"
-			style="font-sise: 18px"> click here</a> <br /> <a
-			href="logoutController" style="width: 300px"> LOGOUT</a>
+		<a href="approverIndexPage">Go to main page</a><br/><br/>
+		 <a href="logoutController"> LOGOUT</a>
 		<c:if test="${message != null}">
 			<script type="text/javascript">
 				alert('CLICK OK THE PAGE WILL BE REFRESHED...'

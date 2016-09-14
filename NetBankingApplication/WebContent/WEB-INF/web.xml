@@ -13,4 +13,7 @@
 	<welcome-file-list>
 		<welcome-file>login.jsp</welcome-file>
 	</welcome-file-list>
+	<session-config>
+	    <session-timeout>15</session-timeout> 
+    </session-config>
 </web-app>

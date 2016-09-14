@@ -38,7 +38,7 @@ public class CustomerTransaction {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="cridit_account_number")
-    private Account criditAccount;
+    private Account creditAccount;
     
     @Column(name = "amount")
     private double amount;
@@ -65,11 +65,11 @@ public class CustomerTransaction {
      * parameter Constructor.
      * Passes parameters to the constructor and creates an instance of CustomerTransaction.
      */  
-    public CustomerTransaction(int id, double amount,String status, Account debitAccount, Account criditAccount) {
+    public CustomerTransaction(int id, double amount,String status, Account debitAccount, Account creditAccount) {
 		this.id = id;
 		this.amount = amount;
 		this.status = status;
-		this.criditAccount = criditAccount;
+		this.creditAccount = creditAccount;
 		this.debitAccount = debitAccount;
 	}
 
@@ -113,12 +113,12 @@ public class CustomerTransaction {
 		this.debitAccount = debitAccount;
 	}
 
-	public Account getCriditAccount() {
-		return criditAccount;
+	public Account getCreditAccount() {
+		return creditAccount;
 	}
 
-	public void setCriditAccount(Account criditAccount) {
-		this.criditAccount = criditAccount;
+	public void setCreditAccount(Account creditAccount) {
+		this.creditAccount = creditAccount;
 	}
 	
 	public Customer getCustomer() {
