@@ -28,15 +28,6 @@ import com.i2i.netbankingApplication.service.CustomerService;
 public class LoginController {
 	private CustomerService customerService = new CustomerService();
 	
-   /**
-	* @return login
-	*     Return to the login JSP page.
-	*/
-	@RequestMapping(value = "/login")
-    public String login(){
-		return "redirect:login.jsp";
-	}
-	
 	/**
 	 * <p> 
 	 *     Get the Customer Id and passWord from JSP page and pass 
@@ -71,7 +62,8 @@ public class LoginController {
      *     If there is an error in the given data like BadElementException.
      */
 	@RequestMapping(value = "/loginController", method = RequestMethod.POST)
-    public String loginVerification(@RequestParam("customerId")String customerId, @RequestParam("password")String password, ModelMap message,HttpSession session) {
+    public String loginVerification(@RequestParam("customerId")String customerId, 
+    		@RequestParam("password")String password, ModelMap message,HttpSession session) {
 		try {
 		    if (customerService.ifValidateUser(customerId, password)) {
 				if (customerService.checkIfRole(customerId)){
@@ -91,6 +83,17 @@ public class LoginController {
         	message.addAttribute("message", e.getMessage());
         	return "redirect:login.jsp";
         } 
+	}
+	
+   /**
+    * If request come this method return to the login JSP page.
+    * 
+	* @return login
+	*     Return to the login JSP page.
+	*/
+	@RequestMapping(value = "/login")
+    public String login(){
+		return "redirect:login.jsp";
 	}
 	
 	/**
@@ -116,7 +119,7 @@ public class LoginController {
 	}
 	
 	/**
-	 * This method return to the approverIndexPage JSP page to view approver operations.
+	 *  If request come this method return to the approverIndexPage JSP page to view approver operations.
 	 * 
 	 * @return approverIndexPage
 	 *     Return to the approverIndexPage JSP page to view approver operations.

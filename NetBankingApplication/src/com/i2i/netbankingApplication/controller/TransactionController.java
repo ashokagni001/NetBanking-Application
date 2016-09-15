@@ -13,8 +13,8 @@ import com.i2i.netbankingApplication.service.TransactionService;
 /**
  * <p>
  *     When request comes from JSP page. 
- *     transaction controller performs add or notification or fetchAll 0r permission or ignore transaction with model(transaction), 
- *     service(transaction) and return the responses to JSP page.
+ *     TransactionController performs add new transaction or view all notifications or view all transactions or transaction 
+ *     permission or transaction ignore with model(transaction), service(transaction) and return the responses to JSP page.
  *     It handles the NumberFormatException, DataBaseException.
  *     If exception occurs it will write what type of exception occurred.
  * </p>
@@ -119,7 +119,7 @@ public class TransactionController {
 	 *     Return to the RetrieveAllTransaction JSP page with transaction lists or status message(failure).
 	 */
 	@RequestMapping(value = "/viewAllTransaction", method = RequestMethod.GET)
-	public ModelAndView viewAllTransaction() {
+	public ModelAndView viewAllTransaction() throws DataBaseException {
 		try {
 			return new ModelAndView("RetrieveAllTransaction", "transactions", transactionService.getAllTransaction());
 		} catch (DataBaseException e) {

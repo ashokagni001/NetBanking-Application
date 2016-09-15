@@ -95,7 +95,7 @@
 				<script src="http://iamrohit.in/lab/js/location.js"></script>
 				<tr>
 					<td>Pincode :</td>
-					<td><form:input path="pincode" placeholder="pincode" required/></td>
+					<td><form:input path="pincode" placeholder="pincode" /></td>
 				</tr>
 				</br>
 				</br>
@@ -103,9 +103,6 @@
 				<br />
 				<br />
 			</form:form>
-			<div class="pos">
-				<a class="btn btn-danger" href="logoutController"> LOGOUT</a>
-			</div>
 		</c:if>
 	</center>
 </body>

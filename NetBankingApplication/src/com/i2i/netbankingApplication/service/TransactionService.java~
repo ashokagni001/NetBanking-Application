@@ -102,6 +102,7 @@ public class TransactionService {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
+	 * @throws ConfigurationException 
 	 */
 	public int getLastTransactionId() throws DataBaseException {
 		int id = ConstantVariableUtil.initializeVariable;
@@ -129,6 +130,7 @@ public class TransactionService {
 	 * 
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
+	 * @throws ConfigurationException 
 	 */
 	public CustomerTransaction getTransactionById(String transactionId) throws DataBaseException {
         return transactionDao.retrieveCustomerTransactionById(transactionId); 
@@ -141,10 +143,11 @@ public class TransactionService {
      * </p>
      * 
 	 * @return List
-	 *     Return the list of CustomerTransactions.
+	 *     Return the lists of CustomerTransaction.
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
+	 * @throws ConfigurationException 
 	 */
 	public List<CustomerTransaction> getAllTransaction() throws DataBaseException {
 		List<CustomerTransaction> transactions = new ArrayList<CustomerTransaction>();
@@ -157,14 +160,15 @@ public class TransactionService {
 	/**
 	 * <p>
 	 *     If request comes TransactionController, It will calling to retriveAllTransactions method in TransactionDao.
-	 *     Return to the lists of notifications.
+	 *     Return to the lists of notification.
      * </p>
      * 
 	 * @return list
-	 *     Return the list of Transactions.
+	 *     Return the lists of Transaction.
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
+	 * @throws ConfigurationException 
 	 */
     public List<CustomerTransaction> getAllNotification() throws DataBaseException {
 		List<CustomerTransaction> transactions = new ArrayList<CustomerTransaction>();
@@ -184,6 +188,7 @@ public class TransactionService {
 	 * 
      * @param customerId
      *     customerId of Customer to use retrieve the customer Account Number.
+     *     
      * @param customerAccountNumber
      *     customerAccountNumber of Customer.
      *     
@@ -237,8 +242,10 @@ public class TransactionService {
      * 
 	 * @param transactionId
 	 *     id of Transaction.
+	 *     
 	 * @param creditAccountNumber
 	 *     creditAccountNumber of Transaction.
+	 *     
 	 * @param amount
 	 *     amount of Transaction.
 	 *     
@@ -264,8 +271,10 @@ public class TransactionService {
      * 
 	 * @param transactionId
 	 *     id of Transaction.
+	 *     
 	 * @param debitAccountNumber
 	 *     debitAccountNumber of Transaction.
+	 *     
 	 * @param amount
 	 *     amount of Transaction.
 	 *     
@@ -290,6 +299,7 @@ public class TransactionService {
      * 
 	 * @param fromDate
 	 *     fromDate of Transaction.
+	 *    
 	 * @param toDate
 	 *     toDate of Transaction.
 	 *    

@@ -33,7 +33,7 @@ public class BranchService {
      * </p>
      * 
      * @param emailId
-     *     emailId of branch used to add a new Branch.
+     *     emailId of branch enter the user add to new Branch.
      * 
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
@@ -53,6 +53,8 @@ public class BranchService {
      *     
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
+     * @throws ConfigurationException 
+     * @throws NumberFormatException 
      */
     public int getLastIFSCode() throws DataBaseException, NumberFormatException {
     	int lastIFSC = ConstantVariableUtil.initializeVariable;
@@ -65,7 +67,7 @@ public class BranchService {
     	}
    	    return lastIFSC;
    	}
-
+    
     /**
      * <p> 
      *     This method get the IFSCode from Branch controller and
@@ -77,6 +79,7 @@ public class BranchService {
      *     
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
+     * @throws ConfigurationException 
      */
 	public void deleteBranchById(String IFSCode) throws DataBaseException {
 		branchDao.deleteBranchById(IFSCode);
@@ -90,6 +93,7 @@ public class BranchService {
 	 *      
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
+	 * @throws ConfigurationException 
 	 */
 	public List<Branch> getAllBranch() throws DataBaseException {
     	return branchDao.retriveAllBranch();
@@ -105,7 +109,7 @@ public class BranchService {
 	 * @param IFSCode
 	 *     IFSCode of branch.It IfsCode used to view corresponding records.
 	 *     
-	 * @return branch
+	 * @return Object
 	 *     return the branch Object.
 	 *     
 	 * @throws DataBaseException
@@ -162,10 +166,13 @@ public class BranchService {
 	 * 
 	 * @param accountNumber
 	 *     accountNumber of Account.
+	 *     
 	 * @param balance
 	 *     balance of Account.
+	 *     
 	 * @param accounttype
 	 *     accountType of Account.
+	 *     
 	 * @param ifsc
 	 *     ifsc of Account.
 	 *     

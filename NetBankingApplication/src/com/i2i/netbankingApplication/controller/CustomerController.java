@@ -123,7 +123,7 @@ public class CustomerController {
 		} catch (DataBaseException e) {
     		message.addAttribute("message", e.getMessage()); 
         } finally {
-		    return "login";
+		    return "Information";
         }
     }
 	
@@ -190,6 +190,7 @@ public class CustomerController {
 	 *     
 	 * @return RetrieveAddressById
 	 *     Return to the RetrieveAddressById JSP page with Customer address or status message(failure).
+	 * @throws DataBaseException 
 	 */
 	@RequestMapping(value="/viewCustomerAddress", method = RequestMethod.GET)
     public ModelAndView viewAddressById(@RequestParam("addressId")int addressId, ModelMap message) {

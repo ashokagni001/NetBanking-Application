@@ -19,8 +19,8 @@ import com.i2i.netbankingApplication.model.Branch;
  * <p>
  *     When request comes from BranchService. BranchDao performs add or delete or fetch or fetchAll 
  *     with database and return the responses to CustomerService.
- *     It handles the HibernateException and DataBaseException.
- *     Connect to the HibernateConnection class.
+ *     It handles the HibernateException.
+ *     Connect to the HibernateConnection class use to create hibernate connection.
  * </p>
  * 
  * @author TEAM-2
@@ -28,6 +28,19 @@ import com.i2i.netbankingApplication.model.Branch;
  * @created 2016-09-03
  */
 public class BranchDao {
+	
+   /**
+	* <p>
+	*     Connect to the HibernateConnection class use to create hibernate connection.
+	*     and create SessionFactory.
+	* </p>
+	* 
+	* @return Session
+	*     Return the new session object. 
+	*     
+	* @throws DataBaseException
+	*     If there is an error in the given data like BadElementException and HibernateException.
+	*/
 	private Session hibernateConncetion() throws DataBaseException {
 		try {
 		    HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
@@ -47,7 +60,6 @@ public class BranchDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
-	 * @throws ConfigurationException 
 	 */
 	public void addBranch(Branch branch) throws DataBaseException {
 	    Session session = hibernateConncetion();
@@ -57,7 +69,7 @@ public class BranchDao {
 		    session.save(branch); 
 	        transaction.commit();                                                                    
 	    } catch (HibernateException e) {
-	    	throw new DataBaseException("PLEASE INSERT VALID IFSC...\n");  
+	    	throw new DataBaseException("PLEASE INSERT VALID IFSC..");  
 	    } finally {
 	        session.close(); 
 	    }
@@ -74,7 +86,6 @@ public class BranchDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
-	 * @throws ConfigurationException 
 	 */
 	public void deleteBranchById(String IFSCode) throws DataBaseException {
 	    Session session = hibernateConncetion();
@@ -105,14 +116,13 @@ public class BranchDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
-	 * @throws ConfigurationException 
 	 */
 	public Branch retrieveBranchById(String IFSCode) throws DataBaseException {
 	    Session session = hibernateConncetion();
 	    try {
 	        return((Branch)session.get(Branch.class, IFSCode)); 
 	    } catch (HibernateException e) {
-	    	throw new DataBaseException("CHECK IFSC " + IFSCode + "PLEASE INSERT VALID IFSC...\n");
+	    	throw new DataBaseException("CHECK IFSC : " + IFSCode + "PLEASE INSERT VALID IFSC.");
 	    } finally {
 	        session.close(); 
 	    } 
@@ -129,7 +139,6 @@ public class BranchDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
-	 * @throws ConfigurationException 
 	 */
 	public List<Branch> retriveAllBranch() throws DataBaseException {
 	    Session session = hibernateConncetion();
@@ -156,7 +165,6 @@ public class BranchDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
-	 * @throws ConfigurationException 
 	 */
 	public String addAddress(String IFSCode, Address address) throws DataBaseException {
 	    Session session = hibernateConncetion();
@@ -190,7 +198,6 @@ public class BranchDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
-	 * @throws ConfigurationException 
 	 */
 	public Address retrieveAddressById(int addressId) throws DataBaseException {
 		Address address;
@@ -219,7 +226,6 @@ public class BranchDao {
 	 * 
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
-	 * @throws ConfigurationException 
 	 */
 	public String addAccount(Account account) throws DataBaseException {
 		Session session = hibernateConncetion();
@@ -230,7 +236,7 @@ public class BranchDao {
 	        transaction.commit();
 	        return ("Account added successfully");
 		} catch (HibernateException e) {
-			throw new DataBaseException("PLEASE CHECK YOUR DATAS " + account + " YOUR DATA IS NOT VALID.PLEASE TRY AGAIN." );  
+			throw new DataBaseException("PLEASE CHECK YOUR DATAS " + account.getAccountNumber() + " YOUR DATA IS NOT VALID.PLEASE TRY AGAIN." );  
 	    } finally {
 	        session.close(); 
 		}
@@ -247,14 +253,13 @@ public class BranchDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
-	 * @throws ConfigurationException 
 	 */
 	public List<Account> retriveAllAccount() throws DataBaseException {
 	    Session session = hibernateConncetion();
 	    try {
 	        return session.createQuery("from Account").list();
 	    } catch(HibernateException e) {
-	        throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
+	        throw new DataBaseException("ROCORD IS NOT AVAILABLE.INSERT RECORD.");
 	    } finally {
 	        session.close();
 	    }
