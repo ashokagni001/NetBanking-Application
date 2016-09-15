@@ -16,6 +16,14 @@
 .well {
 	background-color: #8ddfe1;
 }
+
+.pos {
+	position: absolute;
+	top: 150px;
+	right: 0px;
+	width: 200px;
+	height: 120px;
+}
 </style>
 </head>
 <body">
@@ -26,11 +34,10 @@
 	<h2>INSERT BRANCH</h2>
 	<center>
 		<form method="post" action="insertBranch">
-			<input type ="text" name="emailId" placeholder="EMAIL ID"/>
-			<br />
-			<input type="submit" path="addBranch" value="ADD"
-				class="btn btn-success" /><br/><br/>
-		<form>
+			<input type="text" name="emailId" placeholder="EMAIL ID" /> <br />
+			<input type="submit" name="addBranch" value="ADD"
+				class="btn btn-success" /><br /> <br />
+		</form>
 		<c:if test="${message != null}">
 			<script type="text/javascript">
 				alert('CLICK OK THE PAGE WILL BE REFRESHED...'
@@ -38,9 +45,11 @@
 				windows.location.reload();
 			</script>
 		</c:if>
-		<a href="BranchIndex">Go to main page </a></br> </br> <br/>
-	    <a href="logoutController">
-			LOGOUT</a>
 	</center>
+	<div class="pos">
+		<a class="btn btn-danger" href="BranchIndex">Go to main page </a><br />
+		<a href="logoutController"> LOGOUT</a>
+	</div>
+
 </body>
 </html>

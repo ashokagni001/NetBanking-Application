@@ -6,13 +6,13 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.hibernateConnection.HibernateConnection;
 import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Branch;
+
 
 /**
  * <p>
@@ -27,9 +27,10 @@ import com.i2i.netbankingApplication.model.Branch;
  * @created 2016-09-03
  */
 public class BranchDao {
-	private HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
-	private Configuration configuration = hibernateConnectionObject.getConfiguration();
-	private SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
+	SessionFactory sessionFactory = HibernateConnection.getSessionFactory();
+	//private HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
+	//private Configuration configuration = hibernateConnectionObject.getConfiguration();
+	//private SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
 	
 	/**
 	 * Get the branch object from BranchService and add Branch to database. 
@@ -40,16 +41,19 @@ public class BranchDao {
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
 	 */
-	public void addBranch(Branch branch) throws DataBaseException {
+	public void addBranch(Branch branch) throws DataBaseException,ExceptionInInitializerError {
 	    Session session = sessionFactory.openSession();
 	    Transaction transaction = null;
 	    try {
 	        transaction = session.beginTransaction();
 		    session.save(branch); 
 	        transaction.commit();                                                                    
-		} catch (HibernateException e) {
-			throw new DataBaseException("PLEASE CHECK YOUR DATAS " + branch + " YOUR DATA IS NOT VALID.PLEASE TRY AGAIN." );  
-	    } finally {
+		} catch (ExceptionInInitializerError e) {
+			throw new DataBaseException( e);  
+	    } //catch (ExceptionInInitializerError e) {
+	    	//throw new DataBaseException(e);
+        //} 
+	    finally {
 	        session.close(); 
 	    }
 	}

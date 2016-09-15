@@ -11,6 +11,13 @@
 .well {
 	background-color: #8ddfe1;
 }
+.pos {
+    position : absolute;
+    top : 150px;
+    right : 0px;
+    width : 200px;
+    height : 120px;
+}
 </style>
 </head>
 <body">

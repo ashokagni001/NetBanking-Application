@@ -16,6 +16,14 @@
 .well {
 	background-color: #8ddfe1;
 }
+
+.pos {
+	position: absolute;
+	top: 150px;
+	right: 0px;
+	width: 200px;
+	height: 120px;
+}
 </style>
 </head>
 <body>
@@ -24,20 +32,21 @@
 				BANKING</marquee></font>
 	</div>
 	<center>
-	<h2>
-		Choose from date to date of Transaction Detail
-		</h3>
-		<form action="getDates" method="get">
-			<tr>
-				<td><input type="date" name="fromDate" placeholder="2016-09-08"
-					required></td>
-				<td><input type="date" name="toDate" placeholder="2016-09-11"
-					required></td>
-					<br/><br/>
-				<td><input type="submit" name="view" value="view"></td>
-			</tr>
-			</br> </br>
-		</form>
+		<h2>
+			Choose from date to date of Transaction Detail
+			</h3>
+			<form action="getDates" method="get">
+				<tr>
+					<td><input type="date" name="fromDate"
+						placeholder="2016-09-08" required></td>
+					<td><input type="date" name="toDate" placeholder="2016-09-11"
+						required></td>
+					<br />
+					<br />
+					<td><input type="submit" name="view" value="view"></td>
+				</tr>
+				</br> </br>
+			</form>
 			<c:if test="${transactions != null}">
 				<table class=" table table-bordered">
 					<tr>
@@ -78,15 +87,19 @@
 					</c:forEach>
 				</table>
 			</c:if>
-			<a href="TransactionIndex">Go to main page</a><br/><br/>
-			<c:if test="${message != null}">
-				<script type="text/javascript">
-					alert('CLICK OK THE PAGE WILL BE REFRESHED...'
-							+ "<c:out value='${message}'/>");
-					windows.location.reload();
-				</script>
-			</c:if>
-			<a href="logoutController">LOGOUT</a>
-		</center>
+	</center>
+
+	<br />
+	<c:if test="${message != null}">
+		<script type="text/javascript">
+			alert('CLICK OK THE PAGE WILL BE REFRESHED...'
+					+ "<c:out value='${message}'/>");
+			windows.location.reload();
+		</script>
+	</c:if>
+	<div class="pos">
+		<a class="btn btn-link" href="TransactionIndex">Go to main page</a> <br />
+		<a class="btn btn-danger" href="logoutController">LOGOUT</a>
+	</div>
 </body>
 </html>

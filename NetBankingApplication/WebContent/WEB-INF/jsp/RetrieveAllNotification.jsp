@@ -14,6 +14,14 @@
 .well {
 	background-color: #8ddfe1;
 }
+
+.pos {
+	position: absolute;
+	top: 150px;
+	right: 0px;
+	width: 200px;
+	height: 120px;
+}
 </style>
 </head>
 <body>
@@ -75,8 +83,10 @@
 				%>
 			</c:forEach>
 		</table>
-		<a href="approverIndexPage">Go to main page </a> <br/><br/>
-		<a href="logoutController"> LOGOUT</a>
 	</center>
+	<div class="pos">
+		<a href="approverIndexPage">Go to main page </a> <br />
+		<br /> <a class="btn btn-danger" href="logoutController"> LOGOUT</a>
+	</div>
 </body>
 </html>

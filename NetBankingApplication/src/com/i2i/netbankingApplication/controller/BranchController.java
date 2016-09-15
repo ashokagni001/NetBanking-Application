@@ -166,9 +166,12 @@ public class BranchController {
 	 * 
 	 * @return GetBranch
 	 *     Return to JSP page GetBranch.
+	 * @throws DataBaseException 
+	 *     If there is an error in the given data like BadElementException.
 	 */ 
 	@RequestMapping(value = "/GetBranch")
-	public String getBranchById() {
+	public String getBranchById(ModelMap message) throws DataBaseException {
+		message.addAttribute("branches", branchService.getAllBranch());
 		return "GetBranch";
 	}
 	/**
@@ -187,7 +190,7 @@ public class BranchController {
      *     If there is an error in the given data like BadElementException.
 	 */
 	@RequestMapping(value="/getBranch", method = RequestMethod.GET)  
-    public ModelAndView viewBranchById (@RequestParam("ifsc")String ifsc, ModelMap message) {
+    public ModelAndView viewBranchById (@RequestParam("ifsc")String ifsc) {
         try {
         	if (ifsc.equals("all") || ifsc.equals("All") || ifsc.equals("ALL")) {
         		return new ModelAndView ("GetBranch", "branches", branchService.getAllBranch());

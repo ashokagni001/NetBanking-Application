@@ -17,37 +17,68 @@
 .well {
 	background-color: #8ddfe1;
 }
+
+.position {
+    position: absolute;
+    left : 200px;
+    font-size: 18px;
+}
+.pos {
+    position: absolute;
+    top : 150px;
+    right: 0px;
+    width: 200px;
+    height: 120px;
+}
+
 </style>
 </head>
-<body">
+<body>
 	<div class="well">
 		<font size="20"><marquee behavior="alternate">NET
 				BANKING</marquee></font>
 	</div>
+	<div class = "position">
 	<h2>INSERT TRANSACTION</h2>
-	<center>
+	<br/>
+	<form method="post" action="insertTransaction">
 		<div class="container">
-			<form method="post" action="insertTransaction">
+			<form class="form-horizontal">
 				<div class="form-group">
-					<label for="usr">Credit Account Number:</label> <input
-						name="creditAccountNumber" placeholder="creditAccountNumber" /> </br>
+					<label class="control-label col-sm-2" for="creditAccountNumber">creditAccountNumber:</label>
+					<div class="col-sm-10">
+						<input type="number" name="creditAccountNumber"
+							placeholder="Enter creditAccountNumber">
+					</div>
 				</div>
 				<div class="form-group">
-					<label for="usr">Credit Account IFSC number :</label> <input
-						name="ifscode" placeholder="ifscode" /> </br>
-				</div>
-				<div class="form-group">
-					<label for="usr">Enter your Amount:</label> <input name="amount"
-						placeholder="Amount" /> </br>
-				</div>
-				<div class="form-group">
-					<input type="submit" name="insertTransaction" value="insertTransaction" />
-				</div>
-				<input type="hidden" name="customerId" value=<c:out value="${sessionScope['id']}"/> />
+					<label class="control-label col-sm-2" for="ifscode">credit ifscode :</label>
+					<div class="col-sm-10">
+						<input type="text" name="ifscode"
+							placeholder="Enter credit ifscode">
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="amount">Enter your Amount:</label>
+						<div class="col-sm-10">
+							<input type = "number" name="amount" placeholder="Enter your Amount" /> </br>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<input type="submit" name="insertTransaction"
+								value="insertTransaction" />
+						</div>
+					</div>
 			</form>
+			<input type="hidden" name="customerId"
+				value=<c:out value="${sessionScope['id']}"/> />
+
 		</div>
-		<a href="userHomePage">Go to main page </a> <br /> </br>
-		<br /> <a href="logoutController" style="width: 300px;"> LOGOUT</a>
-	</center>
+	</form>
+	</div>
+	<div class = "pos">
+	<a class = "btn btn-link" href="userHomePage">Go to main page </a> <br/>
+	<a class = "btn btn-danger" href="logoutController" style="width: 100px"> LOGOUT</a>
+	</div>
 </body>
 </html>

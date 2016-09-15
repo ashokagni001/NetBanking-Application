@@ -13,6 +13,13 @@
 .well {
 	background-color: #8ddfe1;
 }
+.pos {
+    position : absolute;
+    top : 150px;
+    right: 0px;
+    width: 200px;
+    height: 120px;
+}
 </style>
 </head>
 <body>
@@ -105,10 +112,11 @@
             </table>
             </form>
             </c:if>
-            <a href="approverIndexPage" style="font-sise:18px">Go to main page </a>
-            <br/><br/>
-            <br/><a href="logoutController" style="width:300px;"> LOGOUT</a>
-        </center>
+            </center>
+            <div class = "pos">
+                        <a href="approverIndexPage" style="font-sise:18px">Go to main page </a>
+            <br/><a class="btn btn-danger" href="logoutController" style="width:300px;"> LOGOUT</a>
+       </div>
 	</c:if>
 	<c:if test="${sessionScope['role'] == 'user'}">
 		<c:if test="${message != null}">
@@ -146,9 +154,11 @@
 					style="color: blue">VIEW</a></td>
 			</tr>
 		</table>
+		<div class = "pos">
 		<a href="userHomePage">Go to main page</a>
-		<br/><br/>
-		<a href="logoutController" style="width: 300px;"> LOGOUT</a>
+		<br/>
+		<a class="btn btn-danger" href="logoutController" style="width: 100px"> LOGOUT</a>
+		</div>
 	</c:if>
 </body>
 </html>

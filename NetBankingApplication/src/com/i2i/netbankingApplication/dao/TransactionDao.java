@@ -27,9 +27,10 @@ import com.i2i.netbankingApplication.model.CustomerTransaction;
  * @created 2016-09-03
  */
 public class TransactionDao {
-	private HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
-	private Configuration configuration = hibernateConnectionObject.getConfiguration();
-	private SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
+	SessionFactory sessionFactory = HibernateConnection.getSessionFactory();
+	//private HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
+	//private Configuration configuration = hibernateConnectionObject.getConfiguration();
+	//private SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
     
 	/**
 	 * <p>

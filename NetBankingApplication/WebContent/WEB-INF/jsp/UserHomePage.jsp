@@ -16,6 +16,14 @@
 .well {
 	background-color: #8ddfe1;
 }
+
+.pos {
+	position: absolute;
+	top: 150px;
+	right: 0px;
+	width: 200px;
+	height: 120px;
+}
 </style>
 </head>
 <body>
@@ -29,8 +37,6 @@
 	<center>
 		<h2>CUSTOMER INFORMATION</h2>
 		<table>
-			<br />
-			<br />
 			<tr>
 				<td align="center" height="40" width="350"><a
 					href="getCustomer?customerId=<c:out value="${sessionScope['id']}"/>">CUSTOMER
@@ -38,7 +44,8 @@
 			</tr>
 			<tr>
 				<td align="center" height="40" width="350"><a
-					href="getAccountByCustomerId?customerId=<c:out value="${sessionScope['id']}"/>">VIEW ACCOUNT</a></td>
+					href="getAccountByCustomerId?customerId=<c:out value="${sessionScope['id']}"/>">VIEW
+						ACCOUNT</a></td>
 			</tr>
 			<tr>
 				<td align="center" height="40" width="350"><a
@@ -49,7 +56,10 @@
 				<td align="center" height="40" width="350"><a
 					href="addTransaction">ADD TRANSACTION</a></td>
 			</tr>
-			</table>
-		    <br/><a href="logoutController">LOGOUT</a>
+		</table>
+	</center>
+	<div class="pos">
+		<br /> <a class="btn btn-danger" href="logoutController">LOGOUT</a>
+	</div>
 </body>
 </html>

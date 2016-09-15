@@ -14,6 +14,14 @@
 .well {
 	background-color: #8ddfe1;
 }
+
+.pos {
+	position: absolute;
+	top: 150px;
+	right: 0px;
+	width: 200px;
+	height: 120px;
+}
 </style>
 </head>
 <body>
@@ -40,9 +48,10 @@
 			</tr>
 		</table>
 	</center>
-	<a href="approverIndexPage" style="font-sise: 18px">Go to main page</a>
-	</br>
-	<br />
-	<a href="logoutController" style="width: 300px"> LOGOUT</a>
+	<div class="pos">
+		<a href="approverIndexPage" style="font-sise: 18px">Go to main
+			page</a> </br> <a class="btn btn-danger" href="logoutController"
+			style="width: 300px"> LOGOUT</a>
+	</div>
 </body>
 </html>

@@ -72,7 +72,7 @@ public class LoginController {
      *     If there is an error in the given data like BadElementException.
      */
 	@RequestMapping(value = "/loginController", method = RequestMethod.POST)
-    public String loginVerification(@RequestParam("customerId")String customerId, @RequestParam("password")String password, ModelMap message,HttpSession session) {
+    public String loginVerification(@RequestParam("customerId")String customerId, @RequestParam("password")String password, ModelMap message,HttpSession session) throws DataBaseException,ExceptionInInitializerError {
 		try {
 		    if (customerService.ifValidateUser(customerId, password)) {
 				if (customerService.checkIfRole(customerId)){
@@ -89,9 +89,12 @@ public class LoginController {
 				return "redirect:login.jsp";
 			} 
         } catch (DataBaseException e) {
-        	message.addAttribute("message", "SOME PROBLEM OCCUR PLEASE TRY AGAIN LATER");
+       	    message.addAttribute("message", e.getMessage());
             return "redirect:login.jsp";
-        }
+        } catch (ExceptionInInitializerError e) {
+       	    message.addAttribute("message", e.getException());
+            return "redirect:login.jsp";
+        } 
 	}
 	
 	/**

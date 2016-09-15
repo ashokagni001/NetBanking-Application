@@ -22,6 +22,14 @@
 .well {
 	background-color: #8ddfe1;
 }
+
+.pos {
+    position: absolute;
+    top : 150px;
+    right: 0px;
+    width: 200px;
+    height: 120px;
+}
 </style>
 </head>
 <body>
@@ -34,14 +42,16 @@
 		<br />
 		<br /> If U Want Customer Operation Open Click On <br />
 		<br />
-		<a href="userHomePage">OPEN</a> <br />
+		<a class="btn btn-info" href="userHomePage">OPEN</a> <br />
 		<br /> If U Want Admin Operation Open Click On <br />
 		<br />
-		<a href=approverIndexPage>OPEN</a>
+		<a class="btn btn-info" href=approverIndexPage>OPEN</a>
 	</center>
 	<br />
 	<br />
-	<a href="logoutController" style="width: 300px;"> LOGOUT</a>
+	<div class = "pos">
+	<a class = "btn btn-danger" href="logoutController" style="width: 100px;"> LOGOUT</a>
+    </div>
 </body>
 </html>
 </body>

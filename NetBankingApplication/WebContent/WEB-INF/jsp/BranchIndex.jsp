@@ -17,9 +17,16 @@
 .well {
 	background-color: #8ddfe1;
 }
+.pos {
+    position : absolute;
+    top : 150px;
+    right: 0px;
+    width: 200px;
+    height: 120px;
+}
 </style>
 </head>
-<body">
+<body>
 	<div class="well">
 		<font size="20"><marquee behavior="alternate">NET
 				BANKING</marquee></font>

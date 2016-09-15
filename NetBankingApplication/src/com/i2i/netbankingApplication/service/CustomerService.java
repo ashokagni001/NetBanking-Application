@@ -337,7 +337,7 @@ public class CustomerService {
      * @throws DataBaseException
      *      If there is an error in the given data like BadElementException.
      */
-	public boolean ifValidateUser(String customerId, String password) throws DataBaseException {
+	public boolean ifValidateUser(String customerId, String password) throws DataBaseException,ExceptionInInitializerError {
 	    Customer customer = getCustomerById(customerId); 
 	    if (customer == null) {
 	    	return false;  
@@ -363,7 +363,7 @@ public class CustomerService {
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
      */
-	public boolean checkIfRole(String customerId) throws DataBaseException {
+	public boolean checkIfRole(String customerId) throws DataBaseException, ExceptionInInitializerError {
 		int userRoleCount = ConstantVariableUtil.initializeVariable;
 		for (UserRole userRole : customerDao.retriveAllUserRole()) {
 			if (userRole.getCustomer().getCustomerId().equals(customerId)) {
