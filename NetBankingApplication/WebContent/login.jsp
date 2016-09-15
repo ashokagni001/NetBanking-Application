@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<c:if test="${sessionScope['role'] != approver}">
+	<c:redirect url="approverIndexPage" />
+</c:if>
+<c:if test="${sessionScope['role'] != user}">
+	<c:redirect url="userHomePage" />
+</c:if>
 <html>
 <head>
 <title>NetBanking login form</title>
@@ -26,10 +31,25 @@ keyframes spinner { 0% {
 100%
 {
 transform
+
+
+
+
 :
+
+
+
+
 rotateZ
+
+
+
+
+
 (359
 deg
+
+
 );
 }
 }

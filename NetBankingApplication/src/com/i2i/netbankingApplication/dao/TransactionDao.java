@@ -169,7 +169,7 @@ public class TransactionDao {
 	    try {
 	        return (Account)session.get(Account.class, accountNumber); 
 	    } catch (HibernateException e) {
-	    	throw new DataBaseException("retrieveAccountByNumber dao");
+	    	throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
 	    } finally {
 	        session.close(); 
 	    } 

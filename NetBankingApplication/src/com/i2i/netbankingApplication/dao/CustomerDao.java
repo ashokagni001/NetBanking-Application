@@ -160,7 +160,7 @@ public class CustomerDao {
 		    customer.setAddress(address);
 	        session.update(customer);
 	        transaction.commit();  
-	        return ("Customer register successfully ::  customer ID :" + customer.getCustomerId() +" PASSWORD :" + customer.getPassWord());
+	        return ("CUSTOMER REGISTER SUCCESSFULLY :: YOUR ID :" + customer.getCustomerId() +" PASSWORD :" + customer.getPassWord());
 		} catch (HibernateException e) {
 			throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
 	    } finally {

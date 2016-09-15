@@ -137,10 +137,8 @@ public class BranchService {
 	 * @throws NumberFormatException 
      */
 	public String getAddress(Address address) throws DataBaseException {
-	    String IFSCode = "I2I0BK" + String.valueOf(getLastIFSCode());
-	    branchDao.addAddress(IFSCode, new Address(customerService.getLastAddressId() + 1, address.getStreet(),
+	    return branchDao.addAddress("I2I0BK" + String.valueOf(getLastIFSCode()), new Address(customerService.getLastAddressId() + 1, address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
-	    return IFSCode;
     }
     
 	/**

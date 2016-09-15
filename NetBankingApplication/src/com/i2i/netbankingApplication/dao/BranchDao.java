@@ -158,7 +158,7 @@ public class BranchDao {
 	 *     If there is an error in the given data like BadElementException and HibernateException.
 	 * @throws ConfigurationException 
 	 */
-	public void addAddress(String IFSCode, Address address) throws DataBaseException {
+	public String addAddress(String IFSCode, Address address) throws DataBaseException {
 	    Session session = hibernateConncetion();
 	    Transaction transaction = null;
 	    try {
@@ -167,7 +167,8 @@ public class BranchDao {
 		    session.save(address);
 		    branch.setAddress(address);
 	        session.update(branch);
-	        transaction.commit();                                                                    
+	        transaction.commit();
+	        return ("BRANCH ADDED SUCCESSFULL. BRANCH IFSC CODE IS :" +branch.getIFSCode());
 		} catch (HibernateException e) {
 			throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
 	    } finally {

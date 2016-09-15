@@ -261,14 +261,10 @@ public class TransactionService {
 			throws DataBaseException {
 		Account creditAccount = transactionDao.retrieveAccountByNumber(creditAccountNumber);
 		Customer approver = customerService.getCustomerById(userId);
-		if (creditAccount != null) {
-			double currentAmount = creditAccount.getBalance();
-			double balanceAmount = (currentAmount + amount);
-			creditAccount.setBalance(balanceAmount);
-			transactionDao.transactionSuccess(creditAccount, transactionId,	approver);
-		} else {
-			throw new DataBaseException("CREDIT ACCOUNT IS NOT AVAILABLE ");
-		}
+		double currentAmount = creditAccount.getBalance();
+		double balanceAmount = (currentAmount + amount);
+		creditAccount.setBalance(balanceAmount);
+		transactionDao.transactionSuccess(creditAccount, transactionId,	approver);
 	}
 	
 	/**
@@ -294,14 +290,10 @@ public class TransactionService {
 			throws DataBaseException {
 		Account debitAccount = transactionDao.retrieveAccountByNumber(debitAccountNumber);
 		Customer approver = customerService.getCustomerById(userId);
-		if (debitAccount != null) {
-			double currentAmount = debitAccount.getBalance();
-			double balanceAmount = (currentAmount + amount);
-			debitAccount.setBalance(balanceAmount);
-			transactionDao.transactionFailure(debitAccount, transactionId, approver);
-		} else {
-			throw new DataBaseException("CREDIT ACCOUNT IS NOT AVAILABLE ");
-		}
+	    double currentAmount = debitAccount.getBalance();
+		double balanceAmount = (currentAmount + amount);
+		debitAccount.setBalance(balanceAmount);
+		transactionDao.transactionFailure(debitAccount, transactionId, approver);
 	}
 	
 	/**
