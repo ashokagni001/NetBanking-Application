@@ -58,8 +58,6 @@
 			<input type="submit" name="submit" value="NEXT" />
 		</form:form>
 	</center>
-	<div class="pos">
-		<a class="btn btn-danger" href="logoutController"> LOGOUT</a>
-	</div>
+	<a href="login"> Go to main page</a>
 </body>
 </html>

@@ -49,7 +49,6 @@ public class CustomerService {
      * 
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
-     * @throws ConfigurationException 
      */
     public void getCustomer(Customer customer) throws DataBaseException, CustomerDataException {
     	String accountNumer = customer.getAccountNumber();
@@ -100,7 +99,7 @@ public class CustomerService {
      *     If there is an error in the given data like BadElementException.
      * @throws ConfigurationException 
      */
-	public int getLastAddressId() throws DataBaseException {
+	public int getNewAddressId() throws DataBaseException {
     	int newAddressId = ConstantVariableUtil.initializeVariable;
     	for (Address address : customerDao.retriveAllAddresses()) {
     		int lastAddressId = address.getAddressId();
@@ -122,8 +121,6 @@ public class CustomerService {
 	 *     
 	 * @throws DataBaseException ConfigurationException
 	 *     If there is an error in the given data like BadElementException.
-	 * @throws ConfigurationException 
-	 * @throws NumberFormatException 
 	 */
     public int getLastCustomerId() throws DataBaseException {
     	int id = ConstantVariableUtil.initializeVariable;
@@ -145,7 +142,6 @@ public class CustomerService {
      *          ConfigurationException
      * @return List
      *     Return list of customers.
-     * @throws ConfigurationException 
      */
     public List<Customer> getAllCustomer() throws DataBaseException {
     	return customerDao.retriveAllCustomer();
@@ -162,10 +158,9 @@ public class CustomerService {
      *     
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
-     * @throws ConfigurationException 
      */ 
 	public String getAddress(Address address) throws DataBaseException {
-	    return customerDao.addAddress("CUSI2I00" + String.valueOf(getLastCustomerId()), new Address(getLastAddressId(), address.getStreet(),
+	    return customerDao.addAddress("CUSI2I00" + String.valueOf(getLastCustomerId()), new Address(getNewAddressId(), address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
     }
     
@@ -184,7 +179,6 @@ public class CustomerService {
      * 
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
-	 * @throws ConfigurationException 
 	 */
 	public Customer getCustomerById(String customerId) throws DataBaseException {
         return customerDao.retrieveCustomerById(customerId); 
@@ -225,7 +219,6 @@ public class CustomerService {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
-	 * @throws ConfigurationException 
 	 */
 	public void insertUserRole(String customerId, String roleId) throws DataBaseException {
 		Customer customer = customerDao.retrieveCustomerById(customerId);

@@ -74,7 +74,6 @@ public class BranchDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
-	 * @throws ConfigurationException 
 	 */
 	public void deleteBranchById(String IFSCode) throws DataBaseException {
 	    Session session = hibernateConncetion();
@@ -190,7 +189,6 @@ public class BranchDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
-	 * @throws ConfigurationException 
 	 */
 	public Address retrieveAddressById(int addressId) throws DataBaseException {
 		Address address;
@@ -219,7 +217,6 @@ public class BranchDao {
 	 * 
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
-	 * @throws ConfigurationException 
 	 */
 	public String addAccount(Account account) throws DataBaseException {
 		Session session = hibernateConncetion();
@@ -247,7 +244,6 @@ public class BranchDao {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
-	 * @throws ConfigurationException 
 	 */
 	public List<Account> retriveAllAccount() throws DataBaseException {
 	    Session session = hibernateConncetion();

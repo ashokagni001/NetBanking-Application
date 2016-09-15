@@ -37,7 +37,6 @@ public class BranchService {
      * 
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
-     * @throws ConfigurationException 
      */
     public void getBranch(String emailId) throws DataBaseException {
     	branchDao.addBranch(new Branch("I2I0BK" + String.valueOf(getLastIFSCode() + 1), emailId));
@@ -54,8 +53,6 @@ public class BranchService {
      *     
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
-     * @throws ConfigurationException 
-     * @throws NumberFormatException 
      */
     public int getLastIFSCode() throws DataBaseException, NumberFormatException {
     	int lastIFSC = ConstantVariableUtil.initializeVariable;
@@ -80,7 +77,6 @@ public class BranchService {
      *     
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
-     * @throws ConfigurationException 
      */
 	public void deleteBranchById(String IFSCode) throws DataBaseException {
 		branchDao.deleteBranchById(IFSCode);
@@ -94,7 +90,6 @@ public class BranchService {
 	 *      
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
-	 * @throws ConfigurationException 
 	 */
 	public List<Branch> getAllBranch() throws DataBaseException {
     	return branchDao.retriveAllBranch();
@@ -115,7 +110,6 @@ public class BranchService {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
-	 * @throws ConfigurationException 
 	 */
 	public Branch getBranchById(String IFSCode) throws DataBaseException {
         return branchDao.retrieveBranchById(IFSCode); 
@@ -133,11 +127,9 @@ public class BranchService {
      *     
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
-	 * @throws ConfigurationException 
-	 * @throws NumberFormatException 
      */
 	public String getAddress(Address address) throws DataBaseException {
-	    return branchDao.addAddress("I2I0BK" + String.valueOf(getLastIFSCode()), new Address(customerService.getLastAddressId() + 1, address.getStreet(),
+	    return branchDao.addAddress("I2I0BK" + String.valueOf(getLastIFSCode()), new Address(customerService.getNewAddressId(), address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
     }
     
@@ -156,7 +148,6 @@ public class BranchService {
      *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
-	 * @throws ConfigurationException 
 	 */
 	public Address getAddressById(int addressId) throws DataBaseException {
 	    return branchDao.retrieveAddressById(addressId);
@@ -183,7 +174,6 @@ public class BranchService {
 	 *     
 	 * @throws DataBaseException
 	 *      If there is an error in the given data like BadElementException.
-	 * @throws ConfigurationException 
 	 */
 	public String getAccount(String accountNumber, double balance, String accounttype, String ifsc) throws DataBaseException {
 		Branch branch = branchDao.retrieveBranchById(ifsc);
@@ -209,7 +199,6 @@ public class BranchService {
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
-	 * @throws ConfigurationException 
 	 */
 	public List<Account> viewAccountByBranch(String ifsc) throws DataBaseException {
 		List<Account> accounts = new ArrayList<Account>();

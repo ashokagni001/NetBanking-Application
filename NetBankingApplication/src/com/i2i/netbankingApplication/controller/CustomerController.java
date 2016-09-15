@@ -123,7 +123,7 @@ public class CustomerController {
 		} catch (DataBaseException e) {
     		message.addAttribute("message", e.getMessage()); 
         } finally {
-		    return "login";
+		    return "Information";
         }
     }
 	
