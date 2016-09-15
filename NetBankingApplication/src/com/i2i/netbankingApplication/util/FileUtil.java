@@ -20,7 +20,7 @@ public class FileUtil {
 	 * @param errorMessage
 	 *     A String data type.
 	 */
-    public static void  exceptionOccurCreateFile(String errorMessage) {
+    public static void exceptionCreateFile(String errorMessage) {
         try {
             Date date = new Date();
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("abc.txt",true));

@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.service.TransactionService;
+import com.i2i.netbankingApplication.util.FileUtil;
 
 /**
  * <p>
@@ -85,6 +86,9 @@ public class TransactionController {
 			message.addAttribute("message", transactionService.getTransactionDetail(customerId ,
 					creditAccountNumber, ifscode, Double.parseDouble(amount)));
 		} catch (DataBaseException e) {
+			FileUtil.exceptionCreateFile("NEW TRANSACTION AT TIME EXCEPTION OCCUR.." +
+		            "CUSTOMER ID : " + customerId + "CREDIT ACCOUNT NUMBER : " + creditAccountNumber +
+		            "IFSCODE : " + ifscode + "AMOUNT :" + amount + e);
 			message.addAttribute("message", e.toString());
 		} finally {
 			return "UserHomePage";
@@ -105,6 +109,7 @@ public class TransactionController {
 		try {
 			return new ModelAndView("RetrieveAllNotification", "notifications", transactionService.getAllNotification());
 		} catch (DataBaseException e) {
+			FileUtil.exceptionCreateFile("VIEW ALL NOTIFICATION AT TIME EXCEPTION OCCUR.." + e);
 			return new ModelAndView("RetrieveAllNotification", "message", e.getMessage().toString());
 		}
 	}
@@ -123,6 +128,7 @@ public class TransactionController {
 		try {
 			return new ModelAndView("RetrieveAllTransaction", "transactions", transactionService.getAllTransaction());
 		} catch (DataBaseException e) {
+			FileUtil.exceptionCreateFile("VIEW ALL TRANSACTION AT TIME EXCEPTION OCCUR.." + e);
 			return new ModelAndView("RetrieveAllTransaction", "message", e.getMessage().toString());
 		}
 	}
@@ -148,6 +154,8 @@ public class TransactionController {
 		try {
 			return new ModelAndView("RetrieveCustomerAccount", "accountDetail", transactionService.getAccountByCustomerId(customerId));
 		} catch (DataBaseException e) {
+			FileUtil.exceptionCreateFile("GET ACCOUNT BY CUSTOMER ID AT TIME EXCEPTION OCCUR.." +
+		            "CUSTOMER ID : " + customerId + e);
 			return new ModelAndView("RetrieveCustomerAccount", "message", "SOME PROBLEM OCCUR TRY AGAIN LATER");
 		}
 	}
@@ -170,6 +178,8 @@ public class TransactionController {
 			return new ModelAndView("RetrieveCustomerAccount", "accountDetail",
 					transactionService.getCustomerAccount(accountNumber));
 		} catch (DataBaseException e) {
+			FileUtil.exceptionCreateFile("VIEW CUSTOMER ACCOUNT BY ACCOUNT NUMBER AT TIME EXCEPTION OCCUR.." +
+		            "ACCOUNT NUMBER : " + accountNumber + e);
 			return new ModelAndView("RetrieveCustomerAccount", "message", e.getMessage());
 		}
 	}
@@ -193,6 +203,8 @@ public class TransactionController {
         try {
         	return new ModelAndView("RetrieveMiniStatementByCustomerId", "miniStatement", transactionService.getCustomerMiniStatement(customerId));
         } catch (DataBaseException e) {
+        	FileUtil.exceptionCreateFile("VIEW CUSTOMER MINISTATEMENT BY CUSTOMER ID AT TIME EXCEPTION OCCUR.." +
+		            "CUSTOMER ID : " + customerId + e);
         	return new ModelAndView("CustomerIndex", "message", e.getMessage());
         }
 	}
@@ -225,6 +237,9 @@ public class TransactionController {
 			message.addAttribute("message", "TRANSACTION ACTION SUCCESSFULLY");
 			message.addAttribute("notifications", transactionService.getAllNotification());
 		} catch (DataBaseException e) {
+			FileUtil.exceptionCreateFile("TRANSACTION SUCCESS AT TIME EXCEPTION OCCUR.." +
+		            "TRANSACTION ID : " + transactionId + "CREDIT ACCOUNT NUMBER : " + creditAccountNumber +
+		            "AMOUNT : " + amount + "UESR ID : " + userId + e);
 			message.addAttribute("message", e.getMessage());
 		} finally {
 			return "RetrieveAllNotification";
@@ -259,6 +274,9 @@ public class TransactionController {
 			message.addAttribute("transactions", "TRANSACTION ACTION SUCCESSFULLY");
 			message.addAttribute("notifications", transactionService.getAllNotification());
 		} catch (DataBaseException e) {
+			FileUtil.exceptionCreateFile("TRANSACTION CANCEL AT TIME EXCEPTION OCCUR.." +
+		            "TRANSACTION ID : " + transactionId + "CREDIT ACCOUNT NUMBER : " + debitAccountNumber +
+		            "AMOUNT : " + amount + "UESR ID : " + userId + e);
 			message.addAttribute("message", e.getMessage());
 		} finally {
 			return "RetrieveAllNotification";
@@ -305,6 +323,8 @@ public class TransactionController {
 		try {
 			message.addAttribute("transactions", transactionService.getDateTransaction(fromDate, toDate));
 		} catch (DataBaseException e) {
+			FileUtil.exceptionCreateFile("TRANSACTION VIEW BY DATES AT TIME EXCEPTION OCCUR.." +
+		            "FROM DATE : " + fromDate + "TO DATE : " + toDate + e);
 			message.addAttribute("message", e.getMessage());
 		} finally {
 			return "ViewTransactionByDate";

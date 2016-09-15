@@ -12,6 +12,7 @@ import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Branch;
 import com.i2i.netbankingApplication.service.BranchService;
+import com.i2i.netbankingApplication.util.FileUtil;
 
 /**
  * <p>
@@ -84,6 +85,8 @@ public class BranchController {
 				message.addAttribute("message", " PLEASE FILL THE FORM ");
 			}
 	    } catch (DataBaseException e) {
+	    	FileUtil.exceptionCreateFile("NEW BRANCH CREATE AT TIME EXCEPTION OCCUR..\nEMAIL ID-->" + 
+	    			emailId + e);
     		message.addAttribute("message", e.getMessage()); 
     		URL = "BranchIndex";
         }
@@ -223,6 +226,8 @@ public class BranchController {
     	try {                     
             return new ModelAndView ("RetrieveAddressById", "address", branchService.getAddressById(addressId)); 
     	} catch (DataBaseException e) {
+    		FileUtil.exceptionCreateFile("BRANCH ADDRESS VIEW AT TIME EXCEPTION OCCUR..\nADDRESS ID-->" + 
+    				addressId + e);
     		return new ModelAndView ("RetrieveAddressById", "message", e.getMessage());
         }
 	}
@@ -262,10 +267,13 @@ public class BranchController {
 	 */
 	@RequestMapping(value="/addAccount", method = RequestMethod.POST)  
     public String getAccount(@RequestParam("accountNumber")String accountNumber, @RequestParam("balance")String balance, 
-    		@RequestParam("accounttype")String accounttype, @RequestParam("ifscode")String ifsc, ModelMap message) throws  DataBaseException {
+    		@RequestParam("accounttype")String accounttype, @RequestParam("ifscode")String ifsc, 
+    		ModelMap message) throws  DataBaseException {
 		try { 
 			message.addAttribute("message", branchService.getAccount(accountNumber, Double.parseDouble(balance), accounttype, ifsc));
 		} catch(DataBaseException e) {
+			FileUtil.exceptionCreateFile("NEW ACCOUNT ADD AT TIME EXCEPTION OCCUR..\nDATAS-->" + 
+					accountNumber + balance + accounttype + ifsc + e);
 			message.addAttribute("message", e.getMessage());
 		} finally {
 	     	return "BranchIndex";
@@ -306,6 +314,8 @@ public class BranchController {
 		try { 
 			message.addAttribute("accounts", branchService.viewAccountByBranch(ifsc));
 		} catch(DataBaseException e) {
+			FileUtil.exceptionCreateFile("VIEW ACCOUNT BY BRANCH AT TIME EXCEPTION OCCUR..\nBRANCH IFSC-->" + 
+					ifsc + e);
 			message.addAttribute("message", e.getMessage().toString());
 		} finally {
 	     	return "ViewAccountByBranch";

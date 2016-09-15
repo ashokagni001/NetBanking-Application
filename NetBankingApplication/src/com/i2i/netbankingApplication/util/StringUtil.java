@@ -70,7 +70,6 @@ public class StringUtil {
             return false;
             }
         catch(ParseException e) {
-            FileUtil.exceptionOccurCreateFile("\nCUSTOMER DATE OF BIRTH IS NOT VALID...\n" + e.toString());
             return true;
         }
     }
@@ -79,12 +78,11 @@ public class StringUtil {
      * 
      * @param customerDateOfBirth
      *     DOB of customer.
+     *     
      * @return year
      *     return age of customer.
      */
     public static int calculateAge (String customerDateOfBirth) {
-        int month;
-        int year;
         String age[] = customerDateOfBirth.split("/");
         int customerDay = Integer.parseInt(age[0]);
         int customerMonth = Integer.parseInt(age[1]);
@@ -92,8 +90,8 @@ public class StringUtil {
         Calendar customerBirthDay = Calendar.getInstance();
         customerBirthDay.set(customerYear, customerMonth, customerDay);
         Calendar currentDate = Calendar.getInstance();
-        year = currentDate.get(Calendar.YEAR) - customerBirthDay.get(Calendar.YEAR);
-        month = currentDate.get(Calendar.MONTH) - customerBirthDay.get(Calendar.MONTH);
+        int year = currentDate.get(Calendar.YEAR) - customerBirthDay.get(Calendar.YEAR);
+        int month = currentDate.get(Calendar.MONTH) - customerBirthDay.get(Calendar.MONTH);
         if (month < 0) {
             return year--;
         }

@@ -13,6 +13,7 @@ import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Customer;
 import com.i2i.netbankingApplication.service.CustomerService;
+import com.i2i.netbankingApplication.util.FileUtil;
 
 /**
  * <p>
@@ -91,6 +92,7 @@ public class CustomerController {
 			message.addAttribute("Address", new Address());
             return "AddAddress";
 		} catch (CustomerDataException e) {
+			FileUtil.exceptionCreateFile("NEW CUSTOMER CREATE AT TIME EXCEPTION OCCUR.." + e);
     		message.addAttribute("message", e.getMessage().toString()); 
         } catch (DataBaseException e) {
     		message.addAttribute("message", e.getMessage().toString()); 
@@ -121,6 +123,7 @@ public class CustomerController {
 		try {
 			message.addAttribute("message", customerService.getAddress(address));
 		} catch (DataBaseException e) {
+			FileUtil.exceptionCreateFile("NEW CUSTOMER ADDTESS CREATE AT TIME EXCEPTION OCCUR.." + e);
     		message.addAttribute("message", e.getMessage()); 
         } finally {
 		    return "login";
@@ -129,20 +132,22 @@ public class CustomerController {
 	
 	/**
 	 * <p>
-     *     It displays a form to input data, here "Customer" is a reserved attribute which is used
-     *     to display object data(Customer) into form.
+     *     This Method call to getAllCustomer method in CustomerService.
+     *     Return to the RetrieveAllCustomer JSP page with list of Customers or status message(failure).
      * </p>
-	 * 
+     * 
 	 * @return GetCustomer
-	 *     Return to JSP page GetCustomer.
+	 *     Return to the RetrieveAllCustomer JSP page with list of Customers or status message(failure)..
+	 *     
 	 * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
 	 */
 	@RequestMapping(value = "/GetCustomer")
-	public String getCustomerById(ModelMap message) {
+	public String getAllCustomer(ModelMap message) {
         try {
 		    message.addAttribute("customers", customerService.getAllCustomer());
         } catch(DataBaseException e) {
+        	FileUtil.exceptionCreateFile("VIEW ALL CUSTOMER AT TIME EXCEPTION OCCUR." + e);
         	message.addAttribute("message", e.getMessage()); 
         }
         return "RetrieveAllCustomer"; 
@@ -151,8 +156,10 @@ public class CustomerController {
     /**
 	 * <p>
 	 *     This Method call to getAllCustomer method in CustomerService.
+	 *     This Method return list of Customers in specific branch only or specific customerId detail.
      *     Return to the RetrieveAllCustomer JSP page with customer lists or status message(failure).
      * </p>
+     * 
 	 * @param customerId
 	 *     Id of Customer entered by user to view the corresponding record.
 	 *     
@@ -173,6 +180,8 @@ public class CustomerController {
         		}
         	}
         } catch (DataBaseException e) {
+        	FileUtil.exceptionCreateFile("VIEW CUSTOMER BY BRANCH AT TIME EXCEPTION OCCUR. CUSTOMER ID-->" + 
+                    customerId + e);
         	message.addAttribute("message", e.getMessage());
         } finally {
         	return "RetrieveAllCustomer";
@@ -196,6 +205,8 @@ public class CustomerController {
     	try {                     
             return new ModelAndView ("RetrieveAddressById", "address", customerService.getAddressById(addressId)); 
     	} catch (DataBaseException e) {
+    		FileUtil.exceptionCreateFile("VIEW CUSTOMER ADDRESS AT TIME EXCEPTION OCCUR. ADDRESS ID-->" + 
+    				addressId + e);
     		return new ModelAndView ("CustomerIndex", "message", e.getMessage().toString());
         }
     }
@@ -211,7 +222,9 @@ public class CustomerController {
 	 * 
 	 * @param model
 	 *     Customer model return the customer object.
+	 *     
 	 * @param message 
+	 *     Display message using add attribute.
 	 *     
 	 * @return AddUserRole
 	 *     Return to the AddUserRole JSP page with Role Detail or status message(failure).
@@ -219,8 +232,8 @@ public class CustomerController {
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
 	 */
-	@RequestMapping(value = "/addUserRole")
-	public String addUserRole(ModelMap model, ModelMap message) {
+	@RequestMapping(value = "/getAllRole")
+	public String getAllRole(ModelMap model, ModelMap message) {
 		try {
 		    if (customerService.isRoleAvailable()) {
 			    model.addAttribute("roles", customerService.getAllRole());
@@ -228,6 +241,7 @@ public class CustomerController {
 			    model.addAttribute("message", "SORRY ROLE IS NOT PRESENT");
 		    }
 		} catch (DataBaseException e) {
+			FileUtil.exceptionCreateFile("GET ALL ROLE AT TIME EXCEPTION OCCUR.." + e);
 	        message.addAttribute("message", e.getMessage());
 	    } finally {
 	    	return "AddUserRole";
@@ -242,7 +256,7 @@ public class CustomerController {
 	 * </p>
 	 * 
 	 * @param customerId
-	 *     Id of Customer. 
+	 *     Id of Customer entered by user to Create new User role.. 
 	 *     
 	 * @param roleId
 	 *     Id of Role.
@@ -257,13 +271,15 @@ public class CustomerController {
 	 *     If there is an error in the given data like BadElementException.
 	 */
 	@RequestMapping(value = "/insertRole", method = RequestMethod.GET)
-	public String addUserRole(@RequestParam("customerId") String customerId, @RequestParam("role") String roleId,
+	public String insertUserRole(@RequestParam("customerId") String customerId, @RequestParam("role") String roleId,
 			ModelMap message) {
 		try {
 			customerService.insertUserRole(customerId, roleId);
 			message.addAttribute("message", "INFORMATION SAVED SUCESSFULLY");
 			message.addAttribute("roles", customerService.getAllRole());
 		} catch (DataBaseException  e) {
+			FileUtil.exceptionCreateFile("INSERT NEW USER ROLE AT TIME EXCEPTION OCCUR.." +
+		            "CUSTOMER ID : " + customerId + " ROLE ID : " + roleId  + e);
 			message.addAttribute("message", e.getMessage().toString());
 			message.addAttribute("roles", customerService.getAllRole());
 		} finally {

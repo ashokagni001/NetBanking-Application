@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.service.CustomerService;
-
-
+import com.i2i.netbankingApplication.util.FileUtil;
 
 /**
  * <p>
@@ -27,15 +26,6 @@ import com.i2i.netbankingApplication.service.CustomerService;
 @Controller
 public class LoginController {
 	private CustomerService customerService = new CustomerService();
-	
-   /**
-	* @return login
-	*     Return to the login JSP page.
-	*/
-	@RequestMapping(value = "/login")
-    public String login(){
-		return "redirect:login.jsp";
-	}
 	
 	/**
 	 * <p> 
@@ -71,7 +61,8 @@ public class LoginController {
      *     If there is an error in the given data like BadElementException.
      */
 	@RequestMapping(value = "/loginController", method = RequestMethod.POST)
-    public String loginVerification(@RequestParam("customerId")String customerId, @RequestParam("password")String password, ModelMap message,HttpSession session) {
+    public String loginVerification(@RequestParam("customerId")String customerId,
+    		@RequestParam("password")String password, ModelMap message,HttpSession session) {
 		String URL = "redirect:login.jsp";
 		try {
 		    if (customerService.ifValidateUser(customerId, password)) {
@@ -88,11 +79,25 @@ public class LoginController {
 				message.addAttribute("message", "CHECK YOUR USERNAME and PASSWORD..");
 			} 
         } catch (DataBaseException e) {
+        	FileUtil.exceptionCreateFile("LOGIN AT TIME EXCEPTION OCCUR ..\nDATAS-->" + 
+                    customerId + password + e);
         	message.addAttribute("message", e.getMessage());
         } finally {
         	return URL;
         }
 	}
+
+	/**
+	 * If request come this method return to the login JSP page.
+	 * 
+	 * @return login
+	 *     Return to the login JSP page.
+	 */
+	@RequestMapping(value = "/login")
+    public String login() {
+		return "redirect:login.jsp";
+	}	
+	
 	
 	/**
 	 * <p>

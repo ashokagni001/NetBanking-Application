@@ -20,7 +20,6 @@ import com.i2i.netbankingApplication.model.CustomerTransaction;
  * @author TEAM-2
  * 
  * @created 2016-09-03.
- *
  */
 public class TransactionService {
 	private TransactionDao transactionDao = new TransactionDao();

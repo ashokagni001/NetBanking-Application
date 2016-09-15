@@ -23,7 +23,6 @@ import com.i2i.netbankingApplication.model.Role;
  * @author Team-2
  * 
  * @created 2016-09-03
- *
  */
 @Entity
 @Table(name = "user_role")

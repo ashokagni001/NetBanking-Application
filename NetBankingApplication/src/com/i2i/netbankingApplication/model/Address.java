@@ -14,7 +14,6 @@ import javax.persistence.Table;
  * @author TEAM-2
  * 
  * @created 2016-09-03
- *
  */
 @Entity
 @Table(name = "address_detail")

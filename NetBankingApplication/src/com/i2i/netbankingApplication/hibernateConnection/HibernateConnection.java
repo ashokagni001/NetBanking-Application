@@ -14,7 +14,7 @@ import org.hibernate.SessionFactory;
  *     Mapping to the hibernate annotation configuration file.
  * </p> 
  *
- * @author Ashok
+ * @author TEAM-2
  * 
  * @created 2016-08-27 
  */
@@ -27,7 +27,7 @@ public class HibernateConnection {
     /**
 	 * <p>
      *     Default Constructor.
-     *     It is private type. so no need create for outside object.
+     *     It is private type. so don't create outside object.
      * </p>
      */
     private HibernateConnection() {
@@ -52,14 +52,15 @@ public class HibernateConnection {
 	 * 
 	 * @return configuration
 	 *     Return a annotation Configuration object.
+	 *     
      * @throws DataBaseException 
-     * @throws ConfigurationException 
+     *     If there is an error in the given data like BadElementException.
 	 */
     public AnnotationConfiguration getConfiguration() throws DataBaseException {
         try {
             if(configuration == null) {
                configuration = new AnnotationConfiguration();
-               configuration.configure("hibernate.cfg.xml");
+               configuration.configure("hibernate.cf.xml");
 	        }
         } catch (HibernateException e) {
         	throw new DataBaseException("OOPS SOME PROBLEM OCCURED.PLEASE TRY AGAIN LATER");
@@ -72,7 +73,9 @@ public class HibernateConnection {
 	 * 
 	 * @return sessionFactory
 	 *     Return a SessionFactory object.
+	 *     
      * @throws DataBaseException 
+     *     If there is an error in the given data like BadElementException.
 	 */
     public SessionFactory getSessionFactory() throws DataBaseException {
         try {
