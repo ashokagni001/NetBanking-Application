@@ -17,12 +17,13 @@
 .well {
 	background-color: #8ddfe1;
 }
+
 .pos {
-    position : absolute;
-    top : 150px;
-    right: 0px;
-    width: 200px;
-    height: 120px;
+	position: absolute;
+	right: 100px;
+	top: 120px;
+	height: 70px;
+	width: 50px;
 }
 </style>
 </head>
@@ -38,11 +39,12 @@
 		<font size="20"><marquee behavior="alternate">NET
 				BANKING</marquee></font>
 	</div>
+	<br />
+	<br />
 	<center>
 		<h2>CUSTOMER INFORMATION</h2>
 		<table>
-			<br />
-			<br />
+
 			<tr>
 				<td align="center" height="40" width="350"><a
 					href="GetCustomer">FETCH CUSTOMER</a></td>
@@ -50,9 +52,8 @@
 		</table>
 	</center>
 	<a href="approverIndexPage" style="font-sise: 18px">Go to main page</a>
-	</br>
-	</br>
-	<br />
-	<a href="logoutController" style="width: 300px;"> LOGOUT</a>
+	<div class="pos">
+		<a class="btn btn-danger" href="logoutController"> LOGOUT</a>
+	</div>
 </body>
 </html>

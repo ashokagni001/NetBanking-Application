@@ -14,92 +14,89 @@
 
 .pos {
 	position: absolute;
-	top: 150px;
-	right: 0px;
-	width: 200px;
-	height: 120px;
+	right: 100px;
+	top: 108px;
+	height: 70px;
+	width: 50px;
 }
 </style>
 </head>
 <body>
-	<center>
-		<c:if test="${sessionScope['role']!= 'approver'}">
-			<div class="well">
-				<font size="20"><marquee behavior="alternate">NET
-						BANKING</marquee></font>
-			</div>
-			<table class=" table table-bordered">
-				<tr>
-					<th>ACCOUNT NUMBER</th>
-					<th>USER ID</th>
-					<th>BRANCH ID</th>
-					<th>BALANCE</th>
-					<th>ACCOUNT TYPE</th>
-				</tr>
-				<c:set value="${accountDetail}" var="accountDetail" />
-				<tr>
-					<td align="center"><c:out
-							value="${accountDetail.getAccountNumber()}" /></td>
-					<c:set value="${accountDetail.getCustomer()}" var="customer" />
-					<td align="center"><c:out value="${customer.customerId}" /></td>
-					<c:set value="${accountDetail.getBranch()}" var="branch" />
-					<td align="center"><c:out value="${branch.IFSCode}" /></td>
-					<td align="center"><c:out
-							value="${accountDetail.getBalance()}" /></td>
-					<td align="center"><c:out
-							value="${accountDetail.getAccountType()}" /></td>
-				</tr>
-			</table>
-			<a href="approverIndexPage">Go to main page</a>
-			<br />
-			<br />
-			<a href="logoutController"> LOGOUT</a>
-			<c:if test="${message != null}">
-				<script type="text/javascript">
-					alert('CLICK OK THE PAGE WILL BE REFRESHED...'
-							+ "<c:out value='${message}'/>");
-					windows.location.reload();
-				</script>
-			</c:if>
-			</b>
+	<c:if test="${sessionScope['role']!= 'approver'}">
+		<div class="well">
+			<font size="20"><marquee behavior="alternate">NET
+					BANKING</marquee></font>
+		</div>
+		<br />
+		<table class=" table table-bordered">
+			<tr>
+				<th>ACCOUNT NUMBER</th>
+				<th>USER ID</th>
+				<th>BRANCH ID</th>
+				<th>BALANCE</th>
+				<th>ACCOUNT TYPE</th>
+			</tr>
+			<c:set value="${accountDetail}" var="accountDetail" />
+			<tr>
+				<td align="center"><c:out
+						value="${accountDetail.getAccountNumber()}" /></td>
+				<c:set value="${accountDetail.getCustomer()}" var="customer" />
+				<td align="center"><c:out value="${customer.customerId}" /></td>
+				<c:set value="${accountDetail.getBranch()}" var="branch" />
+				<td align="center"><c:out value="${branch.IFSCode}" /></td>
+				<td align="center"><c:out value="${accountDetail.getBalance()}" /></td>
+				<td align="center"><c:out
+						value="${accountDetail.getAccountType()}" /></td>
+			</tr>
+		</table>
+		<a href="approverIndexPage">Go to main page</a>
+		<div class="pos">
+			<a class="btn btn-danger" href="logoutController"> LOGOUT</a>
+		</div>
+		<c:if test="${message != null}">
+			<script type="text/javascript">
+				alert('CLICK OK THE PAGE WILL BE REFRESHED...'
+						+ "<c:out value='${message}'/>");
+				windows.location.reload();
+			</script>
 		</c:if>
-		<c:if test="${sessionScope['role']!= 'user'}">
-			<div class="well">
-				<font size="20"><marquee behavior="alternate">NET
-						BANKING</marquee></font>
-			</div>
-			<table class=" table table-bordered">
-				<tr>
-					<th>ACCOUNT NUMBER</th>
-					<th>USER ID</th>
-					<th>BRANCH ID</th>
-					<th>BALANCE</th>
-					<th>ACCOUNT TYPE</th>
-					<th colspan="2">VIEW CUSTOMER DETAIL</th>
-				</tr>
-				<c:set value="${accountDetail}" var="accountDetail" />
-				<tr>
-					<td align="center"><c:out
-							value="${accountDetail.getAccountNumber()}" /></td>
-					<c:set value="${accountDetail.getCustomer()}" var="customer" />
-					<td align="center"><c:out value="${customer.customerId}" /></td>
-					<c:set value="${accountDetail.getBranch()}" var="branch" />
-					<td align="center"><c:out value="${branch.IFSCode}" /></td>
-					<td align="center"><c:out
-							value="${accountDetail.getBalance()}" /></td>
-					<td align="center"><c:out
-							value="${accountDetail.getAccountType()}" /></td>
-					<td align="center" height="30" width="100"><a
-						href="getCustomer?customerId=<c:out value="${customer.customerId}"/>"
-						style="color: blue">VIEW USER DETAIL</a></td>
-				</tr>
-			</table>
-		</c:if>
-	</center>
+	</c:if>
+	<c:if test="${sessionScope['role'] != 'user'}">
+		<div class="well">
+			<font size="20"><marquee behavior="alternate">NET
+					BANKING</marquee></font>
+		</div>
+		<br />
+		<table class=" table table-bordered">
+			<tr>
+				<th>ACCOUNT NUMBER</th>
+				<th>USER ID</th>
+				<th>BRANCH ID</th>
+				<th>BALANCE</th>
+				<th>ACCOUNT TYPE</th>
+				<th colspan="2">VIEW CUSTOMER DETAIL</th>
+			</tr>
+			<c:set value="${accountDetail}" var="accountDetail" />
+			<tr>
+				<td align="center"><c:out
+						value="${accountDetail.getAccountNumber()}" /></td>
+				<c:set value="${accountDetail.getCustomer()}" var="customer" />
+				<td align="center"><c:out value="${customer.customerId}" /></td>
+				<c:set value="${accountDetail.getBranch()}" var="branch" />
+				<td align="center"><c:out value="${branch.IFSCode}" /></td>
+				<td align="center"><c:out value="${accountDetail.getBalance()}" /></td>
+				<td align="center"><c:out
+						value="${accountDetail.getAccountType()}" /></td>
+				<td align="center" height="30" width="100"><a
+					href="getCustomer?customerId=<c:out value="${customer.customerId}"/>"
+					style="color: blue">VIEW USER DETAIL</a></td>
+			</tr>
+		</table>
+	<a href="approverIndexPage">Go to main page</a>
 	<div class="pos">
-		<a href="approverIndexPage">Go to main page</a> <br /> <a
-			class="btn btn-danger" href="logoutController"> LOGOUT</a>
+		<a class="btn btn-danger" href="logoutController"> LOGOUT</a>
 	</div>
+	</c:if>
 	<c:if test="${message != null}">
 		<script type="text/javascript">
 			alert('CLICK OK THE PAGE WILL BE REFRESHED...'
@@ -107,6 +104,5 @@
 			windows.location.reload();
 		</script>
 	</c:if>
-	</b>
 </body>
 </html>

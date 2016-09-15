@@ -16,19 +16,20 @@
 .well {
 	background-color: #8ddfe1;
 }
+
 .pos {
-    position: absolute;
-    top : 150px;
-    right: 0px;
-    width: 200px;
-    height: 120px;
+	position: absolute;
+	right: 100px;
+	top: 112px;
+	height: 70px;
+	width: 50px;
 }
 </style>
 </head>
 <body>
 	<div class="well">
-		<font size="20"><marquee behavior="alternate">NET
-				BANKING</marquee></font>
+		<font size="20"> <marquee behavior="alternate">NETBANKING</marquee>
+		</font>
 	</div>
 	<h2>INSERT ACCOUNT</h2>
 	<center>
@@ -46,12 +47,15 @@
 			<b>Account Type</b></br> <select name="accounttype">
 				<option value="Current">Current</option>
 				<option value="Saving">Saving</option>
-			</select><br /> <input name="ifscode" type="text"
+			</select> <br /> <input name="ifscode" type="text"
 				placeholder="Enter the ifscode" /><br /> <input type="submit"
 				name="addaccount" value="ADD" />
 		</form>
-		<a href="BranchIndex">Go to main page </a></br> </br> <br /> <a href="logoutController" style="width: 300px;">
-			LOGOUT</a>
 	</center>
+	<a href="BranchIndex">Go to main page</a>
+	<div class="pos">
+		<a class="btn btn-danger" href="logoutController"> LOGOUT</a>
+	</div>
+	</div>
 </body>
 </html>

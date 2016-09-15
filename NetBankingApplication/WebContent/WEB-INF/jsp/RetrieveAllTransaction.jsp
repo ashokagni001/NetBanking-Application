@@ -1,8 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:if test="${sessionScope['id']== null}">
+<c:if test="${sessionScope['id'] == null}">
 	<c:redirect url="login" />
 </c:if>
-<c:if test="${sessionScope['role']!= 'approver'}">
+<c:if test="${sessionScope['role'] != 'approver'}">
 	<c:redirect url="userHomePage" />
 </c:if>
 <html>
@@ -17,10 +17,10 @@
 
 .pos {
 	position: absolute;
-	top: 150px;
-	right: 0px;
-	width: 200px;
-	height: 120px;
+	right: 100px;
+	top: 78px;
+	height: 70px;
+	width: 50px;
 }
 </style>
 </head>
@@ -29,6 +29,8 @@
 		<font size="20"><marquee behavior="alternate">NET
 				BANKING</marquee></font>
 	</div>
+	<br />
+	<br />
 	<center>
 		<table class=" table table-bordered">
 			<tr>
@@ -57,10 +59,10 @@
 					<td align="center"><c:out value="${transactions.getAmount()}" /></td>
 					<td align="center"><c:out value="${transactions.getDate()}" /></td>
 					<td align="center"><c:out value="${transactions.getStatus()}" /></td>
-					<td align="center" height="30" width="100"><a
+					<td align="center"><a
 						href="viewCustomerAccount?accountNumber=<c:out value="${accountDebit.accountNumber}"/>"
 						style="color: blue">VIEW DEBIT ACCOUNT</a></td>
-					<td align="center" height="30" width="100"><a
+					<td align="center"><a
 						href="viewCustomerAccount?accountNumber=<c:out value="${accountCredit.accountNumber}"/>"
 						style="color: blue">VIEW CREDIT ACCOUNT</a></td>
 				</tr>
@@ -70,9 +72,9 @@
 			</c:forEach>
 		</table>
 	</center>
+	<a href="approverIndexPage">Go to main page</a>
 	<div class="pos">
-		<a href="approverIndexPage">Go to main page</a>
-		<br /> <a class="btn btn-danger" href="logoutController"> LOGOUT</a>
+		<a class="btn btn-danger" href="logoutController"> LOGOUT</a>
 	</div>
 	<c:if test="${message != null}">
 		<script type="text/javascript">

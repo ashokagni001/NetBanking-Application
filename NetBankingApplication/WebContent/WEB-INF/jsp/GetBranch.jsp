@@ -19,10 +19,10 @@
 
 .pos {
 	position: absolute;
-	top: 150px;
-	right: 0px;
-	width: 200px;
-	height: 120px;
+	right: 100px;
+	top: 108px;
+	height: 70px;
+	width: 50px;
 }
 </style>
 </head>
@@ -101,9 +101,9 @@
 			</table>
 		</c:if>
 	</center>
+	<a href="BranchIndex">Go to main page</a>
 	<div class="pos">
-		<a href="BranchIndex">Go to main page</a> <br /> <a
-			class="btn btn-danger" href="logoutController"> LOGOUT</a>
+		<a class="btn btn-danger" href="logoutController"> LOGOUT</a>
 	</div>
 </body>
 </html>

@@ -17,14 +17,14 @@
 .well {
 	background-color: #8ddfe1;
 }
-.pos {
-    position: absolute;
-    top : 150px;
-    right: 0px;
-    width: 200px;
-    height: 120px;
-}
 
+.pos {
+	position: absolute;
+	right: 100px;
+	top: 108px;
+	height: 70px;
+	width: 50px;
+}
 </style>
 </head>
 <body>
@@ -32,9 +32,10 @@
 		<font size="20"><marquee behavior="alternate">NET
 				BANKING</marquee></font>
 	</div>
-	<h2>ADD USER ROLE</h1>
+	<h2>ADD USER ROLE</h2>
 	<center>
-		<h3>INSERT DETAIL</h3><br />
+		<h3>INSERT DETAIL</h3>
+		<br />
 		<table>
 			<form method="get" action="insertRole" />
 			<tr>
@@ -54,19 +55,19 @@
 			</tr>
 		</table>
 		</form>
-		</br>
-		</br>
-		</center>
-		<c:if test="${message != null}">
-			<script type="text/javascript">
-				alert("<c:out value='${message}'/>");
-				windows.location.reload();
-			</script>
-		</c:if>
-		<div class = "pos">
-        <a class = "btn btn-link" href="BranchIndex">Go to main page </a></br>
-		</br> 
-		<a class = "btn btn-danger" href="logoutController" style="width: 100"> LOGOUT</a>
-		</div>
-	
+		</br> </br>
+	</center>
+	<c:if test="${message != null}">
+		<script type="text/javascript">
+			alert("<c:out value='${message}'/>");
+			windows.location.reload();
+		</script>
+	</c:if>
+	<a class="btn btn-link" href="BranchIndex">Go to main page </a>
+	</br>
+	</br>
+	<div class="pos">
+		<a class="btn btn-danger" href="logoutController"> LOGOUT</a>
+	</div>
+</body>
 </html>

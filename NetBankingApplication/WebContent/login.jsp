@@ -1,18 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:if test="${sessionScope['id']!= approver}">
-        <c:redirect url = "approverIndexPage"/>
+<c:if test="${sessionScope['role'] != approver}">
+	<c:redirect url="approverIndexPage" />
 </c:if>
-<c:if test="${sessionScope['role']!= user}">
-        <c:redirect url = "userHomePage"/>
-</c:if>
-<c:if test="${message != null}">
-		<script type="text/javascript">
-			alert('CLICK OK THE PAGE WILL BE REFRESHED...'
-					+ "<c:out value='${message}'/>");
-			windows.location.reload();
-		</script>
+<c:if test="${sessionScope['role'] != user}">
+	<c:redirect url="userHomePage" />
 </c:if>
 <html>
 <head>
@@ -38,10 +31,26 @@ keyframes spinner { 0% {
 100%
 {
 transform
+
+
+
+
 :
+
+
+
+
 rotateZ
 
-(359 deg);
+
+
+
+
+(359
+deg
+
+
+);
 }
 }
 * {
@@ -188,46 +197,32 @@ rotateZ
 .login:not (.loading ) button:focus {
 	border-bottom-width: 4px;
 }
-
-footer {
-	display: block;
-	padding-top: 50px;
-	text-align: center;
-	color: #ddd;
-	font-weight: normal;
-	text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
-	font-size: 0.8em;
-}
-
-footer a, footer a:link {
-	color: #fff;
-	text-decoration: none;
-}
 </style>
 <script src="js/prefixfree.min.js"></script>
 </head>
 <body>
-	<div class="wrapper">
-		<form class="login" action="loginController" method="post">
-			<p class="title">Log in</p>
-			<input type="text" name="customerId" placeholder="CUSTOMER ID"
-				autofocus required /> <i class="fa fa-user"></i> <input
-				type="password" name="password" placeholder="PASSWORD" required />
-			<i class="fa fa-key"></i>
-			<button>
-				<i class="spinner"></i> <span class="state">Log in</span>
-			</button>
-			<p class="message">
-				Not registered? <a href="CustomerRegistration">Create an account</a>
-			</p>
-		</form>
-		<footer>
-			<a target="blank" href="http://boudra.me/">boudra.me</a>
-		</footer>
-		</p>
-	</div>
-	<script
-		src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-	<script src="js/index.js"></script>
+<c:if test="${message != null}">
+	<script type="text/javascript">
+		windows.alert("<c:out value='${message}'/>");
+	</script>
+</c:if>
+		<div class="wrapper">
+			<form class="login" action="loginController" method="post">
+				<p class="title">Log in</p>
+				<input type="text" name="customerId" placeholder="CUSTOMER ID"
+					autofocus required /> <input type="password" name="password"
+					placeholder="PASSWORD" required /> <i class="fa fa-key"></i>
+				<button>
+					<i class="spinner"></i> <span class="state">Log in</span>
+				</button>
+				<p class="message">
+					Not registered? <a href="CustomerRegistration">Create an
+						account</a>
+				</p>
+			</form>
+		</div>
+		<script
+			src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+		<script src="js/index.js"></script>
 </body>
 </html>

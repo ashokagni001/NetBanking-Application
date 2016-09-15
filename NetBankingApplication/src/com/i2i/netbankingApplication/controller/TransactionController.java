@@ -49,7 +49,7 @@ public class TransactionController {
 	 *     Return to the AddTransaction JSP page.
 	 */ 
 	@RequestMapping(value = "/addTransaction")
-	public String transactionOpration() throws DataBaseException {
+	public String transactionOpration() {
 		return "AddTransaction";
 	}
         
@@ -103,8 +103,7 @@ public class TransactionController {
 	@RequestMapping(value = "/notification", method = RequestMethod.GET)
 	public ModelAndView notification() {
 		try {
-			return new ModelAndView("RetrieveAllNotification", "notifications",
-					transactionService.getAllNotification());
+			return new ModelAndView("RetrieveAllNotification", "notifications", transactionService.getAllNotification());
 		} catch (DataBaseException e) {
 			return new ModelAndView("RetrieveAllNotification", "message", e.getMessage().toString());
 		}
@@ -147,8 +146,7 @@ public class TransactionController {
 	@RequestMapping(value = "/getAccountByCustomerId", method = RequestMethod.GET)
 	public ModelAndView getAccountByCustomerId(@RequestParam("customerId") String customerId, ModelMap message) {
 		try {
-			return new ModelAndView("RetrieveCustomerAccount", "accountDetail",
-					transactionService.getAccountByCustomerId(customerId));
+			return new ModelAndView("RetrieveCustomerAccount", "accountDetail", transactionService.getAccountByCustomerId(customerId));
 		} catch (DataBaseException e) {
 			return new ModelAndView("RetrieveCustomerAccount", "message", "SOME PROBLEM OCCUR TRY AGAIN LATER");
 		}
@@ -172,7 +170,7 @@ public class TransactionController {
 			return new ModelAndView("RetrieveCustomerAccount", "accountDetail",
 					transactionService.getCustomerAccount(accountNumber));
 		} catch (DataBaseException e) {
-			return new ModelAndView("RetrieveCustomerAccount", "message", "SOME PROBLEM OCCUR TRY AGAIN LATER");
+			return new ModelAndView("RetrieveCustomerAccount", "message", e.getMessage());
 		}
 	}
         
@@ -194,8 +192,8 @@ public class TransactionController {
     public ModelAndView viewMiniStatementByCustomerId (@RequestParam("customerId")String customerId, ModelMap message) {
         try {
         	return new ModelAndView("RetrieveMiniStatementByCustomerId", "miniStatement", transactionService.getCustomerMiniStatement(customerId));
-        }catch (DataBaseException e) {
-        	return new ModelAndView("CustomerIndex", "message", "ENTER VALID CUSTOMER ID ONLY");
+        } catch (DataBaseException e) {
+        	return new ModelAndView("CustomerIndex", "message", e.getMessage());
         }
 	}
     
@@ -227,7 +225,7 @@ public class TransactionController {
 			message.addAttribute("message", "TRANSACTION ACTION SUCCESSFULLY");
 			message.addAttribute("notifications", transactionService.getAllNotification());
 		} catch (DataBaseException e) {
-			message.addAttribute("message", e.getMessage().toString());
+			message.addAttribute("message", e.getMessage());
 		} finally {
 			return "RetrieveAllNotification";
 		}
@@ -261,7 +259,7 @@ public class TransactionController {
 			message.addAttribute("transactions", "TRANSACTION ACTION SUCCESSFULLY");
 			message.addAttribute("notifications", transactionService.getAllNotification());
 		} catch (DataBaseException e) {
-			message.addAttribute("message", e.getMessage().toString());
+			message.addAttribute("message", e.getMessage());
 		} finally {
 			return "RetrieveAllNotification";
 		}
@@ -278,7 +276,7 @@ public class TransactionController {
 	 *     
 	 */
 	@RequestMapping(value = "/viewTransactionByDate")
-	public String getDateTransaction() throws DataBaseException {
+	public String getDateTransaction() {
 		return "ViewTransactionByDate";
 	}
         
@@ -303,11 +301,11 @@ public class TransactionController {
 	 */
 	@RequestMapping(value = "/getDates", method = RequestMethod.GET)
 	public String getDateTransaction(@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
-			ModelMap message) throws DataBaseException {
+			ModelMap message) {
 		try {
 			message.addAttribute("transactions", transactionService.getDateTransaction(fromDate, toDate));
 		} catch (DataBaseException e) {
-			message.addAttribute("message", e.getMessage().toString());
+			message.addAttribute("message", e.getMessage());
 		} finally {
 			return "ViewTransactionByDate";
 		}

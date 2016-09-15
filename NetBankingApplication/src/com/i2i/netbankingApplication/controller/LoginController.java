@@ -2,7 +2,6 @@ package com.i2i.netbankingApplication.controller;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,7 +71,7 @@ public class LoginController {
      *     If there is an error in the given data like BadElementException.
      */
 	@RequestMapping(value = "/loginController", method = RequestMethod.POST)
-    public String loginVerification(@RequestParam("customerId")String customerId, @RequestParam("password")String password, ModelMap message,HttpSession session) throws DataBaseException,ExceptionInInitializerError {
+    public String loginVerification(@RequestParam("customerId")String customerId, @RequestParam("password")String password, ModelMap message,HttpSession session) {
 		try {
 		    if (customerService.ifValidateUser(customerId, password)) {
 				if (customerService.checkIfRole(customerId)){
@@ -89,11 +88,8 @@ public class LoginController {
 				return "redirect:login.jsp";
 			} 
         } catch (DataBaseException e) {
-       	    message.addAttribute("message", e.getMessage());
-            return "redirect:login.jsp";
-        } catch (ExceptionInInitializerError e) {
-       	    message.addAttribute("message", e.getException());
-            return "redirect:login.jsp";
+        	message.addAttribute("message", e.getMessage());
+        	return "redirect:login.jsp";
         } 
 	}
 	

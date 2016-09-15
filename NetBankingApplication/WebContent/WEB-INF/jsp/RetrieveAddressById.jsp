@@ -15,10 +15,10 @@
 
 .pos {
 	position: absolute;
-	top: 150px;
-	right: 0px;
-	width: 200px;
-	height: 120px;
+	right: 100px;
+	top: 108px;
+	height: 70px;
+	width: 50px;
 }
 </style>
 </head>
@@ -57,20 +57,22 @@
 			</script>
 		</c:if>
 	</center>
+	<c:if test="${sessionScope['role']== 'approver'}">
+		<br />
+		<br />
+		<a href="approverIndexPage" style="font-sise: 18px">Go to main
+			page</a>
+		<div class="pos">
+			<a class="btn btn-danger" href="logoutController"> LOGOUT</a>
+		</div>
+	</c:if>
+	<c:if test="${sessionScope['role']== 'user'}">
+		<td><a
+			href="getCustomer?customerId=<c:out value="${sessionScope['id']}"/>">Go
+				to main page</a></td>
+	</c:if>
 	<div class="pos">
-		<c:if test="${sessionScope['role']== 'approver'}">
-			<br />
-			<br />
-			<a href="approverIndexPage" style="font-sise: 18px">Go to main
-				page</a>
-		</c:if>
-		<c:if test="${sessionScope['role']== 'user'}">
-			<td><a
-				href="getCustomer?customerId=<c:out value="${sessionScope['id']}"/>">Go
-					to main page</a></td>
-		</c:if>
-		<br /></br> <a class="btn btn-danger" href="logoutController"
-			style="width: 100px"> LOGOUT</a>
+		<a class="btn btn-danger" href="logoutController"> LOGOUT</a>
 	</div>
 </body>
 </html>

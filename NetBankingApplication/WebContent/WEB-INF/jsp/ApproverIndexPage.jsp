@@ -16,12 +16,13 @@
 .well {
 	background-color: #8ddfe1;
 }
+
 .pos {
-    position: absolute;
-    top : 150px;
-    right: 0px;
-    width: 200px;
-    height: 120px;
+	position: absolute;
+	right: 100px;
+	top: 108px;
+	height: 70px;
+	width: 50px;
 }
 </style>
 </head>
@@ -32,15 +33,15 @@
 	</div>
 	<center>
 		<h1>WELCOME NETBANKING APPLICATION</h1>
-		If U Want Branch Operation Open Click On <br /> <br />
-		 <a href=BranchIndex>OPEN</a> <br /> <br /> If U Want Customer
-		Operation Open Click On <br /> <br /> 
-		<a href=GetCustomer>OPEN</a> <br />
+		If U Want Branch Operation Open Click On <br /> <br /> <a
+			href=BranchIndex>OPEN</a> <br /> <br /> If U Want Customer
+		Operation Open Click On <br /> <br /> <a href=GetCustomer>OPEN</a> <br />
 		<br /> If U Want Transaction Operation Open Click On <br /> <br />
 		<a href=TransactionIndex>OPEN</a>
 	</center>
 	<br />
-	<br />
-	<a href="logoutController"> LOGOUT</a>
+	<div class="pos">
+		<a class="btn btn-danger" href="logoutController"> LOGOUT</a>
+	</div>
 </body>
 </html>

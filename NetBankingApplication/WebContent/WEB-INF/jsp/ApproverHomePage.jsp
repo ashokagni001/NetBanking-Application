@@ -24,11 +24,11 @@
 }
 
 .pos {
-    position: absolute;
-    top : 150px;
-    right: 0px;
-    width: 200px;
-    height: 120px;
+	position: absolute;
+	right: 100px;
+	top: 108px;
+	height: 70px;
+	width: 50px;
 }
 </style>
 </head>
@@ -39,20 +39,14 @@
 	</div>
 	<center>
 		<h1>WELCOME NETBANKING APPLICATION</h1>
-		<br />
-		<br /> If U Want Customer Operation Open Click On <br />
-		<br />
-		<a class="btn btn-info" href="userHomePage">OPEN</a> <br />
-		<br /> If U Want Admin Operation Open Click On <br />
-		<br />
-		<a class="btn btn-info" href=approverIndexPage>OPEN</a>
+		<br /> <br /> If U Want Customer Operation Open Click On <br /> <br />
+		<a class="btn btn-info" href="userHomePage">OPEN</a> <br /> <br />
+		If U Want Admin Operation Open Click On <br /> <br /> <a
+			class="btn btn-info" href=approverIndexPage>OPEN</a>
 	</center>
 	<br />
-	<br />
-	<div class = "pos">
-	<a class = "btn btn-danger" href="logoutController" style="width: 100px;"> LOGOUT</a>
-    </div>
-</body>
-</html>
+	<div class="pos">
+		<a class="btn btn-danger" href="logoutController"> LOGOUT</a>
+	</div>
 </body>
 </html>

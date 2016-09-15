@@ -17,10 +17,10 @@
 
 .pos {
 	position: absolute;
-	top: 150px;
-	right: 0px;
-	width: 200px;
-	height: 120px;
+	right: 100px;
+	top: 108px;
+	height: 70px;
+	width: 50px;
 }
 </style>
 </head>
@@ -36,6 +36,8 @@
 		<font size="20"><marquee behavior="alternate">NET
 				BANKING</marquee></font>
 	</div>
+	<br />
+	<br />
 	<center>
 		<table class=" table table-bordered">
 			<tr>
@@ -84,9 +86,9 @@
 			</c:forEach>
 		</table>
 	</center>
+	<a href="approverIndexPage">Go to main page </a>
 	<div class="pos">
-		<a href="approverIndexPage">Go to main page </a> <br />
-		<br /> <a class="btn btn-danger" href="logoutController"> LOGOUT</a>
+		<a class="btn btn-danger" href="logoutController"> LOGOUT</a>
 	</div>
 </body>
 </html>

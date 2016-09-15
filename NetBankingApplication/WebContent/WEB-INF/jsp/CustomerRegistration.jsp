@@ -55,11 +55,11 @@
 			<form:input path="email" type="text" placeholder="Enter the email" />
 			<br />
 			<br />
-			<input type="submit" path="submit" value="NEXT" />
+			<input type="submit" name="submit" value="NEXT" />
 		</form:form>
 	</center>
-	<a href="login" style="font-sise: 18px">Go to main page </a>
-	</br>
-	</br>
+	<div class="pos">
+		<a class="btn btn-danger" href="logoutController"> LOGOUT</a>
+	</div>
 </body>
 </html>

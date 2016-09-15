@@ -11,12 +11,13 @@
 .well {
 	background-color: #8ddfe1;
 }
+
 .pos {
-    position : absolute;
-    top : 150px;
-    right : 0px;
-    width : 200px;
-    height : 120px;
+	position: absolute;
+	right: 100px;
+	top: 108px;
+	height: 70px;
+	width: 50px;
 }
 </style>
 </head>
@@ -27,24 +28,24 @@
 	</div>
 	<center>
 		<c:if test="${BranchAddress != null }">
-			<form:form method="post" action="address" modelAttribute="BranchAddress">
+			<form:form method="post" action="address"
+				modelAttribute="BranchAddress">
 				<tr>
 					<td>Street :</td>
 					<td><form:input path="street" placeholder="street" /></td>
 				</tr>
 				</br>
-				</br>
-				<form:select path="country" class="countries" id="countryId">
+				<form:select path="country" class="countries" id="countryId" >
 					<form:option value="">Select Country</form:option>
 				</form:select>
 				</br>
 				</br>
-				<form:select path="state" class="states" id="stateId">
+				<form:select path="state" class="states" id="stateId" >
 					<form:option value="">Select State</form:option>
 				</form:select>
 				</br>
 				</br>
-				<form:select path="city" class="cities" id="cityId">
+				<form:select path="city" class="cities" id="cityId" >
 					<form:option value="">Select City</form:option>
 				</form:select>
 				</br>
@@ -61,7 +62,9 @@
 				<input type="submit" name="addBranch" value="ADD" />
 			</form:form>
 			<br />
-			<a href="logoutController" style="width: 300px;"> LOGOUT</a>
+			<div class="pos">
+				<a class="btn btn-danger" href="logoutController"> LOGOUT</a>
+			</div>
 		</c:if>
 		<c:if test="${Address != null }">
 			<form:form method="post" action="customerAddress"
@@ -92,14 +95,17 @@
 				<script src="http://iamrohit.in/lab/js/location.js"></script>
 				<tr>
 					<td>Pincode :</td>
-					<td><form:input path="pincode" placeholder="pincode" /></td>
+					<td><form:input path="pincode" placeholder="pincode" required/></td>
 				</tr>
 				</br>
 				</br>
 				<input type="submit" name="addBranch" value="ADD" />
-				<br/><br/>
-                <a href="logoutController" style="width: 300px;"> LOGOUT</a>
+				<br />
+				<br />
 			</form:form>
+			<div class="pos">
+				<a class="btn btn-danger" href="logoutController"> LOGOUT</a>
+			</div>
 		</c:if>
 	</center>
 </body>

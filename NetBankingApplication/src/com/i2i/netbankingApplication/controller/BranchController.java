@@ -30,7 +30,6 @@ import com.i2i.netbankingApplication.service.BranchService;
 public class BranchController {
 	private BranchService branchService = new BranchService();
 	
-	
    /**
     * Return the JSP page that contains options for Branch operation
     * 
@@ -43,18 +42,10 @@ public class BranchController {
 	}
 	
 	/**
-	 * <p>
-	 *     It displays a form to input data, here "Branch" is a reserved attribute which is used
-	 *     to display object data(Branch) into form.
-	 * </p>
-	 * 
-	 * @return AddBranch
-	 *     Return to the AddBranch JSP page.
 	 * Return to the AddBranch JSP page use to add the new branch.
 	 * 
 	 * @return AddBranch
-	 *     Return to the AddBranch JSP page. with model(Branch) object.
-	 * 
+	 *     Return to the AddBranch JSP page.
 	 */
 	@RequestMapping(value = "/addBranch")
 	public String getBranch() {
@@ -74,7 +65,7 @@ public class BranchController {
      *     Display message using add attribute.
      *     
      * @return AddAddress
-     *     Return to JSP page AddAddress with Address of Object.
+     *     Return to JSP page AddAddress with Address Object.
      *     
      * @return BranchIndex
      *     Return to JSP page BranchIndex with Status message(failure).
@@ -83,7 +74,8 @@ public class BranchController {
      *     If there is an error in the given data like BadElementException.
      */
 	@RequestMapping(value="/insertBranch", method = RequestMethod.POST)
-    public String addBranch(@RequestParam("emailId") String emailId, ModelMap message) {  
+    public String addBranch(@RequestParam("emailId") String emailId, ModelMap message) { 
+		String URL = "AddAddress";
 		try {
 			if (emailId != null) {
 			    branchService.getBranch(emailId);
@@ -91,11 +83,11 @@ public class BranchController {
 			} else {
 				message.addAttribute("message", " PLEASE FILL THE FORM ");
 			}
-            return "AddAddress";
-		} catch (DataBaseException e) {
+	    } catch (DataBaseException e) {
     		message.addAttribute("message", e.getMessage()); 
-    		return "BranchIndex";
-        } 
+    		URL = "BranchIndex";
+        }
+		return URL; 
     }
 	
 	
@@ -121,35 +113,35 @@ public class BranchController {
     public String addAddress(@ModelAttribute("address1") Address address, ModelMap message) {  
 		try {
 			message.addAttribute("message","BRANCH ADDED SUCCESS. BRANCH IFSC IS :: " + branchService.getAddress(address));
-            return "BranchIndex";
-		} catch (DataBaseException e) {
+	    } catch (DataBaseException e) {
     		message.addAttribute("message", e.getMessage()); 
-    		return "BranchIndex";
+        } finally {
+        	return "BranchIndex";
         }
     }
 	
 	/**
 	 * <p>
 	 *     This Method call to deleteBranchById method in BranchService.
-     *     Return to the GetBranch JSP page with Branch lists or status message(failure).
+     *     Return to the GetBranch JSP page with list of Branches or status message(failure).
      * </p>
      * 
 	 * @param BranchId
 	 *     Id of Branch entered by user to delete the corresponding record.
 	 *     
 	 * @return GetBranch
-	 *     Return to the GetBranch JSP page with Branch lists or status message(failure).
+	 *     Return to the GetBranch JSP page with list of Branches or status message(failure).
 	 *     
 	 * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
 	 */
 	@RequestMapping(value="/deleteBranchById", method = RequestMethod.GET)
-    public String deleteBranch(@RequestParam("ifsc")String ifsc, ModelMap message) throws DataBaseException {
+    public String deleteBranch(@RequestParam("ifsc")String ifsc, ModelMap message) {
     	try {       
             branchService.deleteBranchById(ifsc);
             message.addAttribute("message", "BRANCH DELETED SUCESSFULLY");
             message.addAttribute("branches", branchService.getAllBranch());
-    	} catch (DataBaseException e) {
+	    } catch (DataBaseException e) {
     		message.addAttribute("message", e.getMessage()); 
     		message.addAttribute("branches", branchService.getAllBranch());
         } finally {
@@ -177,14 +169,14 @@ public class BranchController {
 	/**
 	 * <p>
 	 *     This Method call to getAllBranch method in BranchService.
-     *     Return to the RetrieveAllBranch JSP page with Branch lists or status message(failure).
+     *     Return to the RetrieveAllBranch JSP page with list of Branches or status message(failure).
      * </p>
      * 
 	 * @param BranchId
 	 *     Id of Branch entered by user to view the corresponding record.
 	 *     
 	 * @return GetBranch
-	 *     Return to the ReteriveAllBranch JSP page with Branch lists or status message(failure).
+	 *     Return to the ReteriveAllBranch JSP page with list of Branches or status message(failure).
 	 *  
 	 * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
@@ -205,7 +197,7 @@ public class BranchController {
         } catch (DataBaseException e) {
         	return new ModelAndView("GetBranch","message",  e.getMessage());
         }
-    }
+	}
 	
 	/**
 	 * <p>
@@ -291,7 +283,7 @@ public class BranchController {
 	/**
 	 * <p>
 	 *     This Method call to viewAccountByBranch method in BranchService.
-     *     Return to the BranchIndex JSP page with account lists or status message(failure).
+     *     Return to the BranchIndex JSP page with list of accounts or status message(failure).
      * </p> 
 	 * @param ifsc
 	 *     ifsc of Branch. It use to retrieve all account detail in One Branch.
@@ -303,7 +295,7 @@ public class BranchController {
      *     If there is an error in the given data like BadElementException.
      *     
      * @return ViewAccountByBranch
-	 *     Return to the ViewAccountByBranch JSP page with account lists or status message(failure).
+	 *     Return to the ViewAccountByBranch JSP page with list of accounts or status message(failure).
 	 */
 	@RequestMapping(value="/getAccount", method = RequestMethod.GET)  
     public String viewAccountByBranch (@RequestParam("ifsc")String ifsc, ModelMap message) {

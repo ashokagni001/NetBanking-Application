@@ -17,12 +17,13 @@
 .well {
 	background-color: #8ddfe1;
 }
+
 .pos {
-    position : absolute;
-    top : 150px;
-    right: 0px;
-    width: 200px;
-    height: 120px;
+	position: absolute;
+	right: 100px;
+	top: 108px;
+	height: 70px;
+	width: 50px;
 }
 </style>
 </head>
@@ -31,10 +32,10 @@
 		<font size="20"><marquee behavior="alternate">NET
 				BANKING</marquee></font>
 	</div>
-	<h1>BANK MANAGEMENT</h1>
 	<br />
 	<br />
 	<center>
+		<h1>BANK MANAGEMENT</h1>
 		<c:if test="${message != null}">
 			<script type="text/javascript">
 				alert('CLICK OK THE PAGE WILL BE REFRESHED...'
@@ -57,18 +58,17 @@
 			</tr>
 			<tr>
 				<td align="center" height="40" width="350"><a
-					href="ViewAccountByBranch">View ACCOUNT By Branch</a></td>
+					href="ViewAccountByBranch">VIEW ACCOUNT BY BRANCH</a></td>
 			</tr>
 			<tr>
-				<td align="center" height="40" width="350"><a
-					href="addUserRole"> Add User Role</a></td>
+				<td align="center" height="40" width="350"><a href="getAllRole">
+						Add User Role</a></td>
 			</tr>
 		</table>
 	</center>
 	<a href="approverIndexPage">Go to main page</a>
-	</br>
-	</br>
-	<br />
-	<a href="logoutController"> LOGOUT</a>
+	<div class="pos">
+		<a class="btn btn-danger" href="logoutController"> LOGOUT</a>
+	</div>
 </body>
 </html>

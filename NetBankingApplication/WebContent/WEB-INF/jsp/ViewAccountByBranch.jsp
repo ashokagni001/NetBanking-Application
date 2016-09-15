@@ -19,10 +19,10 @@
 
 .pos {
 	position: absolute;
-	top: 150px;
-	right: 0px;
-	width: 200px;
-	height: 120px;
+	right: 100px;
+	top: 108px;
+	height: 70px;
+	width: 50px;
 }
 </style>
 </head>
@@ -31,58 +31,56 @@
 		<font size="20"><marquee behavior="alternate">NET
 				BANKING</marquee></font>
 	</div>
+	<h1>VIEW ACCOUNT BY BRANCH</h1>
+	<br />
 	<center>
-		<h1>VIEW ACCOUNT BY BRANCH</h1>
-		<h3>Branch IFSC Number</h3>
-		<form action="getAccount" method="get">
-			<table>
+	<h2>BRANCH IFSC NUMBER</h2>
+	<form action="getAccount" method="get">
+		<table>
+			<tr>
+				<td><input type="text" name="ifsc" placeholder="IFSC" required></td>
+				<td><input type="submit" name="view" value="view"></td>
+			</tr>
+		</table>
+	</form>
+	<c:if test="${message != null}">
+		<script type="text/javascript">
+			alert('CLICK OK THE PAGE WILL BE REFRESHED...'
+					+ "<c:out value='${message}'/>");
+			windows.location.reload();
+		</script>
+	</c:if>
+	<c:if test="${accounts != null}">
+		<h2>Fetching Data From A Branch Management System</h2>
+		<table class="table table-striped">
+			<tr>
+				<th>S.NO</th>
+				<th>AccountNumber</th>
+				<th>Customer Id</th>
+				<th>Balance</th>
+				<th>AccountType</th>
+			</tr>
+			<%
+				int sno = 1;
+			%>
+			<c:forEach items="${accounts}" var="accounts">
 				<tr>
-					<td><input type="text" name="ifsc" placeholder="IFSC" required></td>
-					<td><input type="submit" name="view" value="view"></td>
-				</tr>
-			</table>
-		</form>
-		<c:if test="${message != null}">
-			<script type="text/javascript">
-				alert('CLICK OK THE PAGE WILL BE REFRESHED...'
-						+ "<c:out value='${message}'/>");
-				windows.location.reload();
-			</script>
-		</c:if>
-		<c:if test="${accounts != null}">
-			<h2>Fetching Data From A Branch Management System</h2>
-			<table class="table table-striped">
-				<tr>
-					<th>S.NO</th>
-					<th>AccountNumber</th>
-					<th>Customer Id</th>
-					<th>Balance</th>
-					<th>AccountType</th>
+					<td><c:out value="<%=sno%>" /></td>
+					<td><c:out value="${accounts.getAccountNumber()}" /></td>
+					<td><c:set value="${accounts.getCustomer()}" var="customer" />
+						<c:out value="${customer.customerId}" /></td>
+					<td><c:out value="${accounts.getBalance()}" /></td>
+					<td><c:out value="${accounts.getAccountType()}" /></td>
 				</tr>
 				<%
-					int sno = 1;
+					sno++;
 				%>
-				<c:forEach items="${accounts}" var="accounts">
-					<tr>
-						<td><c:out value="<%=sno%>" /></td>
-						<td><c:out value="${accounts.getAccountNumber()}" /></td>
-						<td><c:set value="${accounts.getCustomer()}" var="customer" />
-							<c:out value="${customer.customerId}" /></td>
-						<td><c:out value="${accounts.getBalance()}" /></td>
-						<td><c:out value="${accounts.getAccountType()}" /></td>
-					</tr>
-					<%
-						sno++;
-					%>
-				</c:forEach>
-			</table>
-		</c:if>
-	</center>
+			</c:forEach>
+		</table>
+	</c:if>
+	<a href="BranchIndex" style="font-sise: 18px">Go to main page</a>
 	<div class="pos">
-		<a href="BranchIndex" style="font-sise: 18px">Go to main page</a> <br />
-		<a class="btn btn-danger" href="logoutController" style="width: 100px">
-			LOGOUT</a>
+		<a class="btn btn-danger" href="logoutController"> LOGOUT</a>
 	</div>
-
 </body>
 </html>

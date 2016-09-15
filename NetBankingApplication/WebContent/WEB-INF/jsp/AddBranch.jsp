@@ -19,10 +19,10 @@
 
 .pos {
 	position: absolute;
-	top: 150px;
-	right: 0px;
-	width: 200px;
-	height: 120px;
+	right: 100px;
+	top: 108px;
+	height: 70px;
+	width: 50px;
 }
 </style>
 </head>
@@ -31,11 +31,13 @@
 		<font size="20"><marquee behavior="alternate">NET
 				BANKING</marquee></font>
 	</div>
-	<h2>INSERT BRANCH</h2>
+	<br />
 	<center>
+		<h2>INSERT BRANCH</h2>
+		<br />
 		<form method="post" action="insertBranch">
-			<input type="text" name="emailId" placeholder="EMAIL ID" /> <br />
-			<input type="submit" name="addBranch" value="ADD"
+			<input type="text" name="emailId" placeholder="EMAIL ID" required />
+			<br /> <input type="submit" name="addBranch" value="ADD"
 				class="btn btn-success" /><br /> <br />
 		</form>
 		<c:if test="${message != null}">
@@ -46,10 +48,10 @@
 			</script>
 		</c:if>
 	</center>
+	<a href="BranchIndex">Go to main page </a>
+	<br />
 	<div class="pos">
-		<a class="btn btn-danger" href="BranchIndex">Go to main page </a><br />
-		<a href="logoutController"> LOGOUT</a>
+		<a class="btn btn-danger" href="logoutController"> LOGOUT</a>
 	</div>
-
 </body>
 </html>
