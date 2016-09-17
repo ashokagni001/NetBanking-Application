@@ -17,8 +17,7 @@
 <body>
 	<c:if test="${message != null}">
 		<script type="text/javascript">
-			alert('CLICK OK THE PAGE WILL BE REFRESHED...'
-					+ "<c:out value='${message}'/>");
+			alert("<c:out value='${message}'/>");
 			windows.location.reload();
 		</script>
 	</c:if>
@@ -58,6 +57,10 @@
 			<input type="submit" name="submit" value="NEXT" />
 		</form:form>
 	</center>
+<<<<<<< HEAD
 	<a href="login"> Go to main page</a>
+=======
+	<a href="login" style="font-sise: 18px">Go to main page</a>
+>>>>>>> 3fdcf5095df462913f64f7093825c3305ade0aa2
 </body>
 </html>

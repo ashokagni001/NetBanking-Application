@@ -141,7 +141,7 @@ public class TransactionService {
      * </p>
      * 
 	 * @return List
-	 *     Return the lists of CustomerTransaction.
+	 *     Return the list of CustomerTransactions.
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
@@ -157,11 +157,11 @@ public class TransactionService {
 	/**
 	 * <p>
 	 *     If request comes TransactionController, It will calling to retriveAllTransactions method in TransactionDao.
-	 *     Return to the lists of notification.
+	 *     Return to the lists of notifications.
      * </p>
      * 
 	 * @return list
-	 *     Return the lists of Transaction.
+	 *     Return the list of Transactions.
 	 *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
@@ -184,7 +184,6 @@ public class TransactionService {
 	 * 
      * @param customerId
      *     customerId of Customer to use retrieve the customer Account Number.
-     *     
      * @param customerAccountNumber
      *     customerAccountNumber of Customer.
      *     
@@ -238,10 +237,8 @@ public class TransactionService {
      * 
 	 * @param transactionId
 	 *     id of Transaction.
-	 *     
 	 * @param creditAccountNumber
 	 *     creditAccountNumber of Transaction.
-	 *     
 	 * @param amount
 	 *     amount of Transaction.
 	 *     
@@ -252,7 +249,7 @@ public class TransactionService {
 			throws DataBaseException {
 		Account creditAccount = transactionDao.retrieveAccountByNumber(creditAccountNumber);
 		Customer approver = customerService.getCustomerById(userId);
-		double currentAmount = creditAccount.getBalance();
+	        double currentAmount = creditAccount.getBalance();
 		double balanceAmount = (currentAmount + amount);
 		creditAccount.setBalance(balanceAmount);
 		transactionDao.transactionSuccess(creditAccount, transactionId,	approver);
@@ -267,10 +264,8 @@ public class TransactionService {
      * 
 	 * @param transactionId
 	 *     id of Transaction.
-	 *     
 	 * @param debitAccountNumber
 	 *     debitAccountNumber of Transaction.
-	 *     
 	 * @param amount
 	 *     amount of Transaction.
 	 *     
@@ -295,7 +290,6 @@ public class TransactionService {
      * 
 	 * @param fromDate
 	 *     fromDate of Transaction.
-	 *    
 	 * @param toDate
 	 *     toDate of Transaction.
 	 *    

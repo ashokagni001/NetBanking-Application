@@ -40,13 +40,11 @@ public class CustomerService {
      * 
      * @param customerAge
      *     Age of customer to be add.
-     * 
      * @param customer
      *     Object of customer model class. It object used for add Customer.
      * 
      * @throws customerDataException
      *     If there is an error in the customer attribute exception is handle by customerDataException.
-     * 
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
      */
@@ -97,7 +95,6 @@ public class CustomerService {
      *     
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
-     * @throws ConfigurationException 
      */
 	public int getNewAddressId() throws DataBaseException {
     	int newAddressId = ConstantVariableUtil.initializeVariable;
@@ -119,7 +116,7 @@ public class CustomerService {
 	 * @return id
 	 *     return to the last customer id value.
 	 *     
-	 * @throws DataBaseException ConfigurationException
+	 * @throws DataBaseException 
 	 *     If there is an error in the given data like BadElementException.
 	 */
     public int getLastCustomerId() throws DataBaseException {
@@ -139,7 +136,7 @@ public class CustomerService {
      * 
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
-     *          ConfigurationException
+     *         
      * @return List
      *     Return list of customers.
      */
@@ -168,10 +165,10 @@ public class CustomerService {
      * <p> 
      *     Get the customer Id from CustomerController.
      *     It is passed to retrieveCustomerById method in CustomerDao and 
-     *     returns customer object to CustomerController.
+     *     Returns customer object to CustomerController.
      * </p>
      * 
-     * @param customerId ConfigurationException
+     * @param customerId 
      *     Id of Customer.
      * 
      * @return customerController
@@ -196,10 +193,9 @@ public class CustomerService {
 	 *     
 	 * @return customerController
      *     Return to the object of Address class. 
-     *      ConfigurationException
+     *     
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
-	 * @throws ConfigurationException 
 	 */
 	public Address getAddressById(int addressId) throws DataBaseException {
 	    return customerDao.retrieveAddressById(addressId);
@@ -209,11 +205,10 @@ public class CustomerService {
 	 * <p>
 	 *    Get the customer Id and roleId from customerController.
      *    It is called to insertRole method in customerDao.
-     * </p> ConfigurationException
+     * </p> 
 	 * 
 	 * @param customerId
 	 *     id of Customer.
-	 *     
 	 * @param roleId
 	 *     id of ROle.
 	 *     
@@ -253,7 +248,7 @@ public class CustomerService {
     
 	/**
 	 * <p>
-	 *     If role size zero return false otherwiseConfigurationException true.
+	 *     If role size zero return false otherwise true.
 	 *     It method called to getAllRole method in CustomerService.
 	 * </p>
 	 * 
@@ -298,7 +293,6 @@ public class CustomerService {
 	 * 
 	 * @param customerId
 	 *     customerId of Customer.
-	 *     
 	 * @param roleId
 	 *     roleId of Role.
 	 *     
@@ -322,7 +316,6 @@ public class CustomerService {
      * 
      * @param customerId
      *      Id of customer to check validate user or not.
-     * 
      * @param password
      *      Password of customer to check validate role or not.
      * 

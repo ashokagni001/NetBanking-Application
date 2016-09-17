@@ -38,8 +38,7 @@
 		<h1>BANK MANAGEMENT</h1>
 		<c:if test="${message != null}">
 			<script type="text/javascript">
-				alert('CLICK OK THE PAGE WILL BE REFRESHED...'
-						+ "<c:out value='${message}'/>");
+				alert("<c:out value='${message}'/>");
 				windows.location.reload();
 			</script>
 		</c:if>
@@ -61,8 +60,8 @@
 					href="ViewAccountByBranch">VIEW ACCOUNT BY BRANCH</a></td>
 			</tr>
 			<tr>
-				<td align="center" height="40" width="350"><a href="getAllRole">
-						Add User Role</a></td>
+				<td align="center" height="40" width="350"><a
+					href="getAllRole"> Add User Role</a></td>
 			</tr>
 		</table>
 	</center>

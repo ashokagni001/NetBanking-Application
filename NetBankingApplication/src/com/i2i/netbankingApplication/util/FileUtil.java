@@ -2,16 +2,15 @@ package com.i2i.netbankingApplication.util;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.lang.Exception;
+import java.io.IOException;
 import java.util.Date;
 
 /**
  * When request comes from FileUtil and FileUtil perform to write message in file.
  * 
- * @author Ashok
+ * @author TEAM-2
  * 
- * @created 2016-08-27 
- *
+ * @created 2016-09-15 
  */
 public class FileUtil {
 	/**
@@ -23,11 +22,11 @@ public class FileUtil {
     public static void  exceptionOccurCreateFile(String errorMessage) {
         try {
             Date date = new Date();
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("abc.txt",true));
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("abc.txt", true));
             bufferedWriter.write("\n" + date + "--->   " + errorMessage + "\n");  
             bufferedWriter.close();
-        } catch (Exception e) {
-            System.out.println("File Could Not Be Created");
+        } catch (IOException e) {
+        	System.out.println("SOME PROBLEM OCCUR PLEASE TRY AGAIN LATER");
         }
     }
 }

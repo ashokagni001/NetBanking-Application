@@ -28,15 +28,6 @@ import com.i2i.netbankingApplication.service.CustomerService;
 public class LoginController {
 	private CustomerService customerService = new CustomerService();
 	
-   /**
-	* @return login
-	*     Return to the login JSP page.
-	*/
-	@RequestMapping(value = "/login")
-    public String login(){
-		return "redirect:login.jsp";
-	}
-	
 	/**
 	 * <p> 
 	 *     Get the Customer Id and passWord from JSP page and pass 
@@ -64,14 +55,15 @@ public class LoginController {
 	 * @return UserHomePage
 	 *     Return to the UserHomePage JSP page to view user operations.
 	 * 
-	 * @return login
+	 * @return Information
 	 *     If login fails return to the login JSP page with error message.
 	 * 
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
      */
 	@RequestMapping(value = "/loginController", method = RequestMethod.POST)
-    public String loginVerification(@RequestParam("customerId")String customerId, @RequestParam("password")String password, ModelMap message,HttpSession session) {
+    public String loginVerification(@RequestParam("customerId")String customerId, 
+    		@RequestParam("password")String password, ModelMap message,HttpSession session) {
 		try {
 		    if (customerService.ifValidateUser(customerId, password)) {
 				if (customerService.checkIfRole(customerId)){
@@ -85,14 +77,23 @@ public class LoginController {
 				}
 			} else {
 				message.addAttribute("message", "CHECK YOUR USERNAME and PASSWORD..");
-				return "redirect:login.jsp";
 			} 
         } catch (DataBaseException e) {
         	message.addAttribute("message", e.getMessage());
-        	return "redirect:login.jsp";
         } 
+		return "Information";
 	}
 	
+   /**
+    * If request come this method return to the login JSP page.
+    * 
+	* @return login
+	*     Return to the login JSP page.
+	*/
+	@RequestMapping(value = "/login")
+    public String login(){
+		return "redirect:login.jsp";
+	}
 	/**
 	 * <p>
 	 *     Adds the id and role of user by using setAttribute method.
@@ -101,7 +102,6 @@ public class LoginController {
 	 * 
 	 * @param customerId
 	 *     Id of Customer.
-	 *    
 	 * @param session
 	 *     Object of httpSeesion. Adds the id and role of user by using setAttribute method.
 	 *    
@@ -116,7 +116,7 @@ public class LoginController {
 	}
 	
 	/**
-	 * This method return to the approverIndexPage JSP page to view approver operations.
+	 *  If request come this method return to the approverIndexPage JSP page to view approver operations.
 	 * 
 	 * @return approverIndexPage
 	 *     Return to the approverIndexPage JSP page to view approver operations.

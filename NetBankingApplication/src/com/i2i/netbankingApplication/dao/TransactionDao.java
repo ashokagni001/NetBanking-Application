@@ -19,7 +19,7 @@ import com.i2i.netbankingApplication.model.CustomerTransaction;
  *     When request comes from TransactionService. TransactionDao performs add or delete or fetch or fetchAll 
  *     with database and return the responses to TransactionService.
  *     It handles the HibernateException and DataBaseException.
- *     Connect to the HibernateConnection class.
+ *     Connect to the HibernateConnection class use to create hibernate connection.
  * </p>
  * 
  * @author TEAM-2
@@ -28,6 +28,18 @@ import com.i2i.netbankingApplication.model.CustomerTransaction;
  */
 public class TransactionDao {
 	
+   /**
+	* <p>
+	*     Connect to the HibernateConnection class use to create hibernate connection.
+	*     and create SessionFactory.
+	* </p>
+	* 
+	* @return Session
+	*     Return the new session object. 
+	*     
+	* @throws DataBaseException
+	*     If there is an error in the given data like BadElementException and HibernateException.
+	*/
 	private Session hibernateConncetion() throws DataBaseException {
 		try {
 		    HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
@@ -46,7 +58,6 @@ public class TransactionDao {
 	 * 
 	 * @param customerTransaction
 	 *     object of CustomerTransaction to add.
-	 *     
 	 * @param debitAccount
 	 *     debitAccount of Account to Add transaction
 	 *     
@@ -175,10 +186,8 @@ public class TransactionDao {
 	 * 
 	 * @param accountNumber
 	 *     accountNumber of Customer.
-	 *     
 	 * @param balanceAmount
 	 *     balanceAmount of customer Account.
-	 *      
 	 * @param transactionId
 	 *     transactionId of Transaction.
 	 *      
@@ -246,15 +255,14 @@ public class TransactionDao {
      *     Return all CustomerTransactions in List type.
      * </p>
      * 
-	 * @return list
-	 *     return the list of CustomerTransactions.
-	 *     
 	 * @param formDate
 	 *     fromDate of transaction Date.
-	 *     
 	 * @param toDate
 	 *     toDate of transaction Date.
 	 *     
+	 * @return list
+	 *     return the list of CustomerTransactions.
+     *
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
 	 */

@@ -55,8 +55,7 @@
 		</div>
 		<c:if test="${message != null}">
 			<script type="text/javascript">
-				alert('CLICK OK THE PAGE WILL BE REFRESHED...'
-						+ "<c:out value='${message}'/>");
+				alert("<c:out value='${message}'/>");
 				windows.location.reload();
 			</script>
 		</c:if>
@@ -99,8 +98,7 @@
 	</c:if>
 	<c:if test="${message != null}">
 		<script type="text/javascript">
-			alert('CLICK OK THE PAGE WILL BE REFRESHED...'
-					+ "<c:out value='${message}'/>");
+			alert("<c:out value='${message}'/>");
 			windows.location.reload();
 		</script>
 	</c:if>

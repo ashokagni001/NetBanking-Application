@@ -21,7 +21,7 @@ import com.i2i.netbankingApplication.model.UserRole;
  *     When request comes from CustomerService. CustomerDao performs add or delete or fetch or fetchAll 
  *     with database and return the responses to CustomerService.
  *     It handles the HibernateException and DataBaseException.
- *     Connect to the HibernateConnection class.
+ *     Connect to the HibernateConnection class use to create hibernate connection.
  * </p>
  * 
  * @author TEAM-2
@@ -31,6 +31,18 @@ import com.i2i.netbankingApplication.model.UserRole;
 
 public class CustomerDao {
 	
+    /**
+	 * <p>
+	 *     Connect to the HibernateConnection class use to create hibernate connection.
+	 *     and create SessionFactory.
+	 * </p>
+	 * 
+	 * @return Session
+	 *     Return the new session object. 
+	 *     
+	 * @throws DataBaseException
+	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 */
 	private Session hibernateConncetion() throws DataBaseException {
 		try {
 		    HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
@@ -50,7 +62,6 @@ public class CustomerDao {
 	 * 
 	 * @param accountNumber
 	 *     accountNumber of customer
-	 *     
 	 * @param customer
 	 *     Object of Customer model class.It object used for add Customer.
 	 *     
@@ -98,7 +109,7 @@ public class CustomerDao {
 	        customer = (Customer)session.get(Customer.class, customerId); 
 	        transaction.commit();
 	    } catch (HibernateException e) {
-	    	throw new DataBaseException(e);
+	    	throw new DataBaseException("CHECK YOUR PLEASE INSERT VALID CUSTOMER DETAIL..");
 	    } finally {
 	        session.close(); 
 	    } 
@@ -136,7 +147,6 @@ public class CustomerDao {
 	 * 
 	 * @param customerId
 	 *     customerId of Customer to add address.
-	 *     
 	 * @param address
 	 *     Object of Address class.
 	 *     
@@ -240,7 +250,7 @@ public class CustomerDao {
 	}
 	
 	/**
-	 *  Get the UserRole object from CustomerService and add UserRole to database. 
+	 * Get the UserRole object from CustomerService and add UserRole to database. 
 	 * 
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.

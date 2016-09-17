@@ -95,7 +95,11 @@
 				<script src="http://iamrohit.in/lab/js/location.js"></script>
 				<tr>
 					<td>Pincode :</td>
+<<<<<<< HEAD
 					<td><form:input path="pincode" placeholder="pincode"/></td>
+=======
+					<td><form:input path="pincode" placeholder="pincode" /></td>
+>>>>>>> 3fdcf5095df462913f64f7093825c3305ade0aa2
 				</tr>
 				</br>
 				</br>

@@ -68,19 +68,14 @@ public class CustomerController {
      * 
      * @param customer
      *     Object of Customer model class.
-     * 
      * @param message
      *     Display message using add attribute.
      * 
      * @return CustomerRegistration
      *     Return to JSP page CustomerRegistration with status message(success or failure).
      * 
-     * @throws NumberFormatException
-     *     If the data is very large.
-     * 
      * @throws CustomerDataException
      *     If there is an error in the Customer Attribute exception is handle by CustomerDataException.
-     * 
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
      */
@@ -106,7 +101,6 @@ public class CustomerController {
      * 
 	 * @param address
 	 *     Object of Address model class.
-	 *     
 	 * @param message
 	 *     Display message using add attribute.
 	 *     
@@ -135,6 +129,7 @@ public class CustomerController {
 	 * 
 	 * @return GetCustomer
 	 *     Return to JSP page GetCustomer.
+	 *     
 	 * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
 	 */
@@ -153,6 +148,7 @@ public class CustomerController {
 	 *     This Method call to getAllCustomer method in CustomerService.
      *     Return to the RetrieveAllCustomer JSP page with customer lists or status message(failure).
      * </p>
+     * 
 	 * @param customerId
 	 *     Id of Customer entered by user to view the corresponding record.
 	 *     
@@ -190,6 +186,7 @@ public class CustomerController {
 	 *     
 	 * @return RetrieveAddressById
 	 *     Return to the RetrieveAddressById JSP page with Customer address or status message(failure).
+	 * @throws DataBaseException 
 	 */
 	@RequestMapping(value="/viewCustomerAddress", method = RequestMethod.GET)
     public ModelAndView viewAddressById(@RequestParam("addressId")int addressId, ModelMap message) {

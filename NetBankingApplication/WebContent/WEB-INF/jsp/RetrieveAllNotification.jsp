@@ -27,8 +27,7 @@
 <body>
 	<c:if test="${message != null}">
 		<script type="text/javascript">
-			alert('CLICK OK THE PAGE WILL BE REFRESHED...'
-					+ "<c:out value='${message}'/>");
+			alert("<c:out value='${message}'/>");
 			windows.location.reload();
 		</script>
 	</c:if>
@@ -86,7 +85,7 @@
 			</c:forEach>
 		</table>
 	</center>
-	<a href="approverIndexPage">Go to main page </a>
+	<a href="TransactionIndex">Go to main page </a>
 	<div class="pos">
 		<a class="btn btn-danger" href="logoutController"> LOGOUT</a>
 	</div>

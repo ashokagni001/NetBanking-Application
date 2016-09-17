@@ -33,7 +33,7 @@ public class BranchService {
      * </p>
      * 
      * @param emailId
-     *     emailId of branch enter the user add to new Branch.
+     *     emailId of branch used to add a new Branch.
      * 
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
@@ -65,7 +65,7 @@ public class BranchService {
     	}
    	    return lastIFSC;
    	}
-    
+
     /**
      * <p> 
      *     This method get the IFSCode from Branch controller and
@@ -105,7 +105,7 @@ public class BranchService {
 	 * @param IFSCode
 	 *     IFSCode of branch.It IfsCode used to view corresponding records.
 	 *     
-	 * @return Object
+	 * @return branch
 	 *     return the branch Object.
 	 *     
 	 * @throws DataBaseException
@@ -162,13 +162,10 @@ public class BranchService {
 	 * 
 	 * @param accountNumber
 	 *     accountNumber of Account.
-	 *     
 	 * @param balance
 	 *     balance of Account.
-	 *     
 	 * @param accounttype
 	 *     accountType of Account.
-	 *     
 	 * @param ifsc
 	 *     ifsc of Account.
 	 *     

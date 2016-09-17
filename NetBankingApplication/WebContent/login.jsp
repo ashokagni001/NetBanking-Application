@@ -1,12 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:if test="${sessionScope['role'] != approver}">
-	<c:redirect url="approverIndexPage" />
-</c:if>
-<c:if test="${sessionScope['role'] != user}">
-	<c:redirect url="userHomePage" />
-</c:if>
+
 <html>
 <head>
 <title>NetBanking login form</title>
@@ -219,5 +214,24 @@ deg
 		<script
 			src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 		<script src="js/index.js"></script>
+	<div class="wrapper">
+		<form class="login" action="loginController" method="post">
+			<p class="title">NET BANKING LOG IN</p>
+			<input type="text" name="customerId" placeholder="CUSTOMER ID"
+				autofocus required /> <i class="fa fa-user"></i> <input
+				type="password" name="password" placeholder="PASSWORD" required />
+			<i class="fa fa-key"></i>
+			<button>
+				<i class="spinner"></i> <span class="state">Log in</span>
+			</button>
+			<p class="message">
+				Not registered? <a href="CustomerRegistration">Create an account</a>
+			</p>
+		</form>
+		</p>
+	</div>
+	<script
+		src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+	<script src="js/index.js"></script>
 </body>
 </html>
