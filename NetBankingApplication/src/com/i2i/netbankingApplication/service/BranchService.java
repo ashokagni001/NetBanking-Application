@@ -20,7 +20,6 @@ import com.i2i.netbankingApplication.model.Branch;
  * @author TEAM-2
  * 
  * @created 2016-09-03.
- *
  */
 public class BranchService {
 	private BranchDao branchDao = new BranchDao();
@@ -49,7 +48,7 @@ public class BranchService {
      * </p>
      * 
      * @return lastIFSC
-     *     return to the Last ifsc code.
+     *     return to the last value of Last IfsCode code.
      *     
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
@@ -78,8 +77,9 @@ public class BranchService {
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
      */
-	public void deleteBranchById(String IFSCode) throws DataBaseException {
+	public String deleteBranchById(String IFSCode) throws DataBaseException {
 		branchDao.deleteBranchById(IFSCode);
+		return "YOUR BRANCH DELETED SUCCESSFULLY";
 	}
 	
 	/**
@@ -129,8 +129,14 @@ public class BranchService {
      *     If there is an error in the given data like BadElementException.
      */
 	public String getAddress(Address address) throws DataBaseException {
-	    return branchDao.addAddress("I2I0BK" + String.valueOf(getLastIFSCode()), new Address(customerService.getNewAddressId(), address.getStreet(),
+		String IFSCode = "I2I0BK" + String.valueOf(getLastIFSCode());
+		String message = branchDao.addAddress(IFSCode, new Address(customerService.getNewAddressId() + 1, address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
+		if (message == null) {
+			branchDao.deleteBranchById(IFSCode);
+			message = "YOUR BRANCH ADDED NOT SUCCESSFULLY";
+		}
+		return message;
     }
     
 	/**
@@ -167,7 +173,7 @@ public class BranchService {
 	 * @param accounttype
 	 *     accountType of Account.
 	 * @param ifsc
-	 *     ifsc of Account.
+	 *     IfsCode of Account.
 	 *     
 	 * @throws DataBaseException
 	 *      If there is an error in the given data like BadElementException.
@@ -189,7 +195,7 @@ public class BranchService {
      * </p>
      * 
 	 * @param ifsc
-	 *     ifsc of Account.
+	 *     IfsCode of Account.
 	 *     
 	 * @return List.
 	 *     return the list of accounts.

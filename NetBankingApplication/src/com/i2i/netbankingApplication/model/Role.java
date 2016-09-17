@@ -15,7 +15,6 @@ import javax.persistence.Table;
  * @author Team-2
  * 
  * @created 2016-09-03
- *
  */
 @Entity
 @Table(name = "role_detail")

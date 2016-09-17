@@ -31,7 +31,7 @@ public class BranchController {
 	private BranchService branchService = new BranchService();
 	
    /**
-    * If request come this method return the JSP page that contains options for Branch operation
+    * If request come this method return the JSP page that contains options for Branch operation.
     * 
     * @return BranchIndex
     *     Return to the BranchIndex JSP page.
@@ -42,7 +42,7 @@ public class BranchController {
 	}
 	
 	/**
-	 *  If request come this method return to the AddBranch JSP page use to add the new branch.
+	 * If request come this method return to the AddBranch JSP page use to add the new branch.
 	 * 
 	 * @return AddBranch
 	 *     Return to the AddBranch JSP page.
@@ -60,13 +60,11 @@ public class BranchController {
      * 
      * @param emailId
      *     emailId of entered by user to Add the Branch.
-     * 
      * @param message
      *     Display message using add attribute.
      *     
      * @return AddAddress
      *     Return to JSP page AddAddress with Address Object.
-     *     
      * @return BranchIndex
      *     Return to JSP page BranchIndex with Status message(failure).
      * 
@@ -99,7 +97,6 @@ public class BranchController {
      * 
 	 * @param address
 	 *     Object of Address model class.
-	 *     
 	 * @param message
 	 *     Display message using add attribute.
 	 *     
@@ -124,14 +121,14 @@ public class BranchController {
 	 * <p>
 	 *     This method delete the corresponding record(Branch IFSC).
 	 *     This Method call to deleteBranchById method in BranchService.
-     *     Return to the GetBranch JSP page with list of Branches or status message(failure).
+     *     Return to the RetrieveAllBranch JSP page with list of Branches or status message(failure).
      * </p>
      * 
 	 * @param BranchId
 	 *     Id of Branch entered by user to delete the corresponding record.
 	 *     
 	 * @return RetrieveAllBranch
-	 *     Return to the GetBranch JSP page with list of Branches or status message(failure).
+	 *     Return to the RetrieveAllBranch JSP page with list of Branches or status message(failure).
 	 *     
 	 * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
@@ -139,8 +136,7 @@ public class BranchController {
 	@RequestMapping(value="/deleteBranchById", method = RequestMethod.GET)
     public String deleteBranch(@RequestParam("ifsc")String ifsc, ModelMap message) {
     	try {       
-            branchService.deleteBranchById(ifsc);
-            message.addAttribute("message", "BRANCH DELETED SUCESSFULLY");
+            message.addAttribute("message", branchService.deleteBranchById(ifsc));
             message.addAttribute("branches", branchService.getAllBranch());
 	    } catch (DataBaseException e) {
     		message.addAttribute("message", e.getMessage()); 
@@ -177,7 +173,7 @@ public class BranchController {
 	 * @param BranchId
 	 *     Id of Branch entered by user to view the corresponding record.
 	 *     
-	 * @return GetBranch
+	 * @return RetrieveAllBranch
 	 *     Return to the ReteriveAllBranch JSP page with list of Branches or status message(failure).
 	 *  
 	 * @throws DataBaseException
@@ -197,7 +193,7 @@ public class BranchController {
         		}
         	}
         } catch (DataBaseException e) {
-        	return new ModelAndView("BranchIndex","message",  e.getMessage());
+        	return new ModelAndView("RetrieveAllBranch","message",  e.getMessage());
         }
 	}
 	
@@ -228,7 +224,7 @@ public class BranchController {
 	/**
      * Return to JSP page AddAccount.It used new add Customer account.
 	 * 
-	 * @return GetBranch
+	 * @return AddAccount
 	 *     Return to JSP page AddAccount.
 	 */
 	@RequestMapping(value = "/AddAccount")
@@ -259,7 +255,6 @@ public class BranchController {
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
 	 */
-	@SuppressWarnings("finally")
 	@RequestMapping(value="/addAccount", method = RequestMethod.POST)  
     public String getAccount(@RequestParam("accountNumber")String accountNumber, @RequestParam("balance")String balance, 
     		@RequestParam("accounttype")String accounttype, @RequestParam("ifscode")String ifsc, ModelMap message) throws  DataBaseException {
@@ -289,9 +284,9 @@ public class BranchController {
 	 *     This Method call to viewAccountByBranch method in BranchService.
      *     Return to the BranchIndex JSP page with list of accounts or status message(failure).
      * </p> 
+     * 
 	 * @param ifsc
 	 *     ifsc of Branch. It use to retrieve all account detail in One Branch.
-	 *      
 	 * @param message
 	 *     Display message using add attribute.
 	 *     

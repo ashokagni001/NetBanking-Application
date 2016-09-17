@@ -22,8 +22,7 @@
 		</script>
 	</c:if>
 	<div class="well">
-		<font size="20"><marquee behavior="alternate">NET
-				BANKING</marquee></font>
+		<font size="20"><marquee behavior="alternate">I2I NETBANKING</marquee></font>
 	</div>
 	<center>
 		<h2>REGISTER YOUR DETAIL</h2>
@@ -57,10 +56,6 @@
 			<input type="submit" name="submit" value="NEXT" />
 		</form:form>
 	</center>
-<<<<<<< HEAD
 	<a href="login"> Go to main page</a>
-=======
-	<a href="login" style="font-sise: 18px">Go to main page</a>
->>>>>>> 3fdcf5095df462913f64f7093825c3305ade0aa2
 </body>
 </html>

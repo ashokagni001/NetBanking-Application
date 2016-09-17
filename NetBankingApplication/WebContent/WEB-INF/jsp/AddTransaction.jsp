@@ -35,8 +35,7 @@
 </head>
 <body>
 	<div class="well">
-		<font size="20"><marquee behavior="alternate">NET
-				BANKING</marquee></font>
+		<font size="20"><marquee behavior="alternate">I2I NETBANKING</marquee></font>
 	</div>
 
 	<div class="position">

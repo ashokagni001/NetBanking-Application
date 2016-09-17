@@ -12,6 +12,7 @@ import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.hibernateConnection.HibernateConnection;
 import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Address;
+import com.i2i.netbankingApplication.model.Branch;
 import com.i2i.netbankingApplication.model.Customer;
 import com.i2i.netbankingApplication.model.Role;
 import com.i2i.netbankingApplication.model.UserRole;
@@ -173,6 +174,34 @@ public class CustomerDao {
 	        session.close(); 
 	    }
 	}
+	
+	/**
+	 * <p>
+     *     Get the customerId from CustomerService.
+     *     Delete customer from database. 
+     * </p>
+     * 
+	 * @param customerId
+	 *     customerId of Customer.
+	 *     
+	 * @throws DataBaseException
+	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 */
+	public String deleteCustomeryId(String customerId) throws DataBaseException {
+	    Session session = hibernateConncetion();
+	    Transaction transaction = null;
+	    try {
+	        transaction = session.beginTransaction();
+	        Customer customer = (Customer)session.get(Customer.class, customerId); 
+	        session.delete(customer); 
+	        transaction.commit();
+	        return "YOUR REGISTERATION NOT COMPLETED .PLEASE TRY AGAIN";
+	    } catch (HibernateException e) {
+	    	throw new DataBaseException("CHECK customerId " + customerId + "PLEASE INSERT VALID IFSC...\n");  
+	    } finally {
+	        session.close(); 
+	    }
+    }
 	
 	/**
 	 * <p>

@@ -56,7 +56,7 @@ public class LoginController {
 	 *     Return to the UserHomePage JSP page to view user operations.
 	 * 
 	 * @return Information
-	 *     If login fails return to the login JSP page with error message.
+	 *     If login fails return to the Information JSP page with error message.
 	 * 
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
@@ -64,24 +64,26 @@ public class LoginController {
 	@RequestMapping(value = "/loginController", method = RequestMethod.POST)
     public String loginVerification(@RequestParam("customerId")String customerId, 
     		@RequestParam("password")String password, ModelMap message,HttpSession session) {
+		String URL = "Information";
 		try {
 		    if (customerService.ifValidateUser(customerId, password)) {
 				if (customerService.checkIfRole(customerId)){
 					session.setAttribute("id", customerId);
 					session.setAttribute("role", "approver");
-					return "ApproverHomePage";
+					return URL = "ApproverHomePage";
 				} else {
 					session.setAttribute("id", customerId);
 					session.setAttribute("role", "user");
-					return "UserHomePage";
+					return URL = "UserHomePage";
 				}
 			} else {
 				message.addAttribute("message", "CHECK YOUR USERNAME and PASSWORD..");
+				return URL;
 			} 
         } catch (DataBaseException e) {
         	message.addAttribute("message", e.getMessage());
+        	return URL;
         } 
-		return "Information";
 	}
 	
    /**
@@ -94,6 +96,7 @@ public class LoginController {
     public String login(){
 		return "redirect:login.jsp";
 	}
+	
 	/**
 	 * <p>
 	 *     Adds the id and role of user by using setAttribute method.
@@ -102,8 +105,9 @@ public class LoginController {
 	 * 
 	 * @param customerId
 	 *     Id of Customer.
+	 *    
 	 * @param session
-	 *     Object of httpSeesion. Adds the id and role of user by using setAttribute method.
+	 *     Object of httpSeesion. Adds the role of user by using setAttribute method.
 	 *    
 	 * @return UserHomePage 
 	 *     Return to the UserHomePage JSP page to view user operations.
@@ -116,7 +120,7 @@ public class LoginController {
 	}
 	
 	/**
-	 *  If request come this method return to the approverIndexPage JSP page to view approver operations.
+	 * If request come this method return to the approverIndexPage JSP page to view approver operations.
 	 * 
 	 * @return approverIndexPage
 	 *     Return to the approverIndexPage JSP page to view approver operations.

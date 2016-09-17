@@ -28,7 +28,7 @@
 </head>
 <body>
 	<div class="well">
-		<font size="20"> <marquee behavior="alternate">NETBANKING</marquee>
+		<font size="20"> <marquee behavior="alternate">I2I NETBANKING</marquee>
 		</font>
 	</div>
 	<h2>INSERT ACCOUNT</h2>

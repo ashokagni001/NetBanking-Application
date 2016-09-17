@@ -32,7 +32,7 @@ public class BranchDao {
    /**
 	* <p>
 	*     Connect to the HibernateConnection class use to create hibernate connection.
-	*     and create SessionFactory.
+	*     and create SessionFactory.Return the new session object. 
 	* </p>
 	* 
 	* @return Session
@@ -159,7 +159,6 @@ public class BranchDao {
 	 * 
 	 * @param IFSCode
 	 *     IFSCode of branch
-	 *      
 	 * @param address
 	 *     object of Address class to add.
 	 *     

@@ -219,10 +219,8 @@ public class TransactionDao {
 	 *  
 	 * @param accountNumber
 	 *     accountNumber of Customer.
-	 *     
 	 * @param balanceAmount
 	 *     balanceAmount of customer Account.
-	 *     
 	 * @param transactionId
 	 *     transactionId of Transaction.
 	 *     
@@ -233,6 +231,7 @@ public class TransactionDao {
 			throws DataBaseException {
 		Session session = hibernateConncetion();
 		Transaction transaction = null;
+		Account account = null;
 		CustomerTransaction customerTransaction = null;
 		try {
 			transaction = session.beginTransaction();

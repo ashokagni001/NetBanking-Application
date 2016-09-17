@@ -22,12 +22,11 @@ public class LogoutController extends HttpServlet {
      * 
 	 * @param message
 	 *     Display message using add attribute.
-	 * 
 	 * @param session
 	 *     Session of httpSeesion.
 	 * 
-	 * @return login
-	 *     Return to the login JSP page with message.
+	 * @return Information
+	 *     Return to the Information JSP page with message.
 	 */
 	@RequestMapping(value = "/logoutController")
     public String logout(ModelMap message, HttpSession session) {

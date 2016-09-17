@@ -51,36 +51,44 @@ public class CustomerService {
     public void getCustomer(Customer customer) throws DataBaseException, CustomerDataException {
     	String accountNumer = customer.getAccountNumber();
     	Account account = customerDao.retrieveAccountByNumber(accountNumer);
-    	//verify the Customer account number validate or not.
+    	//check the Customer account number already exists or not.
     	if (account == null) {
     		throw new CustomerDataException("YOUR ACCOUNT NUMBER IS NOT VALID");  
     	}
-    	//verify the Customer details already register or not.
+    	//check the Customer details already register or not.
     	if (account.getCustomer() != null) {
     		throw new CustomerDataException("YOUR ALREADY REGISTER THE NETBANKING..."); 
     	}
-    	//verify the Customer DOB valid or not
-    	String dateOBirth = customer.getDob();
-        if (StringUtil.isValidFormat(dateOBirth)) {
-            throw new DataBaseException("YOUR FORMAT" + dateOBirth +
-                "FORMAT MUST 1/05/2000.INSERT VALID DOB..!!");  
+    	
+    	String customerName = customer.getName();
+    	//check the Customer Name valid or not
+    	if (!StringUtil.isAlphabetic(customerName)) {
+    		throw new CustomerDataException("YOUR NAME" + customerName +
+                    "IS NOT VALID");  
+    	}
+    	
+    	//check the Customer Name valid length or not
+    	if (customerName.length() > ConstantVariableUtil.nameLength) {
+         	throw new CustomerDataException("YOUR NAME" + customerName +
+                    "IS NOT VALID");  
         }
-        
+    	
     	String customerDOB = customer.getDob();
     	//verify the Customer DOB valid or not
         if (StringUtil.isValidFormat(customerDOB)) {
-            throw new DataBaseException("YOUR FORMAT" + customerDOB +
+            throw new CustomerDataException("YOUR FORMAT" + customerDOB +
                 "FORMAT MUST 1/05/2000.INSERT VALID DOB..!!");  
         }
         
         int customerAge = StringUtil.calculateAge(customerDOB);
-        //verify the customer age valid limit or not
+        //check the customer age valid limit or not
         if (customerAge > ConstantVariableUtil.maxAgeLimit) {
         	throw new CustomerDataException("YOUR AGE IS NOT VALID");  
         }
         String customerId = "CUSI2I00" + String.valueOf(getLastCustomerId() + 1);
-        customerDao.insertUser(customer.getAccountNumber(), new Customer(customerId, customer.getName(), customerAge, customerDOB, 
-            customer.getGender(), customer.getMobileNumber(), customer.getEmail(), "i2i" + String.valueOf((int)(Math.random()*9000)), accountNumer, "ACTIVE"));
+        customerDao.insertUser(customer.getAccountNumber(), new Customer(customerId, customerName, customerAge, 
+        		customerDOB, customer.getGender(), customer.getMobileNumber(), customer.getEmail(),
+        		"i2i" + String.valueOf((int)(Math.random()*9000)), accountNumer, "ACTIVE"));
         insertUserRole(customerId, "1");
     }
     
@@ -153,12 +161,20 @@ public class CustomerService {
      * @param address
      *     Object of Address model class.It object used for add Customer Address.
      *     
+     * @return message
+     *     Return status message (Success or failure).
+     * 
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
-     */ 
-	public String getAddress(Address address) throws DataBaseException {
-	    return customerDao.addAddress("CUSI2I00" + String.valueOf(getLastCustomerId()), new Address(getNewAddressId(), address.getStreet(),
+     */
+   	public String getAddress(Address address) throws DataBaseException {
+		String customerId = "CUSI2I00" + String.valueOf(getLastCustomerId());
+	    String message = customerDao.addAddress(customerId, new Address(getNewAddressId(), address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
+	    if (message == null) {
+	    	message = customerDao.deleteCustomeryId(customerId);
+	    }
+		return message;
     }
     
 	/**
@@ -227,7 +243,7 @@ public class CustomerService {
 				throw new DataBaseException("ALREADY CUSTOMER ASSINED SAME ROLE");
 			}
 		} else {
-			throw new DataBaseException("Please enter the valid userId");
+			throw new DataBaseException("PLEASE ENTER THE VALID USERID");
 		}
 	}    
 	/**
@@ -268,8 +284,8 @@ public class CustomerService {
 	 *     Return to the last userRole id.
 	 * </p>
 	 * 
-	 * @return lastId
-	 *     last Id of userRole.
+	 * @return newUserRoleId
+	 *     Return the new User Role Id.
 	 *  
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
@@ -327,9 +343,11 @@ public class CustomerService {
      */
 	public boolean ifValidateUser(String customerId, String password) throws DataBaseException,ExceptionInInitializerError {
 	    Customer customer = getCustomerById(customerId); 
+	    //verify the user already exists or not.
 	    if (customer == null) {
 	    	return false;  
 	    }
+	    //verify the user passWord equals or not.
 	    if(!(customer.getPassWord().equals(password))) {
 	    	return false; 
 	    }

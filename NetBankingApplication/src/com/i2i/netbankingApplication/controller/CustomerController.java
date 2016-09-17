@@ -80,17 +80,19 @@ public class CustomerController {
      *     If there is an error in the given data like BadElementException.
      */
 	@RequestMapping(value="/register", method = RequestMethod.POST)
-    public String addCustomer(@ModelAttribute("Customer") Customer customer, ModelMap message) {  
+    public String addCustomer(@ModelAttribute("Customer") Customer customer, ModelMap message) { 
+		String URL = "CustomerRegistration";
 		try {
 			customerService.getCustomer(customer);
 			message.addAttribute("Address", new Address());
-            return "AddAddress";
+            return URL = "AddAddress";
 		} catch (CustomerDataException e) {
     		message.addAttribute("message", e.getMessage().toString()); 
         } catch (DataBaseException e) {
     		message.addAttribute("message", e.getMessage().toString()); 
-        } 
-		return "CustomerRegistration";
+        } finally {
+		    return URL;
+        }
     }
 	
 	/**
@@ -186,7 +188,6 @@ public class CustomerController {
 	 *     
 	 * @return RetrieveAddressById
 	 *     Return to the RetrieveAddressById JSP page with Customer address or status message(failure).
-	 * @throws DataBaseException 
 	 */
 	@RequestMapping(value="/viewCustomerAddress", method = RequestMethod.GET)
     public ModelAndView viewAddressById(@RequestParam("addressId")int addressId, ModelMap message) {
@@ -209,7 +210,8 @@ public class CustomerController {
 	 * @param model
 	 *     Customer model return the customer object.
 	 * @param message 
-	 *     
+	 *      Display message using add attribute.
+	 *      
 	 * @return AddUserRole
 	 *     Return to the AddUserRole JSP page with Role Detail or status message(failure).
 	 * 
@@ -240,10 +242,8 @@ public class CustomerController {
 	 * 
 	 * @param customerId
 	 *     Id of Customer. 
-	 *     
 	 * @param roleId
 	 *     Id of Role.
-	 *     
 	 * @param message
 	 *     Display message using add attribute.
 	 *     

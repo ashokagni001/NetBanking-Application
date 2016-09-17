@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class FileUtil {
 	/**
-	 * It is write a message in file.
+	 * It is write a message in file with current date.
      * 
 	 * @param errorMessage
 	 *     A String data type.

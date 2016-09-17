@@ -20,7 +20,6 @@ import com.i2i.netbankingApplication.model.CustomerTransaction;
  * @author TEAM-2
  * 
  * @created 2016-09-03.
- *
  */
 public class TransactionService {
 	private TransactionDao transactionDao = new TransactionDao();
@@ -35,13 +34,10 @@ public class TransactionService {
      * 
 	 * @param debitAccountNumber
 	 *     debitAccountNumber of Transaction. 
-	 *     
 	 * @param creditAccountNumber
 	 *     creditAccountNumber of Transaction.
-	 *     
 	 * @param ifscode
 	 *     IFSCode of creditAccount.
-	 *      
 	 * @param amount
 	 *     amount of Transaction.
 	 *      
@@ -188,7 +184,7 @@ public class TransactionService {
      *     customerAccountNumber of Customer.
      *     
      * @return list
-     *     Return the customer transaction lists.
+     *     Return the list of customer transactions.
      *     
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
@@ -299,7 +295,8 @@ public class TransactionService {
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
 	 */
-	public List<CustomerTransaction> getDateTransaction(String fromDate, String toDate) throws DataBaseException {
+	public List<CustomerTransaction> getDateTransaction(String fromDate, String toDate) 
+			throws DataBaseException {
 		return transactionDao.retriveTransactionByDate(fromDate, toDate);
 	}
     

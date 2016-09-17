@@ -9,12 +9,6 @@
 </c:if>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<html>
-<head>
 <link rel="stylesheet" href="css/bootstrap.css">
 <script src="js/bootstrap.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -34,11 +28,10 @@
 </head>
 <body>
 	<div class="well">
-		<font size="20"><marquee behavior="alternate">NET
-				BANKING</marquee></font>
+		<font size="20"><marquee behavior="alternate">I2I NETBANKING</marquee></font>
 	</div>
 	<center>
-		<h1>WELCOME NETBANKING APPLICATION</h1>
+		<h1>WELCOME I2I NETBANKING APPLICATION</h1>
 		<br /> <br /> If U Want Customer Operation Open Click On <br /> <br />
 		<a class="btn btn-info" href="userHomePage">OPEN</a> <br /> <br />
 		If U Want Admin Operation Open Click On <br /> <br /> <a

@@ -26,8 +26,7 @@
 <body>
 	<c:if test="${sessionScope['role'] == 'approver'}">
 		<div class="well">
-			<font size="20"><marquee behavior="alternate">NET
-					BANKING</marquee></font>
+			<font size="20"><marquee behavior="alternate">I2I NETBANKING</marquee></font>
 		</div>
 		<c:if test="${message != null}">
 			<script type="text/javascript">

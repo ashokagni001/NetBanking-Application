@@ -23,7 +23,6 @@ import org.hibernate.annotations.LazyCollectionOption;
  * @author TEAM-2
  * 
  * @created 2016-09-03
- *
  */
 @Entity
 @Table(name = "account_detail")

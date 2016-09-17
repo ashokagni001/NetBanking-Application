@@ -60,17 +60,13 @@ public class TransactionController {
      * </p>
      * 
 	 * @param debitAccountNumber
-	 *     debitAccountNumber of Account.
-	 *     
+	 *     debitAccountNumber of Transaction.
 	 * @param creditAccountNumber
-	 *     creditAccountNumber of Account.
-	 *     
+	 *     creditAccountNumber of Transaction
 	 * @param ifscode
 	 *     ifsCode of Branch.
-	 *     
 	 * @param amount
 	 *     amount of transaction.
-	 *     
 	 * @param message
 	 *     Display message using add attribute.
 	 *     
@@ -136,7 +132,6 @@ public class TransactionController {
      * 
 	 * @param customerId
 	 *     Id of Customer entered by user to view the corresponding record(Account Detail).
-	 *     
 	 * @param message
 	 *     Display message using add attribute.
 	 *     
@@ -186,7 +181,6 @@ public class TransactionController {
 	 *     
 	 * @return RetrieveMiniStatementByCustomerId
 	 *     Return to the RetrieveMiniStatementByCustomerId JSP page with Customer MiniStatement or status message(failure).
-	 * 
 	 */
 	@RequestMapping(value="/viewMiniStatementByCustomerId", method = RequestMethod.GET)  
     public ModelAndView viewMiniStatementByCustomerId (@RequestParam("customerId")String customerId, ModelMap message) {
@@ -206,10 +200,8 @@ public class TransactionController {
 	 *       
 	 * @param creditAccountNumber
 	 *     creditAccountNumber of Account.
-	 *     
 	 * @param amount
 	 *     amount of Transaction.
-	 *           
 	 * @param message
 	 *     Display message using add attribute.
 	 *     
@@ -240,10 +232,8 @@ public class TransactionController {
 	 * 
 	 * @param debitAccountNumber
 	 *     debitAccountNumber of Account.
-	 *     
 	 * @param amount
 	 *     amount of Transaction.
-	 *           
 	 * @param message
 	 *     Display message using add attribute.
 	 *  
@@ -273,7 +263,6 @@ public class TransactionController {
 	 * 
 	 * @return AddTransaction
 	 *     Return to the AddTransaction JSP page.
-	 *     
 	 */
 	@RequestMapping(value = "/viewTransactionByDate")
 	public String getDateTransaction() {
@@ -289,10 +278,8 @@ public class TransactionController {
 	 * 
 	 * @param fromDate
 	 *     fromDate of transaction
-	 *     
 	 * @param toDate
 	 *     toDate of transaction.
-	 *     
 	 * @param message
 	 *     Display message using add attribute.
 	 *      

@@ -1,10 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<c:if test="${sessionScope['role'] != approver}">
+	<c:redirect url="approverIndexPage" />
+</c:if>
+<c:if test="${sessionScope['role'] != user}">
+	<c:redirect url="userHomePage" />
+	</c:if>
+<c:if test="${message != null}">
+		<script type="text/javascript">
+			alert("<c:out value='${message}'/>");
+			windows.location.reload();
+		</script>
+</c:if>
 <html>
 <head>
-<title>NetBanking login form</title>
+<title>I2I NETBANKING LOGIN FORM</title>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700'
 	rel='stylesheet' type='text/css'>
 <link rel="stylesheet"
