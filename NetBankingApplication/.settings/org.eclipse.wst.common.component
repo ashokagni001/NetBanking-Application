@@ -2,7 +2,7 @@
     <wb-module deploy-name="NetBankingApplication">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="NetBankingApplication"/>
         <property name="java-output-path" value="/NetBankingApplication/build/classes"/>
+        <property name="context-root" value="NetBankingApplication"/>
     </wb-module>
 </project-modules>

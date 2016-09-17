@@ -124,14 +124,14 @@ public class BranchController {
 	 * <p>
 	 *     This method delete the corresponding record(Branch IFSC).
 	 *     This Method call to deleteBranchById method in BranchService.
-     *     Return to the GetBranch JSP page with list of Branches or status message(failure).
+     *     Return to the RetrieveAllBranch JSP page with list of Branches or status message(failure).
      * </p>
      * 
 	 * @param BranchId
 	 *     Id of Branch entered by user to delete the corresponding record.
 	 *     
 	 * @return RetrieveAllBranch
-	 *     Return to the GetBranch JSP page with list of Branches or status message(failure).
+	 *     Return to the RetrieveAllBranch JSP page with list of Branches or status message(failure).
 	 *     
 	 * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
@@ -177,7 +177,7 @@ public class BranchController {
 	 * @param BranchId
 	 *     Id of Branch entered by user to view the corresponding record.
 	 *     
-	 * @return GetBranch
+	 * @return RetrieveAllBranch
 	 *     Return to the ReteriveAllBranch JSP page with list of Branches or status message(failure).
 	 *  
 	 * @throws DataBaseException
@@ -187,17 +187,17 @@ public class BranchController {
     public ModelAndView viewBranchById (@RequestParam("ifsc")String ifsc) {
         try {
         	if (ifsc.equals("all") || ifsc.equals("All") || ifsc.equals("ALL")) {
-        		return new ModelAndView ("GetBranch", "branches", branchService.getAllBranch());
+        		return new ModelAndView ("RetrieveAllBranch", "branches", branchService.getAllBranch());
         	} else  {
         		Branch branch = branchService.getBranchById(ifsc);
         		if (branch != null) {
-                    return new ModelAndView("GetBranch","branch", branch);
+                    return new ModelAndView("RetrieveAllBranch","branch", branch);
         		} else {
-        			return new ModelAndView("GetBranch","message", "ENTER VALID IFSC ONLY");
+        			return new ModelAndView("RetrieveAllBranch","message", "ENTER VALID IFSC ONLY");
         		}
         	}
         } catch (DataBaseException e) {
-        	return new ModelAndView("GetBranch","message",  e.getMessage());
+        	return new ModelAndView("RetrieveAllBranch","message",  e.getMessage());
         }
 	}
 	
@@ -228,7 +228,7 @@ public class BranchController {
 	/**
      * Return to JSP page AddAccount.It used new add Customer account.
 	 * 
-	 * @return GetBranch
+	 * @return AddAccount
 	 *     Return to JSP page AddAccount.
 	 */
 	@RequestMapping(value = "/AddAccount")
