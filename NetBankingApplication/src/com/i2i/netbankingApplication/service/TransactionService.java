@@ -9,6 +9,7 @@ import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Customer;
 import com.i2i.netbankingApplication.model.CustomerTransaction;
+import com.i2i.netbankingApplication.util.StringUtil;
 
 /**
  * <p>
@@ -42,14 +43,13 @@ public class TransactionService {
 	 *     amount of Transaction.
 	 *      
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking Application.
 	 */
-	public String getTransactionDetail(String customerId, String creditAccountNumber, 
+	public String addTransactionDetail(String customerId, String creditAccountNumber, 
 			String ifscode, double amount) throws DataBaseException {
 		Account debitAccount = getAccountByCustomerId(customerId);
 		Account creditAccount = transactionDao.retrieveAccountByNumber(creditAccountNumber);
-		//verify the Credit Account available or not.
-		if (creditAccount != null) {
+		if (null != creditAccount) {
 			//verify the creditAccount IFSCode valid or not.
 			if (creditAccount.getBranch().getIFSCode().equals(ifscode)) {
 		        double currentAmount = debitAccount.getBalance();
@@ -57,17 +57,19 @@ public class TransactionService {
 				//check the balanceAmount have or not.
 				if (balanceAmount > Constant.INITIALIZEVARAILABLEVALUE) {
 					debitAccount.setBalance(balanceAmount);
-					return transactionDao.addTransaction(new CustomerTransaction(getLastTransactionId(), amount,
+					transactionDao.insertTransaction(new CustomerTransaction(getLastTransactionId(), amount,
 								"Request", debitAccount, creditAccount), debitAccount);
+					return ("YOUR TRANSACTION DETAIL SEND OUR TRANSACTION APPROVER PLEASE WAIT");
 				} else {
 
-					return "YOUR CREDIT AMOUNT VALUE IS MUST BE LESSER THAN CURRENT AMOUNT :Rs " + currentAmount;
+					throw new DataBaseException("YOUR CREDIT AMOUNT VALUE IS MUST BE LESSER THAN CURRENT AMOUNT :Rs " + currentAmount );
 				}
-			} 
+			} else {
+				throw new DataBaseException("CREDITACCOUNTNUMBER IFSC CODE WORNG");
+			}
 		} else {
-			return "CREDITACCOUNTNUMBER INCORRECT";
+			throw new DataBaseException("CREDITACCOUNTNUMBER INCORRECT");
 		}
-		return "YOUR TRANSACTION IS SCUCCESSED";
 	}
 	
 	/**
@@ -84,7 +86,7 @@ public class TransactionService {
 	 *     Return the object of Account.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking Application.
 	 */
 	public Account retrieveAccountByNumber(String accountNumber) throws DataBaseException {
 		return transactionDao.retrieveAccountByNumber(accountNumber);
@@ -97,7 +99,7 @@ public class TransactionService {
 	 *     Return the new Transaction Id.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking Application.
 	 */
 	public int getLastTransactionId() throws DataBaseException {
 		int id = Constant.INITIALIZEVARAILABLEVALUE;
@@ -124,7 +126,7 @@ public class TransactionService {
 	 *     return object of CustomerTransaction.
 	 * 
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking Application.
 	 */
 	public CustomerTransaction getTransactionById(String transactionId) throws DataBaseException {
         return transactionDao.retrieveCustomerTransactionById(transactionId); 
@@ -140,9 +142,9 @@ public class TransactionService {
 	 *     Return the list of CustomerTransactions.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking Application.
 	 */
-	public List<CustomerTransaction> getAllTransaction() throws DataBaseException {
+	public List<CustomerTransaction> getAllTransactions() throws DataBaseException {
 		List<CustomerTransaction> transactions = new ArrayList<CustomerTransaction>();
 		for (CustomerTransaction transaction : transactionDao.retriveAllTransactions()) {
 			    transactions.add(transaction);
@@ -160,9 +162,9 @@ public class TransactionService {
 	 *     Return the list of Transactions.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking Application.
 	 */
-    public List<CustomerTransaction> getAllNotification() throws DataBaseException {
+    public List<CustomerTransaction> getAllNotifications() throws DataBaseException {
 		List<CustomerTransaction> transactions = new ArrayList<CustomerTransaction>();
 		for (CustomerTransaction transaction : transactionDao.retriveAllTransactions()) {
 			if (transaction.getStatus().equals("Request")) {
@@ -187,9 +189,9 @@ public class TransactionService {
      *     Return the list of customer transactions.
      *     
      * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException.
+     *     It handle all the custom exception in NetBanking Application.
      */
-   public List<CustomerTransaction> getCustomerMiniStatement(String customerId) throws DataBaseException {
+   public List<CustomerTransaction> getCustomerMiniStatements(String customerId) throws DataBaseException {
 		List<CustomerTransaction> transactions = new ArrayList<CustomerTransaction>();
 		String customerAccountNumber = customerService.getCustomerById(customerId).getAccountNumber();
 		for (CustomerTransaction transaction : transactionDao.retriveAllTransactions()) {
@@ -218,7 +220,7 @@ public class TransactionService {
      *     return to the object of Account.
      *     
      * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException.
+     *     It handle all the custom exception in NetBanking Application.
      */
 	public Account getCustomerAccount(String accountNumber) throws DataBaseException {
 		return transactionDao.retrieveAccountByNumber(accountNumber);
@@ -239,13 +241,13 @@ public class TransactionService {
 	 *     amount of Transaction.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking Application.
 	 */
 	public void transactionSuccess(int transactionId, String creditAccountNumber, Double amount, String userId)
 			throws DataBaseException {
 		Account creditAccount = transactionDao.retrieveAccountByNumber(creditAccountNumber);
 		Customer approver = customerService.getCustomerById(userId);
-	        double currentAmount = creditAccount.getBalance();
+	    double currentAmount = creditAccount.getBalance();
 		double balanceAmount = (currentAmount + amount);
 		creditAccount.setBalance(balanceAmount);
 		transactionDao.transactionSuccess(creditAccount, transactionId,	approver);
@@ -266,7 +268,7 @@ public class TransactionService {
 	 *     amount of Transaction.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking Application.
 	 */
 	public void transactionFailure(int transactionId, String debitAccountNumber, Double amount, String userId)
 			throws DataBaseException {
@@ -289,14 +291,18 @@ public class TransactionService {
 	 * @param toDate
 	 *     toDate of Transaction.
 	 *    
-	 * @return Object
-	 *     Return CustomerTransaction Object.
+	 * @return CustomerTransaction
+	 *     Return CustomerTransaction detail by specified dates.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking Application.
 	 */
 	public List<CustomerTransaction> getDateTransaction(String fromDate, String toDate) 
 			throws DataBaseException {
+		if (StringUtil.isValidDateFormat(fromDate) && StringUtil.isValidDateFormat(toDate)) {
+            throw new DataBaseException("YOUR FORMAT " + fromDate + " & " + toDate + 
+                " FORMAT MUST 2000-05-21.INSERT VALID DATE..!!");  
+        }
 		return transactionDao.retriveTransactionByDate(fromDate, toDate);
 	}
     
@@ -313,7 +319,7 @@ public class TransactionService {
 	 *     Return to the object of Account.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking Application.
 	 */
 	public Account getAccountByCustomerId(String customerId) throws DataBaseException {
 		return getCustomerAccount(customerService.getCustomerById(customerId).getAccountNumber());

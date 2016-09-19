@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.i2i.netbankingApplication.Constand.Constant;
 import com.i2i.netbankingApplication.exception.BranchDataException;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.Account;
@@ -144,7 +145,7 @@ public class BranchController {
     		message.addAttribute("message", e.getMessage()); 
     		message.addAttribute("branches", branchService.getAllBranches());
         } finally {
-        	return "RetrieveAllBranchs";
+        	return "RetrieveAllBranch";
         }
     }
 	
@@ -163,7 +164,7 @@ public class BranchController {
 	@RequestMapping(value = "/GetBranch")
 	public String getAllBranches(ModelMap message) throws DataBaseException {
 		message.addAttribute("branches", branchService.getAllBranches());
-		return "RetrieveAllBranchs";
+		return "RetrieveAllBranch";
 	}
 	/**
 	 * <p>
@@ -227,9 +228,12 @@ public class BranchController {
 	 * 
 	 * @return AddAccount
 	 *     Return to JSP page AddAccount.
+	 * @throws DataBaseException 
+	 *     It handle all the custom exception in NetBanking application.
 	 */
 	@RequestMapping(value = "/AddAccount")
-	public String addAccountForm() {
+	public String addAccountForm(ModelMap message) throws DataBaseException {
+		message.addAttribute("branches", branchService.getAllBranches());
 		return "AddAccount";
 	}
 	
@@ -264,6 +268,7 @@ public class BranchController {
 		} catch(DataBaseException e) {
 			message.addAttribute("message", e.getMessage());
 		} finally {
+			message.addAttribute("branches", branchService.getAllBranches());
 	     	return "AddAccount";
 		}
 	}
@@ -302,7 +307,7 @@ public class BranchController {
     public String viewAccountByBranch (@RequestParam("ifsc")String ifsc, ModelMap message) {
         try { 
             List<Account> accounts = branchService.viewAccountByBranch(ifsc);
-            if (0 != accounts.size()) {
+            if (Constant.INITIALIZEVARAILABLEVALUE != accounts.size()) {
                 message.addAttribute("accounts", accounts);
             } else {
                 message.addAttribute("message", "NO ACCOUNT STARTED IN THIS BRANCH ");

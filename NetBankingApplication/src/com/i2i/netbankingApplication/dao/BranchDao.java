@@ -39,7 +39,7 @@ public class BranchDao {
 	*     Return the new session object. 
 	*     
 	* @throws DataBaseException
-	*     If there is an error in the given data like BadElementException and HibernateException.
+	*     It handle all the custom exception in NetBanking Application and HibernateException.
 	*/
 	private Session hibernateConncetion() throws DataBaseException {
 		try {
@@ -59,9 +59,9 @@ public class BranchDao {
 	 *     object of Branch to add.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 *     It handle all the custom exception in NetBanking Application and HibernateException.
 	 */
-	public void addBranch(Branch branch) throws DataBaseException {
+	public void insertBranch(Branch branch) throws DataBaseException {
 	    Session session = hibernateConncetion();
 	    Transaction transaction = null;
 	    try {
@@ -85,7 +85,7 @@ public class BranchDao {
 	 *     IFSCode of Branch.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 *     It handle all the custom exception in NetBanking Application and HibernateException.
 	 */
 	public void deleteBranchById(String IFSCode) throws DataBaseException {
 	    Session session = hibernateConncetion();
@@ -115,7 +115,7 @@ public class BranchDao {
 	 *     Object of branch class.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 *     It handle all the custom exception in NetBanking Application and HibernateException.
 	 */
 	public Branch retrieveBranchById(String IFSCode) throws DataBaseException {
 	    Session session = hibernateConncetion();
@@ -138,9 +138,9 @@ public class BranchDao {
 	 *     Return the list of Branches.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 *     It handle all the custom exception in NetBanking Application and HibernateException.
 	 */
-	public List<Branch> retriveAllBranch() throws DataBaseException {
+	public List<Branch> retriveAllBranches() throws DataBaseException {
 	    Session session = hibernateConncetion();
 	    try {
 	        return session.createQuery("FROM Branch").list();
@@ -163,9 +163,9 @@ public class BranchDao {
 	 *     object of Address class to add.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 *     It handle all the custom exception in NetBanking Application and HibernateException.
 	 */
-	public String addAddress(String IFSCode, Address address) throws DataBaseException {
+	public void insertAddress(String IFSCode, Address address) throws DataBaseException {
 	    Session session = hibernateConncetion();
 	    Transaction transaction = null;
 	    try {
@@ -175,7 +175,6 @@ public class BranchDao {
 		    branch.setAddress(address);
 	        session.update(branch);
 	        transaction.commit();
-	        return ("BRANCH ADDED SUCCESSFULLY. BRANCH IFSC CODE IS :" + branch.getIFSCode());
 		} catch (HibernateException e) {
 			throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
 	    } finally {
@@ -196,7 +195,7 @@ public class BranchDao {
 	 *     Return the object of Address class.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 *     It handle all the custom exception in NetBanking Application and HibernateException.
 	 */
 	public Address retrieveAddressById(int addressId) throws DataBaseException {
 		Address address;
@@ -224,16 +223,15 @@ public class BranchDao {
 	 *     Return Status message(Success or failure).
 	 * 
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 *     It handle all the custom exception in NetBanking Application and HibernateException.
 	 */
-	public String addAccount(Account account) throws DataBaseException {
+	public void insertAccount(Account account) throws DataBaseException {
 		Session session = hibernateConncetion();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
 		    session.save(account); 
 	        transaction.commit();
-	        return ("ACCOUNT ADDED SUCCESSFULLY");
 		} catch (HibernateException e) {
 			throw new DataBaseException("PLEASE CHECK YOUR DATAS " + account.getAccountNumber() + " YOUR DATA IS NOT VALID.PLEASE TRY AGAIN." );  
 	    } finally {
@@ -251,9 +249,9 @@ public class BranchDao {
 	 *     Returns the list of Accounts.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 *     It handle all the custom exception in NetBanking Application and HibernateException.
 	 */
-	public List<Account> retriveAllAccount() throws DataBaseException {
+	public List<Account> retriveAllAccounts() throws DataBaseException {
 	    Session session = hibernateConncetion();
 	    try {
 	        return session.createQuery("from Account").list();

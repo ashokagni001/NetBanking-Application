@@ -21,13 +21,14 @@
 }
 </style>
 </head>
-<body">
+<body>
 	<div class="well">
 		<font size="20"><marquee behavior="alternate">NET
 				BANKING</marquee></font>
 	</div>
+	<c:if test="${BranchAddress != null }">
+	<h3> Welcome  ${sessionScope['name']} </h3><br />
 	<center>
-		<c:if test="${BranchAddress != null }">
 			<form:form method="post" action="address"
 				modelAttribute="BranchAddress">
 				<tr>
@@ -95,7 +96,7 @@
 				<script src="http://iamrohit.in/lab/js/location.js"></script>
 				<tr>
 					<td>Pincode :</td>
-					<td><form:input path="pincode" placeholder="pincode" /></td>
+					<td><form:input path="pincode" placeholder="pincode"/></td>
 				</tr>
 				</br>
 				</br>

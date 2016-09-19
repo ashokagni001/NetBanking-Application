@@ -278,7 +278,7 @@ public class CustomerService {
 	 *     It handle all the custom exception in NetBanking Application..
 	 */
 	public boolean isRoleAvailable() throws DataBaseException {
-		return (getAllRoles().size() != 0);
+		return (Constant.INITIALIZEVARAILABLEVALUE != getAllRoles().size());
 	}
     
 	/**

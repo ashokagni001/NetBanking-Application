@@ -16,4 +16,5 @@ public class Constant {
     public static final String BRANCHID = "I2I0BK";
     public static final String USERROLEID = "1";
     public static final String ID = "1";
+    public static final String IFSCODE = "I2I0BK";
 }

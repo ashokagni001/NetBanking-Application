@@ -3,7 +3,7 @@ package com.i2i.netbankingApplication.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.i2i.netbankingApplication.constantVariableUtil.ConstantVariableUtil;
+import com.i2i.netbankingApplication.Constand.Constant;
 import com.i2i.netbankingApplication.dao.BranchDao;
 import com.i2i.netbankingApplication.exception.BranchDataException;
 import com.i2i.netbankingApplication.exception.CustomerDataException;
@@ -41,7 +41,7 @@ public class BranchService {
      */
 	
     public void addBranch(String emailId) throws DataBaseException {
-    	branchDao.insertBranch(new Branch("I2I0BK" + String.valueOf(getLastIFSCode() + 1), emailId));
+    	branchDao.insertBranch(new Branch(Constant.IFSCODE + String.valueOf(getLastIFSCode() + 1), emailId));
     }
     
     /**
@@ -57,7 +57,7 @@ public class BranchService {
      *     It handle all the custom exception in NetBanking application.
      */
     public int getLastIFSCode() throws DataBaseException, NumberFormatException {
-    	int lastIFSC = ConstantVariableUtil.initializeVariable;
+    	int lastIFSC = Constant.INITIALIZEVARAILABLEVALUE;
     	for (Branch branch : branchDao.retriveAllBranches()) {
     		String IFSC = branch.getIFSCode();
    			int temp = Integer.parseInt(IFSC.substring(6, IFSC.length()));
@@ -132,9 +132,9 @@ public class BranchService {
      *     It handle all the custom exception in NetBanking application.
      */
 	public String getAddress(Address address) throws BranchDataException, DataBaseException {
-		String IFSCode = "I2I0BK" + String.valueOf(getLastIFSCode());
+		String IFSCode = Constant.IFSCODE + String.valueOf(getLastIFSCode());
 		try {
-		    branchDao.addAddress(IFSCode, new Address(customerService.getNewAddressId() + 1, address.getStreet(),
+		    branchDao.insertAddress(IFSCode, new Address(customerService.getNewAddressId() + 1, address.getStreet(),
 	                address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
 		return ("BRANCH ADDED SUCCESSFULL. BRANCH IFSC CODE IS :" + IFSCode);
 		} catch(DataBaseException e) {

@@ -74,6 +74,24 @@ public class StringUtil {
             return true;
         }
     }
+    
+    /**
+     * Check the data valid Format or not.
+     * 
+     * @return Boolean
+     *     Return true or false.
+     */
+    public static boolean isValidDateFormat(String date) {
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+            simpleDateFormat.parse(date);
+            return false;
+            }
+        catch(ParseException e) {
+            FileUtil.exceptionOccurCreateFile("\nDATE IS NOT VALID FORMATE...\n" + e.toString());
+            return true;
+        }
+    }
     /**
      * It is calculate the customer age.
      * 

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.i2i.netbankingApplication.Constand.Constant;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.CustomerTransaction;
 import com.i2i.netbankingApplication.service.TransactionService;
@@ -38,7 +39,7 @@ public class TransactionController {
      *     Return to the transactionIndex JSP page.
      */
 	@RequestMapping(value = "/TransactionIndex")
-	public String customer() {
+	public String transactionIndex() {
 		return "TransactionIndex";
 	}
         
@@ -52,7 +53,7 @@ public class TransactionController {
 	 *     Return to the AddTransaction JSP page.
 	 */ 
 	@RequestMapping(value = "/addTransaction")
-	public String transactionOpration() {
+	public String transactionForm() {
 		return "AddTransaction";
 	}
         
@@ -75,16 +76,18 @@ public class TransactionController {
 	 *     
 	 * @return TransactionIndex
      *     Return to JSP page TransactionIndex with status message(success or failure).
+     * @throws DataBaseException
+     *     It handle all the custom exception in NetBanking Application.
      */
 	@RequestMapping(value = "/insertTransaction", method = RequestMethod.POST)
-	public String insertransaction(@RequestParam("customerId") String customerId,
+	public String addTransaction(@RequestParam("customerId") String customerId,
 			@RequestParam("creditAccountNumber") String creditAccountNumber, @RequestParam("ifscode") String ifscode,
 			@RequestParam("amount") String amount, ModelMap message) {
 		try {
-			message.addAttribute("message", transactionService.getTransactionDetail(customerId ,
+			message.addAttribute("message", transactionService.addTransactionDetail(customerId ,
 					creditAccountNumber, ifscode, Double.parseDouble(amount)));
 		} catch (DataBaseException e) {
-			message.addAttribute("message", e.toString());
+			message.addAttribute("message", e.getMessage());
 		} finally {
 			return "AddTransaction";
 		}
@@ -98,13 +101,21 @@ public class TransactionController {
      * 
 	 * @return RetrieveAllNotification
 	 *     Return to the RetrieveAllNotification JSP page with notification lists or status message(failure).
-	 */
+	 *
+	 * @throws DataBaseException
+     *     It handle all the custom exception in NetBanking Application.
+     */    
 	@RequestMapping(value = "/notification", method = RequestMethod.GET)
-	public ModelAndView notification() {
+	public ModelAndView getNotifications() {
 		try {
-			return new ModelAndView("RetrieveAllNotification", "notifications", transactionService.getAllNotification());
+			List<CustomerTransaction>  notifications = transactionService.getAllNotifications();
+			if (Constant.INITIALIZEVARAILABLEVALUE != notifications.size()) {
+			    return new ModelAndView("RetrieveAllNotification", "notifications", notifications);
+			} else {
+				return new ModelAndView("RetrieveAllNotification", "message", "NO NOTIFICATION AVAILABLE");
+			}
 		} catch (DataBaseException e) {
-			return new ModelAndView("RetrieveAllNotification", "message", e.getMessage().toString());
+			return new ModelAndView("RetrieveAllNotification", "message", e.getMessage());
 		}
 	}
 
@@ -116,13 +127,16 @@ public class TransactionController {
 	 *     
 	 * @return RetrieveAllTransaction
 	 *     Return to the RetrieveAllTransaction JSP page with transaction lists or status message(failure).
-	 */
+	 *
+	 * @throws DataBaseException
+     *     It handle all the custom exception in NetBanking Application.
+     */
 	@RequestMapping(value = "/viewAllTransaction", method = RequestMethod.GET)
-	public ModelAndView viewAllTransaction() throws DataBaseException {
+	public ModelAndView viewAllTransactions() throws DataBaseException {
 		try {
-			return new ModelAndView("RetrieveAllTransaction", "transactions", transactionService.getAllTransaction());
+			return new ModelAndView("RetrieveAllTransaction", "transactions", transactionService.getAllTransactions());
 		} catch (DataBaseException e) {
-			return new ModelAndView("RetrieveAllTransaction", "message", e.getMessage().toString());
+			return new ModelAndView("RetrieveAllTransaction", "message", e.getMessage());
 		}
 	}
         
@@ -140,6 +154,9 @@ public class TransactionController {
 	 *     
 	 * @return RetrieveCustomerAccount
 	 *     Return to the RetrieveCustomerAccount JSP page with customer account detail or status message(failure).
+	 *     
+	 * @throws DataBaseException
+     *     It handle all the custom exception in NetBanking Application.
 	 */
 	@RequestMapping(value = "/getAccountByCustomerId", method = RequestMethod.GET)
 	public ModelAndView getAccountByCustomerId(@RequestParam("customerId") String customerId, ModelMap message) {
@@ -161,7 +178,10 @@ public class TransactionController {
 	 *     
 	 * @return RetrieveCustomerAccount
 	 *     Return to the RetrieveCustomerAccount JSP page with customer account detail or status message(failure).
-	 */
+	 *
+	 *@throws DataBaseException
+     *     It handle all the custom exception in NetBanking Application.
+     */
 	@RequestMapping(value = "/viewCustomerAccount", method = RequestMethod.GET)
 	public ModelAndView viewCustomerAccount(@RequestParam("accountNumber") String accountNumber, ModelMap message) {
 		try {
@@ -184,11 +204,14 @@ public class TransactionController {
 	 *     
 	 * @return RetrieveMiniStatementByCustomerId
 	 *     Return to the RetrieveMiniStatementByCustomerId JSP page with Customer MiniStatement or status message(failure).
-	 */
+	 *
+	 * @throws DataBaseException
+     *     It handle all the custom exception in NetBanking Application.
+     */
 	@RequestMapping(value="/viewMiniStatementByCustomerId", method = RequestMethod.GET)  
     public ModelAndView viewMiniStatementByCustomerId (@RequestParam("customerId")String customerId, ModelMap message) {
         try {
-        	return new ModelAndView("RetrieveMiniStatementByCustomerId", "miniStatement", transactionService.getCustomerMiniStatement(customerId));
+        	return new ModelAndView("RetrieveMiniStatementByCustomerId", "miniStatement", transactionService.getCustomerMiniStatements(customerId));
         } catch (DataBaseException e) {
         	return new ModelAndView("CustomerIndex", "message", e.getMessage());
         }
@@ -210,6 +233,9 @@ public class TransactionController {
 	 *     
 	 * @return viewAllTransaction
 	 *     Return to the viewAllTransaction JSP page with status message (Success or failure).
+	 *     
+	 * @throws DataBaseException
+     *     It handle all the custom exception in NetBanking Application.
 	 */ 
 	@RequestMapping(value = "/transactionSuccess", method = RequestMethod.GET)
 	public String transactionSuccess(@RequestParam("id") int transactionId,
@@ -218,7 +244,7 @@ public class TransactionController {
 		try {
 			transactionService.transactionSuccess(transactionId, creditAccountNumber, amount, userId);
 			message.addAttribute("message", "TRANSACTION ACTION SUCCESSFULLY");
-			notification();
+		    getNotifications();
 		} catch (DataBaseException e) {
 			message.addAttribute("message", e.getMessage());
 		} finally {
@@ -242,6 +268,9 @@ public class TransactionController {
 	 *  
 	 * @return viewAllTransaction
 	 *     Return to the viewAllTransaction JSP page with status (Success or Failure).
+	 *     
+	 * @throws DataBaseException
+     *     It handle all the custom exception in NetBanking Application.
 	 */ 
 	@RequestMapping(value = "/transactionCancel", method = RequestMethod.GET)
 	public String transactionFailure(@RequestParam("id") int transactionId,
@@ -250,7 +279,7 @@ public class TransactionController {
 		try {
 			transactionService.transactionFailure(transactionId, debitAccountNumber, amount, userId);
 			message.addAttribute("transactions", "TRANSACTION ACTION SUCCESSFULLY");
-			notification();
+			getNotifications();
 		} catch (DataBaseException e) {
 			message.addAttribute("message", e.getMessage());
 		} finally {
@@ -288,17 +317,20 @@ public class TransactionController {
 	 *      
 	 * @return viewTransactionByDate
 	 *     Return to the viewTransactionBYDate JSP page with transaction lists or failure message.
+	 *     
+	 * @throws DataBaseException
+     *     It handle all the custom exception in NetBanking Application.
 	 */
 	@RequestMapping(value = "/getDates", method = RequestMethod.GET)
-	public String getDateTransaction(@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
+	public String getTransactionsByDate(@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
 			ModelMap message) {
 		try {
 			List<CustomerTransaction> transactions = transactionService.getDateTransaction(fromDate, toDate);
-            if (transactions.size() == 0) {
-                message.addAttribute("message", "NO TRENSACTION PROCESS IN " + fromDate + " TO " + toDate);
-            } else {
-                message.addAttribute("transactions", transactions);
-            }
+			if (Constant.INITIALIZEVARAILABLEVALUE != transactions.size()) {
+				message.addAttribute("message", "NO TRENSACTION PROCESS IN " + fromDate + " TO " + toDate);
+			} else {
+			    message.addAttribute("transactions", transactions);
+			}
 		} catch (DataBaseException e) {
 			message.addAttribute("message", e.getMessage());
 		} finally {
