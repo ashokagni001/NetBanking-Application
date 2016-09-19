@@ -229,9 +229,9 @@ public class CustomerService {
      * </p> 
 	 * 
 	 * @param customerId
-	 *     id of Customer.
+	 *     Id of Customer to add new user role. 
 	 * @param roleId
-	 *     id of ROle.
+	 *     Id of Role assigned for user.
 	 *     
 	 * @throws DataBaseException
 	 *     It handle all the custom exception in NetBanking Application..

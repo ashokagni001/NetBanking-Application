@@ -64,7 +64,7 @@ public class CustomerDao {
 	 * @param accountNumber
 	 *     accountNumber of customer
 	 * @param customer
-	 *     Object of Customer model class.It object used for add Customer.
+	 *     It is use for insert new Customer detail.
 	 *     
 	 * @throws DataBaseException
 	 *     It handle all the custom exception in NetBanking Application..
@@ -96,7 +96,7 @@ public class CustomerDao {
      *     Id of Customer to view.
      * 
      * @return customer
-     *     Object of Customer class.
+     *     Return customer details.
      * 
      * @throws DataBaseException
      *     It handle all the custom exception in NetBanking Application..

@@ -43,16 +43,10 @@ public class CustomerController {
 	}
     
    /**
-    * <p>
-    *     It displays a form to input data, here "Customer" is a reserved attribute which is used
-    *     to display object data(Customer) into form.
-    * </p>
-    * 
-    * @param model
-    *      Customer model return the Customer Model object.
+    * Return to the CustomerRegistration JSP page to add new Customer detail.
     * 
     * @return CustomerRegistration
-    *      Return to the CustomerRegistration JSP page with model(Customer) object.
+    *      Return to the CustomerRegistration JSP page.
     */
 	@RequestMapping("/CustomerRegistration") 
 	public String customerRegistration(ModelMap model) {
@@ -67,7 +61,7 @@ public class CustomerController {
      * </p>
      * 
      * @param customer
-     *     Object of Customer model class.
+     *     Customer of the bank whose details are added.
      * @param message
      *     Display message using add attribute.
      * 
@@ -102,7 +96,7 @@ public class CustomerController {
      * </p>
      * 
 	 * @param address
-	 *     Object of Address model class.
+	 *     Address of the Customer whose details are added.
 	 * @param message
 	 *     Display message using add attribute.
 	 *     
@@ -210,9 +204,9 @@ public class CustomerController {
      * </p>
 	 * 
 	 * @param model
-	 *     Customer model return the customer object.
+	 *     Display the get all customers.
 	 * @param message 
-	 *      Display message using add attribute.
+	 *     Display message using add attribute.
 	 *      
 	 * @return AddUserRole
 	 *     Return to the AddUserRole JSP page with Role Detail or status message(failure).
@@ -244,9 +238,9 @@ public class CustomerController {
 	 * </p>
 	 * 
 	 * @param customerId
-	 *     Id of Customer. 
+	 *     Id of Customer to add new user role. 
 	 * @param roleId
-	 *     Id of Role.
+	 *     Id of Role assigned for user.
 	 * @param message
 	 *     Display message using add attribute.
 	 *     
