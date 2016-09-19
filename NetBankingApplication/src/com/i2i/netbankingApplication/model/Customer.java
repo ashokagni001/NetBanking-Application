@@ -60,7 +60,7 @@ public class Customer {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="address_id")
-	public Address address;
+	private Address address;
     
 	/**
      * Default Constructor.

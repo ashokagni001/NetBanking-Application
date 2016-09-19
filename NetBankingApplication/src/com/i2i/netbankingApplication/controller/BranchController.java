@@ -1,5 +1,7 @@
 package com.i2i.netbankingApplication.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.i2i.netbankingApplication.exception.DataBaseException;
+import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Address;
 import com.i2i.netbankingApplication.model.Branch;
 import com.i2i.netbankingApplication.service.BranchService;
@@ -71,12 +74,12 @@ public class BranchController {
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
      */
-	@RequestMapping(value="/insertBranch", method = RequestMethod.POST)
+	@RequestMapping(value="/insertBranch", method = RequestMethod.GET)
     public String addBranch(@RequestParam("emailId") String emailId, ModelMap message) { 
 		String URL = "AddAddress";
 		try {
 			if (emailId != null) {
-			    branchService.getBranch(emailId);
+			    branchService.addBranch(emailId);
 			    message.addAttribute("BranchAddress", new Address());
 			} else {
 				message.addAttribute("message", " PLEASE FILL THE FORM ");
@@ -109,7 +112,7 @@ public class BranchController {
 	@RequestMapping(value="/address", method = RequestMethod.POST)
     public String addAddress(@ModelAttribute("BranchAddress") Address address, ModelMap message) {  
 		try {
-			message.addAttribute("message","BRANCH ADDED SUCCESS. BRANCH IFSC IS :: " + branchService.getAddress(address));
+			message.addAttribute("message", branchService.addAddress(address));
 	    } catch (DataBaseException e) {
     		message.addAttribute("message", e.getMessage()); 
         } finally {
@@ -259,11 +262,11 @@ public class BranchController {
     public String getAccount(@RequestParam("accountNumber")String accountNumber, @RequestParam("balance")String balance, 
     		@RequestParam("accounttype")String accounttype, @RequestParam("ifscode")String ifsc, ModelMap message) throws  DataBaseException {
 		try { 
-			message.addAttribute("message", branchService.getAccount(accountNumber, Double.parseDouble(balance), accounttype, ifsc));
+			message.addAttribute("message", branchService.addAccount(accountNumber, Double.parseDouble(balance), accounttype, ifsc));
 		} catch(DataBaseException e) {
 			message.addAttribute("message", e.getMessage());
 		} finally {
-	     	return "BranchIndex";
+	     	return "AddAccount";
 		}
 	}
 	
@@ -299,11 +302,16 @@ public class BranchController {
 	@RequestMapping(value="/getAccount", method = RequestMethod.GET)  
     public String viewAccountByBranch (@RequestParam("ifsc")String ifsc, ModelMap message) {
 		try { 
-			message.addAttribute("accounts", branchService.viewAccountByBranch(ifsc));
+			 List<Account> accounts = branchService.getAccountByBranch(ifsc);
+	            if (accounts.size() != 0) {
+	                message.addAttribute("accounts", accounts);
+	            } else {
+	                message.addAttribute("message", "NO ACCOUNT STARTED IN THIS BRANCH ");
+	            }
 		} catch(DataBaseException e) {
-			message.addAttribute("message", e.getMessage().toString());
+			message.addAttribute("message", e.getMessage());
 		} finally {
 	     	return "ViewAccountByBranch";
 		}
-	}	
+	}
 }

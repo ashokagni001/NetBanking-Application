@@ -42,7 +42,7 @@ public class CustomerDao {
 	 *     Return the new session object. 
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 *     It handle all the custom exception in NetBanking Application..
 	 */
 	private Session hibernateConncetion() throws DataBaseException {
 		try {
@@ -67,9 +67,9 @@ public class CustomerDao {
 	 *     Object of Customer model class.It object used for add Customer.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 *     It handle all the custom exception in NetBanking Application..
 	 */
-	public void insertUser(String accountNumber, Customer customer) throws DataBaseException {
+	public void insertCustomer(String accountNumber, Customer customer) throws DataBaseException {
 		Session session = hibernateConncetion();
         Transaction transaction = null;
         try {
@@ -80,7 +80,7 @@ public class CustomerDao {
             session.update(account);
             transaction.commit();
         } catch(HibernateException e) {
-        	throw new DataBaseException("CHECK YOUR PLEASE INSERT VALID CUSTOMER DETAIL..");
+        	throw new DataBaseException("CHECK YOUR REGISTER DETAILS");
         } finally {
             session.close();
         }
@@ -99,14 +99,14 @@ public class CustomerDao {
      *     Object of Customer class.
      * 
      * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException and HibernateException.
+     *     It handle all the custom exception in NetBanking Application..
 	 */
 	public Customer retrieveCustomerById(String customerId) throws DataBaseException {
-	    Customer customer = null ;
+	    Customer customer = null;
 	    Session session = hibernateConncetion();
 	    Transaction transaction = null;
 	    try {
-	        transaction = session.beginTransaction();
+	    	transaction = session.beginTransaction();
 	        customer = (Customer)session.get(Customer.class, customerId); 
 	        transaction.commit();
 	    } catch (HibernateException e) {
@@ -129,7 +129,7 @@ public class CustomerDao {
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
 	 */
-	public List<Customer> retriveAllCustomer() throws DataBaseException {
+	public List<Customer> retriveAllCustomers() throws DataBaseException {
 		Session session = hibernateConncetion();
 	    try {
 	        return session.createQuery("FROM Customer").list();
@@ -157,7 +157,7 @@ public class CustomerDao {
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException and HibernateException.
 	 */
-	public String addAddress(String customerId, Address address) throws DataBaseException {
+	public void addAddress(String customerId, Address address) throws DataBaseException {
 		Session session = hibernateConncetion();
 	    Transaction transaction = null;
 	    try {
@@ -167,7 +167,6 @@ public class CustomerDao {
 		    customer.setAddress(address);
 	        session.update(customer);
 	        transaction.commit();  
-	        return ("CUSTOMER REGISTER SUCCESSFULLY :: YOUR ID :" + customer.getCustomerId() +" PASSWORD :" + customer.getPassWord());
 		} catch (HibernateException e) {
 			throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
 	    } finally {
@@ -185,9 +184,9 @@ public class CustomerDao {
 	 *     customerId of Customer.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 *     It handle all the custom exception in NetBanking Application..
 	 */
-	public String deleteCustomeryId(String customerId) throws DataBaseException {
+	public void deleteCustomeryId(String customerId) throws DataBaseException {
 	    Session session = hibernateConncetion();
 	    Transaction transaction = null;
 	    try {
@@ -195,9 +194,8 @@ public class CustomerDao {
 	        Customer customer = (Customer)session.get(Customer.class, customerId); 
 	        session.delete(customer); 
 	        transaction.commit();
-	        return "YOUR REGISTERATION NOT COMPLETED .PLEASE TRY AGAIN";
 	    } catch (HibernateException e) {
-	    	throw new DataBaseException("CHECK customerId " + customerId + "PLEASE INSERT VALID IFSC...\n");  
+	    	throw new DataBaseException("YOUR REGISTERATION NOT COMPLETED .PLEASE TRY AGAIN");  
 	    } finally {
 	        session.close(); 
 	    }
@@ -239,7 +237,7 @@ public class CustomerDao {
 	 *     Object of Address class.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 *     It handle all the custom exception in NetBanking Application..
 	 */
 	public Address retrieveAddressById(int addressId) throws DataBaseException {
 		Session session = hibernateConncetion();
@@ -282,9 +280,9 @@ public class CustomerDao {
 	 * Get the UserRole object from CustomerService and add UserRole to database. 
 	 * 
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 *     It handle all the custom exception in NetBanking Application..
 	 */
-	public void insertRole(UserRole userRole) throws DataBaseException {
+	public void insertUserRole(UserRole userRole) throws DataBaseException {
 		Session session = hibernateConncetion();
 		Transaction transaction = null;
 		try {
@@ -308,9 +306,9 @@ public class CustomerDao {
 	 *     Return the list of roles.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 *     It handle all the custom exception in NetBanking Application..
 	 */
-	public List<Role> retriveAllRole() throws DataBaseException {
+	public List<Role> retriveAllRoles() throws DataBaseException {
 		Session session = hibernateConncetion();
 		try {
 			return session.createQuery("FROM Role").list();
@@ -357,9 +355,9 @@ public class CustomerDao {
 	 *     Object of UserRole class.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException and HibernateException.
+	 *     It handle all the custom exception in NetBanking Application..
 	 */
-	public List<UserRole> retriveAllUserRole() throws DataBaseException {
+	public List<UserRole> retriveAllUserRoles() throws DataBaseException {
 		Session session = hibernateConncetion();
 		try {
 			return session.createQuery("FROM UserRole").list();

@@ -2,7 +2,7 @@ package com.i2i.netbankingApplication.service;
 
 import java.util.List;
 
-import com.i2i.netbankingApplication.constantVariableUtil.ConstantVariableUtil;
+import com.i2i.netbankingApplication.Constand.Constant;
 import com.i2i.netbankingApplication.dao.CustomerDao;
 import com.i2i.netbankingApplication.exception.CustomerDataException;
 import com.i2i.netbankingApplication.exception.DataBaseException;
@@ -46,17 +46,15 @@ public class CustomerService {
      * @throws customerDataException
      *     If there is an error in the customer attribute exception is handle by customerDataException.
      * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException.
+     *     It handle all the custom exception in NetBanking Application.
      */
-    public void getCustomer(Customer customer) throws DataBaseException, CustomerDataException {
+    public void addCustomer(Customer customer) throws DataBaseException, CustomerDataException {
     	String accountNumer = customer.getAccountNumber();
     	Account account = customerDao.retrieveAccountByNumber(accountNumer);
-    	//check the Customer account number already exists or not.
-    	if (account == null) {
+    	if (null == account) {
     		throw new CustomerDataException("YOUR ACCOUNT NUMBER IS NOT VALID");  
     	}
-    	//check the Customer details already register or not.
-    	if (account.getCustomer() != null) {
+    	if (null != account.getCustomer()) {
     		throw new CustomerDataException("YOUR ALREADY REGISTER THE NETBANKING..."); 
     	}
     	
@@ -68,7 +66,7 @@ public class CustomerService {
     	}
     	
     	//check the Customer Name valid length or not
-    	if (customerName.length() > ConstantVariableUtil.nameLength) {
+    	if (customerName.length() > Constant.MAXNAMELENGTH) {
          	throw new CustomerDataException("YOUR NAME" + customerName +
                     "IS NOT VALID");  
         }
@@ -82,14 +80,16 @@ public class CustomerService {
         
         int customerAge = StringUtil.calculateAge(customerDOB);
         //check the customer age valid limit or not
-        if (customerAge > ConstantVariableUtil.maxAgeLimit) {
+        if (customerAge > Constant.MAXAGELIMIT) {
         	throw new CustomerDataException("YOUR AGE IS NOT VALID");  
         }
-        String customerId = "CUSI2I00" + String.valueOf(getLastCustomerId() + 1);
-        customerDao.insertUser(customer.getAccountNumber(), new Customer(customerId, customerName, customerAge, 
-        		customerDOB, customer.getGender(), customer.getMobileNumber(), customer.getEmail(),
-        		"i2i" + String.valueOf((int)(Math.random()*9000)), accountNumer, "ACTIVE"));
-        insertUserRole(customerId, "1");
+        String customerId = Constant.CUSTOMERID + String.valueOf(getLastCustomerId() + 1);
+        customer.setCustomerId(customerId);
+        customer.setAge(customerAge);
+        customer.setPassWord(StringUtil.generatePassword());
+        customer.setStatus("ACTIVE");
+        customerDao.insertCustomer(customer.getAccountNumber(), customer);
+        addUserRole(customerId, Constant.USERROLEID);
     }
     
     /**
@@ -102,10 +102,10 @@ public class CustomerService {
      *     return to the last customer address Id.
      *     
      * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException.
+     *     It handle all the custom exception in NetBanking Application.
      */
 	public int getNewAddressId() throws DataBaseException {
-    	int newAddressId = ConstantVariableUtil.initializeVariable;
+    	int newAddressId = Constant.INITIALIZEVARAILABLEVALUE;
     	for (Address address : customerDao.retriveAllAddresses()) {
     		int lastAddressId = address.getAddressId();
     		if (newAddressId <= lastAddressId) {
@@ -125,11 +125,11 @@ public class CustomerService {
 	 *     return to the last customer id value.
 	 *     
 	 * @throws DataBaseException 
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking Application.
 	 */
     public int getLastCustomerId() throws DataBaseException {
-    	int id = ConstantVariableUtil.initializeVariable;
-        for (Customer customer : customerDao.retriveAllCustomer()) {
+    	int id = Constant.INITIALIZEVARAILABLEVALUE;
+        for (Customer customer : customerDao.retriveAllCustomers()) {
     		String lastCustomerId = customer.getCustomerId();
     		int temp = Integer.parseInt(lastCustomerId.substring(6, lastCustomerId.length()));
             if (id <= temp) {
@@ -143,13 +143,13 @@ public class CustomerService {
      * Retrieves all customers from CustomerDao.
      * 
      * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException.
+     *     It handle all the custom exception in NetBanking Application.
      *         
      * @return List
      *     Return list of customers.
      */
-    public List<Customer> getAllCustomer() throws DataBaseException {
-    	return customerDao.retriveAllCustomer();
+    public List<Customer> getAllCustomers() throws DataBaseException {
+    	return customerDao.retriveAllCustomers();
 	}
     
     /**
@@ -165,16 +165,21 @@ public class CustomerService {
      *     Return status message (Success or failure).
      * 
      * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException.
+     *     It handle all the custom exception in NetBanking Application.
+     * @throws CustomerDataException 
+     *     It handle all the business logic exception in NetBanking Application.
      */
-   	public String getAddress(Address address) throws DataBaseException {
-		String customerId = "CUSI2I00" + String.valueOf(getLastCustomerId());
-	    String message = customerDao.addAddress(customerId, new Address(getNewAddressId(), address.getStreet(),
-	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
-	    if (message == null) {
-	    	message = customerDao.deleteCustomeryId(customerId);
+   	public String addAddress(Address address) throws CustomerDataException ,DataBaseException {
+		String customerId = Constant.CUSTOMERID + String.valueOf(getLastCustomerId());
+	    try {
+	        customerDao.addAddress(customerId, new Address(getNewAddressId(), address.getStreet(),
+	               address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
+	        Customer customer = getCustomerById(customerId);
+	        return ("CUSTOMER REGISTER SUCCESSFULLY :: YOUR ID :" + customerId + " PASSWORD :" + customer.getPassWord());
+	    } catch (DataBaseException e) {
+	        customerDao.deleteCustomeryId(customerId);
+	        throw new CustomerDataException("YOUR REGISTERATION NOT COMPLETED .PLEASE TRY AGAIN");
 	    }
-		return message;
     }
     
 	/**
@@ -191,13 +196,13 @@ public class CustomerService {
      *     Return to the object of Customer class. 
      * 
      * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException.
+     *     It handle all the custom exception in NetBanking Application..
 	 */
 	public Customer getCustomerById(String customerId) throws DataBaseException {
         return customerDao.retrieveCustomerById(customerId); 
     }
 	
-	/**
+	/**mvn jetty:run
 	 * <p> 
      *     Get the address Id from customerController.
      *     It is passed to retrieveAddressById method in customerDao and 
@@ -211,7 +216,7 @@ public class CustomerService {
      *     Return to the object of Address class. 
      *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking Application..
 	 */
 	public Address getAddressById(int addressId) throws DataBaseException {
 	    return customerDao.retrieveAddressById(addressId);
@@ -229,16 +234,14 @@ public class CustomerService {
 	 *     id of ROle.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking Application..
 	 */
-	public void insertUserRole(String customerId, String roleId) throws DataBaseException {
+	public void addUserRole(String customerId, String roleId) throws DataBaseException {
 		Customer customer = customerDao.retrieveCustomerById(customerId);
-		//verify the customer null 0r not.
 		if (customer != null) {
 			Role role = customerDao.retrieveRoleById(roleId);
-			//verify the user already exist or not
 			if (IfUserRoleExist(customerId, roleId)) {
-			    customerDao.insertRole(new UserRole(getUserRoleId(), customer, role));
+			    customerDao.insertUserRole(new UserRole(getUserRoleId(), customer, role));
 			} else {
 				throw new DataBaseException("ALREADY CUSTOMER ASSINED SAME ROLE");
 			}
@@ -256,10 +259,10 @@ public class CustomerService {
      *     Return to the lists of role.
 	 * 
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking Application..
 	 */
-	public List<Role>getAllRole() throws DataBaseException {
-		return customerDao.retriveAllRole();
+	public List<Role>getAllRoles() throws DataBaseException {
+		return customerDao.retriveAllRoles();
 	}
     
 	/**
@@ -272,10 +275,10 @@ public class CustomerService {
 	 *     If role size zero return false otherwise true.
 	 * 
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking Application..
 	 */
 	public boolean isRoleAvailable() throws DataBaseException {
-		return (getAllRole().size() != 0);
+		return (getAllRoles().size() != 0);
 	}
     
 	/**
@@ -288,11 +291,11 @@ public class CustomerService {
 	 *     Return the new User Role Id.
 	 *  
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking Application.
 	 */
 	public int getUserRoleId() throws DataBaseException {
-		int newUserRoleId = ConstantVariableUtil.initializeVariable;
-		for (UserRole userRole : customerDao.retriveAllUserRole()) {
+		int newUserRoleId = Constant.INITIALIZEVARAILABLEVALUE;
+		for (UserRole userRole : customerDao.retriveAllUserRoles()) {
 			 int lastUserRoleId = userRole.getId();
 			 if (newUserRoleId <= lastUserRoleId) {
 				 newUserRoleId = lastUserRoleId + 1;
@@ -316,10 +319,10 @@ public class CustomerService {
 	 *     If user role already allocated return false otherwise true.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking Application..
 	 */
 	public boolean IfUserRoleExist(String customerId, String roleId) throws DataBaseException {
-		for (UserRole userRole : customerDao.retriveAllUserRole()) {
+		for (UserRole userRole : customerDao.retriveAllUserRoles()) {
 			if ((userRole.getCustomer().getCustomerId().equals(customerId)) && (userRole.getRole().getRoleId().equals(roleId))) {
 			    return false;
 			}
@@ -339,15 +342,13 @@ public class CustomerService {
      *      If user already exists return true otherwise false.
      * 
      * @throws DataBaseException
-     *      If there is an error in the given data like BadElementException.
+     *      It handle all the custom exception in NetBanking Application.
      */
 	public boolean ifValidateUser(String customerId, String password) throws DataBaseException,ExceptionInInitializerError {
 	    Customer customer = getCustomerById(customerId); 
-	    //verify the user already exists or not.
 	    if (customer == null) {
 	    	return false;  
 	    }
-	    //verify the user passWord equals or not.
 	    if(!(customer.getPassWord().equals(password))) {
 	    	return false; 
 	    }
@@ -367,11 +368,11 @@ public class CustomerService {
      *     If userRoleCount is 2 return true, otherwise return false.
      * 
      * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException.
+     *     It handle all the custom exception in NetBanking Application.
      */
 	public boolean checkIfRole(String customerId) throws DataBaseException, ExceptionInInitializerError {
-		int userRoleCount = ConstantVariableUtil.initializeVariable;
-		for (UserRole userRole : customerDao.retriveAllUserRole()) {
+		int userRoleCount = Constant.INITIALIZEVARAILABLEVALUE;
+		for (UserRole userRole : customerDao.retriveAllUserRoles()) {
 			if (userRole.getCustomer().getCustomerId().equals(customerId)) {
 				userRoleCount++;
 			}

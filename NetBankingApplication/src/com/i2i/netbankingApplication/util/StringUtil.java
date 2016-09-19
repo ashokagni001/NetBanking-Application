@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import com.i2i.netbankingApplication.Constand.Constant;
+
 public class StringUtil {
 	
 	/**
@@ -31,15 +33,13 @@ public class StringUtil {
     }
     
     /**
-     * Check the customer P.Number valid Format or not.
+     * This method generate the customer passWord.
      * 
-     * @param input
-     *     A int data type.  
-     * @return Boolean
-     *     Return true or false.
+     * @return String
+     *		 This method return the customer passWord.
      */
-    public static boolean isSixDigit(String input) {
-        return (input.matches("^[0-9][0-9][0-9][0-9][0-9][0-9]"));
+    public static String generatePassword() {
+        return ("I2I" + String.valueOf((int)(Math.random()*9000)));
     }
     
     /**

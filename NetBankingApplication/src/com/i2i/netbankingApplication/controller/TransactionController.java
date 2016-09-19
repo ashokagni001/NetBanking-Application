@@ -1,5 +1,7 @@
 package com.i2i.netbankingApplication.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.i2i.netbankingApplication.exception.DataBaseException;
+import com.i2i.netbankingApplication.model.CustomerTransaction;
 import com.i2i.netbankingApplication.service.TransactionService;
 
 /**
@@ -83,7 +86,7 @@ public class TransactionController {
 		} catch (DataBaseException e) {
 			message.addAttribute("message", e.toString());
 		} finally {
-			return "UserHomePage";
+			return "AddTransaction";
 		}
 	}
 
@@ -215,7 +218,7 @@ public class TransactionController {
 		try {
 			transactionService.transactionSuccess(transactionId, creditAccountNumber, amount, userId);
 			message.addAttribute("message", "TRANSACTION ACTION SUCCESSFULLY");
-			message.addAttribute("notifications", transactionService.getAllNotification());
+			notification();
 		} catch (DataBaseException e) {
 			message.addAttribute("message", e.getMessage());
 		} finally {
@@ -247,7 +250,7 @@ public class TransactionController {
 		try {
 			transactionService.transactionFailure(transactionId, debitAccountNumber, amount, userId);
 			message.addAttribute("transactions", "TRANSACTION ACTION SUCCESSFULLY");
-			message.addAttribute("notifications", transactionService.getAllNotification());
+			notification();
 		} catch (DataBaseException e) {
 			message.addAttribute("message", e.getMessage());
 		} finally {
@@ -290,7 +293,12 @@ public class TransactionController {
 	public String getDateTransaction(@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
 			ModelMap message) {
 		try {
-			message.addAttribute("transactions", transactionService.getDateTransaction(fromDate, toDate));
+			List<CustomerTransaction> transactions = transactionService.getDateTransaction(fromDate, toDate);
+            if (transactions.size() == 0) {
+                message.addAttribute("message", "NO TRENSACTION PROCESS IN " + fromDate + " TO " + toDate);
+            } else {
+                message.addAttribute("transactions", transactions);
+            }
 		} catch (DataBaseException e) {
 			message.addAttribute("message", e.getMessage());
 		} finally {

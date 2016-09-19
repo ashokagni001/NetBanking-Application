@@ -175,7 +175,7 @@ public class BranchDao {
 		    branch.setAddress(address);
 	        session.update(branch);
 	        transaction.commit();
-	        return ("BRANCH ADDED SUCCESSFULL. BRANCH IFSC CODE IS :" +branch.getIFSCode());
+	        return ("BRANCH ADDED SUCCESSFULLY. BRANCH IFSC CODE IS :" + branch.getIFSCode());
 		} catch (HibernateException e) {
 			throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
 	    } finally {
@@ -233,7 +233,7 @@ public class BranchDao {
 			transaction = session.beginTransaction();
 		    session.save(account); 
 	        transaction.commit();
-	        return ("Account added successfully");
+	        return ("ACCOUNT ADDED SUCCESSFULLY");
 		} catch (HibernateException e) {
 			throw new DataBaseException("PLEASE CHECK YOUR DATAS " + account.getAccountNumber() + " YOUR DATA IS NOT VALID.PLEASE TRY AGAIN." );  
 	    } finally {
@@ -258,7 +258,7 @@ public class BranchDao {
 	    try {
 	        return session.createQuery("from Account").list();
 	    } catch(HibernateException e) {
-	        throw new DataBaseException("ROCORD IS NOT AVAILABLE.INSERT RECORD.");
+	        throw new DataBaseException("RECORD IS NOT AVAILABLE.INSERT RECORD.");
 	    } finally {
 	        session.close();
 	    }

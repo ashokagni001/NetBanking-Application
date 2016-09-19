@@ -17,9 +17,9 @@ import com.i2i.netbankingApplication.service.CustomerService;
 /**
  * <p>
  *     When request comes from JSP page. 
- *     Customer controller performs add or delete or fetch or fetchAll customer with model(Customer),
+ *     Customer Controller performs add or delete or fetch or fetchAll customer with model(Customer),
  *     service(Customer) and return the responses to JSP page.
- *     It handles the NumberFormatException, CustomerDataException, DataBaseException.
+ *     It handles the CustomerDataException, DataBaseException.
  *     If exception occurs it will write what type of exception occurred.
  * </p>
  * 
@@ -32,13 +32,13 @@ public class CustomerController {
     private CustomerService customerService = new CustomerService();
     
     /**
-     * Return the JSP page that contains options for customer operation
+     * Return the JSP page that contains options for customer operation.
      * 
      * @return CustomerIndex
      *     Return to the CustomerIndex JSP page.
      */ 	
     @RequestMapping(value = "/CustomerIndex")
-	public String customer() {
+	public String customerIndex() {
 		return "CustomerIndex";
 	}
     
@@ -49,13 +49,13 @@ public class CustomerController {
     * </p>
     * 
     * @param model
-    *      Customer model return the customer object.
+    *      Customer model return the Customer Model object.
     * 
     * @return CustomerRegistration
     *      Return to the CustomerRegistration JSP page with model(Customer) object.
     */
 	@RequestMapping("/CustomerRegistration") 
-	public String addForm(ModelMap model) {
+	public String customerRegistration(ModelMap model) {
 		model.addAttribute("Customer", new Customer());
 		return "CustomerRegistration";
 	}
@@ -77,13 +77,13 @@ public class CustomerController {
      * @throws CustomerDataException
      *     If there is an error in the Customer Attribute exception is handle by CustomerDataException.
      * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException.
+     *     It handle all the custom exception in NetBanking Application.
      */
 	@RequestMapping(value="/register", method = RequestMethod.POST)
     public String addCustomer(@ModelAttribute("Customer") Customer customer, ModelMap message) { 
 		String URL = "CustomerRegistration";
 		try {
-			customerService.getCustomer(customer);
+			customerService.addCustomer(customer);
 			message.addAttribute("Address", new Address());
             return URL = "AddAddress";
 		} catch (CustomerDataException e) {
@@ -110,12 +110,14 @@ public class CustomerController {
 	 *     Return to JSP page CustomerRegistration with status message(success or failure).
 	 *     
 	 * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException.
+     *     It handle all the custom exception in NetBanking Application.
 	 */
 	@RequestMapping(value="/customerAddress", method = RequestMethod.POST)
     public String addAddress(@ModelAttribute("Address") Address address, ModelMap message) {  
 		try {
-			message.addAttribute("message", customerService.getAddress(address));
+			message.addAttribute("message", customerService.addAddress(address));
+		} catch (CustomerDataException e) {
+    		message.addAttribute("message", e.getMessage()); 
 		} catch (DataBaseException e) {
     		message.addAttribute("message", e.getMessage()); 
         } finally {
@@ -125,20 +127,20 @@ public class CustomerController {
 	
 	/**
 	 * <p>
-     *     It displays a form to input data, here "Customer" is a reserved attribute which is used
-     *     to display object data(Customer) into form.
+     *    This Method call to getAllCustomer method in CustomerService.
+     *     Return to the RetrieveAllCustomer JSP page with customer lists or status message(failure).
      * </p>
 	 * 
 	 * @return GetCustomer
 	 *     Return to JSP page GetCustomer.
 	 *     
 	 * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException.
+     *     It handle all the custom exception in NetBanking Application.
 	 */
 	@RequestMapping(value = "/GetCustomer")
 	public String getCustomerById(ModelMap message) {
         try {
-		    message.addAttribute("customers", customerService.getAllCustomer());
+		    message.addAttribute("customers", customerService.getAllCustomers());
         } catch(DataBaseException e) {
         	message.addAttribute("message", e.getMessage()); 
         }
@@ -158,10 +160,10 @@ public class CustomerController {
 	 *     Return to the ReteriveAllCustomer JSP page with Customer lists or status message(failure).
 	 */	
 	@RequestMapping(value="/getCustomer", method = RequestMethod.GET)  
-    public String viewBranchById (@RequestParam("customerId")String customerId, ModelMap message) {
+    public String viewBranchById(@RequestParam("customerId")String customerId, ModelMap message) {
         try {
         	if (customerId.equals("all") || customerId.equals("All") || customerId.equals("ALL")) {
-        		message.addAttribute("customers", customerService.getAllCustomer());
+        		message.addAttribute("customers", customerService.getAllCustomers());
         	} else {
         		Customer customer = customerService.getCustomerById(customerId);
         		if (customer != null) {
@@ -216,13 +218,14 @@ public class CustomerController {
 	 *     Return to the AddUserRole JSP page with Role Detail or status message(failure).
 	 * 
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking Application..
 	 */
 	@RequestMapping(value = "/getAllRole")
-	public String getAllRole(ModelMap model, ModelMap message) {
+	public String getAllRoles(ModelMap model, ModelMap message) {
 		try {
 		    if (customerService.isRoleAvailable()) {
-			    model.addAttribute("roles", customerService.getAllRole());
+		    	message.addAttribute("customers", customerService.getAllCustomers());
+			    model.addAttribute("roles", customerService.getAllRoles());
 		    } else {
 			    model.addAttribute("message", "SORRY ROLE IS NOT PRESENT");
 		    }
@@ -251,18 +254,20 @@ public class CustomerController {
 	 *     Return to the AddUserRole JSP page with Role Detail or status message(failure).
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking Application.
 	 */
 	@RequestMapping(value = "/insertRole", method = RequestMethod.GET)
 	public String insertUserRole(@RequestParam("customerId") String customerId, @RequestParam("role") String roleId,
 			ModelMap message) {
 		try {
-			customerService.insertUserRole(customerId, roleId);
+			customerService.addUserRole(customerId, roleId);
 			message.addAttribute("message", "INFORMATION SAVED SUCESSFULLY");
-			message.addAttribute("roles", customerService.getAllRole());
+			message.addAttribute("customers", customerService.getAllCustomers());
+			message.addAttribute("roles", customerService.getAllRoles());
 		} catch (DataBaseException  e) {
-			message.addAttribute("message", e.getMessage().toString());
-			message.addAttribute("roles", customerService.getAllRole());
+			message.addAttribute("message", e.getMessage());
+			message.addAttribute("roles", customerService.getAllRoles());
+			message.addAttribute("customers", customerService.getAllCustomers());
 		} finally {
 		    return "AddUserRole";
 		}

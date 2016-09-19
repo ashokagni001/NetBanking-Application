@@ -35,12 +35,6 @@
 	<br />
 	<center>
 		<h1>BANK MANAGEMENT</h1>
-		<c:if test="${message != null}">
-			<script type="text/javascript">
-				alert("<c:out value='${message}'/>");
-				windows.location.reload();
-			</script>
-		</c:if>
 		<table>
 			<tr>
 				<td align="center" height="40" width="350"><a href="addBranch">
@@ -60,9 +54,15 @@
 			</tr>
 			<tr>
 				<td align="center" height="40" width="350"><a
-					href="getAllRole"> Add User Role</a></td>
+					href="getAllRole"> ADD USER ROLE</a></td>
 			</tr>
 		</table>
+		<c:if test="${message != null}">
+			<script type="text/javascript">
+				alert("<c:out value='${message}'/>");
+				windows.location.reload();
+			</script>
+		</c:if>
 	</center>
 	<a href="approverIndexPage">Go to main page</a>
 	<div class="pos">

@@ -3,7 +3,7 @@ package com.i2i.netbankingApplication.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.i2i.netbankingApplication.constantVariableUtil.ConstantVariableUtil;
+import com.i2i.netbankingApplication.Constand.Constant;
 import com.i2i.netbankingApplication.dao.TransactionDao;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.Account;
@@ -55,7 +55,7 @@ public class TransactionService {
 		        double currentAmount = debitAccount.getBalance();
 		        double balanceAmount = (currentAmount - amount);
 				//check the balanceAmount have or not.
-				if (balanceAmount > ConstantVariableUtil.initializeVariable) {
+				if (balanceAmount > Constant.INITIALIZEVARAILABLEVALUE) {
 					debitAccount.setBalance(balanceAmount);
 					return transactionDao.addTransaction(new CustomerTransaction(getLastTransactionId(), amount,
 								"Request", debitAccount, creditAccount), debitAccount);
@@ -100,7 +100,7 @@ public class TransactionService {
 	 *     If there is an error in the given data like BadElementException.
 	 */
 	public int getLastTransactionId() throws DataBaseException {
-		int id = ConstantVariableUtil.initializeVariable;
+		int id = Constant.INITIALIZEVARAILABLEVALUE;
     	for (CustomerTransaction transactions : transactionDao.retriveAllTransactions()) {
     		int temp = transactions.getId();
     		if (id <= temp) {

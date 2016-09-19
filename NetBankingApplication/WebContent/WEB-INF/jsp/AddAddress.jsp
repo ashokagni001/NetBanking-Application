@@ -23,7 +23,8 @@
 </head>
 <body">
 	<div class="well">
-		<font size="20"><marquee behavior="alternate">I2I NETBANKING</marquee></font>
+		<font size="20"><marquee behavior="alternate">NET
+				BANKING</marquee></font>
 	</div>
 	<center>
 		<c:if test="${BranchAddress != null }">
@@ -94,7 +95,7 @@
 				<script src="http://iamrohit.in/lab/js/location.js"></script>
 				<tr>
 					<td>Pincode :</td>
-					<td><form:input path="pincode" placeholder="pincode"/></td>
+					<td><form:input path="pincode" placeholder="pincode" /></td>
 				</tr>
 				</br>
 				</br>

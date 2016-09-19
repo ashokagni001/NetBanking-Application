@@ -3,7 +3,7 @@ package com.i2i.netbankingApplication.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.i2i.netbankingApplication.constantVariableUtil.ConstantVariableUtil;
+import com.i2i.netbankingApplication.Constand.Constant;
 import com.i2i.netbankingApplication.dao.BranchDao;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.Account;
@@ -37,7 +37,7 @@ public class BranchService {
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
      */
-    public void getBranch(String emailId) throws DataBaseException {
+    public void addBranch(String emailId) throws DataBaseException {
     	branchDao.addBranch(new Branch("I2I0BK" + String.valueOf(getLastIFSCode() + 1), emailId));
     }
     
@@ -54,7 +54,7 @@ public class BranchService {
      *     If there is an error in the given data like BadElementException.
      */
     public int getLastIFSCode() throws DataBaseException, NumberFormatException {
-    	int lastIFSC = ConstantVariableUtil.initializeVariable;
+    	int lastIFSC = Constant.INITIALIZEVARAILABLEVALUE;
     	for (Branch branch : branchDao.retriveAllBranch()) {
     		String IFSC = branch.getIFSCode();
    			int temp = Integer.parseInt(IFSC.substring(6, IFSC.length()));
@@ -128,7 +128,7 @@ public class BranchService {
      * @throws DataBaseException
      *     If there is an error in the given data like BadElementException.
      */
-	public String getAddress(Address address) throws DataBaseException {
+	public String addAddress(Address address) throws DataBaseException {
 		String IFSCode = "I2I0BK" + String.valueOf(getLastIFSCode());
 		String message = branchDao.addAddress(IFSCode, new Address(customerService.getNewAddressId() + 1, address.getStreet(),
 	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
@@ -178,7 +178,7 @@ public class BranchService {
 	 * @throws DataBaseException
 	 *      If there is an error in the given data like BadElementException.
 	 */
-	public String getAccount(String accountNumber, double balance, String accounttype, String ifsc) throws DataBaseException {
+	public String addAccount(String accountNumber, double balance, String accounttype, String ifsc) throws DataBaseException {
 		Branch branch = branchDao.retrieveBranchById(ifsc);
 		//verify the branch id exist or not.
 		if (branch != null) {
@@ -203,7 +203,7 @@ public class BranchService {
 	 * @throws DataBaseException
 	 *     If there is an error in the given data like BadElementException.
 	 */
-	public List<Account> viewAccountByBranch(String ifsc) throws DataBaseException {
+	public List<Account> getAccountByBranch(String ifsc) throws DataBaseException {
 		List<Account> accounts = new ArrayList<Account>();
 		if (branchDao.retrieveBranchById(ifsc) != null) {
 			for (Account account : branchDao.retriveAllAccount()) {
