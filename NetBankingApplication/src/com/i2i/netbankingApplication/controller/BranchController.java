@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.i2i.netbankingApplication.exception.BranchDataException;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Address;
@@ -40,7 +41,7 @@ public class BranchController {
     *     Return to the BranchIndex JSP page.
     */
 	@RequestMapping(value = "/BranchIndex")
-	public String login() {
+	public String branchIndex() {
 		return "BranchIndex";
 	}
 	
@@ -51,14 +52,14 @@ public class BranchController {
 	 *     Return to the AddBranch JSP page.
 	 */
 	@RequestMapping(value = "/addBranch")
-	public String getBranch() {
+	public String addBranch() {
 		return "AddBranch";
 	}
 	
 	/**
      * <p>
-     *     Get the Branch emailId from JSP page and pass to getBranch method in BranchService.
-     *     Return to JSP page BranchIndex with status message(success or failure) Or Address object.
+     *     Get the Branch emailId from JSP page and pass to addBranch method in BranchService.
+     *     Return to JSP page BranchIndex with status message(success or failure) or Address object.
      * </p>
      * 
      * @param emailId
@@ -72,18 +73,14 @@ public class BranchController {
      *     Return to JSP page BranchIndex with Status message(failure).
      * 
      * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException.
+     *     It handle all the custom exception in NetBanking application.
      */
-	@RequestMapping(value="/insertBranch", method = RequestMethod.GET)
+	@RequestMapping(value="/insertBranch", method = RequestMethod.POST)
     public String addBranch(@RequestParam("emailId") String emailId, ModelMap message) { 
 		String URL = "AddAddress";
 		try {
-			if (emailId != null) {
-			    branchService.addBranch(emailId);
-			    message.addAttribute("BranchAddress", new Address());
-			} else {
-				message.addAttribute("message", " PLEASE FILL THE FORM ");
-			}
+			branchService.addBranch(emailId);
+			message.addAttribute("BranchAddress", new Address());
 	    } catch (DataBaseException e) {
     		message.addAttribute("message", e.getMessage()); 
     		URL = "BranchIndex";
@@ -94,8 +91,8 @@ public class BranchController {
 	
 	/**
 	 * <p>
-     *     Get the address object from JSP page and pass to getAddress method in BranchService.
-     *     Return to JSP page BranchIndex with Status message (Success with IFSC code Or failure).
+     *     Get the address object from JSP page and pass to addAddress method in BranchService.
+     *     Return to JSP page BranchIndex with Status message (Success with IFSC code or failure).
      * </p>
      * 
 	 * @param address
@@ -107,14 +104,16 @@ public class BranchController {
 	 *     Return to JSP page BranchIndex with status message(Success or Failure).
 	 *     
 	 * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException.
+     *     It handle all the custom exception in NetBanking application.
 	 */
 	@RequestMapping(value="/address", method = RequestMethod.POST)
     public String addAddress(@ModelAttribute("BranchAddress") Address address, ModelMap message) {  
 		try {
-			message.addAttribute("message", branchService.addAddress(address));
-	    } catch (DataBaseException e) {
+			message.addAttribute("message","BRANCH ADDED SUCCESSFULLY. BRANCH IFSC IS :: " + branchService.getAddress(address));
+	    } catch (BranchDataException e) {
     		message.addAttribute("message", e.getMessage()); 
+        } catch (DataBaseException e) {
+            message.addAttribute("message", e.getMessage()); 
         } finally {
         	return "BranchIndex";
         }
@@ -134,21 +133,20 @@ public class BranchController {
 	 *     Return to the RetrieveAllBranch JSP page with list of Branches or status message(failure).
 	 *     
 	 * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException.
+     *     It handle all the custom exception in NetBanking application.
 	 */
 	@RequestMapping(value="/deleteBranchById", method = RequestMethod.GET)
-    public String deleteBranch(@RequestParam("ifsc")String ifsc, ModelMap message) {
+    public String deleteBranchById(@RequestParam("ifsc")String ifsc, ModelMap message) {
     	try {       
             message.addAttribute("message", branchService.deleteBranchById(ifsc));
-            message.addAttribute("branches", branchService.getAllBranch());
+            message.addAttribute("branches", branchService.getAllBranches());
 	    } catch (DataBaseException e) {
     		message.addAttribute("message", e.getMessage()); 
-    		message.addAttribute("branches", branchService.getAllBranch());
+    		message.addAttribute("branches", branchService.getAllBranches());
         } finally {
-        	return "RetrieveAllBranch";
+        	return "RetrieveAllBranchs";
         }
     }
-	
 	
 	/**
 	 * <p>
@@ -160,12 +158,12 @@ public class BranchController {
 	 *     Return to the RetrieveAllBranch JSP page with list of Branches.
 	 *     
 	 * @throws DataBaseException 
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking application.
 	 */ 
 	@RequestMapping(value = "/GetBranch")
-	public String getAllBranch(ModelMap message) throws DataBaseException {
-		message.addAttribute("branches", branchService.getAllBranch());
-		return "RetrieveAllBranch";
+	public String getAllBranches(ModelMap message) throws DataBaseException {
+		message.addAttribute("branches", branchService.getAllBranches());
+		return "RetrieveAllBranchs";
 	}
 	/**
 	 * <p>
@@ -180,13 +178,13 @@ public class BranchController {
 	 *     Return to the ReteriveAllBranch JSP page with list of Branches or status message(failure).
 	 *  
 	 * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException.
+     *     It handle all the custom exception in NetBanking application.
 	 */
 	@RequestMapping(value="/getBranch", method = RequestMethod.GET)  
     public ModelAndView viewBranchById (@RequestParam("ifsc")String ifsc) {
         try {
         	if (ifsc.equals("all") || ifsc.equals("All") || ifsc.equals("ALL")) {
-        		return new ModelAndView ("RetrieveAllBranch", "branches", branchService.getAllBranch());
+        		return new ModelAndView ("RetrieveAllBranch", "branches", branchService.getAllBranches());
         	} else  {
         		Branch branch = branchService.getBranchById(ifsc);
         		if (branch != null) {
@@ -213,7 +211,7 @@ public class BranchController {
 	 *     Return to the RetrieveAddressById JSP page with Branch address or status message(failure).
 	 *     
 	 * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException.
+     *     It handle all the custom exception in NetBanking application.
 	 */
 	@RequestMapping(value="/viewBranchAddress", method = RequestMethod.GET)
     public ModelAndView viewAddressById(@RequestParam("addressId")int addressId, ModelMap message) {
@@ -231,7 +229,7 @@ public class BranchController {
 	 *     Return to JSP page AddAccount.
 	 */
 	@RequestMapping(value = "/AddAccount")
-	public String getAccount() {
+	public String addAccountForm() {
 		return "AddAccount";
 	}
 	
@@ -256,10 +254,10 @@ public class BranchController {
 	 *     Return to the RetrieveAddressById JSP page with Branch address or status message(failure).
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking application.
 	 */
 	@RequestMapping(value="/addAccount", method = RequestMethod.POST)  
-    public String getAccount(@RequestParam("accountNumber")String accountNumber, @RequestParam("balance")String balance, 
+    public String addAccount(@RequestParam("accountNumber")String accountNumber, @RequestParam("balance")String balance, 
     		@RequestParam("accounttype")String accounttype, @RequestParam("ifscode")String ifsc, ModelMap message) throws  DataBaseException {
 		try { 
 			message.addAttribute("message", branchService.addAccount(accountNumber, Double.parseDouble(balance), accounttype, ifsc));
@@ -294,24 +292,26 @@ public class BranchController {
 	 *     Display message using add attribute.
 	 *     
 	 * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException.
+     *     It handle all the custom exception in NetBanking application.
      *     
      * @return ViewAccountByBranch
 	 *     Return to the ViewAccountByBranch JSP page with list of accounts or status message(failure).
 	 */
+	
 	@RequestMapping(value="/getAccount", method = RequestMethod.GET)  
     public String viewAccountByBranch (@RequestParam("ifsc")String ifsc, ModelMap message) {
-		try { 
-			 List<Account> accounts = branchService.getAccountByBranch(ifsc);
-	            if (accounts.size() != 0) {
-	                message.addAttribute("accounts", accounts);
-	            } else {
-	                message.addAttribute("message", "NO ACCOUNT STARTED IN THIS BRANCH ");
-	            }
-		} catch(DataBaseException e) {
-			message.addAttribute("message", e.getMessage());
-		} finally {
-	     	return "ViewAccountByBranch";
-		}
+        try { 
+            List<Account> accounts = branchService.viewAccountByBranch(ifsc);
+            if (0 != accounts.size()) {
+                message.addAttribute("accounts", accounts);
+            } else {
+                message.addAttribute("message", "NO ACCOUNT STARTED IN THIS BRANCH ");
+            }
+        } catch(DataBaseException e) {
+            message.addAttribute("message", e.getMessage());
+        } finally {
+             return "ViewAccountByBranch";
+        }
 	}
+
 }

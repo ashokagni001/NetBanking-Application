@@ -3,8 +3,10 @@ package com.i2i.netbankingApplication.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.i2i.netbankingApplication.Constand.Constant;
+import com.i2i.netbankingApplication.constantVariableUtil.ConstantVariableUtil;
 import com.i2i.netbankingApplication.dao.BranchDao;
+import com.i2i.netbankingApplication.exception.BranchDataException;
+import com.i2i.netbankingApplication.exception.CustomerDataException;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Address;
@@ -35,10 +37,11 @@ public class BranchService {
      *     emailId of branch used to add a new Branch.
      * 
      * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException.
+     *     It handle all the custom exception in NetBanking application.
      */
+	
     public void addBranch(String emailId) throws DataBaseException {
-    	branchDao.addBranch(new Branch("I2I0BK" + String.valueOf(getLastIFSCode() + 1), emailId));
+    	branchDao.insertBranch(new Branch("I2I0BK" + String.valueOf(getLastIFSCode() + 1), emailId));
     }
     
     /**
@@ -51,11 +54,11 @@ public class BranchService {
      *     return to the last value of Last IfsCode code.
      *     
      * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException.
+     *     It handle all the custom exception in NetBanking application.
      */
     public int getLastIFSCode() throws DataBaseException, NumberFormatException {
-    	int lastIFSC = Constant.INITIALIZEVARAILABLEVALUE;
-    	for (Branch branch : branchDao.retriveAllBranch()) {
+    	int lastIFSC = ConstantVariableUtil.initializeVariable;
+    	for (Branch branch : branchDao.retriveAllBranches()) {
     		String IFSC = branch.getIFSCode();
    			int temp = Integer.parseInt(IFSC.substring(6, IFSC.length()));
    			if (lastIFSC <= temp) {
@@ -75,7 +78,7 @@ public class BranchService {
      *     IFSCode of branch.It IfsCode used to delete corresponding records.
      *     
      * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException.
+     *     It handle all the custom exception in NetBanking application.
      */
 	public String deleteBranchById(String IFSCode) throws DataBaseException {
 		branchDao.deleteBranchById(IFSCode);
@@ -89,10 +92,10 @@ public class BranchService {
 	 *     Return list of branches.
 	 *      
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking application.
 	 */
-	public List<Branch> getAllBranch() throws DataBaseException {
-    	return branchDao.retriveAllBranch();
+	public List<Branch> getAllBranches() throws DataBaseException {
+    	return branchDao.retriveAllBranches();
 	}
     
 	/**
@@ -109,7 +112,7 @@ public class BranchService {
 	 *     return the branch Object.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking application.
 	 */
 	public Branch getBranchById(String IFSCode) throws DataBaseException {
         return branchDao.retrieveBranchById(IFSCode); 
@@ -126,17 +129,18 @@ public class BranchService {
      *     Object of Address model class.It object used for add branch Address.
      *     
      * @throws DataBaseException
-     *     If there is an error in the given data like BadElementException.
+     *     It handle all the custom exception in NetBanking application.
      */
-	public String addAddress(Address address) throws DataBaseException {
+	public String getAddress(Address address) throws BranchDataException, DataBaseException {
 		String IFSCode = "I2I0BK" + String.valueOf(getLastIFSCode());
-		String message = branchDao.addAddress(IFSCode, new Address(customerService.getNewAddressId() + 1, address.getStreet(),
-	        address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
-		if (message == null) {
+		try {
+		    branchDao.addAddress(IFSCode, new Address(customerService.getNewAddressId() + 1, address.getStreet(),
+	                address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
+		return ("BRANCH ADDED SUCCESSFULL. BRANCH IFSC CODE IS :" + IFSCode);
+		} catch(DataBaseException e) {
 			branchDao.deleteBranchById(IFSCode);
-			message = "YOUR BRANCH ADDED NOT SUCCESSFULLY";
+			throw new BranchDataException("SORRY DATA NOT INSERTED. TRY AGAIN");
 		}
-		return message;
     }
     
 	/**
@@ -153,7 +157,7 @@ public class BranchService {
      *     Return to the object of Address class. 
      *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking application.
 	 */
 	public Address getAddressById(int addressId) throws DataBaseException {
 	    return branchDao.retrieveAddressById(addressId);
@@ -176,19 +180,20 @@ public class BranchService {
 	 *     IfsCode of Account.
 	 *     
 	 * @throws DataBaseException
-	 *      If there is an error in the given data like BadElementException.
+	 *      It handle all the custom exception in NetBanking application.
 	 */
 	public String addAccount(String accountNumber, double balance, String accounttype, String ifsc) throws DataBaseException {
 		Branch branch = branchDao.retrieveBranchById(ifsc);
 		//verify the branch id exist or not.
-		if (branch != null) {
-			return branchDao.addAccount(new Account(accountNumber, balance, accounttype, branch));
+		if (null != branch) {
+			branchDao.insertAccount(new Account(accountNumber, balance, accounttype, branch));
+			return ("ACCOUNT ADDED SUCCESSFULLY");
 	    } else {
 	     	return ("PLEASE ENTER VALID IFSC NUMBER"); 
 		}
 	}
 	
-	/**
+	/**DataBaseException
 	 * <p> 
 	 *     This method use to view account by branch.
      *     This method get the branch IFSC from branch controller. 
@@ -201,12 +206,12 @@ public class BranchService {
 	 *     return the list of accounts.
 	 *     
 	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException.
+	 *     It handle all the custom exception in NetBanking application.
 	 */
-	public List<Account> getAccountByBranch(String ifsc) throws DataBaseException {
+	public List<Account> viewAccountByBranch(String ifsc) throws DataBaseException {
 		List<Account> accounts = new ArrayList<Account>();
-		if (branchDao.retrieveBranchById(ifsc) != null) {
-			for (Account account : branchDao.retriveAllAccount()) {
+		if (null != branchDao.retrieveBranchById(ifsc)) {
+			for (Account account : branchDao.retriveAllAccounts()) {
 				if (account.getBranch().getIFSCode().equals(ifsc)) {
 					accounts.add(account);
 				}

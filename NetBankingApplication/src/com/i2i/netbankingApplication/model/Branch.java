@@ -25,7 +25,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 @Table(name = "branch_detail")
 public class Branch {
 	@Id
-    @Column(name = "ifsc")
+    @Column(name = "ifscode")
 	private String IFSCode;
 	
 	@Column(name = "email")
@@ -34,7 +34,7 @@ public class Branch {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="address_id")
-	private Address address;
+	public Address address;
 	
 	/**
      * Default Constructor.
