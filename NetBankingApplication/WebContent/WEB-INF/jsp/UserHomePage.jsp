@@ -31,6 +31,10 @@
 				<c:import url="CustomerSideMenu.jsp" />
 			</div>
 			<div class="col-md-9">
+			    <div style="width:50%;">
+                <img src="image/bankImage2.jpg" width="204%" height="100%"><br/>
+                </div>
+			</div>
 			</div>
 			</div>
 			</div>

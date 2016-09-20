@@ -15,6 +15,7 @@ import com.i2i.netbankingApplication.Constand.Constant;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.exception.TransactionCustomException;
 import com.i2i.netbankingApplication.model.CustomerTransaction;
+import com.i2i.netbankingApplication.service.CustomerService;
 import com.i2i.netbankingApplication.service.TransactionService;
 
 /**
@@ -33,7 +34,7 @@ import com.i2i.netbankingApplication.service.TransactionService;
 @Controller
 public class TransactionController {
 	private TransactionService transactionService = new TransactionService();
-        
+    private CustomerService customerService = new CustomerService();
         	
 	/**
      * Return the JSP page that contains options for transaction operation
@@ -89,9 +90,7 @@ public class TransactionController {
 		try {
 			message.addAttribute("message", transactionService.addTransactionDetail(customerId ,
 					creditAccountNumber, ifscode, Double.parseDouble(amount)));
-		} catch (TransactionCustomException e) {
-            message.addAttribute("message", e.getMessage());
-        } catch (DataBaseException e) {
+		} catch (DataBaseException e) {
 			message.addAttribute("message", e.getMessage());
 		} finally {
 			return "AddTransaction";
@@ -106,9 +105,6 @@ public class TransactionController {
      * 
 	 * @return RetrieveAllNotification
 	 *     Return to the RetrieveAllNotification JSP page with notification lists or status message(failure).
-	 *
-	 * @throws DataBaseException
-     *     It handle all the custom exception in NetBanking Application.
      */    
 	@RequestMapping(value = "/notification", method = RequestMethod.GET)
 	public ModelAndView getNotifications() {
@@ -199,8 +195,7 @@ public class TransactionController {
         
    /**
 	 * <p>
-	 *     Get the Customer Id from JSP page.
-	 *     This Method call to getMiniStatementByCustomerId method in CustomerService.
+	 *     This Method call to getMiniStatementByCustomerId method in TransactionService.
      *     Return to the getMiniStatementByCustomerId JSP page with Customer MiniStatement or status message(failure).
      * </p>
      * 
@@ -238,9 +233,6 @@ public class TransactionController {
 	 *     
 	 * @return viewAllTransaction
 	 *     Return to the viewAllTransaction JSP page with status message (Success or failure).
-	 *     
-	 * @throws DataBaseException
-     *     It handle all the custom exception in NetBanking Application.
 	 */ 
 	@RequestMapping(value = "/transactionSuccess", method = RequestMethod.GET)
 	public String transactionSuccess(@RequestParam("id") int transactionId,
@@ -291,8 +283,9 @@ public class TransactionController {
 			return "RetrieveAllNotification";
 		}
 	}
-        
-    /**
+    
+
+	/**
 	 * <p> 
 	 *     This form used to view transaction by date.
 	 *     It is return to the viewTransactionBYDate JSP page.
@@ -304,9 +297,9 @@ public class TransactionController {
 	@RequestMapping(value = "/viewTransactionByDate")
 	public String getDateTransaction() {
 		return "ViewTransactionByDate";
-	}
-        
-    /**
+    }
+
+	/**
 	 * <p> 
 	 *     It method used for view transaction by Date.
 	 *     This Method call to getDateTransaction method in transactionService with transaction details.
@@ -322,9 +315,6 @@ public class TransactionController {
 	 *      
 	 * @return viewTransactionByDate
 	 *     Return to the viewTransactionBYDate JSP page with transaction lists or failure message.
-	 *     
-	 * @throws DataBaseException
-     *     It handle all the custom exception in NetBanking Application.
 	 */
 	@RequestMapping(value = "/getDates", method = RequestMethod.GET)
 	public String getTransactionsByDate(@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
@@ -336,12 +326,64 @@ public class TransactionController {
 			} else {
 			    message.addAttribute("transactions", transactions);
 			}
-		} catch (TransactionCustomException e) {
-            message.addAttribute("message", e.getMessage());
-        } catch (DataBaseException e) {
+		} catch (DataBaseException e) {
 			message.addAttribute("message", e.getMessage());
 		} finally {
 			return "ViewTransactionByDate";
 		}
 	}
+    
+   /**
+	 * <p> 
+	 *     This form used to view transaction by date.
+	 *     It is return to the viewTransactionBYDate JSP page.
+	 * </p>
+	 * 
+	 * @return AddTransaction
+	 *     Return to the AddTransaction JSP page.
+	 */
+	@RequestMapping(value = "/addBeneficiaryAccountForm")
+	public String addBeneficiaryAccountForm() {
+		return "AddBeneficiaryAccount";
+	}
+	/**
+	 * <p>
+	 *     This Method call to addBeneficiaryAccount method in TransactionService.
+     *     Return to the AddBeneficiaryAccount JSP page with status message(success or failure).
+     * </p>
+     * 
+	 * @param accountNumber
+	 *    accounNumber of account entered by user add new BeneficiaryAccount.
+	 * @param IFSCode
+	 *    IFSCode of Branch entered by user add new BeneficiaryAccount.
+	 * @param session
+	 *    It is used for get the customer id.
+	 *    
+	 * @return
+	 *    Return to the AddBeneficiaryAccount JSP page with status message(success or failure).
+	 */
+	@RequestMapping(value = "/addBeneficiaryAccount", method = RequestMethod.GET)
+	public ModelAndView addBeneficiaryAccount(@RequestParam("accountNumber")String accountNumber, 
+			@RequestParam("IFSCode")String IFSCode, HttpSession session) {
+		try {              
+            return new ModelAndView ("AddBeneficiaryAccount", "address",
+            		transactionService.addBeneficiaryAccount(session.getAttribute("id").toString(), accountNumber, IFSCode)); 
+    	} catch(TransactionCustomException e) {
+    		return new ModelAndView ("AddBeneficiaryAccount", "message", e.getMessage());
+    	} catch (DataBaseException e) {
+    		return new ModelAndView ("AddBeneficiaryAccount", "message", e.getMessage());
+        }
+	}
+	
+	@RequestMapping(value = "/viewAllBeneficiaryAccountDetail", method = RequestMethod.GET)
+	public ModelAndView viewAllBeneficiaryAccountDetail(HttpSession session) throws TransactionCustomException {
+		try {      
+			System.out.println(customerService.getCustomerById(session.getAttribute("id").toString()).getBeneficiary());
+            return new ModelAndView ("ReterieveBeneficiaryByCustomerId", "beneficiaries", 
+            		customerService.getCustomerById(session.getAttribute("id").toString()).getBeneficiary());
+    	} catch (DataBaseException e) {
+    		return new ModelAndView ("AddBeneficiaryAccount", "message", e.getMessage());
+        }
+	}
 }
+

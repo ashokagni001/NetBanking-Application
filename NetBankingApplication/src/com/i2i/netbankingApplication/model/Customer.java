@@ -1,10 +1,14 @@
 package com.i2i.netbankingApplication.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -61,7 +65,11 @@ public class Customer {
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="address_id")
 	private Address address;
-    
+	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "id")
+	private List<Beneficiary> beneficiary = new ArrayList<Beneficiary>();
+
 	/**
      * Default Constructor.
      * which create a instance of Customer.
@@ -174,7 +182,15 @@ public class Customer {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-    
+
+	public List<Beneficiary> getBeneficiary() {
+		return beneficiary;
+	}
+
+	public void setBeneficiary(List<Beneficiary> beneficiary) {
+		this.beneficiary = beneficiary;
+	}
+	
 }
     
 	

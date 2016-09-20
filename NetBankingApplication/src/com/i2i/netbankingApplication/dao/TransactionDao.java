@@ -11,8 +11,10 @@ import org.hibernate.cfg.Configuration;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.hibernateConnection.HibernateConnection;
 import com.i2i.netbankingApplication.model.Account;
+import com.i2i.netbankingApplication.model.Beneficiary;
 import com.i2i.netbankingApplication.model.Customer;
 import com.i2i.netbankingApplication.model.CustomerTransaction;
+import com.i2i.netbankingApplication.model.UserRole;
 
 /**
  * <p>
@@ -270,6 +272,38 @@ public class TransactionDao {
 	        return session.createQuery("FROM CustomerTransaction WHERE date BETWEEN '"+formDate +"' AND '" +toDate +"'").list();
 	    } catch (HibernateException e) {
 	        throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
+	    } finally {
+	        session.close();
+	    }
+	}
+    
+	/**
+	 * Get the Beneficiary detail from CustomerService and add Beneficiary detail to database. 
+	 * 
+	 * @throws DataBaseException
+	 *     It handle all the custom exception in NetBanking Application..
+	 */
+	public void insertBeneficiaryAccount(Beneficiary beneficiary) throws DataBaseException {
+		Session session = hibernateConncetion();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			System.out.println("flow3");
+			session.save(beneficiary);
+			transaction.commit();
+		} catch (HibernateException e) {
+			throw new DataBaseException("SORRY INFORMATION CAN'T SAVE PLEASE TRY AGAIN" + e);
+		} finally {
+			session.close();
+		}
+	}
+	
+	public List<Beneficiary> retriveAllBeneficiaries() throws DataBaseException {
+	    Session session = hibernateConncetion();
+	    try {
+	        return session.createQuery("FROM Beneficiary").list();
+	    } catch (HibernateException e) {
+	        throw new DataBaseException("BENEFICIARY ACCOUNTS IS NOT AVAILABLE.");
 	    } finally {
 	        session.close();
 	    }

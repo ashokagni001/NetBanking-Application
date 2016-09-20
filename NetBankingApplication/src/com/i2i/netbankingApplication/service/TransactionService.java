@@ -8,8 +8,10 @@ import com.i2i.netbankingApplication.dao.TransactionDao;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.exception.TransactionCustomException;
 import com.i2i.netbankingApplication.model.Account;
+import com.i2i.netbankingApplication.model.Beneficiary;
 import com.i2i.netbankingApplication.model.Customer;
 import com.i2i.netbankingApplication.model.CustomerTransaction;
+import com.i2i.netbankingApplication.model.UserRole;
 import com.i2i.netbankingApplication.util.StringUtil;
 
 /**
@@ -62,7 +64,6 @@ public class TransactionService {
 								"Request", debitAccount, creditAccount), debitAccount);
 					return ("YOUR TRANSACTION DETAIL SEND OUR TRANSACTION APPROVER PLEASE WAIT");
 				} else {
-
 					throw new TransactionCustomException("YOUR CREDIT AMOUNT VALUE IS MUST BE LESSER THAN CURRENT AMOUNT :Rs " + currentAmount );
 				}
 			} else {
@@ -81,10 +82,10 @@ public class TransactionService {
      * </p>
 	 * 
 	 * @param accountNumber
-	 *     accountNumber of Account.
+	 *     accountNumber of Account to used for retrieve one account.
 	 *     
-	 * @return object.
-	 *     Return the object of Account.
+	 * @return Account.
+	 *     Return Account details.
 	 *     
 	 * @throws DataBaseException
 	 *     It handle all the custom exception in NetBanking Application.
@@ -121,10 +122,10 @@ public class TransactionService {
      * </p>
      * 
 	 * @param transactionId
-	 *     Id of Transaction.
+	 *     Id of Transaction to view transaction detail.
 	 *     
-	 * @return object
-	 *     return object of CustomerTransaction.
+	 * @return CustomerTransaction
+	 *     Return Customer Transaction details.
 	 * 
 	 * @throws DataBaseException
 	 *     It handle all the custom exception in NetBanking Application.
@@ -297,13 +298,11 @@ public class TransactionService {
 	 *     
 	 * @throws DataBaseException
 	 *     It handle all the custom exception in NetBanking Application.
-	 * @throws TransactionCustomException 
-	 *     It handle all the custom exception.
 	 */
 	public List<CustomerTransaction> getDateTransaction(String fromDate, String toDate) 
-			throws DataBaseException, TransactionCustomException {
+			throws DataBaseException {
 		if (StringUtil.isValidDateFormat(fromDate) && StringUtil.isValidDateFormat(toDate)) {
-            throw new TransactionCustomException ("YOUR FORMAT " + fromDate + " & " + toDate + 
+            throw new DataBaseException("YOUR FORMAT " + fromDate + " & " + toDate + 
                 " FORMAT MUST 2000-05-21.INSERT VALID DATE..!!");  
         }
 		return transactionDao.retriveTransactionByDate(fromDate, toDate);
@@ -326,5 +325,32 @@ public class TransactionService {
 	 */
 	public Account getAccountByCustomerId(String customerId) throws DataBaseException {
 		return getCustomerAccount(customerService.getCustomerById(customerId).getAccountNumber());
+	}
+    
+	public String addBeneficiaryAccount(String customerId, String accountNumber, String IFSCode) throws TransactionCustomException, DataBaseException {
+		Account customerAccount = getCustomerAccount(accountNumber);
+		if(null != customerAccount) {
+			if(customerAccount.getBranch().getIFSCode().equals(IFSCode)) {
+				Customer customer = customerService.getCustomerById(customerAccount.getCustomer().getCustomerId());
+				Customer beneficiaryCustomer = customerService.getCustomerById(customerId);
+				transactionDao.insertBeneficiaryAccount(new Beneficiary(beneficiaryCustomer, customer));
+				return "YOUR ACCOUNT ADDED SUCCESSFULLY";
+			}
+			throw new TransactionCustomException("YOUR IFSCODE IS WORNG " + IFSCode);
+		}
+		throw new TransactionCustomException("YOUR ACCOUNT NUMBER IS WORNG " + accountNumber);
+	}
+
+	
+	public List<Beneficiary> getAllBeneficiaryAccountByCustomerId(String customerId) throws TransactionCustomException, DataBaseException {
+		List<Beneficiary> beneficiaries = new ArrayList<Beneficiary>();
+		Customer customerAccountNumber = customerService.getCustomerById(customerId);
+		customerAccountNumber.getBeneficiary();
+		beneficiaries.add((Beneficiary) customerAccountNumber.getBeneficiary());
+		for (Beneficiary beneficiary : customerAccountNumber.getBeneficiary()) {
+			
+			throw new TransactionCustomException("YOUR BENEFICIARY ACCOUNTS NOT AVAILABLE..INSERT NEW ACCOUNT");
+		}
+		return beneficiaries;
 	}
 }
