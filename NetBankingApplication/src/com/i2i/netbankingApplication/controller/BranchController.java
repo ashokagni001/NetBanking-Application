@@ -110,7 +110,7 @@ public class BranchController {
 	@RequestMapping(value="/address", method = RequestMethod.POST)
     public String addAddress(@ModelAttribute("BranchAddress") Address address, ModelMap message) {  
 		try {
-			message.addAttribute("message","BRANCH ADDED SUCCESSFULLY. BRANCH IFSC IS :: " + branchService.getAddress(address));
+			message.addAttribute("message",branchService.addAddress(address));
 	    } catch (BranchDataException e) {
     		message.addAttribute("message", e.getMessage()); 
         } catch (DataBaseException e) {
@@ -312,6 +312,8 @@ public class BranchController {
             } else {
                 message.addAttribute("message", "NO ACCOUNT STARTED IN THIS BRANCH ");
             }
+        } catch (BranchDataException e) {
+            message.addAttribute("message", e.getMessage()); 
         } catch(DataBaseException e) {
             message.addAttribute("message", e.getMessage());
         } finally {

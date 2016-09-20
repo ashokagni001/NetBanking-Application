@@ -9,61 +9,30 @@
 </c:if>
 <html>
 <head>
-<link rel="stylesheet" href="css/bootstrap.css">
-<script src="js/bootstrap.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title></title>
+<link href="css/bootstrap.css" rel="styleSheet">
+<!-- MetisMenu CSS -->
+<link href="css/metisMenu.min.css" rel="stylesheet">
+<script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<style type="text/css">
-.well {
-    background-color: #8ddfe1;
-}
-
-.pos {
-    position: absolute;
-    right: 100px;
-    top: 108px;
-    height: 70px;
-    width: 50px;
-}
-</style>
+<script src="js/metisMenu.min.js"></script>
+<link href="css/mystyle.css" rel="stylesheet">
 </head>
+
 <body>
-    <c:if test="${message != null}">
-        <script type="text/javascript">
-            alert("<c:out value='${message}'/>");
-            windows.location.reload();
-        </script>
-    </c:if>
-    <div class="well">
-        <font size="20"><marquee behavior="alternate">I2I NETBANKING</marquee></font>
-    </div>
-    <br />
-    <h3> Welcome  ${sessionScope['name']} </h3><br />
-    <center>
-        <h2>CUSTOMER INFORMATION</h2>
-        <table>
-            <tr>
-                <td align="center" height="40" width="350"><a
-                    href="getCustomer?customerId=<c:out value="${sessionScope['id']}"/>">CUSTOMER
-                        DETAIL</a></td>
-            </tr>
-            <tr>
-                <td align="center" height="40" width="350"><a
-                    href="getAccountByCustomerId?customerId=<c:out value="${sessionScope['id']}"/>">VIEW
-                        ACCOUNT</a></td>
-            </tr>
-            <tr>
-                <td align="center" height="40" width="350"><a
-                    href="viewMiniStatementByCustomerId?customerId=<c:out value="${sessionScope['id']}"/>">CUTOMER
-                        MINI STATEMENT</a></td>
-            </tr>
-            <tr>
-                <td align="center" height="40" width="350"><a
-                    href="addTransaction">ADD TRANSACTION</a></td>
-            </tr>
-        </table>
-    </center>
-    <div class="pos">
-        <a class="btn btn-danger" href="logoutController"> LOGOUT</a>
-    </div>
+	<div class="col-md-12 container">
+		<c:import url="TopHead.jsp" />
+
+		<div class="col-md-12 main-container">
+
+
+			<div class="col-md-3 sidemenu">
+				<c:import url="CustomerSideMenu.jsp" />
+			</div>
+			<div class="col-md-9">
+			</div>
+			</div>
+			</div>
 </body>
 </html> 

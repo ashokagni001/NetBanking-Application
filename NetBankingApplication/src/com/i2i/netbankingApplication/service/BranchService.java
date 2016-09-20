@@ -131,7 +131,7 @@ public class BranchService {
      * @throws DataBaseException
      *     It handle all the custom exception in NetBanking application.
      */
-	public String getAddress(Address address) throws BranchDataException, DataBaseException {
+	public String addAddress(Address address) throws BranchDataException, DataBaseException {
 		String IFSCode = Constant.IFSCODE + String.valueOf(getLastIFSCode());
 		try {
 		    branchDao.insertAddress(IFSCode, new Address(customerService.getNewAddressId() + 1, address.getStreet(),
@@ -207,8 +207,10 @@ public class BranchService {
 	 *     
 	 * @throws DataBaseException
 	 *     It handle all the custom exception in NetBanking application.
+	 * @throws BranchDataException 
+	 *     It handle all the custom exception.
 	 */
-	public List<Account> viewAccountByBranch(String ifsc) throws DataBaseException {
+	public List<Account> viewAccountByBranch(String ifsc) throws DataBaseException, BranchDataException {
 		List<Account> accounts = new ArrayList<Account>();
 		if (null != branchDao.retrieveBranchById(ifsc)) {
 			for (Account account : branchDao.retriveAllAccounts()) {
@@ -218,7 +220,7 @@ public class BranchService {
 			}
 			return accounts;
 		} else {
-			throw new DataBaseException("PLEASE ENTER VALID IFSC NUMBER"); 
+			throw new BranchDataException("PLEASE ENTER VALID IFSC NUMBER"); 
 		}
 	}
 }

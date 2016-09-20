@@ -1,5 +1,7 @@
 package com.i2i.netbankingApplication.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;  
@@ -81,9 +83,9 @@ public class CustomerController {
 			message.addAttribute("Address", new Address());
             return URL = "AddAddress";
 		} catch (CustomerDataException e) {
-    		message.addAttribute("message", e.getMessage().toString()); 
+    		message.addAttribute("message", e.getMessage()); 
         } catch (DataBaseException e) {
-    		message.addAttribute("message", e.getMessage().toString()); 
+    		message.addAttribute("message", e.getMessage()); 
         } finally {
 		    return URL;
         }
@@ -154,7 +156,7 @@ public class CustomerController {
 	 *     Return to the ReteriveAllCustomer JSP page with Customer lists or status message(failure).
 	 */	
 	@RequestMapping(value="/getCustomer", method = RequestMethod.GET)  
-    public String viewBranchById(@RequestParam("customerId")String customerId, ModelMap message) {
+    public String viewCustomerById(@RequestParam("customerId")String customerId, ModelMap message) {
         try {
         	if (customerId.equals("all") || customerId.equals("All") || customerId.equals("ALL")) {
         		message.addAttribute("customers", customerService.getAllCustomers());
@@ -173,6 +175,26 @@ public class CustomerController {
         }
     }
 	
+	 /**
+		 * <p>
+		 *     This Method call to getCustomerById method in CustomerService.
+	     * </p>
+	     * 
+		 * @param customerId
+		 *     Id of Customer entered by user to view the corresponding record.
+		 *     
+		 * @return customer
+		 *     Return to the ReteriveAllCustomer JSP page with Customer lists or status message(failure).
+		 */	
+	@RequestMapping(value="/getCustomerById", method = RequestMethod.GET)  
+	public ModelAndView viewCustomerById(ModelMap message, HttpSession session) {
+		try {                     
+            return new ModelAndView ("RetrieveAllCustomer", "customer", customerService.getCustomerById(session.getAttribute("id").toString())); 
+    	} catch (DataBaseException e) {
+    		return new ModelAndView ("RetrieveAllCustomer", "message", e.getMessage());
+        }
+	}
+	
 	/**
 	 * <p>
 	 *     This Method call to getAddressById method in CustomerService.
@@ -190,7 +212,7 @@ public class CustomerController {
     	try {                     
             return new ModelAndView ("RetrieveAddressById", "address", customerService.getAddressById(addressId)); 
     	} catch (DataBaseException e) {
-    		return new ModelAndView ("CustomerIndex", "message", e.getMessage().toString());
+    		return new ModelAndView ("RetrieveAddressById", "message", e.getMessage().toString());
         }
     }
 	

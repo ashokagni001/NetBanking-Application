@@ -1,0 +1,65 @@
+ .logo{
+ padding-top:30px;
+ }
+ .header-top{
+ margin: 0px;
+ background:#1C1515;
+ height: 90px;
+ }
+ .header-top h1 {
+ color:#fff;
+ }
+  .header-logout{
+ margin: 0px;
+ background:#1C1515;
+ height: 60px;
+ float: right;
+ }
+ .name{
+ color:#fff;
+ }
+ .sidemenu{
+ background:  #5689c9  ;
+ margin: 0px;
+ padding: 0px;
+ height :100%;
+ }
+ .main-container {
+ margin: 0px;
+ padding: 0px;
+ }
+ .sidemenu-nav{
+ 
+ }
+.sidemenu ul {
+ 
+   list-style: none;
+ }
+ .sizetable{
+ overflow: scroll;
+ }
+
+.sidemenu ul li {
+    
+ }
+.sidemenu ul li a{
+ color : #fff;
+ 
+ }
+ .sidemenu ul li a:hover {
+
+ color :  #1f7ee3 ;
+ 
+ }
+ 
+ .pos {
+    position: absolute;
+    right: 7px;
+    top: 116px;
+    height: 70px;
+    width: 50px;
+}
+.row{
+margin-top: 5px;
+}
+.s

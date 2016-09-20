@@ -2,6 +2,8 @@ package com.i2i.netbankingApplication.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.i2i.netbankingApplication.Constand.Constant;
 import com.i2i.netbankingApplication.exception.DataBaseException;
+import com.i2i.netbankingApplication.exception.TransactionCustomException;
 import com.i2i.netbankingApplication.model.CustomerTransaction;
 import com.i2i.netbankingApplication.service.TransactionService;
 
@@ -86,7 +89,9 @@ public class TransactionController {
 		try {
 			message.addAttribute("message", transactionService.addTransactionDetail(customerId ,
 					creditAccountNumber, ifscode, Double.parseDouble(amount)));
-		} catch (DataBaseException e) {
+		} catch (TransactionCustomException e) {
+            message.addAttribute("message", e.getMessage());
+        } catch (DataBaseException e) {
 			message.addAttribute("message", e.getMessage());
 		} finally {
 			return "AddTransaction";
@@ -209,9 +214,9 @@ public class TransactionController {
      *     It handle all the custom exception in NetBanking Application.
      */
 	@RequestMapping(value="/viewMiniStatementByCustomerId", method = RequestMethod.GET)  
-    public ModelAndView viewMiniStatementByCustomerId (@RequestParam("customerId")String customerId, ModelMap message) {
+    public ModelAndView viewMiniStatementByCustomerId (ModelMap message, HttpSession session) {
         try {
-        	return new ModelAndView("RetrieveMiniStatementByCustomerId", "miniStatement", transactionService.getCustomerMiniStatements(customerId));
+        	return new ModelAndView("RetrieveMiniStatementByCustomerId", "miniStatement", transactionService.getCustomerMiniStatements(session.getAttribute("id").toString()));
         } catch (DataBaseException e) {
         	return new ModelAndView("CustomerIndex", "message", e.getMessage());
         }
@@ -326,12 +331,14 @@ public class TransactionController {
 			ModelMap message) {
 		try {
 			List<CustomerTransaction> transactions = transactionService.getDateTransaction(fromDate, toDate);
-			if (Constant.INITIALIZEVARAILABLEVALUE != transactions.size()) {
+			if (Constant.INITIALIZEVARAILABLEVALUE == transactions.size()) {
 				message.addAttribute("message", "NO TRENSACTION PROCESS IN " + fromDate + " TO " + toDate);
 			} else {
 			    message.addAttribute("transactions", transactions);
 			}
-		} catch (DataBaseException e) {
+		} catch (TransactionCustomException e) {
+            message.addAttribute("message", e.getMessage());
+        } catch (DataBaseException e) {
 			message.addAttribute("message", e.getMessage());
 		} finally {
 			return "ViewTransactionByDate";

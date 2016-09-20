@@ -370,7 +370,7 @@ public class CustomerService {
      * @throws DataBaseException
      *     It handle all the custom exception in NetBanking Application.
      */
-	public boolean checkIfRole(String customerId) throws DataBaseException, ExceptionInInitializerError {
+	public boolean checkIfRole(String customerId) throws DataBaseException {
 		int userRoleCount = Constant.INITIALIZEVARAILABLEVALUE;
 		for (UserRole userRole : customerDao.retriveAllUserRoles()) {
 			if (userRole.getCustomer().getCustomerId().equals(customerId)) {

@@ -6,6 +6,7 @@ import java.util.List;
 import com.i2i.netbankingApplication.Constand.Constant;
 import com.i2i.netbankingApplication.dao.TransactionDao;
 import com.i2i.netbankingApplication.exception.DataBaseException;
+import com.i2i.netbankingApplication.exception.TransactionCustomException;
 import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Customer;
 import com.i2i.netbankingApplication.model.CustomerTransaction;
@@ -46,7 +47,7 @@ public class TransactionService {
 	 *     It handle all the custom exception in NetBanking Application.
 	 */
 	public String addTransactionDetail(String customerId, String creditAccountNumber, 
-			String ifscode, double amount) throws DataBaseException {
+			String ifscode, double amount) throws TransactionCustomException, DataBaseException {
 		Account debitAccount = getAccountByCustomerId(customerId);
 		Account creditAccount = transactionDao.retrieveAccountByNumber(creditAccountNumber);
 		if (null != creditAccount) {
@@ -62,13 +63,13 @@ public class TransactionService {
 					return ("YOUR TRANSACTION DETAIL SEND OUR TRANSACTION APPROVER PLEASE WAIT");
 				} else {
 
-					throw new DataBaseException("YOUR CREDIT AMOUNT VALUE IS MUST BE LESSER THAN CURRENT AMOUNT :Rs " + currentAmount );
+					throw new TransactionCustomException("YOUR CREDIT AMOUNT VALUE IS MUST BE LESSER THAN CURRENT AMOUNT :Rs " + currentAmount );
 				}
 			} else {
-				throw new DataBaseException("CREDITACCOUNTNUMBER IFSC CODE WORNG");
+				throw new TransactionCustomException("CREDITACCOUNTNUMBER IFSC CODE WORNG");
 			}
 		} else {
-			throw new DataBaseException("CREDITACCOUNTNUMBER INCORRECT");
+			throw new TransactionCustomException("CREDITACCOUNTNUMBER INCORRECT");
 		}
 	}
 	
@@ -296,11 +297,13 @@ public class TransactionService {
 	 *     
 	 * @throws DataBaseException
 	 *     It handle all the custom exception in NetBanking Application.
+	 * @throws TransactionCustomException 
+	 *     It handle all the custom exception.
 	 */
 	public List<CustomerTransaction> getDateTransaction(String fromDate, String toDate) 
-			throws DataBaseException {
+			throws DataBaseException, TransactionCustomException {
 		if (StringUtil.isValidDateFormat(fromDate) && StringUtil.isValidDateFormat(toDate)) {
-            throw new DataBaseException("YOUR FORMAT " + fromDate + " & " + toDate + 
+            throw new TransactionCustomException ("YOUR FORMAT " + fromDate + " & " + toDate + 
                 " FORMAT MUST 2000-05-21.INSERT VALID DATE..!!");  
         }
 		return transactionDao.retriveTransactionByDate(fromDate, toDate);
