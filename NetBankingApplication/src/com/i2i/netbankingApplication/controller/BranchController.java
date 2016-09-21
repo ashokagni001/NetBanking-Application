@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.i2i.netbankingApplication.Constand.Constant;
+import com.i2i.netbankingApplication.constant.Constant;
 import com.i2i.netbankingApplication.exception.BranchDataException;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.model.Account;

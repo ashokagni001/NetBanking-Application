@@ -3,7 +3,7 @@ package com.i2i.netbankingApplication.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.i2i.netbankingApplication.Constand.Constant;
+import com.i2i.netbankingApplication.constant.Constant;
 import com.i2i.netbankingApplication.dao.TransactionDao;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.exception.TransactionCustomException;
@@ -49,28 +49,18 @@ public class TransactionService {
 	 *     It handle all the custom exception in NetBanking Application.
 	 */
 	public String addTransactionDetail(String customerId, String creditAccountNumber, 
-			String ifscode, double amount) throws TransactionCustomException, DataBaseException {
+			double amount) throws TransactionCustomException, DataBaseException {
 		Account debitAccount = getAccountByCustomerId(customerId);
-		Account creditAccount = transactionDao.retrieveAccountByNumber(creditAccountNumber);
-		if (null != creditAccount) {
-			//verify the creditAccount IFSCode valid or not.
-			if (creditAccount.getBranch().getIFSCode().equals(ifscode)) {
-		        double currentAmount = debitAccount.getBalance();
-		        double balanceAmount = (currentAmount - amount);
-				//check the balanceAmount have or not.
-				if (balanceAmount > Constant.INITIALIZEVARAILABLEVALUE) {
-					debitAccount.setBalance(balanceAmount);
-					transactionDao.insertTransaction(new CustomerTransaction(getLastTransactionId(), amount,
-								"Request", debitAccount, creditAccount), debitAccount);
-					return ("YOUR TRANSACTION DETAIL SEND OUR TRANSACTION APPROVER PLEASE WAIT");
-				} else {
-					throw new TransactionCustomException("YOUR CREDIT AMOUNT VALUE IS MUST BE LESSER THAN CURRENT AMOUNT :Rs " + currentAmount );
-				}
-			} else {
-				throw new TransactionCustomException("CREDITACCOUNTNUMBER IFSC CODE WORNG");
-			}
+		double currentAmount = debitAccount.getBalance();
+		double balanceAmount = (currentAmount - amount);
+		//check the balanceAmount have or not.
+		if (balanceAmount > Constant.INITIALIZEVARAILABLEVALUE) {
+		    debitAccount.setBalance(balanceAmount);
+			transactionDao.insertTransaction(new CustomerTransaction(getLastTransactionId(), amount,
+					"Request", debitAccount, transactionDao.retrieveAccountByNumber(creditAccountNumber)), debitAccount);
+			return ("YOUR TRANSACTION DETAIL SEND OUR TRANSACTION APPROVER PLEASE WAIT");
 		} else {
-			throw new TransactionCustomException("CREDITACCOUNTNUMBER INCORRECT");
+			throw new TransactionCustomException("YOUR CREDIT AMOUNT VALUE IS MUST BE LESSER THAN CURRENT AMOUNT :Rs " + currentAmount );
 		}
 	}
 	
@@ -333,24 +323,11 @@ public class TransactionService {
 			if(customerAccount.getBranch().getIFSCode().equals(IFSCode)) {
 				Customer customer = customerService.getCustomerById(customerAccount.getCustomer().getCustomerId());
 				Customer beneficiaryCustomer = customerService.getCustomerById(customerId);
-				transactionDao.insertBeneficiaryAccount(new Beneficiary(beneficiaryCustomer, customer));
+				transactionDao.insertBeneficiaryAccount(new Beneficiary(beneficiaryCustomer, customer, "request"));
 				return "YOUR ACCOUNT ADDED SUCCESSFULLY";
 			}
 			throw new TransactionCustomException("YOUR IFSCODE IS WORNG " + IFSCode);
 		}
 		throw new TransactionCustomException("YOUR ACCOUNT NUMBER IS WORNG " + accountNumber);
-	}
-
-	
-	public List<Beneficiary> getAllBeneficiaryAccountByCustomerId(String customerId) throws TransactionCustomException, DataBaseException {
-		List<Beneficiary> beneficiaries = new ArrayList<Beneficiary>();
-		Customer customerAccountNumber = customerService.getCustomerById(customerId);
-		customerAccountNumber.getBeneficiary();
-		beneficiaries.add((Beneficiary) customerAccountNumber.getBeneficiary());
-		for (Beneficiary beneficiary : customerAccountNumber.getBeneficiary()) {
-			
-			throw new TransactionCustomException("YOUR BENEFICIARY ACCOUNTS NOT AVAILABLE..INSERT NEW ACCOUNT");
-		}
-		return beneficiaries;
 	}
 }

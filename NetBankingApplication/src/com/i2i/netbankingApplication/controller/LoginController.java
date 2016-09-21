@@ -66,7 +66,6 @@ public class LoginController {
     		@RequestParam("password")String password, ModelMap message,HttpSession session) {
 		String URL = "Information";
 		try {
-			System.out.println("gdg");
 		    if (customerService.ifValidateUser(customerId, password)) {
 				if (customerService.checkIfRole(customerId)){
 					session.setAttribute("name", customerService.getCustomerById(customerId).getName());

@@ -288,7 +288,6 @@ public class TransactionDao {
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			System.out.println("flow3");
 			session.save(beneficiary);
 			transaction.commit();
 		} catch (HibernateException e) {
@@ -296,16 +295,5 @@ public class TransactionDao {
 		} finally {
 			session.close();
 		}
-	}
-	
-	public List<Beneficiary> retriveAllBeneficiaries() throws DataBaseException {
-	    Session session = hibernateConncetion();
-	    try {
-	        return session.createQuery("FROM Beneficiary").list();
-	    } catch (HibernateException e) {
-	        throw new DataBaseException("BENEFICIARY ACCOUNTS IS NOT AVAILABLE.");
-	    } finally {
-	        session.close();
-	    }
 	}
 }

@@ -6,14 +6,18 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.i2i.netbankingApplication.Constand.Constant;
+import com.i2i.netbankingApplication.constant.Constant;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.exception.TransactionCustomException;
+import com.i2i.netbankingApplication.model.Account;
+import com.i2i.netbankingApplication.model.Beneficiary;
+import com.i2i.netbankingApplication.model.Customer;
 import com.i2i.netbankingApplication.model.CustomerTransaction;
 import com.i2i.netbankingApplication.service.CustomerService;
 import com.i2i.netbankingApplication.service.TransactionService;
@@ -83,13 +87,15 @@ public class TransactionController {
      * @throws DataBaseException
      *     It handle all the custom exception in NetBanking Application.
      */
-	@RequestMapping(value = "/insertTransaction", method = RequestMethod.POST)
-	public String addTransaction(@RequestParam("customerId") String customerId,
-			@RequestParam("creditAccountNumber") String creditAccountNumber, @RequestParam("ifscode") String ifscode,
-			@RequestParam("amount") String amount, ModelMap message) {
+	
+	@RequestMapping(value = "/insertTransaction", method = RequestMethod.GET)
+	public String addTransaction(@RequestParam("creditAccountNumber") String creditAccountNumber,
+			@RequestParam("amount") String amount, ModelMap message, HttpSession session) {
 		try {
-			message.addAttribute("message", transactionService.addTransactionDetail(customerId ,
-					creditAccountNumber, ifscode, Double.parseDouble(amount)));
+			message.addAttribute("message", transactionService.addTransactionDetail(session.getAttribute("id").toString() ,
+					creditAccountNumber, Double.parseDouble(amount)));
+		} catch (TransactionCustomException e) {
+			message.addAttribute("message", e.getMessage());
 		} catch (DataBaseException e) {
 			message.addAttribute("message", e.getMessage());
 		} finally {
@@ -366,7 +372,7 @@ public class TransactionController {
 	public ModelAndView addBeneficiaryAccount(@RequestParam("accountNumber")String accountNumber, 
 			@RequestParam("IFSCode")String IFSCode, HttpSession session) {
 		try {              
-            return new ModelAndView ("AddBeneficiaryAccount", "address",
+            return new ModelAndView ("AddBeneficiaryAccount", "messgae",
             		transactionService.addBeneficiaryAccount(session.getAttribute("id").toString(), accountNumber, IFSCode)); 
     	} catch(TransactionCustomException e) {
     		return new ModelAndView ("AddBeneficiaryAccount", "message", e.getMessage());
@@ -377,13 +383,19 @@ public class TransactionController {
 	
 	@RequestMapping(value = "/viewAllBeneficiaryAccountDetail", method = RequestMethod.GET)
 	public ModelAndView viewAllBeneficiaryAccountDetail(HttpSession session) throws TransactionCustomException {
-		try {      
-			System.out.println(customerService.getCustomerById(session.getAttribute("id").toString()).getBeneficiary());
+		try {
+			List<Beneficiary> customerBeneficiary = customerService.getCustomerById(session.getAttribute("id").toString()).getBeneficiary();
             return new ModelAndView ("ReterieveBeneficiaryByCustomerId", "beneficiaries", 
             		customerService.getCustomerById(session.getAttribute("id").toString()).getBeneficiary());
     	} catch (DataBaseException e) {
     		return new ModelAndView ("AddBeneficiaryAccount", "message", e.getMessage());
         }
+	}
+	
+	@RequestMapping(value = "/addTransaction1", method = RequestMethod.GET)
+	public String addTransaction1(@ModelAttribute("customerAccountNumber") String accountNumber, ModelMap message) throws DataBaseException {
+		message.addAttribute("customerAccount", transactionService.getCustomerAccount(accountNumber));
+		return "AddTransaction1";
 	}
 }
 

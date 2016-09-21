@@ -15,7 +15,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
-@Table(name = "beneficiary_detail")
+@Table(name = "beneficiaries_detail")
 public class Beneficiary {
 	
 	@Id
@@ -31,12 +31,16 @@ public class Beneficiary {
 	@JoinColumn(name = "customer_account_number")
 	private Customer customerAccountNumber;
 	
+	@Column(name = "status")
+	private String status;
+	
 	public Beneficiary() {
 	}
 	
-	public Beneficiary(Customer beneficiaryAccountNumber, Customer customerAccountNumber) {
+	public Beneficiary(Customer beneficiaryAccountNumber, Customer customerAccountNumber, String status) {
 		this.beneficiaryAccountNumber = beneficiaryAccountNumber;
 		this.customerAccountNumber = customerAccountNumber;
+		this.status = status;
 	}
     
 	public int getId() {
@@ -61,5 +65,13 @@ public class Beneficiary {
 
 	public void setCustomerAccountNumber(Customer customerAccountNumber) {
 		this.customerAccountNumber = customerAccountNumber;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }

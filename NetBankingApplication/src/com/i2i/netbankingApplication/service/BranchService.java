@@ -3,7 +3,7 @@ package com.i2i.netbankingApplication.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.i2i.netbankingApplication.Constand.Constant;
+import com.i2i.netbankingApplication.constant.Constant;
 import com.i2i.netbankingApplication.dao.BranchDao;
 import com.i2i.netbankingApplication.exception.BranchDataException;
 import com.i2i.netbankingApplication.exception.CustomerDataException;

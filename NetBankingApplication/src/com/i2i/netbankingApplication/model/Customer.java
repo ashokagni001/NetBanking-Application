@@ -67,8 +67,12 @@ public class Customer {
 	private Address address;
 	
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "id")
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "beneficiaryAccountNumber")
 	private List<Beneficiary> beneficiary = new ArrayList<Beneficiary>();
+	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "customer")
+	private List<Account> account = new ArrayList<Account>();
 
 	/**
      * Default Constructor.
@@ -190,7 +194,14 @@ public class Customer {
 	public void setBeneficiary(List<Beneficiary> beneficiary) {
 		this.beneficiary = beneficiary;
 	}
-	
+
+	public List<Account> getAccount() {
+		return account;
+	}
+
+	public void setAccount(List<Account> account) {
+		this.account = account;
+	}
 }
     
 	

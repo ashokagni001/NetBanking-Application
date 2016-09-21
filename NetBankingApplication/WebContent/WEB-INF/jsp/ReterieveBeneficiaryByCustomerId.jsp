@@ -41,18 +41,18 @@
 							<th>S.NO</th>
 							<th>NAME</th>
 							<th>ACCOUNT NUMBER</th>
-							<th>TRANSACTIONS</th>
 						</tr>
 						<%
 							int sno = 1;
 						%>
 						<c:forEach items="${beneficiaries}" var="beneficiaries">
 							<tr>
-								<td align="center"><c:out value="<%=sno%>" /></td>
-								<td align="center"><c:out
-										value="${beneficiaries.getCustomerAccountNumber().getAccountNumber()}" />
-							    <td align="center"><c:out
+								<td><c:out value="<%=sno%>" /></td>
+							    <td><c:out
 										value="${beneficiaries.getCustomerAccountNumber().getName()}" />
+								</td>
+								<td><a href="addTransaction1?customerAccountNumber=<c:out value="${beneficiaries.getCustomerAccountNumber().getAccountNumber()}"/>">
+								<c:out value="${beneficiaries.getCustomerAccountNumber().getAccountNumber()}" /></a>	
 								</td>
 							</tr>
 							<%
@@ -64,5 +64,5 @@
 			</div>
 		</div>
 	</div>
-</body>
+    </body>
 </html>
