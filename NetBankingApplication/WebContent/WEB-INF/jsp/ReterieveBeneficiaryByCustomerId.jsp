@@ -35,8 +35,9 @@
 							windows.location.reload();
 						</script>
 					</c:if>
-					<table	class="table table-striped table-bordered table-hover"
-						id="dataTables-example">
+					<c:if test="${beneficiaries != null}">
+					<table class="table table-striped table-bordered table-hover"
+							id="dataTables-example">
 						<tr>
 							<th>S.NO</th>
 							<th>NAME</th>
@@ -48,8 +49,10 @@
 						<c:forEach items="${beneficiaries}" var="beneficiaries">
 							<tr>
 								<td><c:out value="<%=sno%>" /></td>
-							    <td><c:out
-										value="${beneficiaries.getCustomerAccountNumber().getCustomer().getName()}" />
+							    <td>
+							    <c:set
+										value="${beneficiaries.getCustomerAccountNumber().getCustomer()}" var="customer"/>
+								<c:out value="${customer.getName()}"/>
 								</td>
 								<td><a href="addTransaction1?customerAccountNumber=<c:out value="${beneficiaries.getCustomerAccountNumber().getAccountNumber()}"/>">
 								<c:out value="${beneficiaries.getCustomerAccountNumber().getAccountNumber()}" /></a>	
@@ -60,6 +63,7 @@
 							%>
 						</c:forEach>
 					</table>
+					</c:if>
 				</div>
 			</div>
 		</div>

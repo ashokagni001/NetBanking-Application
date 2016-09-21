@@ -41,7 +41,7 @@
 							<label class="control-label col-md-4" for="creditAccountNumber">CREDIT
 								ACCOUNT NUMBER </label>
 							<div class="col-md-8">
-							<td><input name="creditAccountNumber" value="<c:out value="${customerAccount.getAccountNumber()}"/>" readonly/></td>
+							<input name="creditAccountNumber" value="<c:out value="${customerAccount.getAccountNumber()}"/>" readonly/>
 							</div>
 						</div>
 					</div>
@@ -50,7 +50,7 @@
 							<label class="control-label col-md-4" for="creditAccountNumber">CREDIT
 								CUSTOMER NAME </label>
 							<div class="col-md-8">
-							<td><input type="text" value="<c:out value="${customerAccount.getCustomer().getName()}"/>" readonly/></td>
+							<input type="text" value="<c:out value="${customerAccount.getCustomer().getName()}"/>" readonly/>
 							</div>
 						</div>
 					</div>
@@ -67,8 +67,8 @@
 					<div class="row">
 						<div class="form-group">
 							<div class="col-md-offset-4 col-md-8">
-								<input type="submit" name="insertTransaction" value="PROCEED"
-									required />
+								<input class="btn btn-success" type="submit" name="insertTransaction" value="PROCEED"
+									/>
 							</div>
 						</div>
 						<input type="hidden" name="customerId"

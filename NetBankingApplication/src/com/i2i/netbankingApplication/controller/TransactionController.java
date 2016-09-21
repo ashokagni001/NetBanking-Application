@@ -1,7 +1,5 @@
 package com.i2i.netbankingApplication.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -12,14 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.i2i.netbankingApplication.constant.Constant;
 import com.i2i.netbankingApplication.exception.DataBaseException;
 import com.i2i.netbankingApplication.exception.TransactionCustomException;
-import com.i2i.netbankingApplication.model.Account;
-import com.i2i.netbankingApplication.model.Beneficiary;
-import com.i2i.netbankingApplication.model.Customer;
-import com.i2i.netbankingApplication.model.CustomerTransaction;
-import com.i2i.netbankingApplication.service.CustomerService;
 import com.i2i.netbankingApplication.service.TransactionService;
 
 /**
@@ -38,19 +30,6 @@ import com.i2i.netbankingApplication.service.TransactionService;
 @Controller
 public class TransactionController {
 	private TransactionService transactionService = new TransactionService();
-    private CustomerService customerService = new CustomerService();
-        	
-	/**
-     * Return the JSP page that contains options for transaction operation
-     * 
-     * @return transactionIndex
-     *     Return to the transactionIndex JSP page.
-     */
-	@RequestMapping(value = "/TransactionIndex")
-	public String transactionIndex() {
-		return "TransactionIndex";
-	}
-        
     /**
 	 * <p>
 	 *     It is return to the AddTransaction JSP page.
@@ -94,12 +73,14 @@ public class TransactionController {
 		try {
 			message.addAttribute("message", transactionService.addTransactionDetail(session.getAttribute("id").toString() ,
 					creditAccountNumber, Double.parseDouble(amount)));
+			message.addAttribute("beneficiaries", transactionService.getBeneficiaryAccountByCustomerId(session.getAttribute("id").toString()));
+			message.addAttribute("beneficiaryNotifications", transactionService.getAllBeneficiaries());
 		} catch (TransactionCustomException e) {
 			message.addAttribute("message", e.getMessage());
 		} catch (DataBaseException e) {
 			message.addAttribute("message", e.getMessage());
 		} finally {
-			return "AddTransaction";
+			return "ReterieveBeneficiaryByCustomerId";
 		}
 	}
 
@@ -112,18 +93,15 @@ public class TransactionController {
 	 * @return RetrieveAllNotification
 	 *     Return to the RetrieveAllNotification JSP page with notification lists or status message(failure).
      */    
-	@RequestMapping(value = "/notification", method = RequestMethod.GET)
+	@RequestMapping(value = "/notification")
 	public ModelAndView getNotifications() {
 		try {
-			List<CustomerTransaction>  notifications = transactionService.getAllNotifications();
-			if (Constant.INITIALIZEVARAILABLEVALUE != notifications.size()) {
-			    return new ModelAndView("RetrieveAllNotification", "notifications", notifications);
-			} else {
-				return new ModelAndView("RetrieveAllNotification", "message", "NO NOTIFICATION AVAILABLE");
-			}
-		} catch (DataBaseException e) {
-			return new ModelAndView("RetrieveAllNotification", "message", e.getMessage());
-		}
+			 return new ModelAndView("RetrieveAllNotification", "notifications", transactionService.getAllNotifications());
+		}catch(TransactionCustomException e) {
+            return new ModelAndView ("AddBeneficiaryAccount", "message", e.getMessage());
+        } catch (DataBaseException e) {
+            return new ModelAndView ("AddBeneficiaryAccount", "message", e.getMessage());
+        }
 	}
 
    /**
@@ -147,7 +125,6 @@ public class TransactionController {
 		}
 	}
         
-    
 	/**
 	 * <p>
 	 *     This Method call to getAccountByCustomerId method in transactionService.
@@ -247,10 +224,12 @@ public class TransactionController {
 		try {
 			transactionService.transactionSuccess(transactionId, creditAccountNumber, amount, userId);
 			message.addAttribute("message", "TRANSACTION ACTION SUCCESSFULLY");
-		    getNotifications();
+			message.addAttribute("notifications", transactionService.getAllNotifications());
 		} catch (DataBaseException e) {
-			message.addAttribute("message", e.getMessage());
-		} finally {
+            message.addAttribute("message", e.getMessage());
+        } catch (TransactionCustomException e) {
+            message.addAttribute("message", e.getMessage());
+        } finally {
 			return "RetrieveAllNotification";
 		}
 	}
@@ -282,10 +261,12 @@ public class TransactionController {
 		try {
 			transactionService.transactionFailure(transactionId, debitAccountNumber, amount, userId);
 			message.addAttribute("transactions", "TRANSACTION ACTION SUCCESSFULLY");
-			getNotifications();
-		} catch (DataBaseException e) {
-			message.addAttribute("message", e.getMessage());
-		} finally {
+			message.addAttribute("notifications", transactionService.getAllNotifications());
+		}  catch (DataBaseException e) {
+            message.addAttribute("message", e.getMessage());
+        } catch (TransactionCustomException e) {
+            message.addAttribute("message", e.getMessage());
+        } finally {
 			return "RetrieveAllNotification";
 		}
 	}
@@ -326,13 +307,10 @@ public class TransactionController {
 	public String getTransactionsByDate(@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
 			ModelMap message) {
 		try {
-			List<CustomerTransaction> transactions = transactionService.getDateTransaction(fromDate, toDate);
-			if (Constant.INITIALIZEVARAILABLEVALUE == transactions.size()) {
-				message.addAttribute("message", "NO TRENSACTION PROCESS IN " + fromDate + " TO " + toDate);
-			} else {
-			    message.addAttribute("transactions", transactions);
-			}
+			message.addAttribute("transactions", transactionService.getDateTransaction(fromDate, toDate));
 		} catch (DataBaseException e) {
+            message.addAttribute("message", e.getMessage());
+        } catch (TransactionCustomException e) {
 			message.addAttribute("message", e.getMessage());
 		} finally {
 			return "ViewTransactionByDate";
@@ -374,24 +352,67 @@ public class TransactionController {
 		try {              
             return new ModelAndView ("AddBeneficiaryAccount", "message", transactionService.addBeneficiaryAccount(session.getAttribute("id").toString(), accountNumber, IFSCode)); 
     	} catch(TransactionCustomException e) {
-    		return new ModelAndView ("AddBeneficiaryAccount", "message", e.getMessage());
+    		return new ModelAndView ("UserHomePage", "message", e.getMessage());
     	} catch (DataBaseException e) {
-    		return new ModelAndView ("AddBeneficiaryAccount", "message", e.getMessage());
+    		return new ModelAndView ("UserHomePage", "message", e.getMessage());
         }
 	}
 	
+	@RequestMapping(value = "/addTransaction1", method = RequestMethod.GET)
+    public String addTransaction1(@ModelAttribute("customerAccountNumber") String accountNumber, ModelMap message) throws DataBaseException {
+        message.addAttribute("customerAccount", transactionService.getCustomerAccount(accountNumber));
+        return "AddTransaction1";
+    }
+	
 	@RequestMapping(value = "/viewAllBeneficiaryAccountDetail", method = RequestMethod.GET)
-	public ModelAndView viewAllBeneficiaryAccountDetail(HttpSession session) throws TransactionCustomException {
+	public ModelAndView viewAllBeneficiaryAccountDetail(HttpSession session) {
 		try {
-            return new ModelAndView ("ReterieveBeneficiaryByCustomerId", "beneficiaries", customerService.getCustomerById(session.getAttribute("id").toString()).getBeneficiary());
+            return new ModelAndView ("ReterieveBeneficiaryByCustomerId", "beneficiaries", transactionService.getBeneficiaryAccountByCustomerId(session.getAttribute("id").toString()));
+    	} catch(TransactionCustomException e) {
+    		return new ModelAndView ("AddBeneficiaryAccount", "message", e.getMessage());
     	} catch (DataBaseException e) {
             return new ModelAndView ("AddBeneficiaryAccount", "message", e.getMessage());
         }
 	}
 	
-	@RequestMapping(value = "/addTransaction1", method = RequestMethod.GET)
-	public String addTransaction1(@ModelAttribute("customerAccountNumber") String accountNumber, ModelMap message) throws DataBaseException {
-		message.addAttribute("customerAccount", transactionService.getCustomerAccount(accountNumber));
-		return "AddTransaction1";
+	@RequestMapping(value = "/beneficiaryNotifications")
+	public ModelAndView fetchBeneficiaryNotifications() {
+		try {
+			return new ModelAndView("RetrieveAllBeneficiaryNotification", "beneficiaryNotifications", transactionService.getAllBeneficiaries());
+		} catch(TransactionCustomException e) {
+            return new ModelAndView ("RetrieveAllBeneficiaryNotification", "message", e.getMessage());
+        } catch (DataBaseException e) {
+			return new ModelAndView("RetrieveAllBeneficiaryNotification", "message", e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/beneficiaryRequestSuccess", method = RequestMethod.GET)
+	public String beneficiaryRequestActive(@RequestParam("id") int beneficiaryId, ModelMap message) {
+		try {
+			transactionService.beneficiaryAccountActive(beneficiaryId);
+			message.addAttribute("message", "YOUR ACTION SUCCESSFULLY");
+			message.addAttribute("beneficiaryNotifications", transactionService.getAllBeneficiaries());
+		} catch (DataBaseException e) {
+            message.addAttribute("message", e.getMessage());
+        } catch (TransactionCustomException e) {
+            message.addAttribute("message", e.getMessage());
+        } finally {
+			return "RetrieveAllBeneficiaryNotification";
+		}
+	}
+	
+	@RequestMapping(value = "/beneficiaryRequestCancel", method = RequestMethod.GET)
+	public String beneficiaryRequestDeactive(@RequestParam("id") int beneficiaryId, ModelMap message) {
+		try {
+			transactionService.beneficiaryAccountDeactive(beneficiaryId);
+			message.addAttribute("message", "YOUR ACTION SUCCESSFULLY");
+			message.addAttribute("beneficiaryNotifications", transactionService.getAllBeneficiaries());
+		} catch (DataBaseException e) {
+            message.addAttribute("message", e.getMessage());
+        } catch (TransactionCustomException e) {
+            message.addAttribute("message", e.getMessage());
+        } finally {
+			return "RetrieveAllBeneficiaryNotification";
+		}
 	}
 }

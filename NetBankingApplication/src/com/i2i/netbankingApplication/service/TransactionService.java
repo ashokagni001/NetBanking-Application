@@ -155,14 +155,18 @@ public class TransactionService {
 	 * @throws DataBaseException
 	 *     It handle all the custom exception in NetBanking Application.
 	 */
-    public List<CustomerTransaction> getAllNotifications() throws DataBaseException {
+    public List<CustomerTransaction> getAllNotifications() throws DataBaseException, TransactionCustomException {
 		List<CustomerTransaction> transactions = new ArrayList<CustomerTransaction>();
 		for (CustomerTransaction transaction : transactionDao.retriveAllTransactions()) {
 			if (transaction.getStatus().equals("Request")) {
 				transactions.add(transaction);
 			} 
 		}
-		return transactions;
+		if (Constant.INITIALIZEVARAILABLEVALUE != transactions.size()) {
+		    return transactions;
+		} else {
+		    throw new TransactionCustomException("NO TRENSACTION PROCESS STILL NOW");
+		}
 	}
     
     /**
@@ -289,12 +293,17 @@ public class TransactionService {
 	 *     It handle all the custom exception in NetBanking Application.
 	 */
 	public List<CustomerTransaction> getDateTransaction(String fromDate, String toDate) 
-			throws DataBaseException {
+			throws DataBaseException, TransactionCustomException {
 		if (StringUtil.isValidDateFormat(fromDate) && StringUtil.isValidDateFormat(toDate)) {
-            throw new DataBaseException("YOUR FORMAT " + fromDate + " & " + toDate + 
+            throw new TransactionCustomException("YOUR FORMAT " + fromDate + " & " + toDate + 
                 " FORMAT MUST 2000-05-21.INSERT VALID DATE..!!");  
         }
-		return transactionDao.retriveTransactionByDate(fromDate, toDate);
+		List<CustomerTransaction> transactions = transactionDao.retriveTransactionByDate(fromDate, toDate);
+		if (Constant.INITIALIZEVARAILABLEVALUE != transactions.size()) {
+		    return transactions;
+		} else {
+		    throw new TransactionCustomException("NO TRENSACTION PROCESS IN " + fromDate + " TO " + toDate);
+		}
 	}
     
 	/**
@@ -317,6 +326,11 @@ public class TransactionService {
 	}
     
 	public String addBeneficiaryAccount(String customerId, String accountNumber, String IFSCode) throws TransactionCustomException, DataBaseException {
+		for(Beneficiary beneficiary : (customerService.getCustomerById(customerId).getBeneficiary())) {                               
+            if (beneficiary.getCustomerAccountNumber().getAccountNumber().equals(accountNumber)) {
+                throw new TransactionCustomException("DEAR CUSTOMER YOUR ALREADY ADDED THIS ACCOUNT IN YOUR BENEFICIARY LIST");
+            }
+		}
 		Account customerAccount = getCustomerAccount(accountNumber);
 		if(null != customerAccount) {
 			if(customerAccount.getBranch().getIFSCode().equals(IFSCode)) {
@@ -327,5 +341,41 @@ public class TransactionService {
 			throw new TransactionCustomException("YOUR IFSCODE IS WORNG " + IFSCode);
 		}
 		throw new TransactionCustomException("YOUR ACCOUNT NUMBER IS WORNG " + accountNumber);
+	}
+	
+	public List<Beneficiary> getBeneficiaryAccountByCustomerId(String customerId) throws TransactionCustomException, DataBaseException {
+	    List<Beneficiary> customerBeneficiary = new ArrayList<Beneficiary>();
+	    for(Beneficiary beneficiary : (customerService.getCustomerById(customerId).getBeneficiary())) {
+		    if (!((beneficiary.getStatus().equals("request")) | (beneficiary.getStatus().equals("Failure")))) {
+			    customerBeneficiary.add(beneficiary);
+		    }
+		    if(null == customerBeneficiary) {
+			    throw new TransactionCustomException("YOUR BENEFICIARY ACCOUNT NOT AVAILABLE." + customerId +"INSERT NEW BENEFICIARY ACCOUNT");
+		    }
+	    }
+	    return customerBeneficiary;
+	}
+
+	public List<Beneficiary> getAllBeneficiaries() throws DataBaseException, TransactionCustomException {
+		List<Beneficiary> beneficiaries = new ArrayList<Beneficiary>();
+		for (Beneficiary beneficiary : transactionDao.retriveAllBeneficiaries()) {
+			if (beneficiary.getStatus().equals("request")) {
+				beneficiaries.add(beneficiary);
+			} 
+		}
+		if (Constant.INITIALIZEVARAILABLEVALUE != beneficiaries.size()) {
+		     return beneficiaries;
+		} else {
+		    throw new TransactionCustomException("NO BENEFICIARY NOTIFICATION AVAILABLE");
+		}
+	}
+
+	public void beneficiaryAccountActive(int beneficiaryId) throws DataBaseException {
+		transactionDao.beneficiaryAccountActive(beneficiaryId);
+	}
+
+	public void beneficiaryAccountDeactive(int beneficiaryId) throws DataBaseException {
+		transactionDao.beneficiaryAccountDeactive(beneficiaryId);
+		
 	}
 }

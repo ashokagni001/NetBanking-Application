@@ -55,7 +55,7 @@ public class Beneficiary {
 	public void setBeneficiaryAccountNumber(Customer beneficiaryAccountNumber) {
 		this.beneficiaryAccountNumber = beneficiaryAccountNumber;
 	}
-
+	
 	public Account getCustomerAccountNumber() {
 		return customerAccountNumber;
 	}

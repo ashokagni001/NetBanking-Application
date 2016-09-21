@@ -33,7 +33,16 @@
 					</div>
 				</div>
 			</div>
+<<<<<<< d7ec54b6baf3fe8f8d63cba987684e0df74c6254
+			<c:if test="${message != null}">
+					<script type="text/javascript">
+						alert("<c:out value='${message}'/>");
+						windows.location.reload();
+					</script>
+				</c:if>
+=======
 		</div>
 	</div>
+>>>>>>> change the mapping of Beneficiary model
 </body>
 </html>
