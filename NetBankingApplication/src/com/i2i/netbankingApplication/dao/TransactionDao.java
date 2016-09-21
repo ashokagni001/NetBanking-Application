@@ -296,4 +296,46 @@ public class TransactionDao {
 			session.close();
 		}
 	}
+
+	public List<Beneficiary> retriveAllBeneficiaries() throws DataBaseException {
+		Session session = hibernateConncetion();
+		try {
+		    return session.createQuery("FROM Beneficiary").list();
+		} catch (HibernateException e) {
+		    throw new DataBaseException("ACCOUNTS IS NOT AVAILABLE.");
+		} finally {
+		    session.close();
+		}
+    }
+
+	public void beneficiaryAccountActive(int beneficiaryId) throws DataBaseException {
+		Session session = hibernateConncetion();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			Beneficiary beneficiary = (Beneficiary) session.get(Beneficiary.class, beneficiaryId);
+			beneficiary.setStatus("Success");
+			session.update(beneficiary);
+			transaction.commit();
+		} catch (HibernateException e) {
+			throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
+		} finally {
+     	}
+	}
+
+	public void beneficiaryAccountDeactive(int beneficiaryId) throws DataBaseException {
+		Session session = hibernateConncetion();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			Beneficiary beneficiary = (Beneficiary) session.get(Beneficiary.class, beneficiaryId);
+			beneficiary.setStatus("Failure");
+			session.update(beneficiary);
+			transaction.commit();
+		} catch (HibernateException e) {
+			throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
+		} finally {
+     	}
+		
+	}
 }

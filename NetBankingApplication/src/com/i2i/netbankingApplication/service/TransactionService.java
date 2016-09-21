@@ -321,13 +321,46 @@ public class TransactionService {
 		Account customerAccount = getCustomerAccount(accountNumber);
 		if(null != customerAccount) {
 			if(customerAccount.getBranch().getIFSCode().equals(IFSCode)) {
-				Customer customer = customerService.getCustomerById(customerAccount.getCustomer().getCustomerId());
 				Customer beneficiaryCustomer = customerService.getCustomerById(customerId);
-				transactionDao.insertBeneficiaryAccount(new Beneficiary(beneficiaryCustomer, customer, "request"));
+				transactionDao.insertBeneficiaryAccount(new Beneficiary(beneficiaryCustomer, customerAccount, "request"));
 				return "YOUR ACCOUNT ADDED SUCCESSFULLY";
 			}
 			throw new TransactionCustomException("YOUR IFSCODE IS WORNG " + IFSCode);
 		}
 		throw new TransactionCustomException("YOUR ACCOUNT NUMBER IS WORNG " + accountNumber);
 	}
+	
+	public List<Beneficiary> getBeneficiaryAccountByCustomerId(String customerId) throws TransactionCustomException, DataBaseException {
+	    List<Beneficiary> customerBeneficiary = new ArrayList<Beneficiary>();
+	    for(Beneficiary beneficiary : (customerService.getCustomerById(customerId).getBeneficiary())) {
+		    if (!((beneficiary.getStatus().equals("request")) | (beneficiary.getStatus().equals("Failure")))) {
+			    customerBeneficiary.add(beneficiary);
+		    }
+		    if(null == customerBeneficiary) {
+			    throw new TransactionCustomException("YOUR BENEFICIARY ACCOUNT NOT AVAILABLE." + customerId +"INSERT NEW BENEFICIARY ACCOUNT");
+		    }
+	    }
+	    return customerBeneficiary;
+	}
+
+	public List<Beneficiary> getAllBeneficiaries() throws DataBaseException {
+		List<Beneficiary> beneficiaries = new ArrayList<Beneficiary>();
+		for (Beneficiary beneficiary : transactionDao.retriveAllBeneficiaries()) {
+			if (beneficiary.getStatus().equals("request")) {
+				beneficiaries.add(beneficiary);
+			} 
+		}
+		return beneficiaries;
+	}
+
+	public void beneficiaryAccountActive(int beneficiaryId) throws DataBaseException {
+		transactionDao.beneficiaryAccountActive(beneficiaryId);
+	}
+
+	public void beneficiaryAccountDeactive(int beneficiaryId) throws DataBaseException {
+		transactionDao.beneficiaryAccountDeactive(beneficiaryId);
+		
+	}
 }
+
+

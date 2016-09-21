@@ -1,5 +1,6 @@
 package com.i2i.netbankingApplication.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -147,7 +148,6 @@ public class TransactionController {
 		}
 	}
         
-    
 	/**
 	 * <p>
 	 *     This Method call to getAccountByCustomerId method in transactionService.
@@ -372,8 +372,19 @@ public class TransactionController {
 	public ModelAndView addBeneficiaryAccount(@RequestParam("accountNumber")String accountNumber, 
 			@RequestParam("IFSCode")String IFSCode, HttpSession session) {
 		try {              
-            return new ModelAndView ("AddBeneficiaryAccount", "messgae",
+            return new ModelAndView ("UserHomePage", "messgae",
             		transactionService.addBeneficiaryAccount(session.getAttribute("id").toString(), accountNumber, IFSCode)); 
+    	} catch(TransactionCustomException e) {
+    		return new ModelAndView ("UserHomePage", "message", e.getMessage());
+    	} catch (DataBaseException e) {
+    		return new ModelAndView ("UserHomePage", "message", e.getMessage());
+        }
+	}
+	
+	@RequestMapping(value = "/viewAllBeneficiaryAccountDetail", method = RequestMethod.GET)
+	public ModelAndView viewAllBeneficiaryAccountDetail(HttpSession session) {
+		try {
+            return new ModelAndView ("ReterieveBeneficiaryByCustomerId", "beneficiaries", transactionService.getBeneficiaryAccountByCustomerId(session.getAttribute("id").toString()));
     	} catch(TransactionCustomException e) {
     		return new ModelAndView ("AddBeneficiaryAccount", "message", e.getMessage());
     	} catch (DataBaseException e) {
@@ -381,21 +392,44 @@ public class TransactionController {
         }
 	}
 	
-	@RequestMapping(value = "/viewAllBeneficiaryAccountDetail", method = RequestMethod.GET)
-	public ModelAndView viewAllBeneficiaryAccountDetail(HttpSession session) throws TransactionCustomException {
+	@RequestMapping(value = "/beneficiaryNotifications", method = RequestMethod.GET)
+	public ModelAndView fetchBeneficiaryNotifications() {
 		try {
-			List<Beneficiary> customerBeneficiary = customerService.getCustomerById(session.getAttribute("id").toString()).getBeneficiary();
-            return new ModelAndView ("ReterieveBeneficiaryByCustomerId", "beneficiaries", 
-            		customerService.getCustomerById(session.getAttribute("id").toString()).getBeneficiary());
-    	} catch (DataBaseException e) {
-    		return new ModelAndView ("AddBeneficiaryAccount", "message", e.getMessage());
-        }
+			List<Beneficiary> beneficiaryNotifications = transactionService.getAllBeneficiaries();
+			if (Constant.INITIALIZEVARAILABLEVALUE != beneficiaryNotifications.size()) {
+			    return new ModelAndView("RetrieveAllBeneficiaryNotification", "beneficiaryNotifications", beneficiaryNotifications);
+			} else {
+				return new ModelAndView("RetrieveAllBeneficiaryNotification", "message", "NO BENEFICIARY NOTIFICATION AVAILABLE");
+			}
+		} catch (DataBaseException e) {
+			return new ModelAndView("RetrieveAllBeneficiaryNotification", "message", e.getMessage());
+		}
 	}
 	
-	@RequestMapping(value = "/addTransaction1", method = RequestMethod.GET)
-	public String addTransaction1(@ModelAttribute("customerAccountNumber") String accountNumber, ModelMap message) throws DataBaseException {
-		message.addAttribute("customerAccount", transactionService.getCustomerAccount(accountNumber));
-		return "AddTransaction1";
+	@RequestMapping(value = "/beneficiaryRequestSuccess", method = RequestMethod.GET)
+	public String beneficiaryRequestActive(@RequestParam("id") int beneficiaryId, ModelMap message) {
+		try {
+			transactionService.beneficiaryAccountActive(beneficiaryId);
+			message.addAttribute("message", "YOUR ACTION SUCCESSFULLY");
+		    getNotifications();
+		} catch (DataBaseException e) {
+			message.addAttribute("message", e.getMessage());
+		} finally {
+			return "RetrieveAllBeneficiaryNotification";
+		}
+	}
+	
+	@RequestMapping(value = "/beneficiaryRequestCancel", method = RequestMethod.GET)
+	public String beneficiaryRequestDeactive(@RequestParam("id") int beneficiaryId, ModelMap message) {
+		try {
+			transactionService.beneficiaryAccountDeactive(beneficiaryId);
+			message.addAttribute("message", "YOUR ACTION SUCCESSFULLY");
+		} catch (DataBaseException e) {
+			message.addAttribute("message", e.getMessage());
+		} finally {
+			fetchBeneficiaryNotifications();
+			return "RetrieveAllBeneficiaryNotification";
+		}
 	}
 }
 

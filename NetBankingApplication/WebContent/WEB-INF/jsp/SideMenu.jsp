@@ -12,7 +12,8 @@
 		</ul>
 	<li><a href="GetCustomer"><i class="fa fa-edit fa-fw"></i>VIEW
 			ALL CUSTOMERS</a></li>
-	<li><a href="notification">NOTIFICATIONS</a></li>
+	<li><a href="notification">TRANSACTION NOTIFICATIONS</a></li>
+	<li><a href="beneficiaryNotifications">BENEFICIARY NOTIFICATIONS</a></li>
 	<li><a href="viewAllTransaction">VIEW ALL TRANSACTIONS</a></li>
 	<li><a href="viewTransactionByDate">VIEW TRANSACTION BY DATE</a></li>
 </ul>

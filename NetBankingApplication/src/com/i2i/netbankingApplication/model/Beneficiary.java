@@ -29,7 +29,7 @@ public class Beneficiary {
 	
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name = "customer_account_number")
-	private Customer customerAccountNumber;
+	private Account customerAccountNumber;
 	
 	@Column(name = "status")
 	private String status;
@@ -37,7 +37,7 @@ public class Beneficiary {
 	public Beneficiary() {
 	}
 	
-	public Beneficiary(Customer beneficiaryAccountNumber, Customer customerAccountNumber, String status) {
+	public Beneficiary(Customer beneficiaryAccountNumber, Account customerAccountNumber, String status) {
 		this.beneficiaryAccountNumber = beneficiaryAccountNumber;
 		this.customerAccountNumber = customerAccountNumber;
 		this.status = status;
@@ -58,12 +58,12 @@ public class Beneficiary {
 	public void setBeneficiaryAccountNumber(Customer beneficiaryAccountNumber) {
 		this.beneficiaryAccountNumber = beneficiaryAccountNumber;
 	}
-
-	public Customer getCustomerAccountNumber() {
+    
+	public Account getCustomerAccountNumber() {
 		return customerAccountNumber;
 	}
 
-	public void setCustomerAccountNumber(Customer customerAccountNumber) {
+	public void setCustomerAccountNumber(Account customerAccountNumber) {
 		this.customerAccountNumber = customerAccountNumber;
 	}
 
