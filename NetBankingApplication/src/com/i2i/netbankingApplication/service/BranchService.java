@@ -60,7 +60,7 @@ public class BranchService {
     	int lastIFSC = Constant.INITIALIZEVARAILABLEVALUE;
     	for (Branch branch : branchDao.retriveAllBranches()) {
     		String IFSC = branch.getIFSCode();
-   			int temp = Integer.parseInt(IFSC.substring(6, IFSC.length()));
+   			int temp = Integer.parseInt(IFSC.substring(Constant.IFSCODECONSTANTPREFIXVALUE, IFSC.length()));
    			if (lastIFSC <= temp) {
                	lastIFSC = temp;
             }
@@ -134,7 +134,7 @@ public class BranchService {
 	public String addAddress(Address address) throws BranchDataException, DataBaseException {
 		String IFSCode = Constant.IFSCODE + String.valueOf(getLastIFSCode());
 		try {
-		    branchDao.insertAddress(IFSCode, new Address(customerService.getNewAddressId() + 1, address.getStreet(),
+		    branchDao.insertAddress(IFSCode, new Address(customerService.getNewAddressId(), address.getStreet(),
 	                address.getCountry(), address.getCity(), address.getState() ,address.getPincode()));
 		return ("BRANCH ADDED SUCCESSFULL. BRANCH IFSC CODE IS :" + IFSCode);
 		} catch(DataBaseException e) {

@@ -1,6 +1,5 @@
 package com.i2i.netbankingApplication.model;
 
-import javax.annotation.Generated;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "beneficiaries_detail")
@@ -29,7 +26,7 @@ public class Beneficiary {
 	
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name = "customer_account_number")
-	private Customer customerAccountNumber;
+	private Account customerAccountNumber;
 	
 	@Column(name = "status")
 	private String status;
@@ -37,7 +34,7 @@ public class Beneficiary {
 	public Beneficiary() {
 	}
 	
-	public Beneficiary(Customer beneficiaryAccountNumber, Customer customerAccountNumber, String status) {
+	public Beneficiary(Customer beneficiaryAccountNumber, Account customerAccountNumber, String status) {
 		this.beneficiaryAccountNumber = beneficiaryAccountNumber;
 		this.customerAccountNumber = customerAccountNumber;
 		this.status = status;
@@ -59,11 +56,11 @@ public class Beneficiary {
 		this.beneficiaryAccountNumber = beneficiaryAccountNumber;
 	}
 
-	public Customer getCustomerAccountNumber() {
+	public Account getCustomerAccountNumber() {
 		return customerAccountNumber;
 	}
 
-	public void setCustomerAccountNumber(Customer customerAccountNumber) {
+	public void setCustomerAccountNumber(Account customerAccountNumber) {
 		this.customerAccountNumber = customerAccountNumber;
 	}
 

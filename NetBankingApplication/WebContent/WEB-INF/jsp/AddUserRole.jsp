@@ -75,39 +75,45 @@
 							</table>
 						</div>
 					</c:if>
-					<form method="get" action="insertRole">
-						<br /> <br />
-						<div class="row">
-							<div class="form-group">
-								<label class="control-label col-md-2" for="customerId">CUSTOMER
-									ID </label>
-								<div class="col-md-10">
-									<input type="text" name="customerId"
-										placeholder="Enter customerId" required />
+					<div class="col-md-12 row">
+						<form method="get" action="insertRole">
+							<div class="row">
+								<div class="form-group">
+									<label class="control-label col-md-2" for="customerId">CUSTOMER
+										ID </label>
+									<div class="col-md-10">
+										<input type="text" name="customerId"
+											placeholder="Enter customerId" required />
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="form-group">
-								<label class="control-label col-md-2" for="role">SELECT
-									ROLE </label>
-								<div class="col-md-10">
-									<select name="role">
-										<c:forEach items="${roles}" var="role">
-											<option value="${role.roleId}">${role.roleName}</option>
-										</c:forEach>
-									</select>
+							<div class="row">
+								<div class="form-group">
+									<label class="control-label col-md-2" for="role">SELECT
+										ROLE </label>
+									<div class="col-md-10">
+										<select name="role">
+											<c:forEach items="${roles}" var="role">
+												<option value="${role.roleId}">${role.roleName}</option>
+											</c:forEach>
+										</select>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="form-group">
-								<div class="col-md-offset-2 col-md-10">
-									<br /> <input type="submit" name="add" value="ALLOCATE" />
+							<div class="row">
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-10">
+										<div class="col-md-3">
+											<center>
+												<input class="btn btn-success" type="submit" name="add"
+													value="ALLOCATE" />
+											</center>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-					</form>
+						</form>
+					</div>
 					<c:if test="${message != null}">
 						<script type="text/javascript">
 							alert("<c:out value='${message}'/>");

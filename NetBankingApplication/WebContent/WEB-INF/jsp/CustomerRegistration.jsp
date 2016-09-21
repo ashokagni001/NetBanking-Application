@@ -27,40 +27,81 @@
 		<div class="tex text-center">
 			<h3>REGISTER YOUR DETAIL FOR NETBANKING</h3>
 		</div>
-		<center>
+		<div class="col-md-12 row">
 			<form:form method="post" action="register" modelAttribute="Customer">
-				<br />
-				<br />
-				<form:input path="name" type="text" placeholder="Enter the name"
-					required="required" />
-				<br />
-				<br />
-				<form:input path="dob" type="text" placeholder="Enter the dob"
-					required="required" />
-				<br />
-				<br />
-				<b>Gender</b>
-				<form:select path="gender">
-					<form:option value="Male">Male</form:option>
-					<form:option value="Female">Female</form:option>
-				</form:select>
-				<br />
-				<br />
-				<form:input path="mobileNumber" type="text"
-					placeholder="Enter the mobile_number" required="required" />
-				<br />
-				<br />
-				<form:input path="accountNumber" type="text"
-					placeholder="Enter the account_number" required="required" />
-				<br />
-				<br />
-				<form:input path="email" type="text" placeholder="Enter the email"
-					required="required" />
-				<br />
-				<br />
-				<input type="submit" name="submit" value="NEXT" />
+				<div class="row">
+					<div class="form-group">
+						<label class="control-label col-md-3" for="name">NAME </label>
+						<div class="col-md-9">
+							<form:input path="name" placeholder="Enter the name"
+								required="required" />
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group">
+						<label class="control-label col-md-3" for="dob">DATE OF
+							BIRTH</label>
+						<div class="col-md-9">
+							<form:input path="dob" placeholder="Enter the dob"
+								required="required" />
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group">
+						<label class="control-label col-md-3" for="city">GENDER </label>
+						<div class="col-md-9">
+							<form:select path="gender">
+								<form:option value="Male">Male</form:option>
+								<form:option value="Female">Female</form:option>
+							</form:select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group">
+						<label class="control-label col-md-3" for="mobileNumber">DATE
+							OF BIRTH</label>
+						<div class="col-md-9">
+							<form:input path="mobileNumber"
+								placeholder="Enter the mobileNumber" required="required" />
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group">
+						<label class="control-label col-md-3" for="accountNumber">ACCOUNT
+							NUMBER</label>
+						<div class="col-md-9">
+							<form:input path="accountNumber"
+								placeholder="Enter the accountNumber" required="required" />
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group">
+						<label class="control-label col-md-3" for="email">EMAIL ID</label>
+						<div class="col-md-9">
+							<form:input path="email" placeholder="Enter the emailId"
+								required="required" />
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group">
+						<div class="col-md-offset-3 col-md-9">
+							<div class="col-md-3">
+								<center>
+									<input class="btn btn-success" type="submit" name="submit"
+										value="NEXT" />
+								</center>
+							</div>
+						</div>
+					</div>
+				</div>
 			</form:form>
-		</center>
+		</div>
 	</div>
 </body>
 </html>

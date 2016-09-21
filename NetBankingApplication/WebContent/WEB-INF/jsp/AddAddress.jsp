@@ -27,41 +27,79 @@
 						<div class="tex text-center">
 							<h4>ADD ADDRESS</h4>
 						</div>
-						<br />
-						<c:if test="${BranchAddress != null }">
-							<form:form method="post" action="address"
-								modelAttribute="BranchAddress">
-								<tr>
-									<td><form:input path="street" placeholder="street" /></td>
-								</tr>
-								<form:select path="country" class="countries" id="countryId">
-									<form:option value="">Select Country</form:option>
-								</form:select>
-								<br />
-								<br />
-								<form:select path="state" class="states" id="stateId">
-									<form:option value="">Select State</form:option>
-								</form:select>
-								<br />
-								<br />
-								<form:select path="city" class="cities" id="cityId">
-									<form:option value="">Select City</form:option>
-								</form:select>
-								<br />
-								<br />
-								<script
-									src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-								<script src="http://iamrohit.in/lab/js/location.js"></script>
-								<tr>
-									<td><form:input path="pincode" placeholder="pincode" /></td>
-								</tr>
-								<br />
-								<br />
-								<input type="submit" name="addBranch" value="ADD" />
-							</form:form>
-						<<br />
-							<br />
-						</c:if>
+						<div class="col-md-12 row">
+							<c:if test="${BranchAddress != null }">
+								<form:form method="post" action="address"
+									modelAttribute="BranchAddress">
+									<div class="row">
+										<div class="form-group">
+											<label class="control-label col-md-3" for="street">STREET
+											</label>
+											<div class="col-md-9">
+												<form:input path="street" placeholder="street" />
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group">
+											<label class="control-label col-md-3" for="country">COUNTRY
+											</label>
+											<div class="col-md-9">
+												<form:select path="country" class="countries" id="countryId">
+													<form:option value="">Select Country</form:option>
+												</form:select>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group">
+											<label class="control-label col-md-3" for="state">STATE
+											</label>
+											<div class="col-md-9">
+												<form:select path="state" class="states" id="stateId">
+													<form:option value="">Select State</form:option>
+												</form:select>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group">
+											<label class="control-label col-md-3" for="city">CITY
+											</label>
+											<div class="col-md-9">
+												<form:select path="city" class="cities" id="cityId">
+													<form:option value="">Select City</form:option>
+												</form:select>
+											</div>
+										</div>
+									</div>
+									<script
+										src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+									<script src="http://iamrohit.in/lab/js/location.js"></script>
+									<div class="row">
+										<div class="form-group">
+											<label class="control-label col-md-3" for="pincode">PINCODE
+											</label>
+											<div class="col-md-9">
+												<form:input path="pincode" placeholder="pincode" />
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group">
+											<div class="col-md-offset-3 col-md-9">
+												<div class="col-md-4">
+													<center>
+														<input class="btn btn-success" type="submit"
+															name="addAddress" value="ADD" />
+													</center>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form:form>
+							</c:if>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -73,42 +111,78 @@
 			<div class="tex text-center">
 				<h4>ADD ADDRESS</h4>
 			</div>
-			<c:if test="${Address != null }">
-				<form:form method="post" action="customerAddress"
-					modelAttribute="Address">
-					<tr>
-						<td><form:input path="street" placeholder="street" /></td>
-					</tr>
-					<br />
-					<br />
-					<form:select path="country" class="countries" id="countryId">
-						<form:option value="">Select Country</form:option>
-					</form:select>
-					<br />
-					<br />
-					<form:select path="state" class="states" id="stateId">
-						<form:option value="">Select State</form:option>
-					</form:select>
-					<br />
-					<br />
-					<form:select path="city" class="cities" id="cityId">
-						<form:option value="">Select City</form:option>
-					</form:select>
-					<br />
-					<br />
-					<script
-						src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-					<script src="http://iamrohit.in/lab/js/location.js"></script>
-					<tr>
-						<td><form:input path="pincode" placeholder="pincode" /></td>
-					</tr>
-					<br />
-					<br />
-					<input type="submit" name="addBranch" value="ADD" />
-					<br />
-					<br />
-				</form:form>
-			</c:if>
+			<div class="col-md-12 row">
+				<c:if test="${Address != null }">
+					<form:form method="post" action="customerAddress"
+						modelAttribute="Address">
+						<div class="row">
+							<div class="form-group">
+								<label class="control-label col-md-3" for="street">STREET
+								</label>
+								<div class="col-md-9">
+									<form:input path="street" placeholder="street" />
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group">
+								<label class="control-label col-md-3" for="country">COUNTRY
+								</label>
+								<div class="col-md-9">
+									<form:select path="country" class="countries" id="countryId">
+										<form:option value="">Select Country</form:option>
+									</form:select>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group">
+								<label class="control-label col-md-3" for="state">STATE
+								</label>
+								<div class="col-md-9">
+									<form:select path="state" class="states" id="stateId">
+										<form:option value="">Select State</form:option>
+									</form:select>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group">
+								<label class="control-label col-md-3" for="city">CITY </label>
+								<div class="col-md-9">
+									<form:select path="city" class="cities" id="cityId">
+										<form:option value="">Select City</form:option>
+									</form:select>
+								</div>
+							</div>
+						</div>
+						<script
+							src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+						<script src="http://iamrohit.in/lab/js/location.js"></script>
+						<div class="row">
+							<div class="form-group">
+								<label class="control-label col-md-3" for="pincode">PINCODE
+								</label>
+								<div class="col-md-9">
+									<form:input path="pincode" placeholder="pincode" />
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group">
+								<div class="col-md-offset-3 col-md-9">
+									<div class="col-md-4">
+										<center>
+											<input class="btn btn-success" type="submit"
+												name="addAddress" value="ADD" />
+										</center>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form:form>
+				</c:if>
+			</div>
 		</div>
 	</c:if>
 </body>

@@ -32,58 +32,64 @@
 					<div class="tex text-center">
 						<h4>ADD NEW ACCOUNT</h4>
 					</div>
-					<br />
-					<form method="post" action="addAccount">
-						<div class="row">
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="accountNumber">ACCOUNT
-									NUMBER </label>
-								<div class="col-sm-10">
-									<input type="number" name="accountNumber"
-										placeholder="Enter accountNumber" required />
+					<div class="col-md-12 row">
+						<form method="post" action="addAccount">
+							<div class="row">
+								<div class="form-group">
+									<label class="control-label col-sm-3" for="accountNumber">ACCOUNT
+										NUMBER </label>
+									<div class="col-sm-9">
+										<input type="number" name="accountNumber"
+											placeholder="Enter accountNumber" required />
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="form-group">
-								<label class="control-label col-md-2" for="ifscode">
-									IFSC CODE </label>
-								<div class="col-md-10">
-									<input type="text" name="ifscode"
-										placeholder="Enter bank ifscode" required />
+							<div class="row">
+								<div class="form-group">
+									<label class="control-label col-md-3" for="ifscode">
+										IFSC CODE </label>
+									<div class="col-md-9">
+										<input type="text" name="ifscode"
+											placeholder="Enter bank ifscode" required />
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="form-group">
-								<label class="control-label col-md-2" for="balance">AMOUNT
-								</label>
-								<div class="col-md-10">
-									<input type="balance" name="balance" placeholder="Enter Amount"
-										required />
+							<div class="row">
+								<div class="form-group">
+									<label class="control-label col-md-3" for="balance">AMOUNT
+									</label>
+									<div class="col-md-9">
+										<input type="balance" name="balance"
+											placeholder="Enter Amount" required />
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="form-group">
-								<label class="control-label col-md-2" for="accounttype">ACCOUNT
-									TYPE </label>
-								<div class="col-md-10">
-									<select name="accounttype">
-										<option value="Current">Current</option>
-										<option value="Saving">Saving</option>
-									</select>
+							<div class="row">
+								<div class="form-group">
+									<label class="control-label col-md-3" for="accounttype">ACCOUNT
+										TYPE </label>
+									<div class="col-md-9">
+										<select name="accounttype">
+											<option value="Current">Current</option>
+											<option value="Saving">Saving</option>
+										</select>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="form-group">
-								<div class="col-md-offset-2 col-md-10">
-									<br /> <input type="submit" name="addaccount" value="ADD" />
+							<div class="row">
+								<div class="form-group">
+									<div class="col-md-offset-3 col-md-9">
+										<div class="col-md-4">
+											<center>
+												<input class="btn btn-success" type="submit"
+													name="addaccount" value="ADD" />
+											</center>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-					</form>
+						</form>
+					</div>
 					<c:if test="${branches != null}">
 						<div class="col-md-12 sizetable">
 							<table class="table table-striped table-bordered table-hover"

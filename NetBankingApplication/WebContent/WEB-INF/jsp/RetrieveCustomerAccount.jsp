@@ -22,7 +22,6 @@
 <script src="js/metisMenu.min.js"></script>
 <link href="css/mystyle.css" rel="stylesheet">
 </head>
-
 <body>
 	<div class="col-md-12 container">
 		<c:import url="TopHead.jsp" />

@@ -14,7 +14,6 @@ import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Beneficiary;
 import com.i2i.netbankingApplication.model.Customer;
 import com.i2i.netbankingApplication.model.CustomerTransaction;
-import com.i2i.netbankingApplication.model.UserRole;
 
 /**
  * <p>

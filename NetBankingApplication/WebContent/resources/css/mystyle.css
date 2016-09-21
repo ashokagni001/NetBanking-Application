@@ -62,4 +62,10 @@
 .row{
 margin-top: 5px;
 }
-.s
+.container{
+margin:0px;
+padding:0px;
+}
+.body{
+	background:"image/blue.png";
+}

@@ -131,7 +131,7 @@ public class CustomerService {
     	int id = Constant.INITIALIZEVARAILABLEVALUE;
         for (Customer customer : customerDao.retriveAllCustomers()) {
     		String lastCustomerId = customer.getCustomerId();
-    		int temp = Integer.parseInt(lastCustomerId.substring(6, lastCustomerId.length()));
+    		int temp = Integer.parseInt(lastCustomerId.substring(Constant.CUSTOMERIDCONSTANTPREFIXVALUE, lastCustomerId.length()));
             if (id <= temp) {
             	id = temp;
             }

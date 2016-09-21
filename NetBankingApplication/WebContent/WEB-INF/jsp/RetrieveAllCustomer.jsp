@@ -72,8 +72,7 @@
 						</c:if>
 						<c:if test="${customers != null}">
 							<div class="col-md-12 sizetable">
-								<table width="100%"
-									class="table table-striped table-bordered table-hover"
+								<table class="table table-striped table-bordered table-hover"
 									id="dataTables-example">
 									<tr>
 										<th>S.NO</th>
@@ -117,36 +116,42 @@
 									</c:forEach>
 								</table>
 							</div>
-							<br />
-							<br />
 							<div class="tex text-center">
 								<div class="col-md-12" style="padding-top: 10px;">
 									<h5>IF YOU WANT ANY ONE CUSTOMER DETAIL</h5>
 								</div>
 							</div>
-							<form action="getCustomer" method="get">
-								<div class="row">
-									<div class="form-group">
-										<label class="control-label col-md-2" for="customerId">CUSTOMER
-											ID </label>
-										<div class="col-md-10">
-											<input type="text" name="customerId"
-												placeholder="Enter customerId" required />
+							<div class="col-md-12 row">
+								<form action="getCustomer" method="get">
+									<div class="row">
+										<div class="form-group">
+											<label class="control-label col-md-2" for="customerId">CUSTOMER
+												ID </label>
+											<div class="col-md-10">
+												<input type="text" name="customerId"
+													placeholder="Enter customerId" required />
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="row">
-									<div class="form-group">
-										<div class="col-md-offset-2 col-md-10">
-											<br /> <input type="submit" name="viewCustomer" value="VIEW" />
+									<div class="row">
+										<div class="form-group">
+											<div class="col-md-offset-2 col-md-10">
+												<div class="col-md-3">
+													<center>
+														<input class="btn btn-success" type="submit"
+															name="viewCustomer" value="VIEW" />
+													</center>
+												</div>
+											</div>
 										</div>
 									</div>
-								</div>
-							</form>
+								</form>
+							</div>
 						</c:if>
 					</div>
 				</div>
 			</div>
+		</div>
 	</c:if>
 	<c:if test="${sessionScope['role'] == 'user'}">
 		<div class="col-md-12 container">

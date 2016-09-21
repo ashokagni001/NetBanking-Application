@@ -31,25 +31,32 @@
 					<div class="tex text-center">
 						<h4>VIEW ACCOUNT BY BRANCH</h4>
 					</div>
-					<form action="getAccount" method="get">
-						<div class="row">
-							<div class="form-group">
-								<label class="control-label col-md-3" for="ifsc">BRANCH IFSCODE </label>
-								<div class="col-md-9">
-									<input type="text" name="ifsc" placeholder="Enter IFSCode"
-										required />
-										Ex.I2I0BK****
+					<div class="col-md-12 row">
+						<form action="getAccount" method="get">
+							<div class="row">
+								<div class="form-group">
+									<label class="control-label col-md-3" for="ifsc">BRANCH
+										IFSCODE </label>
+									<div class="col-md-9">
+										<input type="text" name="ifsc" placeholder="Enter IFSCode"
+											required /> Ex.I2I0BK****
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="form-group">
-								<div class="col-md-offset-3 col-md-9">
-									<br /> <input type="submit" name="viewAccount" value="VIEW" />
+							<div class="row">
+								<div class="form-group">
+									<div class="col-md-offset-3 col-md-9">
+										<div class="col-md-4">
+											<center>
+												<input class="btn btn-success" type="submit"
+													name="viewAccount" value="VIEW" />
+											</center>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-					</form>
+						</form>
+					</div>
 					<c:if test="${message != null}">
 						<script type="text/javascript">
 							alert("<c:out value='${message}'/>");

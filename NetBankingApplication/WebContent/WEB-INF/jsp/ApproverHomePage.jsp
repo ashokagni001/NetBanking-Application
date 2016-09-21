@@ -23,16 +23,17 @@
 	<div class="col-md-12 container">
 		<center>
 			<c:import url="TopHead.jsp" />
-			<div style="width: 64%; float: left;">
-				<br />
-				<br /> <a href="userHomePage"><img src="image/myAccount1.jpg"
-					width="300" height="165" class="imge"><br /> <br />CUSTOMER
-					OPERATIONS</a>
-			</div>
-			<div style="width: 28%; hight: 30%; float: left; margin-left: 15px;">
-				<br /> <br /> <a href=approverIndexPage><img
-					src="image/bank.jpg" width="300" height="165" class="imge"> <br />
-				<br />ADMIN OPERATIONS</a>
+			<div class="col-md-12">
+				<div style="width: 64%; float: left;">
+					<br /> <br /> <a href="userHomePage"><img
+						src="image/myAccount1.jpg" width="300" height="165" class="imge"><br />
+						<br />CUSTOMER OPERATIONS</a>
+				</div>
+				<div style="width: 28%; hight: 30%; float: left; margin-left: 15px;">
+					<br /> <br /> <a href=approverIndexPage><img
+						src="image/bank.jpg" width="300" height="165" class="imge">
+						<br /> <br />ADMIN OPERATIONS</a>
+				</div>
 			</div>
 		</center>
 	</div>

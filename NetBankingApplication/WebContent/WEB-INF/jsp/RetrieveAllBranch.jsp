@@ -38,25 +38,32 @@
 					<div class="tex text-center">
 						<h4>VIEW BRANCH BY IFSC</h4>
 					</div>
-					<form action="getBranch" method="get">
-						<div class="row">
-							<div class="form-group">
-								<label class="control-label col-md-2" for="ifsc">BRANCH
-									IFSCODE </label>
-								<div class="col-md-10">
-									<input type="text" name="ifsc" placeholder="Enter ifscode"
-										required />
+					<div class="col-md-12 row">
+						<form action="getBranch" method="get">
+							<div class="row">
+								<div class="form-group">
+									<label class="control-label col-md-3" for="ifsc">BRANCH
+										IFSCODE </label>
+									<div class="col-md-9">
+										<input type="text" name="ifsc" placeholder="Enter IFSCode"
+											required />
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="form-group">
-								<div class="col-md-offset-2 col-md-10">
-									<br /> <input type="submit" name="viewBranch" value="VIEW" />
+							<div class="row">
+								<div class="form-group">
+									<div class="col-md-offset-3 col-md-9">
+										<div class="col-md-4">
+											<center>
+												<input class="btn btn-success" type="submit"
+													name="viewBranch" value="VIEW" />
+											</center>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-					</form>
+						</form>
+					</div>
 					<c:if test="${branch != null}">
 						<div class="col-md-12 sizetable">
 							<table class="table table-striped table-bordered table-hover"

@@ -33,9 +33,7 @@
 					<div class="tex text-center">
 						<h4>NEW TRANSACTION</h4>
 					</div>
-					<br />
 				</div>
-				<br />
 				<form method="get" action="insertTransaction">
 				<c:set value="${customerAccount}" var="customerAccount" />
 					<div class="row">

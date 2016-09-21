@@ -11,7 +11,6 @@ import com.i2i.netbankingApplication.model.Account;
 import com.i2i.netbankingApplication.model.Beneficiary;
 import com.i2i.netbankingApplication.model.Customer;
 import com.i2i.netbankingApplication.model.CustomerTransaction;
-import com.i2i.netbankingApplication.model.UserRole;
 import com.i2i.netbankingApplication.util.StringUtil;
 
 /**
@@ -321,9 +320,8 @@ public class TransactionService {
 		Account customerAccount = getCustomerAccount(accountNumber);
 		if(null != customerAccount) {
 			if(customerAccount.getBranch().getIFSCode().equals(IFSCode)) {
-				Customer customer = customerService.getCustomerById(customerAccount.getCustomer().getCustomerId());
 				Customer beneficiaryCustomer = customerService.getCustomerById(customerId);
-				transactionDao.insertBeneficiaryAccount(new Beneficiary(beneficiaryCustomer, customer, "request"));
+				transactionDao.insertBeneficiaryAccount(new Beneficiary(beneficiaryCustomer, customerAccount, "request"));
 				return "YOUR ACCOUNT ADDED SUCCESSFULLY";
 			}
 			throw new TransactionCustomException("YOUR IFSCODE IS WORNG " + IFSCode);

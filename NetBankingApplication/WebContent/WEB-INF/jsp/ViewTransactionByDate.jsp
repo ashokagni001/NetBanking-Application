@@ -32,36 +32,42 @@
 					<div class="tex text-center">
 						<h4>ENTER FROM DATE & TO DATE OF TRANSACTION DETAIL</h4>
 					</div>
-					<form action="getDates" method="get">
-						<div class="row">
-							<div class="form-group">
-								<label class="control-label col-md-2" for="fromDate">FROM
-									DATE </label>
-								<div class="col-md-10">
-									<input type="date" name="fromDate" placeholder="2016-09-08"
-										required />
+					<div class="col-md-12 row">
+						<form action="getDates" method="get">
+							<div class="row">
+								<div class="form-group">
+									<label class="control-label col-md-2" for="fromDate">FROM
+										DATE </label>
+									<div class="col-md-10">
+										<input type="date" name="fromDate" placeholder="2016-09-08"
+											required />
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="form-group">
-								<label class="control-label col-md-2" for="toDate">TO
-									DATE </label>
-								<div class="col-md-10">
-									<input type="date" name="toDate" placeholder=" 2016-09-11"
-										required />
+							<div class="row">
+								<div class="form-group">
+									<label class="control-label col-md-2" for="toDate">TO
+										DATE </label>
+									<div class="col-md-10">
+										<input type="date" name="toDate" placeholder=" 2016-09-11"
+											required />
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="form-group">
-								<div class="col-md-offset-2 col-md-10">
-									<br /> <input type="submit" name="viewTransaction"
-										value="VIEW" />
+							<div class="row">
+								<div class="form-group">
+									<div class="col-md-offset-2 col-md-10">
+										<div class="col-md-3">
+											<center>
+												<input class="btn btn-success" type="submit"
+													name="viewTransaction" value="VIEW" />
+											</center>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-					</form>
+						</form>
+					</div>
 					<c:if test="${transactions != null}">
 						<div class="tex text-center">
 							<h5>TRANSACTION DETAIL</h5>

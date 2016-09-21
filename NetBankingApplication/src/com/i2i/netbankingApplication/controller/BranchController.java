@@ -84,7 +84,7 @@ public class BranchController {
 			message.addAttribute("BranchAddress", new Address());
 	    } catch (DataBaseException e) {
     		message.addAttribute("message", e.getMessage()); 
-    		URL = "BranchIndex";
+    		URL = "AddBranch";
         }
 		return URL; 
     }
@@ -116,7 +116,7 @@ public class BranchController {
         } catch (DataBaseException e) {
             message.addAttribute("message", e.getMessage()); 
         } finally {
-        	return "BranchIndex";
+        	return "AddBranch";
         }
     }
 	

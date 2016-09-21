@@ -49,7 +49,7 @@
 							<tr>
 								<td><c:out value="<%=sno%>" /></td>
 							    <td><c:out
-										value="${beneficiaries.getCustomerAccountNumber().getName()}" />
+										value="${beneficiaries.getCustomerAccountNumber().getCustomer().getName()}" />
 								</td>
 								<td><a href="addTransaction1?customerAccountNumber=<c:out value="${beneficiaries.getCustomerAccountNumber().getAccountNumber()}"/>">
 								<c:out value="${beneficiaries.getCustomerAccountNumber().getAccountNumber()}" /></a>	

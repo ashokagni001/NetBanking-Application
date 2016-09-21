@@ -372,8 +372,7 @@ public class TransactionController {
 	public ModelAndView addBeneficiaryAccount(@RequestParam("accountNumber")String accountNumber, 
 			@RequestParam("IFSCode")String IFSCode, HttpSession session) {
 		try {              
-            return new ModelAndView ("AddBeneficiaryAccount", "messgae",
-            		transactionService.addBeneficiaryAccount(session.getAttribute("id").toString(), accountNumber, IFSCode)); 
+            return new ModelAndView ("AddBeneficiaryAccount", "message", transactionService.addBeneficiaryAccount(session.getAttribute("id").toString(), accountNumber, IFSCode)); 
     	} catch(TransactionCustomException e) {
     		return new ModelAndView ("AddBeneficiaryAccount", "message", e.getMessage());
     	} catch (DataBaseException e) {
@@ -384,11 +383,9 @@ public class TransactionController {
 	@RequestMapping(value = "/viewAllBeneficiaryAccountDetail", method = RequestMethod.GET)
 	public ModelAndView viewAllBeneficiaryAccountDetail(HttpSession session) throws TransactionCustomException {
 		try {
-			List<Beneficiary> customerBeneficiary = customerService.getCustomerById(session.getAttribute("id").toString()).getBeneficiary();
-            return new ModelAndView ("ReterieveBeneficiaryByCustomerId", "beneficiaries", 
-            		customerService.getCustomerById(session.getAttribute("id").toString()).getBeneficiary());
+            return new ModelAndView ("ReterieveBeneficiaryByCustomerId", "beneficiaries", customerService.getCustomerById(session.getAttribute("id").toString()).getBeneficiary());
     	} catch (DataBaseException e) {
-    		return new ModelAndView ("AddBeneficiaryAccount", "message", e.getMessage());
+            return new ModelAndView ("AddBeneficiaryAccount", "message", e.getMessage());
         }
 	}
 	
@@ -398,4 +395,3 @@ public class TransactionController {
 		return "AddTransaction1";
 	}
 }
-
