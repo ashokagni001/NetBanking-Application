@@ -3,55 +3,30 @@
  }
  .header-top{
  margin: 0px;
- background:#1C1515;
- height: 90px;
- }
- .header-top h1 {
- color:#fff;
- }
-  .header-logout{
- margin: 0px;
- background:#1C1515;
- height: 60px;
- float: right;
- }
- .name{
- color:#fff;
+ background: #606060;
+ height: 150px;
  }
  .sidemenu{
- background:  #5689c9  ;
+ background: #606060;
  margin: 0px;
  padding: 0px;
- height :100%;
  }
  .main-container {
  margin: 0px;
  padding: 0px;
  }
- .sidemenu-nav{
+ .side-nav{
  
  }
-.sidemenu ul {
+ 
+ .side-nav ul {
  
    list-style: none;
  }
- .sizetable{
- overflow: scroll;
- }
 
-.sidemenu ul li {
+.side-nav ul li {
     
  }
-.sidemenu ul li a{
- color : #fff;
- 
- }
- .sidemenu ul li a:hover {
-
- color :  #1f7ee3 ;
- 
- }
- 
  .pos {
     position: absolute;
     right: 7px;
@@ -59,13 +34,4 @@
     height: 70px;
     width: 50px;
 }
-.row{
-margin-top: 5px;
-}
-.container{
-margin:0px;
-padding:0px;
-}
-.body{
-	background:"image/blue.png";
-}
+ 

@@ -11,54 +11,53 @@ package com.i2i.netbankingApplication.exception;
  * @created 2016-09-06
  */
 public class DataBaseException extends Exception {
-	private String message;
+    private String message;
 
-	public DataBaseException() {
-	}
+    public DataBaseException() {}
 
-	/**
-	 * <p>
-	 * parameter Constructor. Passes parameters to the constructor and creates
-	 * an instance of CustomerDataException.
-	 * </p>
-	 * 
-	 * @param message
-	 *            A String data type.
-	 */
-	public DataBaseException(String message) {
-		super(message);
-	}
+    /**
+     * <p>
+     * parameter Constructor. Passes parameters to the constructor and creates
+     * an instance of CustomerDataException.
+     * </p>
+     * 
+     * @param message
+     *            A String data type.
+     */
+    public DataBaseException(String message) {
+        super(message);
+    }
 
-	/**
-	 * <p>
-	 *     parameter Constructor. Passes parameters to the constructor and creates
-	 *    an instance of CustomerDataException.
-	 * </p>
-	 * 
-	 * @param message
-	 *     A String data type.
-	 *     
-	 * @param cause
-	 *     A String data type.
-	 */
-	public DataBaseException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    /**
+     * <p>
+     *     parameter Constructor. Passes parameters to the constructor and creates
+     *    an instance of CustomerDataException.
+     * </p>
+     * 
+     * @param message
+     *     A String data type.
+     *     
+     * @param cause
+     *     A String data type.
+     */
+    public DataBaseException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	/**
-	 * <p>
-	 *     parameter Constructor. Passes parameters to the constructor and creates
-	 *     an instance of CustomerDataException.
-	 * </p>
-	 * 
-	 * @param cause
-	 *     A String data type.     
-	 */
-	public DataBaseException(Throwable cause) {
-		super(cause);
-	}
+    /**
+     * <p>
+     *     parameter Constructor. Passes parameters to the constructor and creates
+     *     an instance of CustomerDataException.
+     * </p>
+     * 
+     * @param cause
+     *     A String data type.     
+     */
+    public DataBaseException(Throwable cause) {
+        super(cause);
+    }
 
-	public String toString() {
-		return this.message;
-	}
+    public String toString() {
+        return this.message;
+    }
 }

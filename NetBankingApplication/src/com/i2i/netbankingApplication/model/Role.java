@@ -19,47 +19,43 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "role_detail")
 public class Role {
-	
-	@Id
-	@Column(name = "role_id")
-	private String roleId;
-	
-	@Column(name = "role_name")
-	private String roleName;
-	
-	/**
+
+    @Id
+    @Column(name = "role_id")
+    private String roleId;
+
+    @Column(name = "role_name")
+    private String roleName;
+
+    /**
      * Default Constructor.
      * which create a instance of Role.
      */
-	public Role() {
-	}
-    
-	/**
+    public Role() {}
+
+    /**
      * parameter Constructor.
      * Passes parameters to the constructor and creates an instance of UserRole.
-     */  
-	public Role(String roleId, String roleName) {
-		this.roleId = roleId;
-		this.roleName = roleName;
-	}
+     */
+    public Role(String roleId, String roleName) {
+        this.roleId = roleId;
+        this.roleName = roleName;
+    }
 
-	public String getRoleId() {
-		return roleId;
-	}
+    public String getRoleId() {
+        return roleId;
+    }
 
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
-	}
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
 
-	public String getRoleName() {
-		return roleName;
-	}
+    public String getRoleName() {
+        return roleName;
+    }
 
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
-	
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
 }
-	
-
-

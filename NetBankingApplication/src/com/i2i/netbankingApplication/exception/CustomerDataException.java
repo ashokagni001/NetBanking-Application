@@ -10,28 +10,27 @@ package com.i2i.netbankingApplication.exception;
  * 
  * @created 2016-09-06 
  */
-public class CustomerDataException extends Exception {  
-	private String message;
-	
-    public CustomerDataException() {
-    }
-    
+public class CustomerDataException extends Exception {
+    private String message;
+
+    public CustomerDataException() {}
+
     /**
-	 * <p>
-	 *     parameter Constructor.
+     * <p>
+     *     parameter Constructor.
      *     Passes parameters to the constructor and creates an instance of CustomerDataException.
      * </p>
      * 
-	 * @param message
-	 *     A String data type.
-	 */
+     * @param message
+     *     A String data type.
+     */
     public CustomerDataException(String message) {
         super(message);
     }
-    
+
     /**
      * <p>
-	 *     parameter Constructor.
+     *     parameter Constructor.
      *     Passes parameters to the constructor and creates an instance of CustomerDataException.
      * </p>
      * 
@@ -41,10 +40,10 @@ public class CustomerDataException extends Exception {
      *     A String data type
      */
     public CustomerDataException(String message, Throwable cause) {
-        super (message, cause);
+        super(message, cause);
     }
-     
-    public String toString() { 
+
+    public String toString() {
         return this.message;
     }
-}  
+}

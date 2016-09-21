@@ -14,61 +14,60 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "beneficiaries_detail")
 public class Beneficiary {
-	
-	@Id
-	@GeneratedValue
-	@Column(name = "id")
-	private int id;
-	
-	@ManyToOne(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
-	@JoinColumn(name = "beneficiary_account_number")
-	private Customer beneficiaryAccountNumber;
-	
-	@ManyToOne(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
-	@JoinColumn(name = "customer_account_number")
-	private Account customerAccountNumber;
-	
-	@Column(name = "status")
-	private String status;
-	
-	public Beneficiary() {
-	}
-	
-	public Beneficiary(Customer beneficiaryAccountNumber, Account customerAccountNumber, String status) {
-		this.beneficiaryAccountNumber = beneficiaryAccountNumber;
-		this.customerAccountNumber = customerAccountNumber;
-		this.status = status;
-	}
-    
-	public int getId() {
-		return id;
-	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    private int id;
 
-	public Customer getBeneficiaryAccountNumber() {
-		return beneficiaryAccountNumber;
-	}
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinColumn(name = "beneficiary_account_number")
+    private Customer beneficiaryAccountNumber;
 
-	public void setBeneficiaryAccountNumber(Customer beneficiaryAccountNumber) {
-		this.beneficiaryAccountNumber = beneficiaryAccountNumber;
-	}
-	
-	public Account getCustomerAccountNumber() {
-		return customerAccountNumber;
-	}
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer_account_number")
+    private Account customerAccountNumber;
 
-	public void setCustomerAccountNumber(Account customerAccountNumber) {
-		this.customerAccountNumber = customerAccountNumber;
-	}
+    @Column(name = "status")
+    private String status;
 
-	public String getStatus() {
-		return status;
-	}
+    public Beneficiary() {}
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public Beneficiary(Customer beneficiaryAccountNumber, Account customerAccountNumber, String status) {
+        this.beneficiaryAccountNumber = beneficiaryAccountNumber;
+        this.customerAccountNumber = customerAccountNumber;
+        this.status = status;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Customer getBeneficiaryAccountNumber() {
+        return beneficiaryAccountNumber;
+    }
+
+    public void setBeneficiaryAccountNumber(Customer beneficiaryAccountNumber) {
+        this.beneficiaryAccountNumber = beneficiaryAccountNumber;
+    }
+
+    public Account getCustomerAccountNumber() {
+        return customerAccountNumber;
+    }
+
+    public void setCustomerAccountNumber(Account customerAccountNumber) {
+        this.customerAccountNumber = customerAccountNumber;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

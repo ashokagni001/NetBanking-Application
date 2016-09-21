@@ -31,62 +31,62 @@ import com.i2i.netbankingApplication.model.UserRole;
  */
 
 public class CustomerDao {
-	
+
     /**
-	 * <p>
-	 *     Connect to the HibernateConnection class use to create hibernate connection.
-	 *     and create SessionFactory.
-	 * </p>
-	 * 
-	 * @return Session
-	 *     Return the new session object. 
-	 *     
-	 * @throws DataBaseException
-	 *     It handle all the custom exception in NetBanking Application..
-	 */
-	private Session hibernateConncetion() throws DataBaseException {
-		try {
-		    HibernateConnection hibernateConnectionObject  = HibernateConnection.getInstance();	
-		    Configuration configuration = hibernateConnectionObject.getConfiguration();
-		    SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
-		    return sessionFactory.openSession();
-		} catch (DataBaseException e) {
-			throw new DataBaseException(e.getMessage());
-		}
-	}
-    
-	/**
-	 * <p>
-	 *     Get the customer object from CustomerService and add Customer to database. 
-	 *     Get the accountNumber from CustomerService and add customer id in Account to database.
-	 * </p>
-	 * 
-	 * @param accountNumber
-	 *     accountNumber of customer
-	 * @param customer
-	 *     It is use for insert new Customer detail.
-	 *     
-	 * @throws DataBaseException
-	 *     It handle all the custom exception in NetBanking Application..
-	 */
-	public void insertCustomer(String accountNumber, Customer customer) throws DataBaseException {
-		Session session = hibernateConncetion();
+     * <p>
+     *     Connect to the HibernateConnection class use to create hibernate connection.
+     *     and create SessionFactory.
+     * </p>
+     * 
+     * @return Session
+     *     Return the new session object. 
+     *     
+     * @throws DataBaseException
+     *     It handle all the custom exception in NetBanking Application..
+     */
+    private Session hibernateConncetion() throws DataBaseException {
+        try {
+            HibernateConnection hibernateConnectionObject = HibernateConnection.getInstance();
+            Configuration configuration = hibernateConnectionObject.getConfiguration();
+            SessionFactory sessionFactory = hibernateConnectionObject.getSessionFactory();
+            return sessionFactory.openSession();
+        } catch (DataBaseException e) {
+            throw new DataBaseException(e.getMessage());
+        }
+    }
+
+    /**
+     * <p>
+     *     Get the customer object from CustomerService and add Customer to database. 
+     *     Get the accountNumber from CustomerService and add customer id in Account to database.
+     * </p>
+     * 
+     * @param accountNumber
+     *     accountNumber of customer
+     * @param customer
+     *     It is use for insert new Customer detail.
+     *     
+     * @throws DataBaseException
+     *     It handle all the custom exception in NetBanking Application..
+     */
+    public void insertCustomer(String accountNumber, Customer customer) throws DataBaseException {
+        Session session = hibernateConncetion();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            Account account = (Account)session.get(Account.class, accountNumber);
+            Account account = (Account) session.get(Account.class, accountNumber);
             session.save(customer);
             account.setCustomer(customer);
             session.update(account);
             transaction.commit();
-        } catch(HibernateException e) {
-        	throw new DataBaseException("CHECK YOUR REGISTER DETAILS");
+        } catch (HibernateException e) {
+            throw new DataBaseException("CHECK YOUR REGISTER DETAILS");
         } finally {
             session.close();
         }
     }
-	
-	/**
+
+    /**
      * <p>
      *     Get the customer Id from CustomerService.
      *     Retrieves customer data from database and returns customer object to CustomerService.
@@ -100,25 +100,25 @@ public class CustomerDao {
      * 
      * @throws DataBaseException
      *     It handle all the custom exception in NetBanking Application..
-	 */
-	public Customer retrieveCustomerById(String customerId) throws DataBaseException {
-	    Customer customer = null;
-	    Session session = hibernateConncetion();
-	    Transaction transaction = null;
-	    try {
-	    	transaction = session.beginTransaction();
-	        customer = (Customer)session.get(Customer.class, customerId); 
-	        transaction.commit();
-	    } catch (HibernateException e) {
-	    	throw new DataBaseException("CHECK YOUR PLEASE INSERT VALID CUSTOMER DETAIL..");
-	    } finally {
-	        session.close(); 
-	    } 
-	    return customer; 
-	}
-	
-	/**
-	 * <p>
+     */
+    public Customer retrieveCustomerById(String customerId) throws DataBaseException {
+        Customer customer = null;
+        Session session = hibernateConncetion();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            customer = (Customer) session.get(Customer.class, customerId);
+            transaction.commit();
+        } catch (HibernateException e) {
+            throw new DataBaseException("CHECK YOUR PLEASE INSERT VALID CUSTOMER DETAIL..");
+        } finally {
+            session.close();
+        }
+        return customer;
+    }
+
+    /**
+     * <p>
      *     Retrieves all customers from database.
      *     Return all customers in List type.
      * </p>
@@ -126,245 +126,245 @@ public class CustomerDao {
      * @return List
      *     Return list of customers. 
      *         
-	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException and HibernateException.
-	 */
-	public List<Customer> retriveAllCustomers() throws DataBaseException {
-		Session session = hibernateConncetion();
-	    try {
-	        return session.createQuery("FROM Customer").list();
-	    } catch (HibernateException e) {
-	        throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
-	    } finally {
-	        session.close();
-	    }
-	}
-	
-	/**
-	 * <p>
-	 *     Get the address object from CustomerService and add Customer Address to database. 
-	 *     Get the customerId from CustomerService and update address in Customer to database.
-	 * </p>
-	 * 
-	 * @param customerId
-	 *     customerId of Customer to add address.
-	 * @param address
-	 *     Object of Address class.
-	 *     
-	 * @return message
-	 *     return status message(Success and customer Id and passWord or failure)
-	 *     
-	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException and HibernateException.
-	 */
-	public void addAddress(String customerId, Address address) throws DataBaseException {
-		Session session = hibernateConncetion();
-	    Transaction transaction = null;
-	    try {
-	        transaction = session.beginTransaction();
-	        Customer customer = (Customer)session.get(Customer.class, customerId);
-	        session.save(address); 
-		    customer.setAddress(address);
-	        session.update(customer);
-	        transaction.commit();  
-		} catch (HibernateException e) {
-			throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
-	    } finally {
-	        session.close(); 
-	    }
-	}
-	
-	/**
-	 * <p>
+     * @throws DataBaseException
+     *     If there is an error in the given data like BadElementException and HibernateException.
+     */
+    public List < Customer > retriveAllCustomers() throws DataBaseException {
+        Session session = hibernateConncetion();
+        try {
+            return session.createQuery("FROM Customer").list();
+        } catch (HibernateException e) {
+            throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * <p>
+     *     Get the address object from CustomerService and add Customer Address to database. 
+     *     Get the customerId from CustomerService and update address in Customer to database.
+     * </p>
+     * 
+     * @param customerId
+     *     customerId of Customer to add address.
+     * @param address
+     *     Object of Address class.
+     *     
+     * @return message
+     *     return status message(Success and customer Id and passWord or failure)
+     *     
+     * @throws DataBaseException
+     *     If there is an error in the given data like BadElementException and HibernateException.
+     */
+    public void addAddress(String customerId, Address address) throws DataBaseException {
+        Session session = hibernateConncetion();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Customer customer = (Customer) session.get(Customer.class, customerId);
+            session.save(address);
+            customer.setAddress(address);
+            session.update(customer);
+            transaction.commit();
+        } catch (HibernateException e) {
+            throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * <p>
      *     Get the customerId from CustomerService.
      *     Delete customer from database. 
      * </p>
      * 
-	 * @param customerId
-	 *     customerId of Customer.
-	 *     
-	 * @throws DataBaseException
-	 *     It handle all the custom exception in NetBanking Application..
-	 */
-	public void deleteCustomeryId(String customerId) throws DataBaseException {
-	    Session session = hibernateConncetion();
-	    Transaction transaction = null;
-	    try {
-	        transaction = session.beginTransaction();
-	        Customer customer = (Customer)session.get(Customer.class, customerId); 
-	        session.delete(customer); 
-	        transaction.commit();
-	    } catch (HibernateException e) {
-	    	throw new DataBaseException("YOUR REGISTERATION NOT COMPLETED .PLEASE TRY AGAIN");  
-	    } finally {
-	        session.close(); 
-	    }
+     * @param customerId
+     *     customerId of Customer.
+     *     
+     * @throws DataBaseException
+     *     It handle all the custom exception in NetBanking Application..
+     */
+    public void deleteCustomeryId(String customerId) throws DataBaseException {
+        Session session = hibernateConncetion();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Customer customer = (Customer) session.get(Customer.class, customerId);
+            session.delete(customer);
+            transaction.commit();
+        } catch (HibernateException e) {
+            throw new DataBaseException("YOUR REGISTERATION NOT COMPLETED .PLEASE TRY AGAIN");
+        } finally {
+            session.close();
+        }
     }
-	
-	/**
-	 * <p>
+
+    /**
+     * <p>
      *     Retrieves all address from database.
      *     Return all address in List type.
      * </p>
      * 
-	 * @return list
-	 *     Return list of address.
-	 *      
-	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException and HibernateException.
-	 */
-	public List<Address> retriveAllAddresses() throws DataBaseException {
-	    Session session = hibernateConncetion();
-	    try {
-	        return session.createQuery("from Address").list();
-	    } catch(HibernateException e) {
-	        throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
-	    } finally {
-	        session.close();
-	    }
-	}
-	
-	/**
-	 * <p>
-	 *     Get the address Id from CustomerService.
-	 *     Retrieves customer address from database and returns Address object to CustomerService.
-	 * </p>
-	 * 
-	 * @param addressId
-	 *     addressId of Address to view.
-	 *      
-	 * @return Address
-	 *     Object of Address class.
-	 *     
-	 * @throws DataBaseException
-	 *     It handle all the custom exception in NetBanking Application..
-	 */
-	public Address retrieveAddressById(int addressId) throws DataBaseException {
-		Session session = hibernateConncetion();
-		try {
-			return (Address)session.get(Address.class, addressId);
-		} catch (HibernateException e) {
-			throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
-		} finally {
-			session.close();
-		}
-	}
-	
-	/**
-	 * <p>
-	 *     Get the accountNumber from CustomerService.
-	 *     Retrieves Account from database and returns Account object to CustomerService.
-	 * </p>
-	 * 
-	 * @param accountNumber
-	 *     accountNumber of Customer.
-	 *     
-	 * @return Account
-	 *     Object of Account class.
-	 * 
-	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException and HibernateException.
-	 */
-	public Account retrieveAccountByNumber(String accountNumber) throws DataBaseException {
-	    Session session = hibernateConncetion();
-	    try {
-	        return (Account)session.get(Account.class, accountNumber); 
-	    } catch (HibernateException e) {
-	    	throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
-	    } finally {
-	        session.close(); 
-	    } 
-	}
-	
-	/**
-	 * Get the UserRole object from CustomerService and add UserRole to database. 
-	 * 
-	 * @throws DataBaseException
-	 *     It handle all the custom exception in NetBanking Application..
-	 */
-	public void insertUserRole(UserRole userRole) throws DataBaseException {
-		Session session = hibernateConncetion();
-		Transaction transaction = null;
-		try {
-			transaction = session.beginTransaction();
-			session.save(userRole);
-			transaction.commit();
-		} catch (HibernateException e) {
-			throw new DataBaseException("SORRY INFORMATION CAN'T SAVE PLEASE TRY AGAIN" + e);
-		} finally {
-			session.close();
-		}
-	}
-    
-	/**
-	 * <p>
+     * @return list
+     *     Return list of address.
+     *      
+     * @throws DataBaseException
+     *     If there is an error in the given data like BadElementException and HibernateException.
+     */
+    public List < Address > retriveAllAddresses() throws DataBaseException {
+        Session session = hibernateConncetion();
+        try {
+            return session.createQuery("from Address").list();
+        } catch (HibernateException e) {
+            throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA.");
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * <p>
+     *     Get the address Id from CustomerService.
+     *     Retrieves customer address from database and returns Address object to CustomerService.
+     * </p>
+     * 
+     * @param addressId
+     *     addressId of Address to view.
+     *      
+     * @return Address
+     *     Object of Address class.
+     *     
+     * @throws DataBaseException
+     *     It handle all the custom exception in NetBanking Application..
+     */
+    public Address retrieveAddressById(int addressId) throws DataBaseException {
+        Session session = hibernateConncetion();
+        try {
+            return (Address) session.get(Address.class, addressId);
+        } catch (HibernateException e) {
+            throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * <p>
+     *     Get the accountNumber from CustomerService.
+     *     Retrieves Account from database and returns Account object to CustomerService.
+     * </p>
+     * 
+     * @param accountNumber
+     *     accountNumber of Customer.
+     *     
+     * @return Account
+     *     Object of Account class.
+     * 
+     * @throws DataBaseException
+     *     If there is an error in the given data like BadElementException and HibernateException.
+     */
+    public Account retrieveAccountByNumber(String accountNumber) throws DataBaseException {
+        Session session = hibernateConncetion();
+        try {
+            return (Account) session.get(Account.class, accountNumber);
+        } catch (HibernateException e) {
+            throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * Get the UserRole object from CustomerService and add UserRole to database. 
+     * 
+     * @throws DataBaseException
+     *     It handle all the custom exception in NetBanking Application..
+     */
+    public void insertUserRole(UserRole userRole) throws DataBaseException {
+        Session session = hibernateConncetion();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.save(userRole);
+            transaction.commit();
+        } catch (HibernateException e) {
+            throw new DataBaseException("SORRY INFORMATION CAN'T SAVE PLEASE TRY AGAIN" + e);
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * <p>
      *     Retrieves all Role from database.
      *     Return all Role in List type.
      * </p>
      * 
-	 * @return Role
-	 *     Return the list of roles.
-	 *     
-	 * @throws DataBaseException
-	 *     It handle all the custom exception in NetBanking Application..
-	 */
-	public List<Role> retriveAllRoles() throws DataBaseException {
-		Session session = hibernateConncetion();
-		try {
-			return session.createQuery("FROM Role").list();
-		} catch (HibernateException e) {
-			throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA." + e);
-		} finally {
-			session.close();
-		}
-	}
-    
-	/**
-	 * <p>
-	 *     Get the id from CustomerService.
-	 *     Retrieves Role from database and returns Role object to CustomerService.
-	 * </p>
-	 * 
-	 * @param idConfigurationException
-	 *     id of Role to view.
-	 * 
-	 * @return Role
-	 *     Object of Role class.
-	 *     
-	 * @throws DataBaseException
-	 *     If there is an error in the given data like BadElementException and HibernateException.
-	 */
-	public Role retrieveRoleById(String id) throws DataBaseException {
-		Session session = hibernateConncetion();
-		try {
-			return (Role) session.get(Role.class, id);
-		} catch (HibernateException e) {
-			throw new DataBaseException("CHECK ID " + id + "PLEASE INSERT VALID ID...\n");
-		} finally {
-			session.close();
-		}
-	}
-    
-	/**
-	 * <p>
+     * @return Role
+     *     Return the list of roles.
+     *     
+     * @throws DataBaseException
+     *     It handle all the custom exception in NetBanking Application..
+     */
+    public List < Role > retriveAllRoles() throws DataBaseException {
+        Session session = hibernateConncetion();
+        try {
+            return session.createQuery("FROM Role").list();
+        } catch (HibernateException e) {
+            throw new DataBaseException("DATA IS NOT AVAILABLE.INSERT DATA." + e);
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * <p>
+     *     Get the id from CustomerService.
+     *     Retrieves Role from database and returns Role object to CustomerService.
+     * </p>
+     * 
+     * @param idConfigurationException
+     *     id of Role to view.
+     * 
+     * @return Role
+     *     Object of Role class.
+     *     
+     * @throws DataBaseException
+     *     If there is an error in the given data like BadElementException and HibernateException.
+     */
+    public Role retrieveRoleById(String id) throws DataBaseException {
+        Session session = hibernateConncetion();
+        try {
+            return (Role) session.get(Role.class, id);
+        } catch (HibernateException e) {
+            throw new DataBaseException("CHECK ID " + id + "PLEASE INSERT VALID ID...\n");
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * <p>
      *     Retrieves all UserRole from database.
      *     Return all UserRole in List type.
      * </p>
      * 
-	 * @return UserRole
-	 *     Object of UserRole class.
-	 *     
-	 * @throws DataBaseException
-	 *     It handle all the custom exception in NetBanking Application..
-	 */
-	public List<UserRole> retriveAllUserRoles() throws DataBaseException {
-		Session session = hibernateConncetion();
-		try {
-			return session.createQuery("FROM UserRole").list();
-		} catch (HibernateException e) {
-			throw new DataBaseException("DATA IS NOT AVAILABLE PLEASE INSERT THE DATA." + e);
-		} finally {
-			session.close();
-		}
-	}
+     * @return UserRole
+     *     Object of UserRole class.
+     *     
+     * @throws DataBaseException
+     *     It handle all the custom exception in NetBanking Application..
+     */
+    public List < UserRole > retriveAllUserRoles() throws DataBaseException {
+        Session session = hibernateConncetion();
+        try {
+            return session.createQuery("FROM UserRole").list();
+        } catch (HibernateException e) {
+            throw new DataBaseException("DATA IS NOT AVAILABLE PLEASE INSERT THE DATA." + e);
+        } finally {
+            session.close();
+        }
+    }
 }

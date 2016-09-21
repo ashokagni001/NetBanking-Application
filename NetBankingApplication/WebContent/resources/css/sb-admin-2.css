@@ -75,11 +75,10 @@ body {
   padding: 15px;
 }
 .sidebar ul li {
-  border-bottom: 1px solid #606060;
-  background-color: #606060;
+  border-bottom: 1px solid #e7e7e7;
 }
-.sidebar ul li a {
-  background-color: #606060;
+.sidebar ul li a.active {
+  background-color: #eeeeee;
 }
 .sidebar .arrow {
   float: right;
@@ -293,7 +292,7 @@ table.dataTable thead .sorting:after {
   left: 50%;
   width: 3px;
   margin-left: -1.5px;
-  background-color: #606060;
+  background-color: #eeeeee;
 }
 .timeline > li {
   position: relative;

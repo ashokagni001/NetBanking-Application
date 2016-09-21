@@ -25,106 +25,105 @@ import org.hibernate.annotations.LazyCollectionOption;
 @Entity
 @Table(name = "transaction_detail")
 public class CustomerTransaction {
-	@Id
+    @Id
     @Column(name = "id")
     private int id;
-	
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name="debit_account_number")
-	private Account debitAccount;
-	
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name="cridit_account_number")
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "debit_account_number")
+    private Account debitAccount;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "cridit_account_number")
     private Account creditAccount;
-    
+
     @Column(name = "amount")
     private double amount;
-    
+
     @Column(name = "date")
     private String date;
-    
+
     @LazyCollection(LazyCollectionOption.FALSE)
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name="user_id")
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "user_id")
     private Customer customer;
-    
-	@Column(name = "status")
+
+    @Column(name = "status")
     private String status;
-    
-	/**
+
+    /**
      * Default Constructor.
      * which create a instance of CustomerTransaction.
      */
-	public CustomerTransaction() {
-	}
-	
-	/**
+    public CustomerTransaction() {}
+
+    /**
      * parameter Constructor.
      * Passes parameters to the constructor and creates an instance of CustomerTransaction.
-     */  
-    public CustomerTransaction(int id, double amount,String status, Account debitAccount, Account creditAccount) {
-		this.id = id;
-		this.amount = amount;
-		this.status = status;
-		this.creditAccount = creditAccount;
-		this.debitAccount = debitAccount;
-	}
+     */
+    public CustomerTransaction(int id, double amount, String status, Account debitAccount, Account creditAccount) {
+        this.id = id;
+        this.amount = amount;
+        this.status = status;
+        this.creditAccount = creditAccount;
+        this.debitAccount = debitAccount;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public double getAmount() {
-		return amount;
-	}
+    public double getAmount() {
+        return amount;
+    }
 
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
-	
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
     public String getDate() {
-		return date;
-	}
+        return date;
+    }
 
-	public void setDate(String date) {
-		this.date = date;
-	}
+    public void setDate(String date) {
+        this.date = date;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public Account getDebitAccount() {
-		return debitAccount;
-	}
+    public Account getDebitAccount() {
+        return debitAccount;
+    }
 
-	public void setDebitAccount(Account debitAccount) {
-		this.debitAccount = debitAccount;
-	}
+    public void setDebitAccount(Account debitAccount) {
+        this.debitAccount = debitAccount;
+    }
 
-	public Account getCreditAccount() {
-		return creditAccount;
-	}
+    public Account getCreditAccount() {
+        return creditAccount;
+    }
 
-	public void setCreditAccount(Account creditAccount) {
-		this.creditAccount = creditAccount;
-	}
-	
-	public Customer getCustomer() {
-		return customer;
-	}
+    public void setCreditAccount(Account creditAccount) {
+        this.creditAccount = creditAccount;
+    }
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 }

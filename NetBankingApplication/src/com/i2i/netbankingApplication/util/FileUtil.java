@@ -13,21 +13,20 @@ import java.util.Date;
  * @created 2016-09-15 
  */
 public class FileUtil {
-	/**
-	 * It is write a message in file with current date.
+    /**
+     * It is write a message in file with current date.
      * 
-	 * @param errorMessage
-	 *     A String data type.
-	 */
-    public static void  exceptionOccurCreateFile(String errorMessage) {
+     * @param errorMessage
+     *     A String data type.
+     */
+    public static void exceptionOccurCreateFile(String errorMessage) {
         try {
             Date date = new Date();
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("abc.txt", true));
-            bufferedWriter.write("\n" + date + "--->   " + errorMessage + "\n");  
+            bufferedWriter.write("\n" + date + "--->   " + errorMessage + "\n");
             bufferedWriter.close();
         } catch (IOException e) {
-        	System.out.println("SOME PROBLEM OCCUR PLEASE TRY AGAIN LATER");
+            System.out.println("SOME PROBLEM OCCUR PLEASE TRY AGAIN LATER");
         }
     }
 }
-      

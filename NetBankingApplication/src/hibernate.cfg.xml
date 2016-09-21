@@ -8,7 +8,7 @@
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="connection.url">jdbc:mysql://localhost/net_banking</property> 
         <property name="connection.username">root</property>
-        <property name="connection.password">siva</property>
+        <property name="connection.password">raj</property>
         <property name="connection.pool_size">1</property>
         <property name="show_sql">true</property>
         <mapping class="com.i2i.netbankingApplication.model.Branch"></mapping>
