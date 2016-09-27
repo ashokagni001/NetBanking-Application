@@ -1,5 +1,4 @@
 package com.i2i.netBankingApplication.exception;
-
 /**
  * <p>
  *     custom exception to check the customer attribute.
@@ -11,11 +10,7 @@ package com.i2i.netBankingApplication.exception;
  * @created 2016-09-06 
  */
 public class TransactionCustomException extends Exception {  
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private String message;
+    private String message;
     
     public TransactionCustomException() {
     }

@@ -12,7 +12,7 @@ public interface BranchManager extends GenericManager<Branch, Long> {
     /**
      * {@inheritDoc}
      */
-    String addBranch(Branch branch) throws DataBaseException;
+    void addBranch(Branch branch) throws DataBaseException;
     
     /**
      * {@inheritDoc}
@@ -32,10 +32,10 @@ public interface BranchManager extends GenericManager<Branch, Long> {
     /**
      * {@inheritDoc}
      */
-    String addAccount(String accountNumber, double balance, String accountType, 
-    		String IFSCode) throws DataBaseException;
+    String addAccount(Account account) throws DataBaseException;
     
-    public List<Account> viewAccountByBranch(String IFSCode) throws BranchDataException, 
-            DataBaseException;
-
+    Account getAccountByAccountNumber(String accountNumber) throws DataBaseException;
+    
+    List<Account> viewAccountByBranch(String IFSCode) throws BranchDataException, 
+    DataBaseException;
 }

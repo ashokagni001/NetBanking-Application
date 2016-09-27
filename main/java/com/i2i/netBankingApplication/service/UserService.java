@@ -1,6 +1,5 @@
 package com.i2i.netBankingApplication.service;
 
-import com.i2i.netBankingApplication.exception.DataBaseException;
 import com.i2i.netBankingApplication.model.User;
 
 import javax.jws.WebService;
@@ -60,6 +59,4 @@ public interface UserService {
      */
     @DELETE
     void removeUser(String userId);
-    
-    User getUserById(String userId) throws DataBaseException;
 }

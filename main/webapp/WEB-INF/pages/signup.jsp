@@ -1,7 +1,7 @@
 <%@ include file="/common/taglibs.jsp" %>
 
 <head>
-    <title>I2I NETBANKING</title>
+    <title><fmt:message key="signup.title"/></title>
 </head>
 
 <body class="signup"/>
@@ -77,8 +77,9 @@
             </div>
         </div>
         <div class="form-group">
-            <appfuse:label styleClass="control-label" key="Bank.AccountNumber*"/>
-            <form:input cssClass="form-control" path="accountNumber" id="accountNumber"/>
+            <appfuse:label styleClass="control-label" key="user.accountNumber"/>
+                <form:input cssClass="form-control" path="accountNumber" id="accountNumber" maxlength="15"/>
+                <form:errors path="accountNumber" cssClass="help-block"/>
         </div>
         <div>
             <legend class="accordion-heading">

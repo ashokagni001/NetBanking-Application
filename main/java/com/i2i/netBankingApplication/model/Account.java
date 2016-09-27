@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.i2i.netBankingApplication.model.Branch;
 /**
  * <p>
  *     Model class of Account. 

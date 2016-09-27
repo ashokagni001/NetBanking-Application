@@ -27,23 +27,24 @@
 							key="address" /></a>
 				</legend>
 				<div id="collapse-address" class="accordion-body collapse">
-				    <div class="row">
-					    <div class="form-group">
-					        <label class="control-label col-md-3" for="address.country">STREET
+					<div class="row">
+						<div class="form-group">
+							<label class="control-label col-md-3" for="address.country">STREET
 							</label>
-					        <div class="col-md-9">
-						    <form:input cssClass="form-control" path="address.address"
-							id="address" />
+							<div class="col-md-9">
+								<form:input cssClass="form-control" path="address.address"
+									id="address" />
 							</div>
-					    </div>
-				</div>
+						</div>
+					</div>
 
 					<div class="row">
 						<div class="form-group">
 							<label class="control-label col-md-3" for="address.country">COUNTRY
 							</label>
 							<div class="col-md-9">
-								<form:select path="address.country" class="countries" id="countryId">
+								<form:select path="address.country" class="countries"
+									id="countryId">
 									<form:option value="">Select Country</form:option>
 								</form:select>
 							</div>
@@ -51,7 +52,8 @@
 					</div>
 					<div class="row">
 						<div class="form-group">
-							<label class="control-label col-md-3" for="address.province">STATE </label>
+							<label class="control-label col-md-3" for="address.province">STATE
+							</label>
 							<div class="col-md-9">
 								<form:select path="address.province" class="states" id="stateId">
 									<form:option value="">Select State</form:option>
@@ -61,7 +63,8 @@
 					</div>
 					<div class="row">
 						<div class="form-group">
-							<label class="control-label col-md-3" for="address.city">CITY </label>
+							<label class="control-label col-md-3" for="address.city">CITY
+							</label>
 							<div class="col-md-9">
 								<form:select path="address.city" class="cities" id="cityId">
 									<form:option value="">Select City</form:option>
@@ -72,18 +75,18 @@
 					<script
 						src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 					<script src="http://iamrohit.in/lab/js/location.js"></script>
-                    <div class="row">
-                        <div class="form-group">
-							<label class="control-label col-md-3" for="address.city">PIN CODE
-							</label>
-                            <div class="col-sm-3 form-group">
-							    <form:input cssClass="form-control" path="address.postalCode"
-								id="postalCode" />
-						    </div>
+					<div class="row">
+						<div class="form-group">
+							<label class="control-label col-md-3" for="address.city">PIN
+								CODE </label>
+							<div class="col-sm-3 form-group">
+								<form:input cssClass="form-control" path="address.postalCode"
+									id="postalCode" />
+							</div>
 						</div>
 					</div>
 				</div>
-				</div>
+			</div>
 			<div class="row">
 				<div class="form-group">
 					<div class="col-md-offset-3 col-md-9">
@@ -98,15 +101,11 @@
 			</div>
 		</form:form>
 	</div>
-	</div>
-	</div>
-	</div>
-	</div>
 	<c:if test="${message != null}">
-					<script type="text/javascript">
-						alert("<c:out value='${message}'/>");
-						windows.location.reload();
-					</script>
-				</c:if>
+		<script type="text/javascript">
+			alert("<c:out value='${message}'/>");
+			windows.location.reload();
+		</script>
+	</c:if>
 </body>
 </html>

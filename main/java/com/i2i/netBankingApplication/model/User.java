@@ -54,6 +54,7 @@ public class User extends BaseObject implements Serializable, UserDetails {
 
     private Long id;
     private String username;
+    private String accountNumber;
     private String userId;                       // required
     private String password;                    // required
     private String confirmPassword;
@@ -62,7 +63,6 @@ public class User extends BaseObject implements Serializable, UserDetails {
     private String lastName;                    // required
     private String email;                       // required; unique
     private String phoneNumber;
-    private String accountNumber;
     private String website;
     private Address address = new Address();
     private Integer version;
@@ -94,10 +94,21 @@ public class User extends BaseObject implements Serializable, UserDetails {
     public Long getId() {
         return id;
     }
-    @Column(name = "user_id", nullable = true, length = 50, unique = true)
+    @Column(name = "user_id", nullable = true, length = 15, unique = true)
     @Field
     public String getUserId() {
         return userId;
+    }
+    
+    
+    @Column(name = "account_number", nullable = true, length = 15, unique = true)
+    @Field
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
     @Column(nullable = false, length = 50, unique = true)
@@ -149,18 +160,8 @@ public class User extends BaseObject implements Serializable, UserDetails {
     public String getPhoneNumber() {
         return phoneNumber;
     }
-    
-    @Column(name = "account_number")
-    @Field(analyze= Analyze.NO)
-    public String getAccountNumber() {
-		return accountNumber;
-	}
 
-	public void setAccountNumber(String accountNumber) {
-		this.accountNumber = accountNumber;
-	}
-
-	@Field
+    @Field
     public String getWebsite() {
         return website;
     }
@@ -407,4 +408,5 @@ public class User extends BaseObject implements Serializable, UserDetails {
         }
         return sb.toString();
     }
+    
 }

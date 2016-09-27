@@ -1,10 +1,7 @@
 package com.i2i.netBankingApplication.dao.hibernate;
 
 import com.i2i.netBankingApplication.dao.UserDao;
-import com.i2i.netBankingApplication.exception.DataBaseException;
 import com.i2i.netBankingApplication.model.User;
-
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -96,36 +93,4 @@ public class UserDaoHibernate extends GenericDaoHibernate<User, Long> implements
         return jdbcTemplate.queryForObject(
                 "select password from " + table.name() + " where id=?", String.class, userId);
     }
-    
-    /**
-     * <p>
-     *     Get the User Id from UserService.
-     *     Retrieves User data from database and returns User object to UserService.
-     * </p>
-     * 
-     * @param UserId
-     *     Id of User to view.
-     * 
-     * @return User
-     *     Return User details.
-     * 
-     * @throws DataBaseException
-     *     It handle all the custom exception in NetBanking Application..
-	 */
-	public User retrieveUserById(String userId) throws DataBaseException {
-	    User User = null;
-	    try {
-	        User = (User)getSession().get(User.class, userId); 
-	    } catch (HibernateException e) {
-	    	throw new DataBaseException("PLEASE INSERT VALID User DETAIL..");
-	    } 
-	    return User; 
-	}
-
-	@Override
-	public User retrieveCustomerById(String userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

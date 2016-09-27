@@ -18,15 +18,15 @@ public class Beneficiary {
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
-	private int id;
+	private long id;
 	
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name = "user_id")
-	private User beneficiaryUser;
+	private User beneficiaryAccountNumber;
 	
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
-	@JoinColumn(name = "customer_account_number")
-	private Account userAccountNumber;
+	@JoinColumn(name = "account_number")
+	private Account customerAccountNumber;
 	
 	@Column(name = "status")
 	private String status;
@@ -34,34 +34,34 @@ public class Beneficiary {
 	public Beneficiary() {
 	}
 	
-	public Beneficiary(User beneficiaryUser, Account userAccountNumber, String status) {
-		this.beneficiaryUser = beneficiaryUser;
-		this.userAccountNumber = userAccountNumber;
+	public Beneficiary(User beneficiaryAccountNumber, Account customerAccountNumber, String status) {
+		this.beneficiaryAccountNumber = beneficiaryAccountNumber;
+		this.customerAccountNumber = customerAccountNumber;
 		this.status = status;
 	}
     
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public User getBeneficiaryUser() {
-		return beneficiaryUser;
+	public User getBeneficiaryAccountNumber() {
+		return beneficiaryAccountNumber;
 	}
 
-	public void setBeneficiaryUser(User beneficiaryUser) {
-		this.beneficiaryUser = beneficiaryUser;
+	public void setBeneficiaryAccountNumber(User beneficiaryAccountNumber) {
+		this.beneficiaryAccountNumber = beneficiaryAccountNumber;
 	}
 	
-	public Account getUserAccountNumber() {
-		return userAccountNumber;
+	public Account getCustomerAccountNumber() {
+		return customerAccountNumber;
 	}
 
-	public void setUserAccountNumber(Account userAccountNumber) {
-		this.userAccountNumber = userAccountNumber;
+	public void setCustomerAccountNumber(Account customerAccountNumber) {
+		this.customerAccountNumber = customerAccountNumber;
 	}
 
 	public String getStatus() {

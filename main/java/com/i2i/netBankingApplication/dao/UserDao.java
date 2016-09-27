@@ -1,5 +1,6 @@
 package com.i2i.netBankingApplication.dao;
 
+import com.i2i.netBankingApplication.model.Account;
 import com.i2i.netBankingApplication.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -46,7 +47,5 @@ public interface UserDao extends GenericDao<User, Long> {
      */
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     String getUserPassword(Long userId);
-
-	User retrieveCustomerById(String userId);
     
 }

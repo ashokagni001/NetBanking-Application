@@ -6,11 +6,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.i2i.netBankingApplication.Constants;
+import com.i2i.netBankingApplication.dao.BranchDao;
+import com.i2i.netBankingApplication.model.Account;
 import com.i2i.netBankingApplication.model.User;
+import com.i2i.netBankingApplication.service.BranchManager;
 import com.i2i.netBankingApplication.service.RoleManager;
 import com.i2i.netBankingApplication.service.UserExistsException;
-
-import org.appfuse.webapp.util.RequestUtil;
+import com.i2i.netBankingApplication.webapp.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.security.access.AccessDeniedException;
@@ -42,13 +44,19 @@ public class SignupController extends BaseFormController {
         setCancelView("redirect:login");
         setSuccessView("redirect:home");
     }
-
+    
+    @Autowired
+    private BranchManager branchManager;
+    
+    @Autowired
+    private BranchDao branchDao;
+    
     @ModelAttribute
     @RequestMapping(method = RequestMethod.GET)
     public User showForm() {
         return new User();
     }
-
+    
     @RequestMapping(method = RequestMethod.POST)
     public String onSubmit(final User user, final BindingResult errors, final HttpServletRequest request, final HttpServletResponse response)
             throws Exception {
@@ -78,9 +86,22 @@ public class SignupController extends BaseFormController {
 
         // unencrypted users password to log in user automatically
         final String password = user.getPassword();
-
+        System.out.println("user service");
+        String accountNumber = user.getAccountNumber();
+        System.out.println(accountNumber);
+        Account account = branchManager.getAccountByAccountNumber(accountNumber);
+        System.out.println(accountNumber);
+        if (null == account) {
+            throw new UserExistsException("Your account number is wrong. Enter valid number");
+        }
+        System.out.println(accountNumber);
+        
         try {
+            System.out.println(accountNumber);
+            account.setUser(user);
             this.getUserManager().saveUser(user);
+            account.setUser(user);
+            branchManager.addAccount(account);
         } catch (final AccessDeniedException ade) {
             // thrown by UserSecurityAdvice configured in aop:advisor userManagerSecurity
             log.warn(ade.getMessage());

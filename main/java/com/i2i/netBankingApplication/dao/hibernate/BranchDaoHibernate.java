@@ -2,8 +2,6 @@ package com.i2i.netBankingApplication.dao.hibernate;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -15,9 +13,7 @@ import com.i2i.netBankingApplication.exception.DataBaseException;
 import com.i2i.netBankingApplication.model.Account;
 import com.i2i.netBankingApplication.model.Branch;
 
-
 @Repository("branchDao")
-@Transactional
 public class BranchDaoHibernate extends GenericDaoHibernate<Branch, Long> implements BranchDao {
 
     /**
@@ -51,7 +47,7 @@ public class BranchDaoHibernate extends GenericDaoHibernate<Branch, Long> implem
     public Branch retrieveBranchByIFSCode(String IFSCode) throws DataBaseException {
         List branches = getSession().createCriteria(Branch.class).add(Restrictions.eq("IFSCode", IFSCode)).list();
         if (branches == null || branches.isEmpty()) {
-            throw new DataBaseException("Branch " + IFSCode + " Not Found...");
+            throw new DataBaseException("Branch '" + IFSCode + "' not found...");
         } else {
             return (Branch) branches.get(0);
         }
@@ -78,16 +74,25 @@ public class BranchDaoHibernate extends GenericDaoHibernate<Branch, Long> implem
 	@Override
 	public void insertAccount(Account account) throws DataBaseException {
 		try {
-			getSession().save(account); 
+		    getSession().saveOrUpdate(account); 
 		} catch (HibernateException e) {
 			throw new DataBaseException("PLEASE CHECK YOUR DATAS " + account.getAccountNumber() + " YOUR DATA IS NOT VALID.PLEASE TRY AGAIN." );  
       	}
 	}
 	
-	public List<Account> retriveAllAccounts() throws DataBaseException {
+	@Override
+	public Account retrieveAccountByAccountNumber(String accountNumber) throws DataBaseException {
+	    try {
+            return (Account) getSession().get(Account.class, accountNumber);
+        } catch (HibernateException e) {
+            throw new DataBaseException("ACCOUNTS IS NOT AVAILABLE.");
+        }
+    }
+	
+
+    public List<Account> retriveAllAccounts() throws DataBaseException {
         Query qry = getSession().createQuery("from Account u order by upper(u.accountNumber)");
         return qry.list();
     }
 
-	
 }

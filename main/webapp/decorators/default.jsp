@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 <%@ include file="/common/taglibs.jsp"%>
-<%@page import="com.i2i.netBankingApplication.model.User"%>
-<%@page import="org.springframework.security.authentication.AnonymousAuthenticationToken"%>
-<%@page import="org.springframework.security.core.Authentication"%>
-<%@page import="org.springframework.security.core.context.SecurityContextHolder"%>
 <html lang="en">
 <head>
     <meta http-equiv="Cache-Control" content="no-store"/>
@@ -15,15 +11,6 @@
     <title><decorator:title/> | <fmt:message key="webapp.name"/></title>
     <t:assets type="css"/>
     <decorator:head/>
-  <% 
-   Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-   if(!(auth instanceof AnonymousAuthenticationToken)){
-       User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
-       session.setAttribute("currentUserFullName", user.getFullName());
-       session.setAttribute("currentUserId", user.getId());
-       session.setAttribute("currentUser", user);
-   }
-  %>
 </head>
 <body<decorator:getProperty property="body.id" writeEntireProperty="true"/><decorator:getProperty property="body.class" writeEntireProperty="true"/>>
     <c:set var="currentMenu" scope="request"><decorator:getProperty property="meta.menu"/></c:set>

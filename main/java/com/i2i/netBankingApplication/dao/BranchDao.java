@@ -18,5 +18,7 @@ public interface BranchDao extends GenericDao<Branch, Long> {
     
     void insertAccount(Account account) throws DataBaseException ;
     
+    Account retrieveAccountByAccountNumber(String accountNumber) throws DataBaseException;
+    
     List<Account>retriveAllAccounts() throws DataBaseException ;
 }

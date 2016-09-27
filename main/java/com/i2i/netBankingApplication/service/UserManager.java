@@ -1,7 +1,7 @@
 package com.i2i.netBankingApplication.service;
 
 import com.i2i.netBankingApplication.dao.UserDao;
-import com.i2i.netBankingApplication.exception.DataBaseException;
+import com.i2i.netBankingApplication.model.Account;
 import com.i2i.netBankingApplication.model.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -138,6 +138,4 @@ public interface UserManager extends GenericManager<User, Long> {
      * @throws UserExistsException
      */
     User updatePassword(String username, String currentPassword, String recoveryToken, String newPassword, String applicationUrl) throws UserExistsException;
-
-    User getUserById(String userId) throws DataBaseException;
 }

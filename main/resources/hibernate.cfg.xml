@@ -11,6 +11,5 @@
         <mapping class="com.i2i.netBankingApplication.model.Branch"/>
         <mapping class="com.i2i.netBankingApplication.model.Account"/>
         <mapping class="com.i2i.netBankingApplication.model.Beneficiary"/>
-        <mapping class="com.i2i.netBankingApplication.model.CustomerTransaction"/>
     </session-factory>
 </hibernate-configuration>
