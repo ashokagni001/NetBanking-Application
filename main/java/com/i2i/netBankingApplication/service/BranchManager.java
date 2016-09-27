@@ -35,10 +35,7 @@ public interface BranchManager extends GenericManager<Branch, Long> {
     String addAccount(String accountNumber, double balance, String accountType, 
     		String IFSCode) throws DataBaseException;
     
-    /**
-     * {@inheritDoc}
-     */ 
-    List<Account> viewAccountByBranch(String IFSCode) throws BranchDataException, 
+    public List<Account> viewAccountByBranch(String IFSCode) throws BranchDataException, 
             DataBaseException;
 
 }

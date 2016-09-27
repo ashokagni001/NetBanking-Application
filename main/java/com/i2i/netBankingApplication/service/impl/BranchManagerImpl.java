@@ -36,10 +36,6 @@ public class BranchManagerImpl extends GenericManagerImpl<Branch, Long> implemen
         return "Branch Added SuccessFully..IFSCode : " + branch.getIFSCode();
     }
     
-    /**
-     * This method generate the branch IFSCode.
-     * 
-     */
     public String getIFSCode() throws DataBaseException {
         long id = 0;
         for (Branch branches : branchDao.retrieveBranches()) {
@@ -70,65 +66,64 @@ public class BranchManagerImpl extends GenericManagerImpl<Branch, Long> implemen
     }
     
     /**
-     * <p>
-     *    This method verify the branch IFSCode exist or not.
-     *    If branch exist add new account.
-     *    Otherwise, return the error message.
-     * </p>
-     * 
-     * @param accountNumber
-     *     accountNumber of Account to use add new account.
-     * @param balance
-     *     balance of Account to use add new account.
-     * @param accounttype
-     *     accountType of Account to use add new account.
-     * @param IFSCode
-     *     IFSCode of Account to use add new account.
-     *     
-     * @throws DataBaseException
-     *     It handle all the custom exception in NetBanking application.
-     */
-    public String addAccount(String accountNumber, double balance, String accountType, String IFSCode) throws DataBaseException {
-        Branch branch = branchDao.retrieveBranchByIFSCode(IFSCode);
-        //verify the branch id exist or not.
-        if (null != branch) {
-            System.out.println(accountNumber);
-            branchDao.insertAccount(new Account(accountNumber, balance, accountType, branch));
-            return ("ACCOUNT ADDED SUCCESSFULLY");
-        } else {
-             return ("PLEASE ENTER VALID IFSC NUMBER"); 
-        }
-    }
-    
-    /**
-     * <p> 
-     *     This method use to view account by branch.
+	 * <p>
+	 *    This method verify the branch IFSCode exist or not.
+	 *    If branch exist add new account.
+	 *    Otherwise, return the error message.
+	 * </p>
+	 * 
+	 * @param accountNumber
+	 *     accountNumber of Account.
+	 * @param balance
+	 *     balance of Account.
+	 * @param accounttype
+	 *     accountType of Account.
+	 * @param ifsc
+	 *     IFSCode of Account.
+	 *     
+	 * @throws DataBaseException
+	 *     It handle all the custom exception in NetBanking application.
+	 */
+	public String addAccount(String accountNumber, double balance, String accountType, String IFSCode) throws DataBaseException {
+		Branch branch = branchDao.retrieveBranchByIFSCode(IFSCode);
+		//verify the branch id exist or not.
+		if (null != branch) {
+			branchDao.insertAccount(new Account(accountNumber, balance, accountType, branch));
+			return ("YOUR BENEFICIARY ACCOUNT IS REQUSET..PLEASE WAIT FEW DAYS..");
+	    } else {
+	     	return ("PLEASE ENTER VALID IFSC NUMBER"); 
+		}
+	}
+	
+	/**
+	 * <p> 
+	 *     This method use to view account by branch.
      *     This method get the branch IFSC from branch controller. 
      * </p>
      * 
-     * @param IFSCode
-     *     IFSCode of Account to use view list of accounts.
-     *     
-     * @return List.
-     *     return the list of accounts.
-     *     
-     * @throws DataBaseException
-     *     It handle all the custom exception in NetBanking application.
-     * @throws BranchDataException 
-     *     It handle all the custom exception.
-     */
-    public List<Account> viewAccountByBranch(String IFSCode) throws DataBaseException, BranchDataException {
-        List<Account> accounts = new ArrayList<Account>();
-        if (null != branchDao.retrieveBranchByIFSCode(IFSCode)) {
-            for (Account account : branchDao.retriveAllAccounts()) {
-                if (account.getBranch().getIFSCode().equals(IFSCode)) {
-                    accounts.add(account);
-                }
-            }
-            return accounts;
-        } else {
-            throw new BranchDataException("PLEASE ENTER VALID IFSC NUMBER"); 
-        }
-    }
+	 * @param IFSCode
+	 *     IFSCode of Account to use view list of accounts.
+	 *     
+	 * @return List.
+	 *     return the list of accounts.
+	 *     
+	 * @throws DataBaseException
+	 *     It handle all the custom exception in NetBanking application.
+	 * @throws BranchDataException 
+	 *     It handle all the custom exception.
+	 */
+	public List<Account> viewAccountByBranch(String IFSCode) throws DataBaseException, BranchDataException {
+		List<Account> accounts = new ArrayList<Account>();
+		if (null != branchDao.retrieveBranchByIFSCode(IFSCode)) {
+			for (Account account : branchDao.retriveAllAccounts()) {
+				if (account.getBranch().getIFSCode().equals(IFSCode)) {
+					accounts.add(account);
+				}
+			}
+			return accounts;
+		} else {
+			throw new BranchDataException("PLEASE ENTER VALID IFSC NUMBER"); 
+		}
+	}
     
 }

@@ -3,9 +3,7 @@
 <body>
 			<div class="col-md-9">
 				<div class="col-md-12">
-					<div class="tex text-center">
 						<h4>ADD NEW BENEFICIARY ACCOUNT</h4>
-					</div>
 					<c:if test="${message != null}">
 						<script type="text/javascript">
 							alert("<c:out value='${message}'/>");

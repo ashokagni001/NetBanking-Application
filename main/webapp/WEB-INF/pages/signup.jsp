@@ -1,7 +1,7 @@
 <%@ include file="/common/taglibs.jsp" %>
 
 <head>
-    <title><fmt:message key="signup.title"/></title>
+    <title>I2I NETBANKING</title>
 </head>
 
 <body class="signup"/>
@@ -31,14 +31,6 @@
             <form:input cssClass="form-control" path="username" id="username" autofocus="true"/>
             <form:errors path="username" cssClass="help-block"/>
         </div>
-        <div class="row">
-            <spring:bind path="user.userId">
-            <div class="col-sm-6 form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
-            </spring:bind>
-                <appfuse:label styleClass="control-label" key="user.userId"/>
-                <form:password cssClass="form-control" path="userId" id="userId" maxlength="10"/>
-                <form:errors path="userId" cssClass="help-block"/>
-            </div>
         <div class="row">
             <spring:bind path="user.password">
             <div class="col-sm-6 form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
@@ -85,8 +77,8 @@
             </div>
         </div>
         <div class="form-group">
-            <appfuse:label styleClass="control-label" key="user.website"/>
-            <form:input cssClass="form-control" path="website" id="website"/>
+            <appfuse:label styleClass="control-label" key="Bank.AccountNumber*"/>
+            <form:input cssClass="form-control" path="accountNumber" id="accountNumber"/>
         </div>
         <div>
             <legend class="accordion-heading">

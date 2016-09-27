@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <%@ include file="/common/taglibs.jsp"%>
-<%@page import="com.i2i.netBankingApplication.User"%>
+<%@page import="com.i2i.netBankingApplication.model.User"%>
 <%@page import="org.springframework.security.authentication.AnonymousAuthenticationToken"%>
 <%@page import="org.springframework.security.core.Authentication"%>
 <%@page import="org.springframework.security.core.context.SecurityContextHolder"%>

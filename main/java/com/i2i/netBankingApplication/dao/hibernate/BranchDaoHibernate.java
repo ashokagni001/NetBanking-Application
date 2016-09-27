@@ -2,6 +2,8 @@ package com.i2i.netBankingApplication.dao.hibernate;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -14,17 +16,8 @@ import com.i2i.netBankingApplication.model.Account;
 import com.i2i.netBankingApplication.model.Branch;
 
 
-/**
- * <p>
- *     When request comes from BrancManager. BranchDaoHibernate performs add or delete or fetch or fetchAll 
- *     with database and return the responses to BrancManager.
- * </p>
- * 
- * @author TEAM2
- * 
- * @created 2016-09-27
- */
 @Repository("branchDao")
+@Transactional
 public class BranchDaoHibernate extends GenericDaoHibernate<Branch, Long> implements BranchDao {
 
     /**
@@ -81,41 +74,20 @@ public class BranchDaoHibernate extends GenericDaoHibernate<Branch, Long> implem
         Query qry = getSession().createQuery("from Branch u order by upper(u.IFSCode)");
         return qry.list();
     }
-    
-    /**
-     * Get the account object from BranchService and add Branch database. 
-     * 
-     * @param account
-     *     It Account datail use add new account.
-     * 
-     * @throws DataBaseException
-     *     It handle all the custom exception in NetBanking Application and HibernateException.
-     */
-    @Override
-    public void insertAccount(Account account) throws DataBaseException {
-        try {
-            getSession().save(account); 
-        } catch (HibernateException e) {
-            throw new DataBaseException("PLEASE CHECK YOUR DATAS " + account.getAccountNumber() + " YOUR DATA IS NOT VALID.PLEASE TRY AGAIN." );  
-          }
-    }
-    
-    /**
-     * <p>
-     *     Retrieves all accounts from database.
-     *     Return all accounts in List type.
-     * </p>
-     * 
-     * @return list
-     *     Returns the list of Accounts.
-     *     
-     * @throws DataBaseException
-     *     It handle all the custom exception in NetBanking Application and HibernateException.
-     */
-    public List<Account> retriveAllAccounts() throws DataBaseException {
+
+	@Override
+	public void insertAccount(Account account) throws DataBaseException {
+		try {
+			getSession().save(account); 
+		} catch (HibernateException e) {
+			throw new DataBaseException("PLEASE CHECK YOUR DATAS " + account.getAccountNumber() + " YOUR DATA IS NOT VALID.PLEASE TRY AGAIN." );  
+      	}
+	}
+	
+	public List<Account> retriveAllAccounts() throws DataBaseException {
         Query qry = getSession().createQuery("from Account u order by upper(u.accountNumber)");
         return qry.list();
     }
 
-    
+	
 }
