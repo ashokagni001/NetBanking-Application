@@ -1,0 +1,83 @@
+ .logo{
+ padding-top:30px;
+ }
+ .header-top{
+ margin: 0px;
+ background:#454545;
+ height: 90px;
+ }
+ .header-top h1 {
+ color:#fff;
+ }
+  .header-logout{
+ margin: 0px;
+ background:#454545;
+ height: 60px;
+ float: right;
+ }
+ .body{
+    margin:0px;
+    padding:0px;
+    background-image: url(../image/online_banking.jpg);
+    background-size: cover;
+    -webkit-filter: blur(2px);
+    -moz-filter: blur(2px);
+    -o-filter: blur(2px);
+    -ms-filter: blur(5px);
+    filter: blur(1px);
+    z-index: -1;
+}
+ .name{
+ color:#fff;
+ }
+ .sidemenu{
+ background:#808080;
+ margin: 0px;
+ padding: 0px;
+ height :100%;
+ }
+ .main-container {
+ margin: 0px;
+ padding: 0px;
+ }
+ .sidemenu-nav{
+ 
+ }
+.sidemenu ul {
+ 
+   list-style: none;
+ }
+ .sizetable{
+ overflow: scroll;
+ }
+
+.sidemenu ul li {
+    
+ }
+.sidemenu ul li a{
+ color : #fff;
+ 
+ }
+ .sidemenu ul li a:hover {
+
+ color :  #1f7ee3 ;
+ 
+ }
+ 
+ .pos {
+    position: absolute;
+    right: 7px;
+    top: 116px;
+    height: 70px;
+    width: 50px;
+}
+.row{
+margin-top: 5px;
+}
+.container{
+margin:0px;
+padding:0px;
+}
+.body{
+	background:"image/blue.png";
+}
