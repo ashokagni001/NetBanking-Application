@@ -12,7 +12,7 @@ public interface BranchManager extends GenericManager<Branch, Long> {
     /**
      * {@inheritDoc}
      */
-    void addBranch(Branch branch) throws DataBaseException;
+    String addBranch(Branch branch) throws DataBaseException;
     
     /**
      * {@inheritDoc}

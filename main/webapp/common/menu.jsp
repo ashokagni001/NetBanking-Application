@@ -10,6 +10,11 @@
     </c:if>
     <menu:displayMenu name="Home"/>
     <menu:displayMenu name="UserMenu"/>
+    <menu:displayMenu name="BranchMenu"/>
+    <menu:displayMenu name="BeneficiaryMenu"/>
+    <menu:displayMenu name="NotificationMenu"/>
+    <menu:displayMenu name="AccountMenu"/>
+    <menu:displayMenu name="ViewAccount"/>
     <menu:displayMenu name="AdminMenu"/>
     <menu:displayMenu name="Logout"/>
 </ul>

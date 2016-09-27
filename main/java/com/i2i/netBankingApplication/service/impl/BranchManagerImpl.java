@@ -29,9 +29,10 @@ public class BranchManagerImpl extends GenericManagerImpl<Branch, Long> implemen
     /**
      * {@inheritDoc}
      */
-    public void addBranch(Branch branch) throws DataBaseException {
+    public String addBranch(Branch branch) throws DataBaseException {
         branch.setIFSCode(getIFSCode());
         branchDao.insertBranch(branch);
+        return "Branch Added Successfully.. IFSCode : " + branch.getIFSCode();
     }
     
     public String getIFSCode() throws DataBaseException {

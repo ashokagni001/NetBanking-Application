@@ -22,7 +22,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<c:url value='/'/>"><fmt:message key="webapp.name"/></a>
+            <a class="navbar-brand" href="<c:url value='/'/>">I2INETBANKING</a>
         </div>
 
         <%@ include file="/common/menu.jsp" %>
@@ -32,7 +32,44 @@
             </div>
         </c:if>
     </div>
-
+    <c:if test="${currentMenu == 'ViewAccount'}">
+                <div class="col-sm-2">
+                <menu:useMenuDisplayer name="Velocity" config="navlistMenu.vm" permissions="rolesAdapter">
+                    <menu:displayMenu name="ViewAccount"/>
+                </menu:useMenuDisplayer>
+                </div>
+            </c:if>
+            <c:if test="${currentMenu == 'BenificiaryMenu'}">
+                <div class="col-sm-2">
+                <menu:useMenuDisplayer name="Velocity" config="navlistMenu.vm" permissions="rolesAdapter">
+                    <menu:displayMenu name="BenificiaryMenu"/>
+                </menu:useMenuDisplayer>
+                </div>
+            </c:if>
+            <c:if test="${currentMenu == 'BranchMenu'}">
+                <div class="col-sm-2">
+                <menu:useMenuDisplayer name="Velocity" config="navlistMenu.vm" permissions="rolesAdapter">
+                    <menu:displayMenu name="BranchMenu"/>
+                </menu:useMenuDisplayer>
+                </div>
+            </c:if>
+            
+            <c:if test="${currentMenu == 'NotificationMenu'}">
+                <div class="col-sm-2">
+                <menu:useMenuDisplayer name="Velocity" config="navlistMenu.vm" permissions="rolesAdapter">
+                    <menu:displayMenu name="NotificationMenu"/>
+                </menu:useMenuDisplayer>
+                </div>
+            </c:if>
+            
+             <c:if test="${currentMenu == 'AccountMenu'}">
+                <div class="col-sm-2">
+                <menu:useMenuDisplayer name="Velocity" config="navlistMenu.vm" permissions="rolesAdapter">
+                    <menu:displayMenu name="AccountMenu"/>
+                </menu:useMenuDisplayer>
+                </div>
+            </c:if>
+    
     <div class="container" id="content">
         <%@ include file="/common/messages.jsp" %>
         <div class="row">

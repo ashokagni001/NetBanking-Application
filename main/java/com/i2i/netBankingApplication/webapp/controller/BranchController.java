@@ -28,10 +28,10 @@ public class BranchController {
      * @return AddBranch
      *     Return to the AddBranch JSP page.
      */
-    @RequestMapping(value = "/addbranch")
+    @RequestMapping(value = "/addBranch")
     public String addBranch(ModelMap message) {
         message.addAttribute("Branch", new Branch());
-        return "addbranch";
+        return "addBranch";
     }
     
     /**
@@ -56,11 +56,11 @@ public class BranchController {
     @RequestMapping(value="/insertBranch", method = RequestMethod.POST)
     public String addBranch(@ModelAttribute("Branch") Branch branch, ModelMap message) { 
         try {
-            branchManager.addBranch(branch);
+        	message.addAttribute("message", branchManager.addBranch(branch));
         } catch (DataBaseException e) {
             message.addAttribute("message", e.getMessage()); 
         } finally {
-            return ("redirect:/home");
+            return "addBranch";
         }
     }
     
@@ -128,7 +128,7 @@ public class BranchController {
 	 * @throws DataBaseException 
 	 *     It handle all the custom exception in NetBanking application.
 	 */
-	@RequestMapping(value = "/addaccount")
+	@RequestMapping(value = "/addAccount")
 	public String addAccountForm(ModelMap message) throws DataBaseException {
 		message.addAttribute("branches", branchManager.getBranches());
 		return "addAccount";

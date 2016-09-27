@@ -77,7 +77,7 @@
             </div>
         </div>
         <div class="form-group">
-            <appfuse:label styleClass="control-label" key="user.accountNumber"/>
+            <appfuse:label styleClass="control-label" key="User.AccountNumber"/>
                 <form:input cssClass="form-control" path="accountNumber" id="accountNumber" maxlength="15"/>
                 <form:errors path="accountNumber" cssClass="help-block"/>
         </div>

@@ -4,7 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -66,6 +68,65 @@ public class BeneficiaryController {
             return new ModelAndView ("addBeneficiaryAccount", "message", e.getMessage());
         }
     }
+    
+    /**
+	 * <p>
+     *     This Method call to getAllBeneficiaries method in TransactionService.
+     *     Return to the getAllBeneficiaries JSP page with status(Success Or Failure).
+     *     This method handle the TransactionCustomException and DataBaseException.
+     *     TransactionCustomException is our business logic exception. 
+     * </p>
+     * 
+	 * @return statusMessage
+	 *     Return to the RetrieveAllBeneficiaryNotification with status(Success Or Failure).
+	 */
+	@RequestMapping(value = "/beneficiaryNotifications")
+	public ModelAndView fetchBeneficiaryNotifications() {
+		try {
+			return new ModelAndView("retrieveAllBeneficiaryNotification", "beneficiaryNotifications", beneficiaryManager.getAllBeneficiaries());
+		} catch(TransactionCustomException e) {
+            return new ModelAndView ("retrieveAllBeneficiaryNotification", "message", e.getMessage());
+        } catch (DataBaseException e) {
+			return new ModelAndView("retrieveAllBeneficiaryNotification", "message", e.getMessage());
+		}
+	}
+	
+	/**
+	 * 
+	 * @param beneficiaryId
+	 * @param message
+	 *     Display message using add attribute.
+	 * @return
+	 */
+	@RequestMapping(value = "/beneficiaryRequestSuccess", method = RequestMethod.GET)
+	public String beneficiaryRequestActive(@RequestParam("id") int beneficiaryId, ModelMap message) {
+		try {
+			beneficiaryManager.beneficiaryAccountActive(beneficiaryId);
+			message.addAttribute("message", "YOUR ACTION SUCCESSFULLY");
+			message.addAttribute("beneficiaryNotifications", beneficiaryManager.getAllBeneficiaries());
+		} catch (DataBaseException e) {
+            message.addAttribute("message", e.getMessage());
+        } catch (TransactionCustomException e) {
+            message.addAttribute("message", e.getMessage());
+        } finally {
+			return "retrieveAllBeneficiaryNotification";
+		}
+	}
+	
+	@RequestMapping(value = "/beneficiaryRequestCancel", method = RequestMethod.GET)
+	public String beneficiaryRequestDeactive(@RequestParam("id") int beneficiaryId, ModelMap message) {
+		try {
+			beneficiaryManager.beneficiaryAccountDeactive(beneficiaryId);
+			message.addAttribute("message", "YOUR ACTION SUCCESSFULLY");
+			message.addAttribute("beneficiaryNotifications", beneficiaryManager.getAllBeneficiaries());
+		} catch (DataBaseException e) {
+            message.addAttribute("message", e.getMessage());
+        } catch (TransactionCustomException e) {
+            message.addAttribute("message", e.getMessage());
+        } finally {
+			return "retrieveAllBeneficiaryNotification";
+		}
+	}
     
     
 }
