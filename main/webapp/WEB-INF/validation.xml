@@ -51,7 +51,7 @@
             </field>
         </form>
         <form name="branch">
-            <field property="emilId" depends="required,eamil">
+            <field property="EMAILID" depends="required,eamil">
                 <arg key="branch.emailId"/>
             </field>
         </form>

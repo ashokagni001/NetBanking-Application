@@ -20,14 +20,13 @@ import org.hibernate.search.annotations.IndexedEmbedded;
  * 
  * @author TEAM-2
  * 
- * @created 2016-09-03
+ * @created 2016-09-26
  */
 @Entity
 @Table(name = "branch_detail")
 public class Branch {
 
     private Long id;
-    
     @Column(name = "IFSCode")
     private String IFSCode;
     

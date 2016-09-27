@@ -7,13 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.appfuse.webapp.util.RequestUtil;
+
 import com.i2i.netBankingApplication.Constants;
 import com.i2i.netBankingApplication.model.Role;
 import com.i2i.netBankingApplication.model.User;
 import com.i2i.netBankingApplication.service.RoleManager;
 import com.i2i.netBankingApplication.service.UserExistsException;
 import com.i2i.netBankingApplication.service.UserManager;
-import com.i2i.netBankingApplication.webapp.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.security.access.AccessDeniedException;

@@ -9,7 +9,8 @@ import com.i2i.netBankingApplication.Constants;
 import com.i2i.netBankingApplication.model.User;
 import com.i2i.netBankingApplication.service.RoleManager;
 import com.i2i.netBankingApplication.service.UserExistsException;
-import com.i2i.netBankingApplication.webapp.util.RequestUtil;
+
+import org.appfuse.webapp.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.security.access.AccessDeniedException;
@@ -47,7 +48,7 @@ public class SignupController extends BaseFormController {
     public User showForm() {
         return new User();
     }
-    
+
     @RequestMapping(method = RequestMethod.POST)
     public String onSubmit(final User user, final BindingResult errors, final HttpServletRequest request, final HttpServletResponse response)
             throws Exception {
@@ -77,7 +78,7 @@ public class SignupController extends BaseFormController {
 
         // unencrypted users password to log in user automatically
         final String password = user.getPassword();
-        
+
         try {
             this.getUserManager().saveUser(user);
         } catch (final AccessDeniedException ade) {

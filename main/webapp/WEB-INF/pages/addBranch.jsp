@@ -102,5 +102,11 @@
 	</div>
 	</div>
 	</div>
+	<c:if test="${message != null}">
+					<script type="text/javascript">
+						alert("<c:out value='${message}'/>");
+						windows.location.reload();
+					</script>
+				</c:if>
 </body>
 </html>

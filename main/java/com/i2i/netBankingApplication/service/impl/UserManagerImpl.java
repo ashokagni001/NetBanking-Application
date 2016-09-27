@@ -1,9 +1,8 @@
 package com.i2i.netBankingApplication.service.impl;
 
 import org.apache.commons.lang.StringUtils;
-
-import com.i2i.netBankingApplication.Constants;
 import com.i2i.netBankingApplication.dao.UserDao;
+import com.i2i.netBankingApplication.exception.DataBaseException;
 import com.i2i.netBankingApplication.model.User;
 import com.i2i.netBankingApplication.service.MailEngine;
 import com.i2i.netBankingApplication.service.UserExistsException;
@@ -106,23 +105,13 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
     public List<User> getUsers() {
         return userDao.getAllDistinct();
     }
-    
-    public String getNewUserId() {
-        long id = 0 ;
-        for (User users : userDao.getAllDistinct()) {
-            long tempId = users.getId();
-            if (id < tempId) {
-                id = tempId;
-            }
-        }
-        return (Constants.CUSTOMERID_PROFIX + String.valueOf(id));
-    }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public User saveUser(final User user) throws UserExistsException {
+
         if (user.getVersion() == null) {
             // if new user, lowercase userId
             user.setUsername(user.getUsername().toLowerCase());
@@ -155,7 +144,6 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
             log.warn("PasswordEncoder not set, skipping password encryption...");
         }
         try {
-            user.setUserId(getNewUserId());
             return userDao.saveUser(user);
         } catch (final Exception e) {
             e.printStackTrace();
@@ -278,5 +266,9 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
         }
         // or throw exception
         return null;
+    }
+    
+    public User getUserById(String userId) throws DataBaseException {
+        return userDao.retrieveCustomerById(userId); 
     }
 }

@@ -89,5 +89,5 @@ public final class Constants {
     
     public static final String IFSCODE_PROFIX = "I2IBK0";
     
-    public static final String CUSTOMERID_PROFIX = "CUSI2I0";
+    public static final int SIZE = 0;
 }

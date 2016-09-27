@@ -11,10 +11,19 @@
 
 <ul class="glassList">
 <li>
-        <a href="<c:url value='/addbranch'/>">Add Branch</a>
+        <a href="<c:url value='/addBranch'/>">Add Branch</a>
     </li>
     <li>
         <a href="<c:url value='/addAccount'/>">Add Account</a>
+    </li>
+    <li>
+        <a href="<c:url value='/viewBranches'/>">View All Branches</a>
+    </li>
+    <li>
+        <a href="<c:url value='/viewAccountByBranch'/>">View Account By Branch</a>
+    </li>
+    <li>
+         <a href="<c:url value='/addBeneficiary'/>">Add New Beneficiary</a>
     </li>
     <li>
         <a href="<c:url value='/userform'/>"><fmt:message key="menu.user"/></a>

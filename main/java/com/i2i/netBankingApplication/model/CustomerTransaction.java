@@ -1,23 +1,20 @@
-/*package com.i2i.netBankingApplication.model;
+package com.i2i.netBankingApplication.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 
 /**
  * <p>
- *     Model class of CustomerTransaction. 
+ *     Model class of UserTransaction. 
  *     It have getter method, setter method, default constructor and parameter constructor.
  *     Many to One mapping is established for Account model class.
  * </p>
@@ -27,10 +24,8 @@ import org.hibernate.search.annotations.IndexedEmbedded;
  * @created 2016-09-26
  */
 
-/*@Entity
-@Indexed
+@Entity
 @Table(name = "transaction_detail")
-@XmlRootElement
 public class CustomerTransaction {
 	@Id
     @Column(name = "id")
@@ -58,23 +53,23 @@ public class CustomerTransaction {
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="user_id")
     @IndexedEmbedded
-    private Customer customer;
+    private User user;
     
 	@Column(name = "status")
     private String status;
     
 	/**
      * Default Constructor.
-     * which create a instance of CustomerTransaction.
+     * which create a instance of UserTransaction.
      */
-	/*public CustomerTransaction() {
+	public CustomerTransaction() {
 	}
 	
 	/**
      * parameter Constructor.
-     * Passes parameters to the constructor and creates an instance of CustomerTransaction.
+     * Passes parameters to the constructor and creates an instance of UserTransaction.
      */  
-   /* public CustomerTransaction(int id, double amount,String status, Account debitAccount, Account creditAccount) {
+    public CustomerTransaction(int id, double amount,String status, Account debitAccount, Account creditAccount) {
 		this.id = id;
 		this.amount = amount;
 		this.status = status;
@@ -130,11 +125,11 @@ public class CustomerTransaction {
 		this.creditAccount = creditAccount;
 	}
 	
-	public Customer getCustomer() {
-		return customer;
+	public User getUser() {
+		return user;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setUser(User user) {
+		this.user = user;
 	}
-}*/
+}

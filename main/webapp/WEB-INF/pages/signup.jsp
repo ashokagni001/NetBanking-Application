@@ -32,6 +32,14 @@
             <form:errors path="username" cssClass="help-block"/>
         </div>
         <div class="row">
+            <spring:bind path="user.userId">
+            <div class="col-sm-6 form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
+            </spring:bind>
+                <appfuse:label styleClass="control-label" key="user.userId"/>
+                <form:password cssClass="form-control" path="userId" id="userId" maxlength="10"/>
+                <form:errors path="userId" cssClass="help-block"/>
+            </div>
+        <div class="row">
             <spring:bind path="user.password">
             <div class="col-sm-6 form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
             </spring:bind>
@@ -41,12 +49,12 @@
             </div>
             <spring:bind path="user.passwordHint">
             <div class="col-sm-6 form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
-            </div>
             </spring:bind>
                 <appfuse:label styleClass="control-label" key="user.passwordHint"/>
                 <form:input cssClass="form-control" path="passwordHint" id="passwordHint"/>
                 <form:errors path="passwordHint" cssClass="help-block"/>
             </div>
+        </div>
         <div class="row">
             <spring:bind path="user.firstName">
             <div class="col-sm-6 form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
@@ -62,14 +70,7 @@
                 <form:input cssClass="form-control" path="lastName" id="lastName" maxlength="50"/>
                 <form:errors path="lastName" cssClass="help-block"/>
             </div>
-            <div class="row">
-            <spring:bind path="user.accountNumber">
-            <div class="col-sm-6 form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
-            </spring:bind>
-                <appfuse:label styleClass="control-label" key="user.accountNumber"/>
-                <form:input cssClass="form-control" path="accountNumber" id="accountNumber" maxlength="15"/>
-                <form:errors path="accountNumber" cssClass="help-block"/>
-            </div>
+        </div>
         <div class="row">
             <spring:bind path="user.email">
             <div class="col-sm-6 form-group${(not empty status.errorMessage) ? ' has-error' : ''}">

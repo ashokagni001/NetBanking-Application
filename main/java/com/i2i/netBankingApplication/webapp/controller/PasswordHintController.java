@@ -2,10 +2,11 @@ package com.i2i.netBankingApplication.webapp.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.appfuse.webapp.util.RequestUtil;
+
 import com.i2i.netBankingApplication.model.User;
 import com.i2i.netBankingApplication.service.MailEngine;
 import com.i2i.netBankingApplication.service.UserManager;
-import com.i2i.netBankingApplication.webapp.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.MessageSourceAccessor;

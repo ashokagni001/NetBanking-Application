@@ -5,8 +5,9 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.appfuse.webapp.util.RequestUtil;
+
 import com.i2i.netBankingApplication.model.User;
-import com.i2i.netBankingApplication.webapp.util.RequestUtil;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
