@@ -34,20 +34,11 @@
 								<tr>
 									<th>IFSC CODE</th>
 									<th>EMAIL ID</th>
-									<th>ADDRESS</th>
-									<th>DALETE</th>
 								</tr>
 								<c:set value="${branch}" var="branch" />
 								<tr>
-									<td align="center"><c:out value="${branch.getIFSCode()}" /></td>
-									<td align="center"><c:out value="${branch.getEmailId()}" /></td>
-									<c:set value="${branch.getAddress()}" var="address" />
-									<td align="center"><a
-										href="viewBranchAddress?addressId=<c:out value="${address.addressId}"/>"
-										style="color: blue">VIEW</a></td>
-									<td><a
-										href="deleteBranchById?ifsc=<c:out value="${branches.getIFSCode()}"/>"
-										style="color: blue">Delete</a></td>
+									<td><c:out value="${branch.getIFSCode()}" /></td>
+									<td><c:out value="${branch.getEmailId()}" /></td>
 								</tr>
 							</table>
 						</div>

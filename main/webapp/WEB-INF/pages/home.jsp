@@ -29,6 +29,17 @@
         <a href="<c:url value='/addTransaction'/>">Add Transaction</a>
     </li>
     <li>
+        <a href="<c:url value='/transactionNotifications'/>">Transaction Notifications</a>
+    </li>
+    <li>
+        <a href="<c:url value='/viewAllBeneficiaryAccountDetail'/>">View All Beneficiaries</a>
+    </li>
+	<li>
+	    <a href="<c:url value='/viewMiniStatementByCustomerId'/>">View Mini Statement</a>
+	</li>
+	<li>
+	    <a href="<c:url value='/viewAllTransaction'/>">View All Transaction</a></li>
+    <li>
         <a href="<c:url value='/beneficiaryNotifications'/>">View Beneficiary Notifications</a>
     </li>
     <li>

@@ -94,4 +94,6 @@ public final class Constants {
     public static final int CUSTOMER_ID_PROFIX_SIZE = 7;
     
     public static final int SIZE = 0;
+    
+    public static final int NOTIFICATION_SIZE = 0;
 }

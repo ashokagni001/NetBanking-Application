@@ -37,14 +37,14 @@ public class BeneficiaryManagerImpl extends GenericManagerImpl<Beneficiary, Long
             throw new TransactionCustomException("Enter valid beneficiary account number");
         }
         
-        beneficiaryDao.insertBeneficiary(new Beneficiary(user, account, "request"));
+        beneficiaryDao.insertBeneficiary(new Beneficiary(user, account, "Request"));
         return ("YOUR REQUEST SEND ADMIN PROCESS WITHIN FEW HOURS GET YOUR UPDATE");
     }
     
     public List getAllBeneficiaries() throws TransactionCustomException, DataBaseException {
     	List<Beneficiary> beneficiaries = new ArrayList<Beneficiary>();
 		for (Beneficiary beneficiary : beneficiaryDao.retrieveAllBeneficiaries()) {
-			if (beneficiary.getStatus().equals("request")) {
+			if (beneficiary.getStatus().equals("Request")) {
 				beneficiaries.add(beneficiary);
 			} 
 		}
@@ -61,5 +61,20 @@ public class BeneficiaryManagerImpl extends GenericManagerImpl<Beneficiary, Long
 
 	public void beneficiaryAccountDeactive(int beneficiaryId) throws DataBaseException {
 		beneficiaryDao.beneficiaryAccountDeactive(beneficiaryId);
+	}
+
+	public List<Beneficiary> getBeneficiaryAccountByCustomerId(User user) throws TransactionCustomException, DataBaseException {
+	    List<Beneficiary> customerBeneficiary = new ArrayList<Beneficiary>();
+	    for (Beneficiary beneficiary : beneficiaryDao.retrieveAllBeneficiaries()) {
+	    	if(beneficiary.getBeneficiaryAccountNumber().equals(user.getAccountNumber())) {
+		        if (!((beneficiary.getStatus().equals("Request")) | (beneficiary.getStatus().equals("Failure")))) {
+			        customerBeneficiary.add(beneficiary);
+		        }
+		        if(null == customerBeneficiary) {
+			        throw new TransactionCustomException("YOUR BENEFICIARY ACCOUNT NOT AVAILABLE..INSERT NEW BENEFICIARY ACCOUNT");
+		        }
+	        }
+	    }
+	    return customerBeneficiary;
 	}
 }

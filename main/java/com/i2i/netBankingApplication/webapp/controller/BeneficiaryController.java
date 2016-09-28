@@ -1,6 +1,7 @@
 package com.i2i.netBankingApplication.webapp.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,10 +59,9 @@ public class BeneficiaryController {
      */
     @RequestMapping(value = "/addBeneficiary")
     public ModelAndView addBeneficiaryAccount(@RequestParam("accountNumber")String accountNumber, 
-            @RequestParam("IFSCode")String IFSCode, final HttpServletRequest requset, User user) {
+            @RequestParam("IFSCode")String IFSCode, final HttpServletRequest request) {
         try { 
-            user = userManager.getUserByUsername(requset.getRemoteUser());
-            return new ModelAndView ("addBeneficiaryAccount", "message", beneficiaryManager.addBeneficiaryAccount(user, accountNumber, IFSCode)); 
+            return new ModelAndView ("addBeneficiaryAccount", "message", beneficiaryManager.addBeneficiaryAccount(userManager.getUserByUsername(request.getRemoteUser()), accountNumber, IFSCode)); 
         } catch(TransactionCustomException e) {
             return new ModelAndView ("addBeneficiaryAccount", "message", e.getMessage());
         } catch (DataBaseException e) {
@@ -128,5 +128,26 @@ public class BeneficiaryController {
 		}
 	}
     
+	/**
+	 * <p>
+     *     This Method call to getBeneficiaryAccountByCustomerId method in TransactionService with customerId.
+     *     Return JSP page (ReterieveBeneficiaryByCustomerId Or UserHomePage) with status(Success Or Failure).
+     * </p>
+     * 
+	 * @param request
+	 *     It is used for get the customer Id.
+	 * @return statusMessage
+	 *     Return JSP page (ReterieveBeneficiaryByCustomerId Or UserHomePage) with status(Success Or Failure).
+	 */
+	@RequestMapping(value = "/viewAllBeneficiaryAccountDetail", method = RequestMethod.GET)
+	public ModelAndView viewAllBeneficiaryAccountDetail(final HttpServletRequest request) {
+		try {
+            return new ModelAndView ("retrieveBeneficiaryByCustomerId", "beneficiaries", beneficiaryManager.getBeneficiaryAccountByCustomerId(userManager.getUserByUsername(request.getRemoteUser())));
+    	} catch(TransactionCustomException e) {
+    		return new ModelAndView ("retrieveBeneficiaryByCustomerId", "message", e.getMessage());
+    	} catch (DataBaseException e) {
+            return new ModelAndView ("retrieveBeneficiaryByCustomerId", "message", e.getMessage());
+        }
+	}
     
 }

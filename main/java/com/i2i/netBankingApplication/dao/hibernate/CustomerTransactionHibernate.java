@@ -1,15 +1,19 @@
 package com.i2i.netBankingApplication.dao.hibernate;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
 import com.i2i.netBankingApplication.dao.CustomerTransactionDao;
 import com.i2i.netBankingApplication.exception.DataBaseException;
 import com.i2i.netBankingApplication.model.Account;
 import com.i2i.netBankingApplication.model.CustomerTransaction;
+import com.i2i.netBankingApplication.model.User;
 
 /**
  * <p>
@@ -65,6 +69,82 @@ public class CustomerTransactionHibernate extends GenericDaoHibernate<CustomerTr
 	    } catch (HibernateException e) {
 	    	throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
 	    }
+	}
+
+	/**
+	 * <p>
+     *     Retrieves all CustomerTransactions from database.
+     *     Return all CustomerTransactions in List type.
+     * </p>
+     * 
+	 * @return list
+	 *     return the list of Customer Transactions.
+	 * 
+	 * @throws DataBaseException
+	 *     It handle all the custom exception in NetBanking Application and HibernateException.
+	 */
+	public List<CustomerTransaction> retriveAllTransactions() throws DataBaseException {
+	    try {
+	        return getSession().createQuery("FROM CustomerTransaction").list();
+	    } catch (HibernateException e) {
+	        throw new DataBaseException("TRANSACTIONS IS NOT AVAILABLE..");
+	    }
+	}
+
+	/**
+	 * Update the balanceAmount to Credit Account using database.
+	 * 
+	 * @param accountNumber
+	 *     accountNumber of Customer.
+	 * @param balanceAmount
+	 *     balanceAmount of customer Account.
+	 * @param transactionId
+	 *     transactionId of Transaction.
+	 *      
+	 * @throws DataBaseException
+	 *     It handle all the custom exception in NetBanking Application and HibernateException.
+	 */
+	public void transactionSuccess(Account criditAccount, int transactionId, User user)
+			throws DataBaseException {
+		CustomerTransaction customerTransaction = null;
+		try {
+			Session session = getSession();
+			session.update(criditAccount);
+			customerTransaction = (CustomerTransaction) session.get(CustomerTransaction.class, transactionId);
+			customerTransaction.setUser(user);
+			customerTransaction.setStatus("Success");
+			session.update(customerTransaction);
+		} catch (HibernateException e) {
+			throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
+	    }
+	}
+	
+	/**
+	 * Update the balanceAmount to Debit Account using database.
+	 *  
+	 * @param accountNumber
+	 *     accountNumber of Customer.
+	 * @param balanceAmount
+	 *     balanceAmount of customer Account.
+	 * @param transactionId
+	 *     transactionId of Transaction.
+	 *     
+	 * @throws DataBaseException
+	 *     It handle all the custom exception in NetBanking Application and HibernateException.
+	 */
+	public void transactionFailure(Account debitAccount, int transactionId, User user)
+			throws DataBaseException {
+		CustomerTransaction customerTransaction = null;
+		try {
+			Session session = getSession();
+			session.update(debitAccount);
+			customerTransaction = (CustomerTransaction) session.get(CustomerTransaction.class, transactionId);
+			customerTransaction.setUser(user);
+			customerTransaction.setStatus("Failure");
+			session.update(customerTransaction);
+		} catch (HibernateException e) {
+			throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
+		}
 	}
 	
 }

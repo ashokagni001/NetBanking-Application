@@ -44,6 +44,7 @@ public class BeneficiaryDaoHibernate extends GenericDaoHibernate<Beneficiary, Lo
 			beneficiary.setStatus("Success");
 			session.update(beneficiary);
 		} catch (HibernateException e) {
+			e.printStackTrace();
 			throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
 		}
 	}
@@ -55,6 +56,7 @@ public class BeneficiaryDaoHibernate extends GenericDaoHibernate<Beneficiary, Lo
 			beneficiary.setStatus("Failure");
 			session.update(beneficiary);
 		} catch (HibernateException e) {
+			e.printStackTrace();
 			throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
 	    }
     }

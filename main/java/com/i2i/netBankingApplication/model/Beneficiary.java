@@ -18,7 +18,7 @@ public class Beneficiary {
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
-	private long id;
+	private int id;
 	
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name = "user_id")
@@ -40,11 +40,11 @@ public class Beneficiary {
 		this.status = status;
 	}
     
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

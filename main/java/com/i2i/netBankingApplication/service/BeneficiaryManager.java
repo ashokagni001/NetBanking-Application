@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.i2i.netBankingApplication.exception.DataBaseException;
 import com.i2i.netBankingApplication.exception.TransactionCustomException;
-import com.i2i.netBankingApplication.model.Account;
 import com.i2i.netBankingApplication.model.User;
 
 public interface BeneficiaryManager {
@@ -16,8 +15,8 @@ public interface BeneficiaryManager {
 	void beneficiaryAccountActive(int beneficiaryId) throws DataBaseException;
 
 	void beneficiaryAccountDeactive(int beneficiaryId) throws DataBaseException;
-    
-   // List getBeneficiaryAccountByCustomerId(String customerId) throws TransactionCustomException, DataBaseException;
+
+    List getBeneficiaryAccountByCustomerId(User user) throws TransactionCustomException, DataBaseException;
     
    // String addTransactionDetail(String customerId, String creditAccountNumber, double amount) throws TransactionCustomException, DataBaseException;
     
