@@ -13,19 +13,19 @@
     </bean>
 
     <!-- Advice Class -->
-    <bean id="userSecurityAdvice" class="com.i2i.netBankingApplication.service.UserSecurityAdvice"/>
+    <bean id="userSecurityAdvice" class="com.i2i.netbankingapplication.service.UserSecurityAdvice"/>
 
     <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
    
     <!-- Password reset token encoder -->
     <bean id="passwordTokenEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder"/>
 
-    <bean id="userManager" class="com.i2i.netBankingApplication.service.impl.UserManagerImpl">
+    <bean id="userManager" class="com.i2i.netbankingapplication.service.impl.UserManagerImpl">
         <property name="passwordEncoder" ref="passwordEncoder" />
     </bean>
 
     <bean id="target" class="org.springframework.aop.framework.ProxyFactoryBean">
-        <property name="proxyInterfaces" value="com.i2i.netBankingApplication.service.UserManager"/>
+        <property name="proxyInterfaces" value="com.i2i.netbankingapplication.service.UserManager"/>
         <property name="interceptorNames">
             <list>
                 <idref bean="userSecurityInterceptor"/>
@@ -34,7 +34,7 @@
         </property>
     </bean>
     
-    <bean id="persistentPasswordTokenManager" class="com.i2i.netBankingApplication.service.impl.PersistentPasswordTokenManagerImpl" autowire="default" />
+    <bean id="persistentPasswordTokenManager" class="com.i2i.netbankingapplication.service.impl.PersistentPasswordTokenManagerImpl" autowire="default" />
     
     <bean id="persistentPasswordTokenManager.userManager" parent="userManager">
     	<property name="passwordTokenManager" ref="persistentPasswordTokenManager"></property>

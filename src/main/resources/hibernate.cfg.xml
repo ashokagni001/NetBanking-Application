@@ -6,11 +6,11 @@
 
 <hibernate-configuration>
     <session-factory>
-        <mapping class="com.i2i.netBankingApplication.model.User"/>
-        <mapping class="com.i2i.netBankingApplication.model.Role"/>
-        <mapping class="com.i2i.netBankingApplication.model.Branch"/>
-        <mapping class="com.i2i.netBankingApplication.model.Account"/>
-        <mapping class="com.i2i.netBankingApplication.model.Beneficiary"/>
-        <mapping class="com.i2i.netBankingApplication.model.CustomerTransaction"/>
+        <mapping class="com.i2i.netbankingapplication.model.User"/>
+        <mapping class="com.i2i.netbankingapplication.model.Role"/>
+        <mapping class="com.i2i.netbankingapplication.model.Branch"/>
+        <mapping class="com.i2i.netbankingapplication.model.Account"/>
+        <mapping class="com.i2i.netbankingapplication.model.Beneficiary"/>
+        <mapping class="com.i2i.netbankingapplication.model.CustomerTransaction"/>
     </session-factory>
 </hibernate-configuration>

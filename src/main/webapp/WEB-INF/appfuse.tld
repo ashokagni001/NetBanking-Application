@@ -10,7 +10,7 @@
     <uri>http://www.appfuse.org/tags/spring</uri>
     <tag>
         <name>label</name>
-        <tag-class>com.i2i.netBankingApplication.webapp.taglib.LabelTag</tag-class>
+        <tag-class>com.i2i.netbankingapplication.webapp.taglib.LabelTag</tag-class>
         <body-content>JSP</body-content>
         <attribute>
             <name>key</name>
@@ -35,8 +35,8 @@
     </tag>
     <tag>
         <name>constants</name>
-        <tag-class>com.i2i.netBankingApplication.webapp.taglib.ConstantsTag</tag-class>
-        <tei-class>com.i2i.netBankingApplication.webapp.taglib.ConstantsTei</tei-class>
+        <tag-class>com.i2i.netbankingapplication.webapp.taglib.ConstantsTag</tag-class>
+        <tei-class>com.i2i.netbankingapplication.webapp.taglib.ConstantsTei</tei-class>
         <body-content>empty</body-content>
         <attribute>
             <name>className</name>
@@ -50,7 +50,7 @@
     </tag>
     <tag>
         <name>country</name>
-        <tag-class>com.i2i.netBankingApplication.webapp.taglib.CountryTag</tag-class>
+        <tag-class>com.i2i.netbankingapplication.webapp.taglib.CountryTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>name</name>
@@ -78,7 +78,7 @@
             Tag surrounds JSP code in which EL expressions should not be XML-escaped.
         </description>
         <name>out</name>
-        <tag-class>com.i2i.netBankingApplication.webapp.taglib.OutTag</tag-class>
+        <tag-class>com.i2i.netbankingapplication.webapp.taglib.OutTag</tag-class>
         <body-content>JSP</body-content>
         <attribute>
             <description>

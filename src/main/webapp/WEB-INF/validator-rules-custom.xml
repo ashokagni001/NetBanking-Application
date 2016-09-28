@@ -7,7 +7,7 @@
    <global>
 
       <validator name="twofields"
-         classname="com.i2i.netBankingApplication.webapp.util.ValidationUtil"
+         classname="com.i2i.netbankingapplication.webapp.util.ValidationUtil"
          method="validateTwoFields"
          methodParams="java.lang.Object,
                        org.apache.commons.validator.ValidatorAction,

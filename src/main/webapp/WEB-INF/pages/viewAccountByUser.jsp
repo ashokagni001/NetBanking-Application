@@ -17,6 +17,8 @@
 				<th>ACCOUNT NUMBER</th>
 				<th>BALANCE</th>
 				<th>ACCOUNT TYPE</th>
+				<th>BRANCH IFSC</th>
+				<th>BRANCH LOCATION</th>
 			</tr>
 			<c:set value="${account}" var="account" />
 			<tr>

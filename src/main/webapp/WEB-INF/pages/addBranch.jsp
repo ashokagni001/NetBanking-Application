@@ -17,7 +17,7 @@
 					<label class="control-label col-md-3" for="emailId">BRANCH
 						EMAIL ID </label>
 					<div class="col-md-9">
-						<form:input path="emailId" placeholder="Enter EMAIL Id" />
+						<form:input path="emailId" placeholder="Enter EMAIL Id"/>
 					</div>
 				</div>
 			</div>

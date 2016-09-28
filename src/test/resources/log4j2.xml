@@ -16,7 +16,7 @@
         <!-- Uncomment if you want to see Hibernate's SQL -->
         <!--<Logger name="org.hibernate.SQL" level="debug"/>-->
         <Logger name="org.springframework" level="warn"/>
-        <Logger name="com.i2i.netBankingApplication" level="debug"/>
+        <Logger name="com.i2i.netbankingapplication" level="debug"/>
 
         <Root level="warn">
             <AppenderRef ref="Console" />

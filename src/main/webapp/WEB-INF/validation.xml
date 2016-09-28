@@ -50,10 +50,5 @@
                 <arg key="user.password"/>
             </field>
         </form>
-        <form name="branch">
-            <field property="EMAILID" depends="required,eamil">
-                <arg key="branch.emailId"/>
-            </field>
-        </form>
     </formset>
 </form-validation>

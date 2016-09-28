@@ -4,10 +4,10 @@
 <dwr>
     <allow>
         <create creator="spring" javascript="UserManager">
-            <param name="class" value="com.i2i.netBankingApplication.service.UserManager"/>
+            <param name="class" value="com.i2i.netbankingapplication.service.UserManager"/>
             <param name="beanName" value="userManager"/>
             <include method="getUsers"/>
         </create>
-        <convert converter="bean" match="com.i2i.netBankingApplication.model.User"/>
+        <convert converter="bean" match="com.i2i.netbankingapplication.model.User"/>
     </allow>
 </dwr>

@@ -76,14 +76,6 @@
             </div>
         </div>
         <div class="row">
-            <spring:bind path="user.userId">
-            <div class="col-sm-6 form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
-            </spring:bind>
-                <appfuse:label styleClass="control-label" key="user.userId"/>
-                <form:password cssClass="form-control" path="userId" id="userId" maxlength="10"/>
-                <form:errors path="userId" cssClass="help-block"/>
-            </div>
-        <div class="row">
             <spring:bind path="user.email">
             <div class="col-sm-6 form-group${(not empty status.errorMessage) ? ' has-error' : ''}">
             </spring:bind>
