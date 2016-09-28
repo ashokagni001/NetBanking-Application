@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MenuConfig>
+    <Displayers>
+        <Displayer name="Velocity" type="net.sf.navigator.displayer.VelocityMenuDisplayer"/>
+    </Displayers>
+    <Menus>
+        <Menu name="Home" title="home.title" page="/home" roles="ROLE_ADMIN,ROLE_USER"/>
+        
+        <Menu name="UserMenu" title="menu.user" description="User Menu" page="/userform" roles="ROLE_USER"/>
+        <Menu name="BeneficiaryMenu" title="Benificiary Menu" description="Benificiary Menu" page="/addBeneficiaryAccount" roles="ROLE_USER">
+            <Item name="Benificiary" title="Add Benificiary" page="/addBeneficiaryAccount"/>
+            <Item name="Benificiary" title="View Benificiary" page="/viewBeneficiaryAccount"/>
+        </Menu>
+        <Menu name="BranchMenu" title="Branch Menu" description="Branch Menu" page="/addbranch" roles="ROLE_ADMIN">
+            <Item name="Branch" title="Add Branch" page="/addBranch"/>
+            <Item name="Branch" title="View Branch" page="/viewBranches"/>
+        </Menu>
+        <Menu name="AccountMenu" title="Account Menu" description="Account Menu" page="/addaccount" roles="ROLE_ADMIN">
+            <Item name="Account" title="Add Account" page="/addAccount"/>
+            <Item name="Account" title="View Account By Branch" page="/viewAccountByBranch"/>
+        </Menu>
+        <Menu name="NotificationMenu" title="Notification Menu" description="Notification Menu" page="/Notification" roles="ROLE_ADMIN">
+            <Item name="Notification" title="View Benificiary Notification" page="/beneficiaryNotifications"/>
+            <Item name="Notification" title="View Transaction Notification" page="/transactionNotifications"/>
+        </Menu>
+        <Menu name="ViewAccount" title="Account Detail" description="Account Detail" page="/viewUserAccount" roles="ROLE_USER">
+        <Item name="Account" title="View Account" page="/viewUserAccount"/>
+        </Menu>
+        <Menu name="ViewMinistatement" title="View Ministatement" description="View Ministatement" page="/viewMiniStatementByCustomerId" roles="ROLE_USER">
+        <Item name="Ministatement" title="View All Ministatement" page="/viewMiniStatementByCustomerId"/>
+        </Menu>
+        <Menu name="TransactionMenu" title="Transaction Menu" description="Transaction Menu" page="/viewAllTransaction" roles="ROLE_ADMIN">
+        <Item name="Transaction" title="View All Transaction" page="/viewAllTransaction"/>
+        </Menu>
+        <Menu name="AdminMenu" title="menu.admin" description="Admin Menu" roles="ROLE_ADMIN" page="/admin/users">
+            <Item name="ViewUsers" title="menu.admin.users" page="/admin/users"/>
+            <Item name="ActiveUsers" title="home.activeUsers" page="/admin/activeUsers"/>
+            <Item name="ReloadContext" title="menu.admin.reload" page="/admin/reload"/>
+            <Item name="FileUpload" title="menu.selectFile" page="/fileupload"/>
+        </Menu>
+        <Menu name="Logout" title="user.logout" page="/logout" roles="ROLE_ADMIN,ROLE_USER"/>
+    </Menus>
+</MenuConfig>
