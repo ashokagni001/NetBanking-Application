@@ -34,10 +34,10 @@ import java.util.Map;
  */
 @Service("userManager")
 @WebService(serviceName = "UserService", endpointInterface = "com.i2i.netbankingapplication.service.UserService")
-public class UserManagerImpl extends GenericManagerImpl<User, Long> implements UserManager, UserService {
+public class UserManagerImpl extends GenericManagerImpl < User, Long > implements UserManager, UserService {
     private PasswordEncoder passwordEncoder;
     private UserDao userDao;
-    
+
     private MailEngine mailEngine;
     private SimpleMailMessage message;
     private PasswordTokenManager passwordTokenManager;
@@ -107,21 +107,35 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
      * {@inheritDoc}
      */
     @Override
-    public List<User> getUsers() {
+    public List < User > getUsers() {
         return userDao.getAllDistinct();
     }
-    
+
+    /**
+     * <p>
+     *     this method using for create the customerId for each customer and then any customer deleted in the list 
+     *     it is full fill that the cab.
+     * </p>
+     * @return customerId
+     *     specific customerId for each customer. 
+     */
     public String getNewUserId() {
-        long id = 0 ;
-        for (User user : userDao.getAllDistinct()) {
-            long tempId = user.getId();
-            if (id < tempId) {
-                id = tempId;
+        long previousValue = Constants.SIZE;
+        for (User user: userDao.getAllDistinct()) {
+            String customerId = user.getUserId();
+            long currentValue = Integer.parseInt(customerId.substring(8, customerId.length()));
+            if (previousValue <= currentValue) {
+                long temp = previousValue - currentValue;
+                if (temp == Constants.INITIAL_SIZE || temp == Constants.SIZE) {
+                    previousValue = currentValue;
+                } else {
+                    return (Constants.CUSTOMER_ID_PROFIX + String.valueOf(previousValue - Constants.INITIAL_SIZE));
+                }
             }
         }
-        return (Constants.CUSTOMER_ID_PROFIX + String.valueOf(id));
+        return (Constants.CUSTOMER_ID_PROFIX + String.valueOf(previousValue + Constants.INITIAL_SIZE));
     }
-    
+
     /**
      * {@inheritDoc}
      * @throws  
@@ -151,7 +165,7 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
                     }
                 }
             }
-         
+
             // If password was changed (or new user), encrypt it
             if (passwordChanged) {
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -159,9 +173,9 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
         } else {
             log.warn("PasswordEncoder not set, skipping password encryption...");
         }
-        
+
         //Existing user, check account number in DB
-        
+
         try {
             user.setUserId(getNewUserId());
             return userDao.saveUser(user);
@@ -206,7 +220,7 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
      * {@inheritDoc}
      */
     @Override
-    public List<User> search(final String searchTerm) {
+    public List < User > search(final String searchTerm) {
         return super.search(searchTerm, User.class);
     }
 
@@ -215,8 +229,14 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
         final String token = generateRecoveryToken(user);
         final String username = user.getUsername();
         return StringUtils.replaceEach(urlTemplate,
-                new String[]{"{username}", "{token}"},
-                new String[]{username, token});
+            new String[] {
+                "{username}",
+                "{token}"
+            },
+            new String[] {
+                username,
+                token
+            });
     }
 
     @Override
@@ -254,7 +274,7 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
         message.setTo(user.getFullName() + "<" + user.getEmail() + ">");
         message.setSubject(subject);
 
-        final Map<String, Serializable> model = new HashMap<String, Serializable>();
+        final Map < String, Serializable > model = new HashMap < String, Serializable > ();
         model.put("user", user);
         model.put("applicationURL", url);
 

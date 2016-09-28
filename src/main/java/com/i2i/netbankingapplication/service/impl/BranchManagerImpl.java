@@ -15,8 +15,8 @@ import com.i2i.netbankingapplication.model.Branch;
 import com.i2i.netbankingapplication.service.BranchManager;
 
 @Service("branchManager")
-public class BranchManagerImpl extends GenericManagerImpl<Branch, Long> implements BranchManager {
-    
+public class BranchManagerImpl extends GenericManagerImpl < Branch, Long > implements BranchManager {
+
     @Autowired
     BranchDao branchDao;
 
@@ -25,7 +25,7 @@ public class BranchManagerImpl extends GenericManagerImpl<Branch, Long> implemen
         super(branchDao);
         this.branchDao = branchDao;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -34,19 +34,39 @@ public class BranchManagerImpl extends GenericManagerImpl<Branch, Long> implemen
         branchDao.insertBranch(branch);
         return "Branch Added Successfully.. IFSCode : " + branch.getIFSCode();
     }
-    
+
+    /**
+     * <p>
+     *     this method using for create the IFSCode for each Branch and then any Branch deleted in the list 
+     *     it is full fill that the cab.
+     * </p>
+     * @return customerId
+     *     specific IFSCode for each Branch. 
+     * @throws DataBaseException
+     *     It handle all the custom exception in NetBanking application.
+     */
     public String getIFSCode() throws DataBaseException {
-        long id = 0;
-        for (Branch branches : branchDao.retrieveBranches()) {
-             id = branches.getId();
+        long previousValue = Constants.NOTIFICATION_SIZE;
+        long currentValue;
+        for (Branch branches: branchDao.retrieveBranches()) {
+            String ifsc = branches.getIFSCode();
+            currentValue = Integer.parseInt(ifsc.substring(Constants.IFSCODE_SUBSTREAM_SIZE, ifsc.length()));
+            if (previousValue <= currentValue) {
+                long temp = currentValue - previousValue;
+                if (temp == Constants.SIZE || temp == Constants.NOTIFICATION_SIZE) {
+                    previousValue = currentValue;
+                } else {
+                    return (Constants.IFSCODE_PROFIX + String.valueOf(currentValue - Constants.INITIAL_SIZE));
+                }
+            }
         }
-        return (Constants.IFSCODE_PROFIX + String.valueOf(id + 1));
+        return (Constants.IFSCODE_PROFIX + String.valueOf(previousValue + Constants.INITIAL_SIZE));
     }
-    
+
     /**
      * {@inheritDoc}
      */
-    public List<Branch> getBranches() throws DataBaseException {
+    public List < Branch > getBranches() throws DataBaseException {
         return branchDao.retrieveBranches();
     }
 
@@ -56,45 +76,45 @@ public class BranchManagerImpl extends GenericManagerImpl<Branch, Long> implemen
     public Branch getBranchByIFSCode(String IFSCode) throws DataBaseException {
         return branchDao.retrieveBranchByIFSCode(IFSCode);
     }
-    
+
     /**
      * {@inheritDoc}
      */
     public void removeBranchByIFSCode(String IFSCode) throws DataBaseException {
         branchDao.removeBranchByIFSCode(IFSCode);
     }
-    
+
     /**
-	 * <p>
-	 *    This method verify the branch IFSCode exist or not.
-	 *    If branch exist add new account.
-	 *    Otherwise, return the error message.
-	 * </p>
-	 * 
-	 * @param accountNumber
-	 *     accountNumber of Account.
-	 * @param balance
-	 *     balance of Account.
-	 * @param accounttype
-	 *     accountType of Account.
-	 * @param ifsc
-	 *     IfsCode of Account.
-	 *     
-	 * @throws DataBaseException
-	 *     It handle all the custom exception in NetBanking application.
-	 */
-	public String addAccount(Account account) throws DataBaseException {
-		//verify the branch id exist or not.
-		branchDao.insertAccount(account);
-		return ("ACCOUNT ADDED SUCCESSFULLY");
-	}
-    
-	public Account getAccountByAccountNumber(String accountNumber) throws DataBaseException {
-	    System.out.println();
-	    return branchDao.retrieveAccountByAccountNumber(accountNumber);
-	}
-	
-	/**
+     * <p>
+     *    This method verify the branch IFSCode exist or not.
+     *    If branch exist add new account.
+     *    Otherwise, return the error message.
+     * </p>
+     * 
+     * @param accountNumber
+     *     accountNumber of Account.
+     * @param balance
+     *     balance of Account.
+     * @param accounttype
+     *     accountType of Account.
+     * @param ifsc
+     *     IfsCode of Account.
+     *     
+     * @throws DataBaseException
+     *     It handle all the custom exception in NetBanking application.
+     */
+    public String addAccount(Account account) throws DataBaseException {
+        //verify the branch id exist or not.
+        branchDao.insertAccount(account);
+        return ("ACCOUNT ADDED SUCCESSFULLY");
+    }
+
+    public Account getAccountByAccountNumber(String accountNumber) throws DataBaseException {
+        System.out.println();
+        return branchDao.retrieveAccountByAccountNumber(accountNumber);
+    }
+
+    /**
      * <p> 
      *     This method use to view account by branch.
      *     This method get the branch IFSC from branch controller. 
@@ -111,17 +131,17 @@ public class BranchManagerImpl extends GenericManagerImpl<Branch, Long> implemen
      * @throws BranchDataException 
      *     It handle all the custom exception.
      */
-    public List<Account> viewAccountByBranch(String IFSCode) throws DataBaseException, BranchDataException {
-        List<Account> accounts = new ArrayList<Account>();
+    public List < Account > viewAccountByBranch(String IFSCode) throws DataBaseException, BranchDataException {
+        List < Account > accounts = new ArrayList < Account > ();
         if (null != branchDao.retrieveBranchByIFSCode(IFSCode)) {
-            for (Account account : branchDao.retriveAllAccounts()) {
+            for (Account account: branchDao.retriveAllAccounts()) {
                 if (account.getBranch().getIFSCode().equals(IFSCode)) {
                     accounts.add(account);
                 }
             }
             return accounts;
         } else {
-            throw new BranchDataException("PLEASE ENTER VALID IFSC NUMBER"); 
+            throw new BranchDataException("PLEASE ENTER VALID IFSC NUMBER");
         }
     }
 }

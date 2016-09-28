@@ -9,7 +9,7 @@
         <Menu name="UserMenu" title="menu.user" description="User Menu" page="/userform" roles="ROLE_USER"/>
         <Menu name="BeneficiaryMenu" title="Benificiary Menu" description="Benificiary Menu" page="/addBeneficiaryAccount" roles="ROLE_USER">
             <Item name="Benificiary" title="Add Benificiary" page="/addBeneficiaryAccount"/>
-            <Item name="Benificiary" title="View Benificiary" page="/viewAllBeneficiaryAccountDetail"/>
+            <Item name="Benificiary" title="View Benificiary" page="/viewBeneficiaryAccount"/>
         </Menu>
         <Menu name="BranchMenu" title="Branch Menu" description="Branch Menu" page="/addbranch" roles="ROLE_ADMIN">
             <Item name="Branch" title="Add Branch" page="/addBranch"/>
@@ -35,6 +35,8 @@
         <Menu name="AdminMenu" title="menu.admin" description="Admin Menu" roles="ROLE_ADMIN" page="/admin/users">
             <Item name="ViewUsers" title="menu.admin.users" page="/admin/users"/>
             <Item name="ActiveUsers" title="home.activeUsers" page="/admin/activeUsers"/>
+            <Item name="ReloadContext" title="menu.admin.reload" page="/admin/reload"/>
+            <Item name="FileUpload" title="menu.selectFile" page="/fileupload"/>
         </Menu>
         <Menu name="Logout" title="user.logout" page="/logout" roles="ROLE_ADMIN,ROLE_USER"/>
     </Menus>

@@ -1,6 +1,7 @@
 package com.i2i.netbankingapplication.webapp.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,19 +13,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.i2i.netbankingapplication.exception.DataBaseException;
 import com.i2i.netbankingapplication.exception.TransactionCustomException;
+import com.i2i.netbankingapplication.model.User;
 import com.i2i.netbankingapplication.service.BeneficiaryManager;
 import com.i2i.netbankingapplication.service.UserManager;
 
-
 @Controller
 public class BeneficiaryController {
-    
+
     @Autowired
     private BeneficiaryManager beneficiaryManager;
-    
+
     @Autowired
     private UserManager userManager;
-    
+
     /**
      * <p> 
      *     This form used to view transaction by date.
@@ -38,7 +39,7 @@ public class BeneficiaryController {
     public String addBeneficiaryAccountForm() {
         return "addBeneficiaryAccount";
     }
-    
+
     /**
      * <p>
      *     This Method call to addBeneficiaryAccount method in TransactionService.
@@ -57,17 +58,17 @@ public class BeneficiaryController {
      *    with status message(success or failure).
      */
     @RequestMapping(value = "/addBeneficiary")
-    public ModelAndView addBeneficiaryAccount(@RequestParam("accountNumber")String accountNumber, 
-            @RequestParam("IFSCode")String IFSCode, final HttpServletRequest request) {
-        try { 
-            return new ModelAndView ("addBeneficiaryAccount", "message", beneficiaryManager.addBeneficiaryAccount(userManager.getUserByUsername(request.getRemoteUser()), accountNumber, IFSCode)); 
-        } catch(TransactionCustomException e) {
-            return new ModelAndView ("addBeneficiaryAccount", "message", e.getMessage());
+    public ModelAndView addBeneficiaryAccount(@RequestParam("accountNumber") String accountNumber,
+        @RequestParam("IFSCode") String IFSCode, final HttpServletRequest request) {
+        try {
+            return new ModelAndView("addBeneficiaryAccount", "message", beneficiaryManager.addBeneficiaryAccount(userManager.getUserByUsername(request.getRemoteUser()), accountNumber, IFSCode));
+        } catch (TransactionCustomException e) {
+            return new ModelAndView("addBeneficiaryAccount", "message", e.getMessage());
         } catch (DataBaseException e) {
-            return new ModelAndView ("addBeneficiaryAccount", "message", e.getMessage());
+            return new ModelAndView("addBeneficiaryAccount", "message", e.getMessage());
         }
     }
-    
+
     /**
      * <p>
      *     This Method call to getAllBeneficiaries method in TransactionService.
@@ -83,13 +84,13 @@ public class BeneficiaryController {
     public ModelAndView fetchBeneficiaryNotifications() {
         try {
             return new ModelAndView("retrieveAllBeneficiaryNotification", "beneficiaryNotifications", beneficiaryManager.getAllBeneficiaries());
-        } catch(TransactionCustomException e) {
-            return new ModelAndView ("retrieveAllBeneficiaryNotification", "message", e.getMessage());
+        } catch (TransactionCustomException e) {
+            return new ModelAndView("retrieveAllBeneficiaryNotification", "message", e.getMessage());
         } catch (DataBaseException e) {
             return new ModelAndView("retrieveAllBeneficiaryNotification", "message", e.getMessage());
         }
     }
-    
+
     /**
      * 
      * @param beneficiaryId
@@ -111,7 +112,7 @@ public class BeneficiaryController {
             return "retrieveAllBeneficiaryNotification";
         }
     }
-    
+
     @RequestMapping(value = "/beneficiaryRequestCancel", method = RequestMethod.GET)
     public String beneficiaryRequestDeactive(@RequestParam("id") int beneficiaryId, ModelMap message) {
         try {
@@ -126,7 +127,7 @@ public class BeneficiaryController {
             return "retrieveAllBeneficiaryNotification";
         }
     }
-    
+
     /**
      * <p>
      *     This Method call to getBeneficiaryAccountByCustomerId method in TransactionService with customerId.
@@ -141,12 +142,12 @@ public class BeneficiaryController {
     @RequestMapping(value = "/viewAllBeneficiaryAccountDetail", method = RequestMethod.GET)
     public ModelAndView viewAllBeneficiaryAccountDetail(final HttpServletRequest request) {
         try {
-            return new ModelAndView ("retrieveBeneficiaryByCustomerId", "beneficiaries", 
-                    beneficiaryManager.getBeneficiaryAccountByCustomerId(userManager.getUserByUsername(request.getRemoteUser())));
-        } catch(TransactionCustomException e) {
-            return new ModelAndView ("retrieveBeneficiaryByCustomerId", "message", e.getMessage());
+            return new ModelAndView("retrieveBeneficiaryByCustomerId", "beneficiaries", beneficiaryManager.getBeneficiaryAccountByCustomerId(userManager.getUserByUsername(request.getRemoteUser())));
+        } catch (TransactionCustomException e) {
+            return new ModelAndView("retrieveBeneficiaryByCustomerId", "message", e.getMessage());
         } catch (DataBaseException e) {
-            return new ModelAndView ("retrieveBeneficiaryByCustomerId", "message", e.getMessage());
+            return new ModelAndView("retrieveBeneficiaryByCustomerId", "message", e.getMessage());
         }
     }
+
 }

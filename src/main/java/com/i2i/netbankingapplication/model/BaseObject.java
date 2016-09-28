@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  */
-public abstract class BaseObject implements Serializable {    
+public abstract class BaseObject implements Serializable {
 
     /**
      * Returns a multi-line String with key=value pairs.

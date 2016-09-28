@@ -15,7 +15,7 @@ import java.util.List;
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  *  Modified by <a href="mailto:dan@getrolling.com">Dan Kibler </a>
  */
-public interface UserManager extends GenericManager<User, Long> {
+public interface UserManager extends GenericManager < User, Long > {
     /**
      * Convenience method for testing - allows you to mock the DAO and set it on an interface.
      * @param userDao the UserDao implementation to use
@@ -50,7 +50,7 @@ public interface UserManager extends GenericManager<User, Long> {
      * Retrieves a list of all users.
      * @return List
      */
-    List<User> getUsers();
+    List < User > getUsers();
 
     /**
      * Saves a user's information.
@@ -80,7 +80,7 @@ public interface UserManager extends GenericManager<User, Long> {
      * @param searchTerm the search terms.
      * @return a list of matches, or all if no searchTerm.
      */
-    List<User> search(String searchTerm);
+    List < User > search(String searchTerm);
 
     /**
      * Builds a recovery password url by replacing placeholders with username and generated recovery token.

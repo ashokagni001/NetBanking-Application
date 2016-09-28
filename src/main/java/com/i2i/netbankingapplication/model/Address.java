@@ -19,7 +19,7 @@ import org.hibernate.search.annotations.Indexed;
 @Embeddable
 @Indexed
 public class Address extends BaseObject implements Serializable {
-    private static final long serialVersionUID = 3617859655330969141L;
+    private static final long serialVersionUID = 3617859655330969141 L;
     private String address;
     private String city;
     private String province;
@@ -51,7 +51,7 @@ public class Address extends BaseObject implements Serializable {
     }
 
     @Column(name = "postal_code", length = 15)
-    @Field(analyze= Analyze.NO)
+    @Field(analyze = Analyze.NO)
     public String getPostalCode() {
         return postalCode;
     }
@@ -117,10 +117,10 @@ public class Address extends BaseObject implements Serializable {
      */
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("country", this.country)
-                .append("address", this.address)
-                .append("province", this.province)
-                .append("postalCode", this.postalCode)
-                .append("city", this.city).toString();
+            .append("country", this.country)
+            .append("address", this.address)
+            .append("province", this.province)
+            .append("postalCode", this.postalCode)
+            .append("city", this.city).toString();
     }
 }

@@ -7,15 +7,43 @@ import com.i2i.netbankingapplication.model.Account;
 import com.i2i.netbankingapplication.model.CustomerTransaction;
 import com.i2i.netbankingapplication.model.User;
 
-public interface CustomerTransactionDao extends GenericDao<CustomerTransaction, Long> {
+/**
+ * CustomerTransaction Data Access Object (GenericDao) interface.
+ * 
+ * @author team2
+ *
+ */
+public interface CustomerTransactionDao extends GenericDao < CustomerTransaction, Long > {
 
-    public void insertTransaction(CustomerTransaction customerTransaction, Account debitAccount) throws DataBaseException; 
+    /**
+     * Insert new customerTransaction;
+     *
+     */
+    void insertTransaction(CustomerTransaction customerTransaction, Account debitAccount) throws DataBaseException;
 
-    public Account retrieveAccountByNumber(String creditAccountNumber) throws DataBaseException;
+    /**
+     * Retrieve account by creditAccountNumber;
+     *
+     *@return Account
+     */
+    Account retrieveAccountByNumber(String creditAccountNumber) throws DataBaseException;
 
-    public List<CustomerTransaction> retriveAllTransactions() throws DataBaseException;
+    /**
+     * Retrieve all customerTransactions;
+     *
+     *@return List
+     */
+    List < CustomerTransaction > retriveAllTransactions() throws DataBaseException;
 
-    public void transactionSuccess(Account creditAccount, int transactionId, User user) throws DataBaseException;
+    /**
+     * Update success transaction;
+     *
+     */
+    void transactionSuccess(Account creditAccount, int transactionId, User user) throws DataBaseException;
 
-    public void transactionFailure(Account debitAccount, int transactionId, User user) throws DataBaseException;
+    /**
+     * Update failure transaction;
+     *
+     */
+    void transactionFailure(Account debitAccount, int transactionId, User user) throws DataBaseException;
 }

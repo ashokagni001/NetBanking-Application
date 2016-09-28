@@ -6,7 +6,6 @@ import javax.transaction.Transactional;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
 import com.i2i.netbankingapplication.dao.CustomerTransactionDao;
@@ -14,7 +13,6 @@ import com.i2i.netbankingapplication.exception.DataBaseException;
 import com.i2i.netbankingapplication.model.Account;
 import com.i2i.netbankingapplication.model.CustomerTransaction;
 import com.i2i.netbankingapplication.model.User;
-
 
 /**
  * <p>
@@ -30,8 +28,8 @@ import com.i2i.netbankingapplication.model.User;
  */
 @Repository("customerTransactionDao")
 @Transactional
-public class CustomerTransactionHibernate extends GenericDaoHibernate<CustomerTransaction, Long> implements CustomerTransactionDao {
-    
+public class CustomerTransactionHibernate extends GenericDaoHibernate < CustomerTransaction, Long > implements CustomerTransactionDao {
+
     /**
      * Constructor to create a Generics-based version using Branch as the entity
      */
@@ -39,20 +37,36 @@ public class CustomerTransactionHibernate extends GenericDaoHibernate<CustomerTr
         super(CustomerTransaction.class);
     }
 
-    public void insertTransaction(CustomerTransaction customerTransaction, Account debitAccount) throws DataBaseException{
+    /**
+     * <p>
+     *     Get the Transaction object from CustomerTransactionManager and add CustomerTransaction to database. 
+     * </p>
+     * 
+     * @param customerTransaction
+     *     object of CustomerTransaction to add.
+     * @param debitAccount
+     *     debitAccount of Account to Add transaction
+     *     
+     * @return message
+     *     return status message(Success or failure)
+     *     
+     * @throws DataBaseException
+     *     It handle all the custom exception in NetBanking Application and HibernateException.
+     */
+    public void insertTransaction(CustomerTransaction customerTransaction, Account debitAccount) throws DataBaseException {
         try {
             Session session = getSession();
             session.save(customerTransaction);
             session.update(debitAccount);
         } catch (HibernateException e) {
-            throw new DataBaseException("PLEASE CHECK YOUR DATAS YOUR DATA IS NOT VALID.PLEASE TRY AGAIN.addTransaction" );  
+            throw new DataBaseException("PLEASE CHECK YOUR DATAS YOUR DATA IS NOT VALID.PLEASE TRY AGAIN.addTransaction");
         }
     }
 
     /**
      * <p>
-     *     Get the accountNumber from CustomerService.
-     *     Retrieves customer Account from database and returns account object to TransactionService.
+     *     Get the accountNumber from CustomerTransactionManager.
+     *     Retrieves customer Account from database and returns account object to CustomerTransactionManager.
      * </p>
      * 
      * @param accountNumber
@@ -66,7 +80,7 @@ public class CustomerTransactionHibernate extends GenericDaoHibernate<CustomerTr
      */
     public Account retrieveAccountByNumber(String accountNumber) throws DataBaseException {
         try {
-            return (Account)getSession().get(Account.class, accountNumber); 
+            return (Account) getSession().get(Account.class, accountNumber);
         } catch (HibernateException e) {
             throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
         }
@@ -84,7 +98,7 @@ public class CustomerTransactionHibernate extends GenericDaoHibernate<CustomerTr
      * @throws DataBaseException
      *     It handle all the custom exception in NetBanking Application and HibernateException.
      */
-    public List<CustomerTransaction> retriveAllTransactions() throws DataBaseException {
+    public List < CustomerTransaction > retriveAllTransactions() throws DataBaseException {
         try {
             return getSession().createQuery("FROM CustomerTransaction").list();
         } catch (HibernateException e) {
@@ -93,8 +107,9 @@ public class CustomerTransactionHibernate extends GenericDaoHibernate<CustomerTr
     }
 
     /**
-     * Update the balanceAmount to Credit Account using database.
-     * 
+     * <p>
+     *     Update the balanceAmount to Credit Account using database.
+     * </p>
      * @param accountNumber
      *     accountNumber of Customer.
      * @param balanceAmount
@@ -106,7 +121,7 @@ public class CustomerTransactionHibernate extends GenericDaoHibernate<CustomerTr
      *     It handle all the custom exception in NetBanking Application and HibernateException.
      */
     public void transactionSuccess(Account criditAccount, int transactionId, User user)
-            throws DataBaseException {
+    throws DataBaseException {
         CustomerTransaction customerTransaction = null;
         try {
             Session session = getSession();
@@ -119,9 +134,11 @@ public class CustomerTransactionHibernate extends GenericDaoHibernate<CustomerTr
             throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
         }
     }
-    
+
     /**
-     * Update the balanceAmount to Debit Account using database.
+     * <p>
+     *     Update the balanceAmount to Debit Account using database.
+     * </p>
      *  
      * @param accountNumber
      *     accountNumber of Customer.
@@ -134,7 +151,7 @@ public class CustomerTransactionHibernate extends GenericDaoHibernate<CustomerTr
      *     It handle all the custom exception in NetBanking Application and HibernateException.
      */
     public void transactionFailure(Account debitAccount, int transactionId, User user)
-            throws DataBaseException {
+    throws DataBaseException {
         CustomerTransaction customerTransaction = null;
         try {
             Session session = getSession();
@@ -147,5 +164,4 @@ public class CustomerTransactionHibernate extends GenericDaoHibernate<CustomerTr
             throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
         }
     }
-    
 }
