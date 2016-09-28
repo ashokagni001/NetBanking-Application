@@ -67,7 +67,7 @@
         <web.framework>spring</web.framework>
 
         <!-- Framework/Plugin versions -->
-        <jdbc.password>ashok</jdbc.password>
+        <jdbc.password>root</jdbc.password>
         <appfuse.version>3.5.0</appfuse.version>
         <java.version>1.7</java.version>
     </properties>
