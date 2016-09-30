@@ -61,7 +61,7 @@ public interface BeneficiaryDao extends GenericDao<Beneficiary, Long> {
      *     If there is an error in getting the object like NullPointerException,
      *     NumberFormatException, HibernateException.
      */
-    Beneficiary retrievebeneficiaryAccount(int beneficiaryId) throws DataBaseException;
+    Beneficiary retrieveBeneficiaryAccount(int beneficiaryId) throws DataBaseException;
     
     /**
      * <p>

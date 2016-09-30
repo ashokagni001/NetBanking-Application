@@ -11,6 +11,7 @@ import com.i2i.netbankingapplication.dao.BranchDao;
 import com.i2i.netbankingapplication.exception.DataBaseException;
 import com.i2i.netbankingapplication.model.Account;
 import com.i2i.netbankingapplication.model.Branch;
+import com.i2i.netbankingapplication.util.StringUtil;
 
 /**
  * <p>
@@ -38,7 +39,7 @@ public class BranchDaoHibernate extends GenericDaoHibernate<Branch, Long> implem
      * Get the branch object from BranchService and add Branch to database. 
      * 
      * @param branch
-     *     object of Branch to add.
+     *     branch holds the Branch information.
      *     
      * @throws DataBaseException
      *     It handle all the custom exception in NetBanking Application and HibernateException.
@@ -47,7 +48,7 @@ public class BranchDaoHibernate extends GenericDaoHibernate<Branch, Long> implem
         try {
             getSession().save(branch); 
         } catch (HibernateException e) {
-            throw new DataBaseException("PLEASE INSERT VALID IFSC..");  
+            throw new DataBaseException(StringUtil.informationReader().getProperty("addBranchError") + branch.getIFSCode());  
         }
     }
      
@@ -66,34 +67,12 @@ public class BranchDaoHibernate extends GenericDaoHibernate<Branch, Long> implem
      * @throws DataBaseException
      *     It handle all the custom exception in NetBanking Application and HibernateException.
      */
-    public Branch retrieveBranchByIFSCode(String IFSCode) throws DataBaseException {
-        List branches = getSession().createCriteria(Branch.class).add(Restrictions.eq("IFSCode", IFSCode)).list();
+    public Branch retrieveBranchByIFSCode(String ifscode) throws DataBaseException {
+        List branches = getSession().createCriteria(Branch.class).add(Restrictions.eq("IFSCode", ifscode)).list();
         if (branches == null || branches.isEmpty()) {
-            throw new DataBaseException("Branch '" + IFSCode + "' not found...");
+            throw new DataBaseException(StringUtil.informationReader().getProperty("viewBranchError") + ifscode );
         } else {
             return (Branch) branches.get(0);
-        }
-    }
-     
-    /**
-     * <p>
-     *     Get the IFSCode from BranchService.
-     *     Remove branch from database. 
-     * </p>
-     * 
-     * @param IFSCode
-     *     IFSCode of Branch.
-     *     
-     * @throws DataBaseException
-     *     It handle all the custom exception in NetBanking Application and HibernateException.
-     */
-    public void removeBranchByIFSCode(String IFSCode) throws DataBaseException {
-        try {
-            Branch branch = retrieveBranchByIFSCode(IFSCode);
-            Session session = getSessionFactory().getCurrentSession();
-            session.delete(branch);
-        } catch (HibernateException e) {
-            throw new DataBaseException("PLEASE CHECK YOUR DATAS " + IFSCode + " YOUR DATA IS NOT VALID.PLEASE TRY AGAIN." );  
         }
     }
      
@@ -113,7 +92,7 @@ public class BranchDaoHibernate extends GenericDaoHibernate<Branch, Long> implem
         try {
             return getSession().createQuery("FROM Branch").list();
         } catch (HibernateException e) {
-            throw new DataBaseException("BRANCHES IS NOT AVAILABLE.");
+            throw new DataBaseException(StringUtil.informationReader().getProperty("viewAllBranchesError"));
         }
     }
     
@@ -133,7 +112,7 @@ public class BranchDaoHibernate extends GenericDaoHibernate<Branch, Long> implem
         try {
             getSession().saveOrUpdate(account); 
         } catch (HibernateException e) {
-            throw new DataBaseException("PLEASE CHECK YOUR DATAS " + account.getAccountNumber() + " YOUR DATA IS NOT VALID.PLEASE TRY AGAIN." );  
+            throw new DataBaseException(StringUtil.informationReader().getProperty("insertAccount") + account.getAccountNumber() );  
         }
     }
     
@@ -156,7 +135,7 @@ public class BranchDaoHibernate extends GenericDaoHibernate<Branch, Long> implem
         try {
             return (Account) getSession().get(Account.class, accountNumber);
         } catch (HibernateException e) {
-            throw new DataBaseException("ACCOUNTS IS NOT AVAILABLE.");
+            throw new DataBaseException(StringUtil.informationReader().getProperty("retrieveAccountError"));
         }
     }
     
@@ -176,7 +155,7 @@ public class BranchDaoHibernate extends GenericDaoHibernate<Branch, Long> implem
         try {
              return getSession().createQuery("FROM Account").list();
         } catch (HibernateException e) {
-            throw new DataBaseException("ACCOUNTS IS NOT AVAILABLE.");
+            throw new DataBaseException(StringUtil.informationReader().getProperty("viewAllAccountMessage"));
         }
     }
 }

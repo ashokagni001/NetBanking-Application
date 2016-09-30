@@ -12,6 +12,7 @@ import com.i2i.netbankingapplication.dao.CustomerTransactionDao;
 import com.i2i.netbankingapplication.exception.DataBaseException;
 import com.i2i.netbankingapplication.model.Account;
 import com.i2i.netbankingapplication.model.CustomerTransaction;
+import com.i2i.netbankingapplication.util.StringUtil;
 
 
 /**
@@ -31,19 +32,34 @@ import com.i2i.netbankingapplication.model.CustomerTransaction;
 public class CustomerTransactionHibernate extends GenericDaoHibernate<CustomerTransaction, Long> implements CustomerTransactionDao {
     
     /**
-     * Constructor to create a Generics-based version using Branch as the entity
+     * Constructor to create a Generics-based version using CustomerTransaction as the entity
      */
     public CustomerTransactionHibernate() {
         super(CustomerTransaction.class);
     }
-
+    
+    /**
+     * <p>
+     *     Get the transaction information and account information from CustomerTransactionManager.
+     *     Add new transaction information and  update the account information to database. 
+     * </p> 
+     *  
+     * @param customerTransaction
+     *     New customerTransaction information.It is used to add new record.
+     * @param debitAccount
+     *     debitAccount of Account. It is used to update the record.
+     *     
+     * @throws DataBaseException
+     *     If there is an error in getting the object like NullPointerException,
+     *     NumberFormatException, HibernateException.
+     */
     public void insertTransaction(CustomerTransaction customerTransaction, Account debitAccount) throws DataBaseException{
         try {
             Session session = getSession();
             session.save(customerTransaction);
             session.update(debitAccount);
         } catch (HibernateException e) {
-            throw new DataBaseException("PLEASE CHECK YOUR DATAS YOUR DATA IS NOT VALID.PLEASE TRY AGAIN.addTransaction" );  
+            throw new DataBaseException(StringUtil.informationReader().getProperty("insertTransactionError"));  
         }
     }
 
@@ -63,15 +79,43 @@ public class CustomerTransactionHibernate extends GenericDaoHibernate<CustomerTr
         try {
             return getSession().createQuery("FROM CustomerTransaction").list();
         } catch (HibernateException e) {
-            throw new DataBaseException("TRANSACTIONS IS NOT AVAILABLE..");
+            throw new DataBaseException(StringUtil.informationReader().getProperty("viewAllTransactionsError"));
         }
     }
 
-    @Override
+    /**
+     * <p>
+     *     Retrieves the all Customer transactions based on id from database.
+     *     Return customer transaction based on transaction id.
+     * </p>
+     * 
+     * @param id
+     *     id of transaction. It is used to view corresponding record.
+     *     
+     * @return customer transaction information based on id.
+     * 
+     * @throws DataBaseException
+     *     If there is an error in getting the object like NullPointerException,
+     *     NumberFormatException, HibernateException.
+     */
     public CustomerTransaction retriveTransactionById(int id) throws DataBaseException {
         return (CustomerTransaction)getSession().get(CustomerTransaction.class, id); 
     }
     
+    /**
+     * <p>
+     *     Update the account information and customer transaction information to corresponding record using database.
+     * </p>
+     * 
+     * @param account
+     *     update the account information. It is used to update the record.
+     * @param customerTransaction
+     *     update the customerTransaction information. It is used to update the record.
+     *     
+     * @throws DataBaseException
+     *     If there is an error in getting the object like NullPointerException,
+     *     NumberFormatException, HibernateException.
+     */
     public void updateTransactionStatus(Account account,CustomerTransaction customerTransaction) 
             throws DataBaseException {
         try {
@@ -79,7 +123,7 @@ public class CustomerTransactionHibernate extends GenericDaoHibernate<CustomerTr
             session.update(account);
             session.update(customerTransaction);
         } catch (HibernateException e) {
-            throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
+            throw new DataBaseException(StringUtil.informationReader().getProperty("updateTransactionErrorMessage"));
         }
     }
 }

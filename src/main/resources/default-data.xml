@@ -3,6 +3,8 @@
     <table name="app_user">
         <column>id</column>
         <column>username</column>
+        <column>user_id</column>
+        <column>account_number</column>
         <column>password</column>
         <column>first_name</column>
         <column>last_name</column>
@@ -23,6 +25,8 @@
         <row>
             <value description="id">1</value>
             <value description="username">user</value>
+            <value description="account_number">111</value>
+            <value description="user_id">CUSI2I01</value>
             <value description="password">$2a$10$CnQVJ9bsWBjMpeSKrrdDEeuIptZxXrwtI6CZ/OgtNxhIgpKxXeT9y</value>
             <value description="first_name">Tomcat</value>
             <value description="last_name">User</value>
@@ -44,6 +48,8 @@
         <row>
             <value description="id">2</value>
             <value description="username">admin</value>
+            <value description="account_number">110</value>
+            <value description="user_id">CUSI2I02</value>
             <value description="password">$2a$10$bH/ssqW8OhkTlIso9/yakubYODUOmh.6m5HEJvcBq3t3VdBh7ebqO</value>
             <value description="first_name">Matt</value>
             <value description="last_name">Raible</value>

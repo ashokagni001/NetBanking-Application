@@ -16,6 +16,7 @@ import com.i2i.netbankingapplication.model.Branch;
 import com.i2i.netbankingapplication.model.User;
 import com.i2i.netbankingapplication.service.BeneficiaryManager;
 import com.i2i.netbankingapplication.service.BranchManager;
+import com.i2i.netbankingapplication.util.StringUtil;
 
 /**
  * <p>
@@ -71,7 +72,7 @@ public class BeneficiaryManagerImpl extends GenericManagerImpl<Beneficiary, Long
             throw new TransactionCustomException("Enter valid beneficiary account number");
         }
         beneficiaryDao.insertBeneficiary(new Beneficiary(user, account, Constants.STATUS_REQUEST));
-        return "YOUR REQUEST SEND ADMIN PROCESS WITHIN FEW HOURS GET YOUR UPDATE";
+        return StringUtil.informationReader().getProperty("beneficiaryRequest");
     }
     
     /**
@@ -99,7 +100,7 @@ public class BeneficiaryManagerImpl extends GenericManagerImpl<Beneficiary, Long
         if (Constants.SIZE != beneficiaries.size()) {
              return beneficiaries;
         } else {
-            throw new TransactionCustomException("NO BENEFICIARY NOTIFICATION AVAILABLE");
+            throw new TransactionCustomException(StringUtil.informationReader().getProperty("beneficiaryExceptionMessage"));
         }
     }
     
@@ -120,7 +121,7 @@ public class BeneficiaryManagerImpl extends GenericManagerImpl<Beneficiary, Long
      *     NumberFormatException, HibernateException.
      */
     public void updateBeneficiaryAccount(int beneficiaryId, String action) throws DataBaseException {
-        Beneficiary beneficiary = beneficiaryDao.retrievebeneficiaryAccount(beneficiaryId);
+        Beneficiary beneficiary = beneficiaryDao.retrieveBeneficiaryAccount(beneficiaryId);
         beneficiary.setStatus(action);
         beneficiaryDao.updateBeneficiary(beneficiary);
     }
@@ -151,7 +152,7 @@ public class BeneficiaryManagerImpl extends GenericManagerImpl<Beneficiary, Long
                     customerBeneficiary.add(beneficiary);
                 }
                 if(null == customerBeneficiary) {
-                    throw new TransactionCustomException("YOUR BENEFICIARY ACCOUNT NOT AVAILABLE..INSERT NEW BENEFICIARY ACCOUNT");
+                    throw new TransactionCustomException(StringUtil.informationReader().getProperty("customerBeneficiaryMessage"));
                 }
             }
         }

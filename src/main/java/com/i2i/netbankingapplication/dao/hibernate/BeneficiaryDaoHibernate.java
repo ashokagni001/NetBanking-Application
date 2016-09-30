@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.i2i.netbankingapplication.dao.BeneficiaryDao;
 import com.i2i.netbankingapplication.exception.DataBaseException;
 import com.i2i.netbankingapplication.model.Beneficiary;
+import com.i2i.netbankingapplication.util.StringUtil;
 
 /**
  * <p>
@@ -48,7 +49,7 @@ public class BeneficiaryDaoHibernate extends GenericDaoHibernate<Beneficiary, Lo
         try {
             getSession().save(beneficiary); 
         } catch (HibernateException e) {
-            throw new DataBaseException("PLEASE INSERT VALID IFSC..");  
+            throw new DataBaseException(StringUtil.informationReader().getProperty("insertBeneficiary"));  
         }
     }
     
@@ -68,23 +69,49 @@ public class BeneficiaryDaoHibernate extends GenericDaoHibernate<Beneficiary, Lo
         try {
             return getSession().createQuery("FROM Beneficiary").list();
         } catch (HibernateException e) {
-            throw new DataBaseException("ACCOUNTS IS NOT AVAILABLE.");
+            throw new DataBaseException(StringUtil.informationReader().getProperty("viewAllAccountsMessage"));
         }
     }
     
-    public Beneficiary retrievebeneficiaryAccount(int beneficiaryId) throws DataBaseException {
+    /**
+     * <p>
+     *     Retrieve the beneficiary account information corresponding beneficiaryId using database.
+     * </p>    
+     *     
+     * @param beneficiaryId
+     *     beneficiaryId of Beneficiary used to retrieve the beneficiary account.
+     * 
+     * @return beneficiary information based on beneficiaryId.
+     * 
+     * @throws DataBaseException
+     *     If there is an error in getting the object like NullPointerException,
+     *     NumberFormatException, HibernateException.
+     */
+    public Beneficiary retrieveBeneficiaryAccount(int beneficiaryId) throws DataBaseException {
         try {
             return (Beneficiary)getSession().get(Beneficiary.class, beneficiaryId); 
         } catch (HibernateException e) {
-            throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
+            throw new DataBaseException(StringUtil.informationReader().getProperty("viewBeneficiaryMessage"));
         }
     }
     
+    /**
+     * <p>
+     *     Update the beneficiary information to corresponding record using database.
+     * </p>
+     * 
+     * @param beneficiary
+     *     beneficiary holds the information of beneficiary.It is used to update.
+     *    
+     * @throws DataBaseException
+     *     If there is an error in getting the object like NullPointerException,
+     *     NumberFormatException, HibernateException.
+     */
     public void updateBeneficiary(Beneficiary beneficiary) throws DataBaseException {
         try {
             getSession().update(beneficiary);
         } catch (HibernateException e) {
-            throw new DataBaseException("PLEASE INSERT VALID IFSC.."); 
+            throw new DataBaseException(StringUtil.informationReader().getProperty("updateBeneficiaryMessage")); 
         }
     }
 }

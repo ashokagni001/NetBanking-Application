@@ -17,6 +17,7 @@ import com.i2i.netbankingapplication.model.User;
 import com.i2i.netbankingapplication.service.BeneficiaryManager;
 import com.i2i.netbankingapplication.service.BranchManager;
 import com.i2i.netbankingapplication.service.CustomerTransactionManager;
+import com.i2i.netbankingapplication.util.StringUtil;
 
 /**
  * <p>
@@ -61,7 +62,7 @@ public class CustomerTransactionManagerImpl extends GenericManagerImpl<CustomerT
       * @return message (success or failure).
       * 
       * @throws TransactionCustomException
-      *     If there is an error in the customer yransaction attribute exception is handle by TransactionCustomException.
+      *     If there is an error in the customer transaction attribute exception is handle by TransactionCustomException.
       * @throws DataBaseException
       *     If there is an error in getting the object like NullPointerException,
       *     NumberFormatException, HibernateException.
@@ -76,9 +77,9 @@ public class CustomerTransactionManagerImpl extends GenericManagerImpl<CustomerT
             debitAccount.setBalance(balanceAmount);
             customerTransactionDao.insertTransaction(new CustomerTransaction(debitAccount, 
                     branchManager.getAccountByAccountNumber(creditAccountNumber), amount, Constants.STATUS_REQUEST), debitAccount);
-            return "YOUR TRANSACTION DETAIL SEND OUR TRANSACTION APPROVER PLEASE WAIT";
+            return StringUtil.informationReader().getProperty("transactionRequest");
         } else {
-            throw new TransactionCustomException("YOUR CREDIT AMOUNT VALUE IS MUST BE LESSER THAN CURRENT AMOUNT :Rs " + currentAmount );
+            throw new TransactionCustomException(StringUtil.informationReader().getProperty("trasnactionExceptionMessage") + currentAmount );
         }
     }
     
@@ -126,7 +127,7 @@ public class CustomerTransactionManagerImpl extends GenericManagerImpl<CustomerT
         if (Constants.NOTIFICATION_SIZE != transactions.size()) {
             return transactions;
         } else {
-            throw new TransactionCustomException("TRANSACTION NOTIFICATION NOT AVAILABLE");
+            throw new TransactionCustomException(StringUtil.informationReader().getProperty("getAllTrasnactionsMessage"));
         }
     }
 
