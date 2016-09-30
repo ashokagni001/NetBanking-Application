@@ -50,33 +50,34 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Indexed
 @XmlRootElement
 public class User extends BaseObject implements Serializable, UserDetails {
-    private static final long serialVersionUID = 3832626162173359411 L;
+    private static final long serialVersionUID = 3832626162173359411L;
 
     private Long id;
     private String username;
     private String accountNumber;
-    private String userId; // required
-    private String password; // required
+    private String userId;                       // required
+    private String password;                    // required
     private String confirmPassword;
     private String passwordHint;
-    private String firstName; // required
-    private String lastName; // required
-    private String email; // required; unique
+    private String firstName;                   // required
+    private String lastName;                    // required
+    private String email;                       // required; unique
     private String phoneNumber;
     private String website;
     private Address address = new Address();
     private Integer version;
-    private Set < Role > roles = new HashSet < Role > ();
+    private Set<Role> roles = new HashSet<Role>();
     private boolean enabled;
     private boolean accountExpired;
     private boolean accountLocked;
     private boolean credentialsExpired;
-
+    
 
     /**
      * Default constructor - creates a new instance with no values set.
      */
-    public User() {}
+    public User() {
+    }
 
     /**
      * Create a new instance and set the username.
@@ -98,8 +99,8 @@ public class User extends BaseObject implements Serializable, UserDetails {
     public String getUserId() {
         return userId;
     }
-
-
+    
+    
     @Column(name = "account_number", nullable = true, length = 15, unique = true)
     @Field
     public String getAccountNumber() {
@@ -155,7 +156,7 @@ public class User extends BaseObject implements Serializable, UserDetails {
     }
 
     @Column(name = "phone_number")
-    @Field(analyze = Analyze.NO)
+    @Field(analyze= Analyze.NO)
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -184,13 +185,11 @@ public class User extends BaseObject implements Serializable, UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
     @JoinTable(
-        name = "user_role",
-        joinColumns = {
-            @JoinColumn(name = "user_id")
-        },
-        inverseJoinColumns = @JoinColumn(name = "role_id")
+            name = "user_role",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    public Set < Role > getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
@@ -200,11 +199,11 @@ public class User extends BaseObject implements Serializable, UserDetails {
      * @return a list of LabelValue objects with role information
      */
     @Transient
-    public List < LabelValue > getRoleList() {
-        List < LabelValue > userRoles = new ArrayList < LabelValue > ();
+    public List<LabelValue> getRoleList() {
+        List<LabelValue> userRoles = new ArrayList<LabelValue>();
 
         if (this.roles != null) {
-            for (Role role: roles) {
+            for (Role role : roles) {
                 // convert the user's roles to LabelValue Objects
                 userRoles.add(new LabelValue(role.getName(), role.getName()));
             }
@@ -228,8 +227,8 @@ public class User extends BaseObject implements Serializable, UserDetails {
      */
     @Transient
     @JsonIgnore // needed for UserApiITest in appfuse-ws archetype
-    public Set < GrantedAuthority > getAuthorities() {
-        Set < GrantedAuthority > authorities = new LinkedHashSet < > ();
+    public Set<GrantedAuthority> getAuthorities() {
+        Set<GrantedAuthority> authorities = new LinkedHashSet<>();
         authorities.addAll(roles);
         return authorities;
     }
@@ -325,16 +324,16 @@ public class User extends BaseObject implements Serializable, UserDetails {
     public void setWebsite(String website) {
         this.website = website;
     }
-
+    
     public void setUserId(String userId) {
         this.userId = userId;
     }
-
+    
     public void setAddress(Address address) {
         this.address = address;
     }
 
-    public void setRoles(Set < Role > roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
@@ -387,17 +386,17 @@ public class User extends BaseObject implements Serializable, UserDetails {
      */
     public String toString() {
         ToStringBuilder sb = new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE)
-            .append("username", this.username)
-            .append("enabled", this.enabled)
-            .append("accountExpired", this.accountExpired)
-            .append("credentialsExpired", this.credentialsExpired)
-            .append("accountLocked", this.accountLocked);
+                .append("username", this.username)
+                .append("enabled", this.enabled)
+                .append("accountExpired", this.accountExpired)
+                .append("credentialsExpired", this.credentialsExpired)
+                .append("accountLocked", this.accountLocked);
 
         if (roles != null) {
             sb.append("Granted Authorities: ");
 
             int i = 0;
-            for (Role role: roles) {
+            for (Role role : roles) {
                 if (i > 0) {
                     sb.append(", ");
                 }
@@ -409,5 +408,5 @@ public class User extends BaseObject implements Serializable, UserDetails {
         }
         return sb.toString();
     }
-
+    
 }

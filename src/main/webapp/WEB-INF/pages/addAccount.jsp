@@ -5,7 +5,7 @@
 <title>ADD NEW ACCOUNT</title>
 </head>
 <body>
-	<h4>ADD NEW ACCOUNT</h4>
+	<h3>ADD NEW ACCOUNT</h3>
 	<div class="col-md-12 row">
 		<form method="post" action="insertAccount">
 			<div class="row">
@@ -69,7 +69,7 @@
 	</div>
 	<br />
 	<br />
-	<h3>Branch Details</h3>
+	<h3>BRANCH DETAIL</h3>
 	<div class="row">
 		<c:if test="${branches != null}">
 			<div class="col-md-12 sizetable">

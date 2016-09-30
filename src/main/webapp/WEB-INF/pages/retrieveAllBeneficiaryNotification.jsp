@@ -47,11 +47,11 @@
 											href="viewCustomerAccount?accountNumber=<c:out value="${customerAccount.accountNumber}"/>"
 											style="color: blue"><c:out
 													value="${customerAccount.accountNumber}" /></a></td>
-										<td align="center" height="30" width="100"><a
-											href="beneficiaryRequestSuccess?id=<c:out value="${beneficiaryNotifications.getId()}"/>">
+										<td align="center" height="30" width="100">
+										<a href="updateBeneficiaryAccount?id=<c:out value="${beneficiaryNotifications.getId()}"/>&action=Success">
 												ACCEPT</a></td>
 										<td align="center" height="30" width="100"><a
-											href="beneficiaryRequestCancel?id=<c:out value="${beneficiaryNotifications.getId()}"/>">
+											href="updateBeneficiaryAccount?id=<c:out value="${beneficiaryNotifications.getId()}"/>&action=Failure">
 												IGNORE</a></td>
 									</tr>
 									<%

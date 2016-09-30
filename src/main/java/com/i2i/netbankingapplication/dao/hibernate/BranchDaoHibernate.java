@@ -25,7 +25,7 @@ import com.i2i.netbankingapplication.model.Branch;
  * @created 2016-09-27
  */
 @Repository("branchDao")
-public class BranchDaoHibernate extends GenericDaoHibernate < Branch, Long > implements BranchDao {
+public class BranchDaoHibernate extends GenericDaoHibernate<Branch, Long> implements BranchDao {
 
     /**
      * Constructor to create a Generics-based version using Branch as the entity
@@ -33,7 +33,7 @@ public class BranchDaoHibernate extends GenericDaoHibernate < Branch, Long > imp
     public BranchDaoHibernate() {
         super(Branch.class);
     }
-
+     
     /**
      * Get the branch object from BranchService and add Branch to database. 
      * 
@@ -45,12 +45,12 @@ public class BranchDaoHibernate extends GenericDaoHibernate < Branch, Long > imp
      */
     public void insertBranch(Branch branch) throws DataBaseException {
         try {
-            getSession().save(branch);
+            getSession().save(branch); 
         } catch (HibernateException e) {
-            throw new DataBaseException("PLEASE INSERT VALID IFSC..");
+            throw new DataBaseException("PLEASE INSERT VALID IFSC..");  
         }
     }
-
+     
     /**
      * <p>
      *     Get the IFSCode from BranchService.
@@ -74,7 +74,7 @@ public class BranchDaoHibernate extends GenericDaoHibernate < Branch, Long > imp
             return (Branch) branches.get(0);
         }
     }
-
+     
     /**
      * <p>
      *     Get the IFSCode from BranchService.
@@ -93,10 +93,10 @@ public class BranchDaoHibernate extends GenericDaoHibernate < Branch, Long > imp
             Session session = getSessionFactory().getCurrentSession();
             session.delete(branch);
         } catch (HibernateException e) {
-            throw new DataBaseException("PLEASE CHECK YOUR DATAS " + IFSCode + " YOUR DATA IS NOT VALID.PLEASE TRY AGAIN.");
+            throw new DataBaseException("PLEASE CHECK YOUR DATAS " + IFSCode + " YOUR DATA IS NOT VALID.PLEASE TRY AGAIN." );  
         }
     }
-
+     
     /**
      * <p>
      *     Retrieves all Branch from database.
@@ -109,14 +109,14 @@ public class BranchDaoHibernate extends GenericDaoHibernate < Branch, Long > imp
      * @throws DataBaseException
      *     It handle all the custom exception in NetBanking Application and HibernateException.
      */
-    public List < Branch > retrieveBranches() throws DataBaseException {
+    public List<Branch> retrieveBranches() throws DataBaseException {
         try {
             return getSession().createQuery("FROM Branch").list();
         } catch (HibernateException e) {
             throw new DataBaseException("BRANCHES IS NOT AVAILABLE.");
         }
     }
-
+    
     /**
      * Get the account object from BranchManager and add Branch database. 
      * 
@@ -131,13 +131,13 @@ public class BranchDaoHibernate extends GenericDaoHibernate < Branch, Long > imp
      */
     public void insertAccount(Account account) throws DataBaseException {
         try {
-            getSession().saveOrUpdate(account);
+            getSession().saveOrUpdate(account); 
         } catch (HibernateException e) {
-            throw new DataBaseException("PLEASE CHECK YOUR DATAS " + account.getAccountNumber() + " YOUR DATA IS NOT VALID.PLEASE TRY AGAIN.");
+            throw new DataBaseException("PLEASE CHECK YOUR DATAS " + account.getAccountNumber() + " YOUR DATA IS NOT VALID.PLEASE TRY AGAIN." );  
         }
     }
-
-    /**
+    
+     /**
      * <p>
      *     Get the accountNumber from BranchManager.
      *     Retrieves Account data from database and returns Account object to BranchService.
@@ -159,7 +159,7 @@ public class BranchDaoHibernate extends GenericDaoHibernate < Branch, Long > imp
             throw new DataBaseException("ACCOUNTS IS NOT AVAILABLE.");
         }
     }
-
+    
     /**
      * <p>
      *     Retrieves all accounts from database.
@@ -172,9 +172,9 @@ public class BranchDaoHibernate extends GenericDaoHibernate < Branch, Long > imp
      * @throws DataBaseException
      *     It handle all the custom exception in NetBanking Application and HibernateException.
      */
-    public List < Account > retriveAllAccounts() throws DataBaseException {
+    public List<Account> retriveAllAccounts() throws DataBaseException {
         try {
-            return getSession().createQuery("FROM Account").list();
+             return getSession().createQuery("FROM Account").list();
         } catch (HibernateException e) {
             throw new DataBaseException("ACCOUNTS IS NOT AVAILABLE.");
         }

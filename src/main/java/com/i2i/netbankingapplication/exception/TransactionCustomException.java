@@ -9,11 +9,12 @@ package com.i2i.netbankingapplication.exception;
  * 
  * @created 2016-09-06 
  */
-public class TransactionCustomException extends Exception {
+public class TransactionCustomException extends Exception {  
     private String message;
-
-    public TransactionCustomException() {}
-
+    
+    public TransactionCustomException() {
+    }
+    
     /**
      * <p>
      *     parameter Constructor.
@@ -26,7 +27,7 @@ public class TransactionCustomException extends Exception {
     public TransactionCustomException(String message) {
         super(message);
     }
-
+    
     /**
      * <p>
      *     parameter Constructor.
@@ -39,10 +40,11 @@ public class TransactionCustomException extends Exception {
      *     A String data type
      */
     public TransactionCustomException(String message, Throwable cause) {
-        super(message, cause);
+        super (message, cause);
     }
-
-    public String toString() {
+     
+    public String toString() { 
         return this.message;
     }
-}
+}  
+

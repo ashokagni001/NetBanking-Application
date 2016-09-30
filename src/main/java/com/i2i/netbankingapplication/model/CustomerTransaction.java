@@ -16,7 +16,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 
 /**
  * <p>
- *     Model class of UserTransaction. 
+ *     Model class of CustomerTransaction. 
  *     It have getter method, setter method, default constructor and parameter constructor.
  *     Many to One mapping is established for Account model class.
  * </p>
@@ -33,46 +33,47 @@ public class CustomerTransaction {
     @GeneratedValue
     @Column(name = "id")
     private int id;
-
+    
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "debit_account_number")
+    @JoinColumn(name="debit_account_number")
     @IndexedEmbedded
     private Account debitAccount;
-
+    
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "cridit_account_number")
+    @JoinColumn(name="cridit_account_number")
     @IndexedEmbedded
     private Account creditAccount;
-
+    
     @Column(name = "amount")
     private double amount;
-
+    
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false, updatable = false)
     @Field
     private String date;
-
+    
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name="user_id")
     @IndexedEmbedded
     private User user;
-
+    
     @Column(name = "status")
     private String status;
-
+    
     /**
      * Default Constructor.
      * which create a instance of UserTransaction.
      */
-    public CustomerTransaction() {}
-
+    public CustomerTransaction() {
+    }
+    
     /**
      * parameter Constructor.
      * Passes parameters to the constructor and creates an instance of UserTransaction.
-     */
-    public CustomerTransaction(Account creditAccount, Account debitAccount, double amount, String status) {
+     */  
+    public CustomerTransaction(Account debitAccount, Account creditAccount, double amount,String status) {
         this.amount = amount;
         this.status = status;
         this.creditAccount = creditAccount;
@@ -94,7 +95,7 @@ public class CustomerTransaction {
     public void setAmount(double amount) {
         this.amount = amount;
     }
-
+    
     public String getDate() {
         return date;
     }
@@ -126,7 +127,7 @@ public class CustomerTransaction {
     public void setCreditAccount(Account creditAccount) {
         this.creditAccount = creditAccount;
     }
-
+    
     public User getUser() {
         return user;
     }

@@ -27,7 +27,7 @@ import java.util.List;
  *         Modified by jgarcia (updated to hibernate 4)
  */
 @Repository("userDao")
-public class UserDaoHibernate extends GenericDaoHibernate < User, Long > implements UserDao, UserDetailsService {
+public class UserDaoHibernate extends GenericDaoHibernate<User, Long> implements UserDao, UserDetailsService {
 
     /**
      * Constructor that sets the entity to User.class.
@@ -40,7 +40,7 @@ public class UserDaoHibernate extends GenericDaoHibernate < User, Long > impleme
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    public List < User > getUsers() {
+    public List<User> getUsers() {
         Query qry = getSession().createQuery("from User u order by upper(u.username)");
         return qry.list();
     }
@@ -88,9 +88,9 @@ public class UserDaoHibernate extends GenericDaoHibernate < User, Long > impleme
      */
     public String getUserPassword(Long userId) {
         JdbcTemplate jdbcTemplate =
-            new JdbcTemplate(SessionFactoryUtils.getDataSource(getSessionFactory()));
+                new JdbcTemplate(SessionFactoryUtils.getDataSource(getSessionFactory()));
         Table table = AnnotationUtils.findAnnotation(User.class, Table.class);
         return jdbcTemplate.queryForObject(
-            "select password from " + table.name() + " where id=?", String.class, userId);
+                "select password from " + table.name() + " where id=?", String.class, userId);
     }
 }

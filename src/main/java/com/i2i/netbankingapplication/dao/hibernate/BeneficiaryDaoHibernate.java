@@ -2,102 +2,89 @@ package com.i2i.netbankingapplication.dao.hibernate;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import com.i2i.netbankingapplication.dao.BeneficiaryDao;
 import com.i2i.netbankingapplication.exception.DataBaseException;
 import com.i2i.netbankingapplication.model.Beneficiary;
 
-
-
+/**
+ * <p>
+ *   DataAccessObject(DAO) which is used to perform insert, update, retrieve all 
+ *   operations for beneficiary and return to the responses.
+ *   Creates session and transaction objects for each operation
+ * </p>
+ * 
+ * @author Team-2
+ * 
+ * @created 2016-09-26
+ */
 @Repository("beneficiaryDao")
-public class BeneficiaryDaoHibernate extends GenericDaoHibernate < Beneficiary, Long > implements BeneficiaryDao {
-
+@Transactional
+public class BeneficiaryDaoHibernate extends GenericDaoHibernate<Beneficiary, Long> implements BeneficiaryDao{
+    
+    /**
+     * Constructor that sets the entity to Beneficiary.class.
+     */
     public BeneficiaryDaoHibernate() {
         super(Beneficiary.class);
     }
-
+     
     /**
      * <p>
-     *     Get the Beneficiary detail from BeneficiaryManagerImpl and add Beneficiary detail to database. 
+     *     Saves a user's beneficiary information(insert new beneficiary account).
      * </p>
      * 
+     * @param beneficiary 
+     *     beneficiary holds the information of beneficiary.The beneficiary to save.
+     * 
      * @throws DataBaseException
-     *     It handle all the custom exception in NetBanking Application..
+     *     If there is an error in getting the object like NullPointerException,
+     *     NumberFormatException, HibernateException.
      */
     public void insertBeneficiary(Beneficiary beneficiary) throws DataBaseException {
         try {
-            getSession().save(beneficiary);
+            getSession().save(beneficiary); 
         } catch (HibernateException e) {
-            throw new DataBaseException("PLEASE INSERT VALID IFSC..");
+            throw new DataBaseException("PLEASE INSERT VALID IFSC..");  
         }
     }
-
+    
     /**
-     * <p>
-     *     Retrieves all Beneficiary from database.
-     *     Return all Beneficiary in List type.
      * </p>
+     *     Gets a list of beneficiaries.
+     * </p>    
+     *  
+     * @return Beneficiaries
+     *     The list of beneficiaries in DB. if the beneficiaries is already persisted
+     *     else return null.
      * 
-     * @return list
-     *     return the list of Beneficiaries.
-     *     
      * @throws DataBaseException
-     *     It handle all the custom exception in NetBanking Application and HibernateException.
+     *     If there is an error in getting the object like HibernateException.
      */
-    public List < Beneficiary > retrieveAllBeneficiaries() throws DataBaseException {
+    public List<Beneficiary> retrieveAllBeneficiaries() throws DataBaseException {
         try {
             return getSession().createQuery("FROM Beneficiary").list();
         } catch (HibernateException e) {
             throw new DataBaseException("ACCOUNTS IS NOT AVAILABLE.");
         }
     }
-
-    /**
-     * <p>
-     *     Update the status to Success in Beneficiary using database.
-     * </p>
-     * 
-     * @param beneficiaryId
-     *     beneficiaryId of Beneficiary.
-     *      
-     * @throws DataBaseException
-     *     It handle all the custom exception in NetBanking Application and HibernateException.
-     */
-    public void beneficiaryAccountActive(int beneficiaryId) throws DataBaseException {
+    
+    public Beneficiary retrievebeneficiaryAccount(int beneficiaryId) throws DataBaseException {
         try {
-            Session session = getSession();
-            Beneficiary beneficiary = (Beneficiary) session.get(Beneficiary.class, beneficiaryId);
-            beneficiary.setStatus("Success");
-            session.update(beneficiary);
+            return (Beneficiary)getSession().get(Beneficiary.class, beneficiaryId); 
         } catch (HibernateException e) {
-            e.printStackTrace();
             throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
         }
     }
-
-    /**
-     * <p>
-     *     Update the status to Failure in Beneficiary using database.
-     * </p>
-     * 
-     * @param beneficiaryId
-     *     beneficiaryId of Beneficiary.
-     *      
-     * @throws DataBaseException
-     *     It handle all the custom exception in NetBanking Application and HibernateException.
-     */
-    public void beneficiaryAccountDeactive(int beneficiaryId) throws DataBaseException {
+    
+    public void updateBeneficiary(Beneficiary beneficiary) throws DataBaseException {
         try {
-            Session session = getSession();
-            Beneficiary beneficiary = (Beneficiary) session.get(Beneficiary.class, beneficiaryId);
-            beneficiary.setStatus("Failure");
-            session.update(beneficiary);
+            getSession().update(beneficiary);
         } catch (HibernateException e) {
-            e.printStackTrace();
-            throw new DataBaseException("OOPS SOME PROBLEM OCCURED.. PLEASE TRY AGAIN LATER");
+            throw new DataBaseException("PLEASE INSERT VALID IFSC.."); 
         }
     }
 }

@@ -28,13 +28,13 @@
 									<td align="center"><c:set
 											value="${transactions.getDebitAccount()}" var="accountDebit" />
 										<a
-										href="viewCustomerAccount?accountNumber=<c:out value="${accountDebit.accountNumber}"/>"
+										href="viewAccountByCustomerId?accountNumber=<c:out value="${accountDebit.accountNumber}"/>"
 										style="color: blue"><c:out
 												value="${accountDebit.accountNumber}" /></a></td>
 									<td align="center"><c:set
 											value="${transactions.getCreditAccount()}"
 											var="accountCredit" /> <a
-										href="viewCustomerAccount?accountNumber=<c:out value="${accountCredit.accountNumber}"/>"
+										href="viewAccountByCustomerId?accountNumber=<c:out value="${accountCredit.accountNumber}"/>"
 										style="color: blue"><c:out
 												value="${accountCredit.accountNumber}" /></a></td>
 									<td align="center"><c:out

@@ -14,134 +14,167 @@ import com.i2i.netbankingapplication.model.Account;
 import com.i2i.netbankingapplication.model.Branch;
 import com.i2i.netbankingapplication.service.BranchManager;
 
+/**
+ * <p>
+ *     When request comes BranchManager performs add or fetch or fetchAll branch with model(Branch),
+ *     DAO(Branch) and return the responses to BranchController.
+ *     branchService operate passing value's to branchDao based on request.
+ *     If method handle the TransactionCustomException. It is means our business logic custom exception.
+ *     It service validate the business logics using Constants class.
+ * </p>
+ * 
+ * @author TEAM-2
+ * 
+ * @created 2016-09-26.
+ */
 @Service("branchManager")
-public class BranchManagerImpl extends GenericManagerImpl < Branch, Long > implements BranchManager {
-
+public class BranchManagerImpl extends GenericManagerImpl<Branch, Long> implements BranchManager {
+    
     @Autowired
     BranchDao branchDao;
-
-    @Autowired
-    public BranchManagerImpl(BranchDao branchDao) {
-        super(branchDao);
-        this.branchDao = branchDao;
-    }
-
+    
     /**
-     * {@inheritDoc}
+     * <p> 
+     *     Get the branch from BranchController and pass to addBranch method in BranchDao.
+     * </p>
+     * 
+     * @param branch
+     *     branch holds the information of Branch.
+     * @return status message (success or failure).
+     * 
+     * @throws DataBaseException
+     *     If there is an error in getting the object like NullPointerException,
+     *     NumberFormatException, HibernateException.
      */
     public String addBranch(Branch branch) throws DataBaseException {
-        branch.setIFSCode(getIFSCode());
+        branch.setIFSCode(getIfscode());
         branchDao.insertBranch(branch);
         return "Branch Added Successfully.. IFSCode : " + branch.getIFSCode();
     }
-
+    
     /**
      * <p>
-     *     this method using for create the IFSCode for each Branch and then any Branch deleted in the list 
-     *     it is full fill that the cab.
+     *     calculate the new branch ifscode using constants class.
      * </p>
-     * @return customerId
-     *     specific IFSCode for each Branch. 
+     * 
+     * @return new ifscode of branch.
+     * 
      * @throws DataBaseException
-     *     It handle all the custom exception in NetBanking application.
+     *      If there is an error in getting the object like NullPointerException,
+     *     NumberFormatException, HibernateException.
      */
-    public String getIFSCode() throws DataBaseException {
-        long previousValue = Constants.NOTIFICATION_SIZE;
-        long currentValue;
-        for (Branch branches: branchDao.retrieveBranches()) {
-            String ifsc = branches.getIFSCode();
-            currentValue = Integer.parseInt(ifsc.substring(Constants.IFSCODE_SUBSTREAM_SIZE, ifsc.length()));
-            if (previousValue <= currentValue) {
-                long temp = currentValue - previousValue;
-                if (temp == Constants.SIZE || temp == Constants.NOTIFICATION_SIZE) {
-                    previousValue = currentValue;
-                } else {
-                    return (Constants.IFSCODE_PROFIX + String.valueOf(currentValue - Constants.INITIAL_SIZE));
-                }
-            }
+    private String getIfscode() throws DataBaseException {
+        long id = 0;
+        for (Branch branches : branchDao.retrieveBranches()) {
+             id = branches.getId();
         }
-        return (Constants.IFSCODE_PROFIX + String.valueOf(previousValue + Constants.INITIAL_SIZE));
+        //calculate the new branch ifscode using constants class.
+        //IFSC_PROFIX value = I2IBK0
+        return Constants.IFSCODE_PROFIX + String.valueOf(id + 1);
     }
-
+    
     /**
-     * {@inheritDoc}
+     * <p>
+     *     Retrieves all branches from retriveAllBranch method in branchDao.
+     *     Return the list of branches informations.
+     * </p>
+     * 
+     * @return list of branches informations
+     * 
+     * @throws DataBaseException
+     *     If there is an error in getting the object like NullPointerException,
+     *     NumberFormatException, HibernateException.
      */
-    public List < Branch > getBranches() throws DataBaseException {
+    public List<Branch> getBranches() throws DataBaseException {
         return branchDao.retrieveBranches();
     }
-
+    
     /**
-     * {@inheritDoc}
+     * <p> 
+     *     Get the ifscode of Branch
+     *     Return the branch information based on branch ifscode.
+     * </p>
+     * 
+     * @param ifscode
+     *     ifscode of Branch used to retrieve branch.
+     * 
+     * @return branch information based on branch ifscode.
+     *  
+     * @throws DataBaseException
+     *     If there is an error in getting the object like NullPointerException,
+     *     NumberFormatException, HibernateException.
      */
-    public Branch getBranchByIFSCode(String IFSCode) throws DataBaseException {
-        return branchDao.retrieveBranchByIFSCode(IFSCode);
+    public Branch getBranchByIfscode(String ifscode) throws DataBaseException {
+        return branchDao.retrieveBranchByIFSCode(ifscode);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void removeBranchByIFSCode(String IFSCode) throws DataBaseException {
-        branchDao.removeBranchByIFSCode(IFSCode);
-    }
-
+    
     /**
      * <p>
-     *    This method verify the branch IFSCode exist or not.
-     *    If branch exist add new account.
-     *    Otherwise, return the error message.
+     *    This method add new account information based on branch ifscode.
+     * </p>
+     * 
+     * @param account
+     *     account holds the information of Account.
+     *     
+     * @return status message (success or failure).
+     * 
+     * @throws DataBaseException
+     *     If there is an error in getting the object like NullPointerException,
+     *     NumberFormatException, HibernateException.
+     */
+    public String addAccount(Account account) throws DataBaseException {
+        branchDao.insertAccount(account);
+        return "ACCOUNT ADDED SUCCESSFULLY";
+    }
+    
+    /**
+     * <p> 
+     *     Get the accountNumber of Account.
+     *     Return the account information based on accountNumber of Account.
      * </p>
      * 
      * @param accountNumber
-     *     accountNumber of Account.
-     * @param balance
-     *     balance of Account.
-     * @param accounttype
-     *     accountType of Account.
-     * @param ifsc
-     *     IfsCode of Account.
+     *     accountNumber of Account used to get the account information.
      *     
+     * @return account information based on accountNumber of Account.
+     * 
      * @throws DataBaseException
-     *     It handle all the custom exception in NetBanking application.
+     *     If there is an error in getting the object like NullPointerException,
+     *     NumberFormatException, HibernateException.
      */
-    public String addAccount(Account account) throws DataBaseException {
-        //verify the branch id exist or not.
-        branchDao.insertAccount(account);
-        return ("ACCOUNT ADDED SUCCESSFULLY");
-    }
-
     public Account getAccountByAccountNumber(String accountNumber) throws DataBaseException {
-        System.out.println();
         return branchDao.retrieveAccountByAccountNumber(accountNumber);
     }
-
+    
     /**
      * <p> 
-     *     This method use to view account by branch.
-     *     This method get the branch IFSC from branch controller. 
+     *     This method used to view account by branch.
+     *     Return branch information based on branch ifscode.
+     *     This method handle the our business logic exception(BranchDataException).
      * </p>
      * 
-     * @param IFSCode
-     *     IFSCode of Account to use view list of accounts.
-     *     
-     * @return List.
-     *     return the list of accounts.
-     *     
+     * @param ifscode
+     *      ifscode of Branch used to view account details.
+     *       
+     * @return branch information based on branch ifscode.
+     * 
+     * @throws BranchDataException
+     *     It handle all the custom exception in NetBanking Application.
      * @throws DataBaseException
-     *     It handle all the custom exception in NetBanking application.
-     * @throws BranchDataException 
-     *     It handle all the custom exception.
+     *     If there is an error in getting the object like NullPointerException,
+     *     NumberFormatException, HibernateException.
      */
-    public List < Account > viewAccountByBranch(String IFSCode) throws DataBaseException, BranchDataException {
-        List < Account > accounts = new ArrayList < Account > ();
-        if (null != branchDao.retrieveBranchByIFSCode(IFSCode)) {
-            for (Account account: branchDao.retriveAllAccounts()) {
-                if (account.getBranch().getIFSCode().equals(IFSCode)) {
+    public List<Account> viewAccountByBranch(String ifscode) throws BranchDataException, DataBaseException{
+        List<Account> accounts = new ArrayList<Account>();
+        if (null != branchDao.retrieveBranchByIFSCode(ifscode)) {
+            for (Account account : branchDao.retriveAllAccounts()) {
+                if (account.getBranch().getIFSCode().equals(ifscode)) {
                     accounts.add(account);
                 }
             }
             return accounts;
         } else {
-            throw new BranchDataException("PLEASE ENTER VALID IFSC NUMBER");
+            throw new BranchDataException("PLEASE ENTER VALID IFSCODE NUMBER"); 
         }
     }
 }

@@ -27,46 +27,47 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 public class Branch {
 
     private Long id;
-
+    
     @Column(name = "IFSCode")
     private String IFSCode;
-
+    
     @Column(name = "email")
     private String emailId;
-
+    
     @Embedded
     @IndexedEmbedded
     private Address address;
-
+    
     /**
      * Default Constructor.
      * which create a instance of Branch.
      */
-    public Branch() {}
-
+    public Branch() {
+    }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @DocumentId
     public Long getId() {
         return id;
     }
-
+    
     public Address getAddress() {
         return address;
     }
-
+    
     public String getEmailId() {
         return emailId;
     }
-
+    
     public void setEmailId(String emailId) {
         this.emailId = emailId;
     }
-
+    
     public void setId(Long id) {
         this.id = id;
     }
-
+    
     public void setAddress(Address address) {
         this.address = address;
     }
@@ -78,5 +79,5 @@ public class Branch {
     public void setIFSCode(String IFSCode) {
         this.IFSCode = IFSCode;
     }
-
+    
 }

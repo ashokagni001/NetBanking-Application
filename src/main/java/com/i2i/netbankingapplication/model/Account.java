@@ -12,6 +12,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import com.i2i.netbankingapplication.model.Branch;
+
 /**
  * <p>
  *     Model class of Account. 
@@ -30,74 +31,75 @@ public class Account {
     @Id
     @Column(name = "account_number")
     private String accountNumber;
-
+    
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name="user_id")
     private User user;
-
+    
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "IFSCode")
+    @JoinColumn(name="IFSCode")
     private Branch branch;
-
+    
     @Column(name = "balance")
     private double balance;
-
+    
     @Column(name = "account_type")
     private String accountType;
-
+    
     /**
      * Default Constructor.
      * which create a instance of Account.
      */
-    public Account() {}
-
+    public Account(){
+    }
+    
     public Account(String accountNumber, double balance, String accounType, Branch branch) {
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.accountType = accounType;
         this.branch = branch;
     }
-
+    
     public String getAccountNumber() {
         return accountNumber;
     }
-
+    
     public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
     }
-
+    
     public User getUser() {
         return user;
     }
-
+    
     public void setUser(User user) {
         this.user = user;
     }
-
+    
     public Branch getBranch() {
         return branch;
     }
-
+    
     public void setBranch(Branch branch) {
         this.branch = branch;
     }
-
+    
     public double getBalance() {
         return balance;
     }
-
+    
     public void setBalance(double balance) {
         this.balance = balance;
     }
-
+    
     public String getAccountType() {
         return accountType;
     }
-
+    
     public void setAccountType(String accountType) {
         this.accountType = accountType;
     }
-
+    
 }

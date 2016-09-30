@@ -59,7 +59,6 @@
 									<th>ADDRESS</th>
 									<th>CITY</th>
 									<th>STATE</th>
-									<th>VIEW ALL ACCOUNT</th>
 								</tr>
 								<%
 								    int sno = 1;
@@ -69,7 +68,6 @@
 										<td><c:out value="<%=sno%>" /></td>
 										<td><c:set value="${branches.getIFSCode()}" var="IFSC" />
 										<a href="getAccounts?IFSCode=<c:out value="${IFSC}"/>" style="color: blue"><c:out value="${IFSC}" /></a></td>
-										<td><c:out value="${branches.getIFSCode()}" /></td>
 										<td><c:out value="${branches.getEmailId()}" /></td>
 										<td><c:out value="${branches.address.address}" /></td>
 										<td><c:out value="${branches.address.city}" /></td>

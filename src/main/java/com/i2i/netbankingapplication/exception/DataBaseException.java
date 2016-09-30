@@ -13,7 +13,8 @@ package com.i2i.netbankingapplication.exception;
 public class DataBaseException extends Exception {
     private String message;
 
-    public DataBaseException() {}
+    public DataBaseException() {
+    }
 
     /**
      * <p>

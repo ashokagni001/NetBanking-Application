@@ -9,9 +9,9 @@ package com.i2i.netbankingapplication;
 public final class Constants {
 
     private Constants() {
-            // hide me
-        }
-        //~ Static fields/initializers =============================================
+        // hide me
+    }
+    //~ Static fields/initializers =============================================
 
     /**
      * Assets Version constant
@@ -86,18 +86,21 @@ public final class Constants {
      * @deprecated No longer used to set themes.
      */
     public static final String CSS_THEME = "csstheme";
-
+    
     public static final String IFSCODE_PROFIX = "I2IBK0";
-
+    
     public static final String CUSTOMER_ID_PROFIX = "CUSI2I0";
-
+    
     public static final int CUSTOMER_ID_PROFIX_SIZE = 7;
-
-    public static final int IFSCODE_SUBSTREAM_SIZE = 7;
-
+    
     public static final int SIZE = 0;
-
+    
     public static final int NOTIFICATION_SIZE = 0;
-
-    public static final int INITIAL_SIZE = 1;
+    
+    public static final String STATUS_REQUEST = "Request";
+    
+    public static final String STATUS_SUCCESS = "Success";
+    
+    public static final String STATUS_FAILURE = "Failure";
+    
 }

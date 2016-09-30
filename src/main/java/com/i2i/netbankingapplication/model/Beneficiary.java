@@ -10,64 +10,76 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
+/**
+ * <p>
+ *     Model class of Beneficiary. 
+ *     It have getter method, setter method, default constructor and parameter constructor.
+ *     Many to One mapping is established for Beneficiary model class.
+ *     One to One mapping is established for Beneficiary model class.
+ * </p>
+ * 
+ * @author TEAM-2
+ * 
+ * @created 2016-09-26
+ */
 @Entity
 @Table(name = "beneficiaries_detail")
 public class Beneficiary {
+	
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
+	private int id;
+	
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@JoinColumn(name = "user_id")
+	private User beneficiaryAccountNumber;
+	
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@JoinColumn(name = "account_number")
+	private Account customerAccountNumber;
+	
+	@Column(name = "status")
+	private String status;
+	
+	public Beneficiary() {
+	}
+	
+	public Beneficiary(User beneficiaryAccountNumber, Account customerAccountNumber, String status) {
+		this.beneficiaryAccountNumber = beneficiaryAccountNumber;
+		this.customerAccountNumber = customerAccountNumber;
+		this.status = status;
+	}
+    
+	public int getId() {
+		return id;
+	}
 
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
-    private int id;
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    private User beneficiaryAccountNumber;
+	public User getBeneficiaryAccountNumber() {
+		return beneficiaryAccountNumber;
+	}
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinColumn(name = "account_number")
-    private Account customerAccountNumber;
+	public void setBeneficiaryAccountNumber(User beneficiaryAccountNumber) {
+		this.beneficiaryAccountNumber = beneficiaryAccountNumber;
+	}
+	
+	public Account getCustomerAccountNumber() {
+		return customerAccountNumber;
+	}
 
-    @Column(name = "status")
-    private String status;
+	public void setCustomerAccountNumber(Account customerAccountNumber) {
+		this.customerAccountNumber = customerAccountNumber;
+	}
 
-    public Beneficiary() {}
+	public String getStatus() {
+		return status;
+	}
 
-    public Beneficiary(User beneficiaryAccountNumber, Account customerAccountNumber, String status) {
-        this.beneficiaryAccountNumber = beneficiaryAccountNumber;
-        this.customerAccountNumber = customerAccountNumber;
-        this.status = status;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public User getBeneficiaryAccountNumber() {
-        return beneficiaryAccountNumber;
-    }
-
-    public void setBeneficiaryAccountNumber(User beneficiaryAccountNumber) {
-        this.beneficiaryAccountNumber = beneficiaryAccountNumber;
-    }
-
-    public Account getCustomerAccountNumber() {
-        return customerAccountNumber;
-    }
-
-    public void setCustomerAccountNumber(Account customerAccountNumber) {
-        this.customerAccountNumber = customerAccountNumber;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }

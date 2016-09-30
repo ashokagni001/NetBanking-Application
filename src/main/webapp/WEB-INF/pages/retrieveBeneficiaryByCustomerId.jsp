@@ -1,21 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:if test="${sessionScope['id']== null}">
-	<c:redirect url="login" />
-</c:if>
-<c:if test="${sessionScope['role']!= 'user'}">
-	<c:redirect url="approverHomePage" />
-</c:if>
+<%@ include file="/common/taglibs.jsp"%>
 <html>
-<head>
-<title>VIEW BENEFICIARIES ACCOUNTS</title>
-<link href="css/bootstrap.css" rel="styleSheet">
-<!-- MetisMenu CSS -->
-<link href="css/metisMenu.min.css" rel="stylesheet">
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/metisMenu.min.js"></script>
-<link href="css/mystyle.css" rel="stylesheet">
-</head>
 <body>
 	<c:if test="${message != null}">
 		<script type="text/javascript">
@@ -23,13 +7,6 @@
 			windows.location.reload();
 		</script>
 	</c:if>
-	<div class="col-md-12 container">
-		<c:import url="TopHead.jsp" />
-
-		<div class="col-md-12 main-container">
-			<div class="col-md-3 sidemenu">
-				<c:import url="CustomerSideMenu.jsp" />
-			</div>
 			<div class="col-md-9">
 				<div class="col-md-12">
 
@@ -50,9 +27,8 @@
 							<c:forEach items="${beneficiaries}" var="beneficiaries">
 								<tr>
 									<td><c:out value="<%=sno%>" /></td>
-									<td><c:set
-											value="${beneficiaries.getCustomerAccountNumber().getCustomer()}"
-											var="customer" /> <c:out value="${customer.getName()}" /></td>
+									<td><c:out
+                                            value="${beneficiaries.getCustomerAccountNumber().getUser().getFirstName()}" /></td>
 									<td><a
 										href="addBeneficiaryTransaction?customerAccountNumber=<c:out value="${beneficiaries.getCustomerAccountNumber().getAccountNumber()}"/>">
 											<c:out

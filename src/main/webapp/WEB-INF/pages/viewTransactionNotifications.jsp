@@ -35,13 +35,13 @@
 									<td align="center"><c:set
 											value="${notifications.getDebitAccount()}" var="accountDebit" />
 										<a
-										href="viewCustomerAccount?accountNumber=<c:out value="${accountDebit.accountNumber}"/>"
+										href="viewAccountByAccountNumber?accountNumber=<c:out value="${accountDebit.accountNumber}"/>"
 										style="color: blue"><c:out
 												value="${accountDebit.accountNumber}" /></a></td>
 									<td align="center"><c:set
 											value="${notifications.getCreditAccount()}"
 											var="accountCredit" /> <a
-										href="viewCustomerAccount?accountNumber=<c:out value="${accountCredit.accountNumber}"/>"
+										href="viewAccountByAccountNumber?accountNumber=<c:out value="${accountCredit.accountNumber}"/>"
 										style="color: blue"><c:out
 												value="${accountCredit.accountNumber}" /></a></td>
 									<td align="center"><c:out
@@ -49,10 +49,10 @@
 									<td align="center"><c:out
 											value="${notifications.getDate()}" /></td>
 									<td align="center" height="30" width="100"><a
-										href="transactionSuccess?id=<c:out value="${notifications.getId()}"/>&creditAccountNumber=<c:out value="${accountCredit.accountNumber}"/>&amount=<c:out value="${notifications.getAmount()}"/>&userId=<c:out value="${sessionScope['id']}"/>"
+										href="updateTransactionStatus?id=<c:out value="${notifications.getId()}"/>&accountNumber=<c:out value="${accountCredit.accountNumber}"/>&amount=<c:out value="${notifications.getAmount()}"/>&action=Success"
 										style="color: blue">PERMISSION</a></td>
 									<td align="center" height="30" width="100"><a
-										href="transactionCancel?id=<c:out value="${notifications.getId()}"/>&debitAccountNumber=<c:out value="${accountDebit.accountNumber}"/>&amount=<c:out value="${notifications.getAmount()}"/>&userId=<c:out value="${sessionScope['id']}"/>"
+										href="updateTransactionStatus?id=<c:out value="${notifications.getId()}"/>&accountNumber=<c:out value="${accountDebit.accountNumber}"/>&amount=<c:out value="${notifications.getAmount()}"/>&action=Failure"
 										style="color: blue">IGNORE</a></td>
 								</tr>
 								<%

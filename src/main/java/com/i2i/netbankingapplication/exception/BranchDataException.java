@@ -10,11 +10,12 @@ package com.i2i.netbankingapplication.exception;
  * 
  * @created 2016-09-06 
  */
-public class BranchDataException extends Exception {
+public class BranchDataException extends Exception {  
     private String message;
-
-    public BranchDataException() {}
-
+    
+    public BranchDataException() {
+    }
+    
     /**
      * <p>
      *     parameter Constructor.
@@ -27,7 +28,7 @@ public class BranchDataException extends Exception {
     public BranchDataException(String message) {
         super(message);
     }
-
+    
     /**
      * <p>
      *     parameter Constructor.
@@ -40,10 +41,10 @@ public class BranchDataException extends Exception {
      *     A String data type
      */
     public BranchDataException(String message, Throwable cause) {
-        super(message, cause);
+        super (message, cause);
     }
-
-    public String toString() {
+     
+    public String toString() { 
         return this.message;
     }
-}
+}  
