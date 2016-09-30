@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.i2i.netbankingapplication.Constants;
+import com.i2i.netbankingapplication.dao.BranchDao;
 import com.i2i.netbankingapplication.model.Account;
 import com.i2i.netbankingapplication.model.User;
 import com.i2i.netbankingapplication.service.BranchManager;
@@ -48,6 +49,9 @@ public class SignupController extends BaseFormController {
     @Autowired
     private BranchManager branchManager;
     
+    @Autowired
+    private BranchDao branchDao;
+    
     @ModelAttribute
     @RequestMapping(method = RequestMethod.GET)
     public User showForm() {
@@ -85,12 +89,12 @@ public class SignupController extends BaseFormController {
         final String password = user.getPassword();
         String accountNumber = user.getAccountNumber();
         Account account = branchManager.getAccountByAccountNumber(accountNumber);
-        if (null == account) {
-            throw new UserExistsException("Your account number is wrong. Enter valid number");
+        if (null == account || null != account.getUser()) {
+            errors.rejectValue("accountNumber", "errors.existing.account","Your account number is wrong. Enter valid number");
+            return "signup";
         }
         
         try {
-            account.setUser(user);
             this.getUserManager().saveUser(user);
             account.setUser(user);
             branchManager.addAccount(account);

@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="<c:url value="/images/favicon.ico"/>"/>
-    <title><decorator:title/> | <fmt:message key="webapp.name"/></title>
+    <title>I2IBANK</title>
     <t:assets type="css"/>
     <decorator:head/>
 </head>
@@ -22,7 +22,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<c:url value='/'/>">I2INETBANKING</a>
+            <a class="navbar-brand">I2INETBANKING</a>
         </div>
 
         <%@ include file="/common/menu.jsp" %>
@@ -100,15 +100,13 @@
     </div>
 
     <div id="footer" class="container navbar-fixed-bottom">
-        <span class="col-sm-6 text-left"><fmt:message key="webapp.version"/>
+        <span class="col-sm-6 text-left">
             <c:if test="${pageContext.request.remoteUser != null}">
             | <fmt:message key="user.status"/> ${pageContext.request.remoteUser}
             </c:if>
         </span>
-        <span class="col-sm-6 text-right">
-            &copy; <fmt:message key="copyright.year"/> <a href="<fmt:message key="company.url"/>"><fmt:message key="company.name"/></a>
-        </span>
     </div>
+    
 <t:assets type="js"/>    
 <%= (request.getAttribute("scripts") != null) ?  request.getAttribute("scripts") : "" %>
 </body>

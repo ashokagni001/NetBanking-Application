@@ -3,6 +3,8 @@
     <table name="app_user">
         <column>id</column>
         <column>username</column>
+        <column>user_id</column>
+        <column>account_number</column>
         <column>password</column>
         <column>first_name</column>
         <column>last_name</column>
@@ -21,8 +23,10 @@
         <column>account_locked</column>
         <column>credentials_expired</column>
         <row>
-            <value description="id">-1</value>
+            <value description="id">1</value>
             <value description="username">user</value>
+            <value description="userId">CUSI2I01</value>
+            <value description="accountNumber">1001</value>
             <value description="password">$2a$10$CnQVJ9bsWBjMpeSKrrdDEeuIptZxXrwtI6CZ/OgtNxhIgpKxXeT9y</value>
             <value description="first_name">Tomcat</value>
             <value description="last_name">User</value>
@@ -42,8 +46,10 @@
             <value description="credentials_expired">0</value>
         </row>
         <row>
-            <value description="id">-2</value>
+            <value description="id">2</value>
             <value description="username">admin</value>
+            <value description="userId">CUSI2I02</value>
+            <value description="accountNumber">1002</value>
             <value description="password">$2a$10$bH/ssqW8OhkTlIso9/yakubYODUOmh.6m5HEJvcBq3t3VdBh7ebqO</value>
             <value description="first_name">Matt</value>
             <value description="last_name">Raible</value>
@@ -63,8 +69,10 @@
             <value description="credentials_expired">0</value>
         </row>
         <row>
-            <value description="id">-3</value>
+            <value description="id">3</value>
             <value description="username">two_roles_user</value>
+            <value description="userId">CUSI2I03</value>
+            <value description="accountNumber">1003</value>
             <value description="password">$2a$10$bH/ssqW8OhkTlIso9/yakubYODUOmh.6m5HEJvcBq3t3VdBh7ebqO</value>
             <value description="first_name">Two Roles</value>
             <value description="last_name">User</value>
@@ -89,12 +97,12 @@
         <column>name</column>
         <column>description</column>
         <row>
-            <value description="id">-1</value>
+            <value description="id">1</value>
             <value description="name">ROLE_ADMIN</value>
             <value description="description"><![CDATA[Administrator role (can edit Users)]]></value>
         </row>
         <row>
-            <value description="id">-2</value>
+            <value description="id">2</value>
             <value description="name">ROLE_USER</value>
             <value description="description"><![CDATA[Default role for all Users]]></value>
         </row>
@@ -103,20 +111,20 @@
         <column>user_id</column>
         <column>role_id</column>
         <row>
-            <value description="user_id">-1</value>
-            <value description="role_id">-2</value>
+            <value description="user_id">1</value>
+            <value description="role_id">2</value>
         </row>
         <row>
-            <value description="user_id">-2</value>
-            <value description="role_id">-1</value>
+            <value description="user_id">2</value>
+            <value description="role_id">1</value>
         </row>
         <row>
-            <value description="user_id">-3</value>
-            <value description="role_id">-1</value>
+            <value description="user_id">3</value>
+            <value description="role_id">1</value>
         </row>
         <row>
-            <value description="user_id">-3</value>
-            <value description="role_id">-2</value>
+            <value description="user_id">3</value>
+            <value description="role_id">2</value>
         </row>
     </table>
 </dataset>

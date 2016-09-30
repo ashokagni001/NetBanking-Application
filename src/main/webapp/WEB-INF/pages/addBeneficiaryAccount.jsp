@@ -1,5 +1,10 @@
 <%@ include file="/common/taglibs.jsp"%>
 <html>
+<style type="text/css">
+.row {
+margin: 3px;
+}
+</style>
 <body>
 	<div class="col-md-12">
 		<div class="tex text-center">

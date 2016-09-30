@@ -112,14 +112,15 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
     }
     
     public String getNewUserId() {
-        long id = 0 ;
+        int id = 0 ;
         for (User user : userDao.getAllDistinct()) {
-            long tempId = user.getId();
+            String lastId = user.getUserId();
+            int tempId = Integer.parseInt(lastId.substring(Constants.CUSTOMER_ID_PROFIX_SIZE, lastId.length()));
             if (id < tempId) {
                 id = tempId;
             }
         }
-        return (Constants.CUSTOMER_ID_PROFIX + String.valueOf(id));
+        return (Constants.CUSTOMER_ID_PROFIX + String.valueOf(id + 1));
     }
     
     /**

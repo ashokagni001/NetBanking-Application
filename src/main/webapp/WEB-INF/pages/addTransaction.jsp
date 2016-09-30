@@ -25,7 +25,7 @@
 									YOUR AMOUNT</label>
 								<div class="col-md-8">
 									<input type="number" name="amount"
-										placeholder="Enter your Amount" required />
+										placeholder="Enter your Amount" min = "1" required />
 								</div>
 							</div>
 						</div>
@@ -33,10 +33,8 @@
 							<div class="form-group">
 								<div class="col-md-offset-4 col-md-8">
 									<div class="col-md-4">
-										<center>
 											<input class="btn btn-success" type="submit"
 												name="insertTransaction" value="PROCEED" required />
-										</center>
 									</div>
 								</div>
 							</div>

@@ -32,6 +32,9 @@
             <field property="username" depends="required">
                 <arg key="user.username"/>
             </field>
+            <field property="accountNumber" depends="required">
+                <arg key="user.accountNumber"/>
+            </field>
             <field property="firstName" depends="required">
                 <arg key="user.firstName"/>
             </field>
